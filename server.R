@@ -27,12 +27,87 @@ library(ggdark)
 library(ggdist)
 library(ggthemes)
 library(chRoma)
-library(mongolite)
 library(tibble)
+library(aws.s3)
+library(digest)
 
 
+merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclean, pathstrings_materials, aliascleani, pathstrings_items){
+  dataframe <- lapply(file_paths, fread) %>%
+    rbindlist(., fill = T) %>%
+    select(material, items, count) %>%
+    mutate(material = as.character(material),
+           items = as.character(items), 
+           count = as.numeric(count)) 
+  
+  dataframeclean <- mutate_all(dataframe, cleantext) 
+  
+  material_key <- inner_join(dataframeclean %>% select(material), 
+                             aliasclean, by = c("material" = "Alias")) %>%
+    distinct()
+  
+  materials_left <- anti_join(dataframeclean %>% select(material), 
+                              aliasclean, by = c("material" = "Alias")) %>%
+    distinct() %>%
+    rename(text = material)
+  
+  if(nrow(materials_left) > 0){
+    new_material_vDB <- add_collection(metadata = materials_left)
+    
+    material_key <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(material = text) %>%
+      inner_join(aliasclean, by = c("Alias")) %>%
+      select(material, Material)   %>%
+      bind_rows(material_key)
+  }
+  
+  unique_materials <- material_key %>%
+    left_join(pathstrings_materials, by = c("Material" = "materials")) 
+  
+  #Run for items
+  items_key <- inner_join(dataframeclean %>% select(items), 
+                          aliascleani, by = c("items" = "Alias")) %>%
+    distinct()
+  
+  items_left <- anti_join(dataframeclean %>% select(items), 
+                          aliascleani, by = c("items" = "Alias")) %>%
+    distinct() %>%
+    rename(text = items)
+  
+  if(nrow(items_left) > 0){
+    new_items_vDB <- add_collection(metadata = items_left)
+    
+    items_key <- query_collection(db = items_vectorDB, query_embeddings = new_items_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(items = text) %>%
+      inner_join(aliascleani, by = "Alias") %>%
+      select(items, Item)   %>%
+      bind_rows(items_key)
+  }
+  
+  unique_items <- items_key %>%
+    left_join(pathstrings_items, by = c("Item" = "items")) 
+  
+  #Replace old material with merged material
+  #Combine any new identical terms
+  dataframeclean2 <- dataframeclean %>%
+    left_join(unique_materials, by="material") %>%
+    left_join(unique_items, by="items") %>%
+    mutate(count = as.numeric(count)) %>%
+    group_by(Material, pathString.x, Item, pathString.y) %>%
+    summarise(count = sum(count)) %>%
+    ungroup() %>% 
+    left_join(use_cases, by = "Item", keep = NULL)
+  
+  return(dataframeclean2)
+}
 
-setwd("/Users/hannahhapich/Documents/R_Scripts/TrashTaxonomy-master")
+
 
 #Build cleaning functions
 cleantext <- function(x) {
@@ -236,13 +311,32 @@ Brand_Item_Relation <- read.csv("data/BrandItem.csv")
 NOAA <- read.csv("data/NOAA.csv")
 PrimeUnclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 Micro_Color_Display <-read.csv("data/Microplastics_Color.csv")
+#Files for bootstrapping routine and sunburst plots
+ItemsHierarchy_sunburst <- read.csv("data/Items_Hierarchy_sunburstPlot.csv")
+MaterialsHierarchy_sunburst <- read.csv("data/Materials_Hierarchy_sunburstPlot.csv") 
+ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
+  rename(Key = Item)
+MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
+  rename(Key = Material)
 
 
+use_cases <- read.csv("data/Item_Use_Case.csv")
+
+MicroOnly <- read.csv("data/PremadeSurveys/Most_Specific_Microplastics.csv")
+AllMore <- read.csv("data/PremadeSurveys/Most_Specific_All.csv")
+AllLess <- read.csv("data/PremadeSurveys/Least_Specific_All.csv")
+polymer_db <- read.csv("data/all_polymer_densities.csv")
 
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
 materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
 Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
+creds <- read.csv("s3_cred.csv")
+Sys.setenv(
+  "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
+  "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
+  "AWS_DEFAULT_REGION" = "us-east-2"
+)
 primeItems <- read.csv("data/PrimeItems.csv")
 primeMaterials <- read.csv("data/PrimeMaterials.csv")
 
@@ -301,7 +395,7 @@ server <- function(input,output,session) {
           match5 <- top_five[[5]]
           
           dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "100px"))
-
+          
       }
       
       else{
@@ -464,199 +558,52 @@ server <- function(input,output,session) {
   })
   
   ###START MERGING TOOL
-  
-  #Files for bootstrapping routine and sunburst plots
-  ItemsHierarchy_sunburst <- read.csv("data/Items_Hierarchy_sunburstPlot.csv")
-  MaterialsHierarchy_sunburst <- read.csv("data/Materials_Hierarchy_sunburstPlot.csv") 
-  ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
-    rename(Key = Item)
-  MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
-    rename(Key = Material)
-  
-  
-  use_cases <- read.csv("data/Item_Use_Case.csv")
 
   df_ <- reactive({
     req(input$df_)
-    req(input$d_f_)
-    
-    infile1 <- input$df_
-    infile2 <- input$d_f_
-    file1 <- fread(infile1$datapath)
-    file2 <- fread(infile2$datapath)
-    dataframe1 <- as.data.frame(file1) %>%
-      select(material, items, count)
-    dataframe2 <- as.data.frame(file2) %>%
-      select(material, items, count)
-    dataframe <- as.data.frame(rbind(dataframe1, dataframe2))
-    dataframe$material <- as.character(dataframe$material)
-    dataframe$items <- as.character(dataframe$items)
-    dataframe$count <- as.numeric(dataframe$count)
-    dataframeclean <- mutate_all(dataframe, cleantext) 
-    
-    
-    #Material query tool cleaning
-    #Matching material to prime material
-    for(row in 1:nrow(dataframeclean)) { 
-      
-      #Identify Alias Row and Alias name in database
-      Primename <- unique(aliasclean[unname(unlist(apply(aliasclean, 2, function(x) which(x == dataframeclean[row,"material"], arr.ind = T)))), "Material"])
-      
-      if(length(Primename) == 0){
-        #Create new embedding
-        new_material <- data.table(text = dataframeclean[row,"material"])
-        new_material_vDB <- add_collection(metadata = new_material)
-        similarity <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 15, type = "dotproduct") %>%
-          left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
-          rename(Alias = text)
-        similarity <-  left_join(similarity, primeMaterials, by = "Alias", relationship = "many-to-many")
-        top_five <- head(unique(similarity$Material), n=1)
-        match1 <- top_five[[1]]
-        
-        dataframe[row, "PrimeMaterial"] <- paste(match1)
-        
-      }
-      
-      else{
-        dataframe[row, "PrimeMaterial"] <- Primename
-      }
-      
-    }
-    
-    #Merge all materials to most specific common denominator
-    
-    #Find all unique materials
-    unique_materials <- as.data.frame(unique(dataframe[,"PrimeMaterial"]))
-    dataframe[,"PrimeMaterial"] <- cleantext(dataframe[,"PrimeMaterial"])
-    colnames(unique_materials) <- c('materials')
-    unique_materials <- mutate_all(unique_materials, cleantext)
-    unique_materials <- left_join(unique_materials, pathstrings_materials, by="materials")
-    unique_materials <- cbind(unique_materials, merged_material=NA)
-    
-    #If parent term exists, replace pathname with parent pathname
-    for(x in 1:nrow(unique_materials)) {
-      for(y in 1:nrow(unique_materials)){
-        z = grepl(unique_materials$pathString[[y]], unique_materials$pathString[[x]], ignore.case=TRUE)
-        length_x <- str_length(unique_materials$pathString[[x]])
-        length_y <- str_length(unique_materials$pathString[[y]])
-        if(z == TRUE && length_x > length_y) {
-          unique_materials$merged_material[[x]] <- paste(unique_materials$pathString[[y]])
-        }
-      }
-    }
-    
-    #If no parent term exists, new pathname remains the same
-    for(x in 1:nrow(unique_materials)) {
-      if(is.na(unique_materials$merged_material[[x]])){
-        unique_materials$merged_material[[x]] <- paste(unique_materials$pathString[[x]])
-      }
-    }
-    
-    #Link new pathname to new material
-    unique_materials <- unique_materials %>% rename("pathString_unmerged"="pathString",
-                                                    "pathString"="merged_material",
-                                                    "material"="materials")
-    unique_materials <- unique_materials %>% left_join(pathstrings_materials, by="pathString") %>%
-      rename("merged_material"="materials") %>%
-      subset(select= -c(pathString_unmerged, pathString))
-    
-    #Replace old material with merged material
-    dataframe <- dataframe %>% left_join(unique_materials, by="material") %>%
-      subset(select= -c(material)) %>%
-      rename("material"="merged_material")
-    
-    
-    
-    #Clean and match items to prime alias
-    for(row in 1:nrow(dataframe)) { 
-      
-      Primename <- unique(aliascleani[unname(unlist(apply(aliascleani, 2, function(x) which(x == dataframeclean[row,"items"], arr.ind = T)))), "Item"])
-      
-      if(length(Primename) == 0){
-        #Create new embedding
-        new_item <- data.table(text = dataframeclean[row,"items"])
-        new_item_vDB <- add_collection(metadata = new_item)
-        similarity <- query_collection(db = items_vectorDB, query_embeddings = new_item_vDB, top_n = 1, type = "dotproduct") %>%
-          left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
-          rename(Alias = text)
-        similarity <-  left_join(similarity, primeItems, by = "Alias", relationship = "many-to-many")
-        top_five <- head(unique(similarity$Item), n=1)
-        match1 <- top_five[[1]]
-        
-        dataframe[row, "PrimeItem"] <- match1
-        
-      }
-      
-      else{
-        dataframe[row, "PrimeItem"] <- Primename
-      }
-      
-    }
-    
-    #Merge all items to most specific common denominator
-    
-    #Find all unique items
-    unique_items <- as.data.frame(unique(dataframe[,"PrimeItem"]))
-    colnames(unique_items) <- c('items')
-    unique_items <- mutate_all(unique_items, cleantext)
-    unique_items <- left_join(unique_items, pathstrings_items, by="items")
-    unique_items <- cbind(unique_items, merged_items=NA)
-    
-    #If parent term exists, replace pathname with parent pathname
-    for(x in 1:nrow(unique_items)) {
-      for(y in 1:nrow(unique_items)){
-        z = grepl(unique_items$pathString[[y]], unique_items$pathString[[x]], ignore.case=TRUE)
-        length_x <- str_length(unique_items$pathString[[x]])
-        length_y <- str_length(unique_items$pathString[[y]])
-        if(z== TRUE && length_x > length_y) {
-          unique_items$merged_items[[x]] <- paste(unique_items$pathString[[y]])
-        }
-      }
-    }
-    
-    #If no parent term exists, new pathname remains the same
-    for(x in 1:nrow(unique_items)) {
-      if(is.na(unique_items$merged_items[[x]])){
-        unique_items$merged_items[[x]] <- paste(unique_items$pathString[[x]])
-      }
-    }
-    
-    #Link new pathname to new item
-    unique_items <- unique_items %>% rename("pathString_unmerged"="pathString",
-                                            "pathString"="merged_items",
-                                            "unmerged_items"="items")
-    unique_items <- unique_items %>% left_join(pathstrings_items, by="pathString") %>%
-      rename("merged_items"="items",
-             "items"="unmerged_items") %>%
-      subset(select= -c(pathString_unmerged, pathString))
-    
-    #Replace old items with merged items
-    dataframe <- dataframe %>% left_join(unique_items, by="items") %>%
-      subset(select= -c(items)) %>%
-      rename("items"="merged_items")
-    
-    #Combine any new identical terms
-    dataframe <- dataframe %>%
-      group_by(material, items) %>%
-      summarise(across(count, sum))
-    
-    #Add use cases
-    dataframe <- dataframe %>% left_join(use_cases, by = "items", keep = NULL) %>%
-      relocate(use, .before = items)
-    
-    return(dataframe)
-    
-    
+    merge_data(file_paths = input$df_$datapath, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB,aliasclean = aliasclean, pathstrings_materials = pathstrings_materials, aliascleani = aliascleani, pathstrings_items = pathstrings_items)
   })
+  
+  #Share data ----
+  observeEvent(input$df, {
+    req(input$share_decision0)
+    put_object(
+      file = file.path(as.character(input$df$datapath)),
+      object = paste0("df_", digest(input$df$datapath), "_", gsub(".*/", "", as.character(input$df$name))),
+      bucket = "trashtaxonomy"
+    )
+  })
+
+  observeEvent(input$particleData, {
+    req(input$share_decision1)
+    put_object(
+      file = file.path(as.character(input$particleData$datapath)),
+      object = paste0("particleData_", digest(input$particleData$datapath), "_", gsub(".*/", "", as.character(input$particleData$name))),
+      bucket = "trashtaxonomy"
+    )
+  })
+  
+  observeEvent(input$concentrationData, {
+    req(input$share_decision2)
+    put_object(
+      file = file.path(as.character(input$concentrationData$datapath)),
+      object = paste0("concentrationData_", digest(input$concentrationData$datapath), "_", gsub(".*/", "", as.character(input$concentrationData$name))),
+      bucket = "trashtaxonomy"
+    )
+  })
+
   
   #Plot new merged data as sunburst plots
   #Material Sunburst Plot ----
   
   output$plot1 <- renderPlotly({
     req(input$df_)
-    req(input$d_f_)
+    #req(input$d_f_)
     
-    dataframe <- as.data.frame(df_()[, c("material", "items", "count")])
+    dataframe <- as.data.frame(df_() %>% 
+                                 rename(material = Material, 
+                                        items = Item) %>%
+                                 select(material, items, count))
     
     Material_DF <- dataframe %>%
       rename(Count = count) %>%
@@ -686,9 +633,11 @@ server <- function(input,output,session) {
   #Item Sunburst Plot ----
   output$plot2 <- renderPlotly({
     req(input$df_)
-    req(input$d_f_)
     
-    dataframe <- as.data.frame(df_()[, c("material", "items", "count")])
+    dataframe <- as.data.frame(df_() %>% 
+                                 rename(material = Material, 
+                                        items = Item) %>%
+                                 select(material, items, count))
     
     Item_DF <- dataframe %>%
       rename(Count = count) %>%
@@ -715,17 +664,7 @@ server <- function(input,output,session) {
     return(Items_Plot)
   })
   
-  
-  
-  
-  
-  
   ###END MERGING TOOL
-  
-  #Output correct survey sheet
-  MicroOnly <- read.csv("data/PremadeSurveys/Most_Specific_Microplastics.csv")
-  AllMore <- read.csv("data/PremadeSurveys/Most_Specific_All.csv")
-  AllLess <- read.csv("data/PremadeSurveys/Least_Specific_All.csv")
   
   selectSurvey <- reactive({
     data = data.frame()
@@ -796,7 +735,6 @@ server <- function(input,output,session) {
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
-    dataframe <- read.csv("Sample_Dist_Data.csv")
     if("width_um" %in% colnames(dataframe) == TRUE){dataframe <- dataframe %>%
       select(length_um, width_um, morphology, polymer)
     dataframe$width_um <- as.numeric(dataframe$width_um)
@@ -820,7 +758,7 @@ server <- function(input,output,session) {
       rename(morphology = morph_dimension)
     
     #Make polymer-density dataframe
-    polymer_db <- read.csv("data/all_polymer_densities.csv")
+    #Output correct survey sheet
     polymer_db <- data.frame(polymer_db)
     polymer_db$polymer <- cleantext(polymer_db$polymer)
     polymer_db$density <- as.numeric(polymer_db$density)
@@ -1022,7 +960,7 @@ server <- function(input,output,session) {
   
   output$contents3 <- renderDataTable(#server = F, 
                                       datatable({
-                                        df_()[, c("use", "material", "items", "count")]
+                                        df_()[, c("Use", "Material", "Item", "count")]
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(

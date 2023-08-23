@@ -593,6 +593,12 @@ ui <- fluidPage(
              titlePanel(tags$h4("Query the Relational Tables with Trash Survey Sheets")),
              fluidRow(
                column(2, 
+                      prettySwitch("share_decision0",
+                                   label = "Share Your Data?",
+                                   inline = T,
+                                   value = T,
+                                   status = "success",
+                                   fill = T),
                       fileInput('df', "Choose CSV File", multiple = FALSE, accept = c(".csv"))%>%
                         helper(type = "inline",
                                title = "Upload Help",
@@ -641,25 +647,11 @@ ui <- fluidPage(
              
              fluidRow(
                column(2, 
-                      prettySwitch("share_decision",
-                                   label = "Share Your Data?",
-                                   inline = T,
-                                   value = T,
-                                   status = "success",
-                                   fill = T),
-                      fileInput('df_', "Choose Survey 1 CSV File", multiple = FALSE, accept = c(".csv"))%>%
+                      fileInput('df_', "Choose CSV Files", multiple = TRUE, accept = c(".csv"))%>%
                         helper(type = "inline",
                                title = "Upload Help",
                                content = c("To use the tool, upload a csv file to the upload file tab. This file need to be a csv with one column named -material- one named -items- and another named -count-. The material should correspond to the item names in the same row."),
-                               size = "m"),
-                      fileInput('d_f_', "Choose Survey 2 CSV File", multiple = FALSE, accept = c(".csv"))%>%
-                        helper(type = "inline",
-                               title = "Upload Help",
-                               content = c("To use the tool, upload a csv file to the upload file tab. This file need to be a csv with one column named -material- one named -items- and another named -count-. The material should correspond to the item names in the same row."),
-                               size = "m"),
-
-
-
+                               size = "m")
              ),
              
              column(10, 
