@@ -31,6 +31,7 @@ library(tibble)
 library(aws.s3)
 library(digest)
 
+setwd("/Users/hannahhapich/Documents/R_Scripts/TrashTaxonomy-master")
 
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclean, pathstrings_materials, aliascleani, pathstrings_items){
   dataframe <- lapply(file_paths, fread) %>%
@@ -120,7 +121,7 @@ removeslash <- function(x){
 }
 
 cleanmaterials <- function(x) {
-  x <- x[!names(x) %in% c("X1", "X2", "X3", "X4")]
+  x <- x[!names(x) %in% c("X1", "X2", "X3", "X4", "X5")]
   if(is.list(x)) lapply(x, cleanmaterials)
 }
 
@@ -264,7 +265,7 @@ microcolorclean <- mutate_all(microcolor, cleantext)
 Materials <- hierarchy
 Materials[is.na(Materials)] <- ""
 Materials <- mutate_all(Materials, removeslash)
-Materials$pathString <- paste("Trash", Materials$X1, Materials$X2, Materials$X3, Materials$X4, sep = "/")
+Materials$pathString <- paste("Trash", Materials$X1, Materials$X2, Materials$X3, Materials$X4, Materials$X5, sep = "/")
 Materials <- as.Node(Materials[,])
 Materials <- as.list(Materials)
 Materials <- Materials[-1]
@@ -325,13 +326,13 @@ use_cases <- read.csv("data/Item_Use_Case.csv")
 MicroOnly <- read.csv("data/PremadeSurveys/Most_Specific_Microplastics.csv")
 AllMore <- read.csv("data/PremadeSurveys/Most_Specific_All.csv")
 AllLess <- read.csv("data/PremadeSurveys/Least_Specific_All.csv")
-polymer_db <- read.csv("data/all_polymer_densities.csv")
+polymer_db <- read.csv("data/median_polymer_density.csv")
 
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
 materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
 Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
-creds <- read.csv("s3_cred.csv")
+creds <- read.csv("data/s3_cred.csv")
 Sys.setenv(
   "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
   "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
@@ -340,11 +341,33 @@ Sys.setenv(
 primeItems <- read.csv("data/PrimeItems.csv")
 primeMaterials <- read.csv("data/PrimeMaterials.csv")
 
-#Read in item and material pathstrings for merging tool
-pathstrings_items <- read.csv("data/Items_Pathstrings.csv")
-pathstrings_materials <- read.csv("data/Materials_Pathstrings.csv")
-pathstrings_materials$materials <- cleantext(pathstrings_materials$materials)
-pathstrings_items$items <- cleantext(pathstrings_items$items)
+#make item and material pathstrings for merging tool
+pathstrings_items <- data.frame(matrix(ncol=2, dimnames = list("", c("items", "pathString"))))
+for(y in 1:ncol(hierarchycleani)){
+  for(x in 1:nrow(hierarchycleani)){
+    pathstrings_items[nrow(pathstrings_items) + 1, 1] <- hierarchycleani[x,y]
+    if(!is.na(hierarchycleani[x,y]) && y == 1){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], sep = "/")}
+    if(!is.na(hierarchycleani[x,y]) && y == 2){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], hierarchycleani[x,2], sep = "/")}
+    if(!is.na(hierarchycleani[x,y]) && y == 3){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], hierarchycleani[x,2], hierarchycleani[x,3], sep = "/")}
+    if(!is.na(hierarchycleani[x,y]) && y == 4){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], hierarchycleani[x,2], hierarchycleani[x,3], hierarchycleani[x,4], sep = "/")}
+    if(!is.na(hierarchycleani[x,y]) && y == 5){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], hierarchycleani[x,2], hierarchycleani[x,3], hierarchycleani[x,4], hierarchycleani[x,5], sep = "/")}
+    if(!is.na(hierarchycleani[x,y]) && y == 6){pathstrings_items[nrow(pathstrings_items), 2] <- paste("Trash", hierarchycleani[x,1], hierarchycleani[x,2], hierarchycleani[x,3], hierarchycleani[x,4], hierarchycleani[x,5], hierarchycleani[x,6], sep = "/")}
+  }
+  pathstrings_items <- pathstrings_items %>% distinct() %>% drop_na()
+}
+
+pathstrings_materials <- data.frame(matrix(ncol=2, dimnames = list("", c("materials", "pathString"))))
+for(y in 1:ncol(hierarchyclean)){
+  for(x in 1:nrow(hierarchyclean)){
+    pathstrings_materials[nrow(pathstrings_materials) + 1, 1] <- hierarchyclean[x,y]
+    if(!is.na(hierarchyclean[x,y]) && y == 1){pathstrings_materials[nrow(pathstrings_materials), 2] <- paste("Trash", hierarchyclean[x,1], sep = "/")}
+    if(!is.na(hierarchyclean[x,y]) && y == 2){pathstrings_materials[nrow(pathstrings_materials), 2] <- paste("Trash", hierarchyclean[x,1], hierarchyclean[x,2], sep = "/")}
+    if(!is.na(hierarchyclean[x,y]) && y == 3){pathstrings_materials[nrow(pathstrings_materials), 2] <- paste("Trash", hierarchyclean[x,1], hierarchyclean[x,2], hierarchyclean[x,3], sep = "/")}
+    if(!is.na(hierarchyclean[x,y]) && y == 4){pathstrings_materials[nrow(pathstrings_materials), 2] <- paste("Trash", hierarchyclean[x,1], hierarchyclean[x,2], hierarchyclean[x,3], hierarchyclean[x,4], sep = "/")}
+    if(!is.na(hierarchyclean[x,y]) && y == 5){pathstrings_materials[nrow(pathstrings_materials), 2] <- paste("Trash", hierarchyclean[x,1], hierarchyclean[x,2], hierarchyclean[x,3], hierarchyclean[x,4], hierarchyclean[x,5], sep = "/")}
+  }
+  pathstrings_materials <- pathstrings_materials %>% distinct() %>% drop_na()
+}
 
 #Start server
 
