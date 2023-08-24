@@ -312,17 +312,7 @@ Brand_Item_Relation <- read.csv("data/BrandItem.csv")
 NOAA <- read.csv("data/NOAA.csv")
 PrimeUnclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 Micro_Color_Display <-read.csv("data/Microplastics_Color.csv")
-#Files for bootstrapping routine and sunburst plots
-ItemsHierarchy_sunburst <- read.csv("data/Items_Hierarchy_sunburstPlot.csv")
-MaterialsHierarchy_sunburst <- read.csv("data/Materials_Hierarchy_sunburstPlot.csv") 
-ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
-  rename(Key = Item)
-MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
-  rename(Key = Material)
-
-
 use_cases <- read.csv("data/Item_Use_Case.csv")
-
 MicroOnly <- read.csv("data/PremadeSurveys/Most_Specific_Microplastics.csv")
 AllMore <- read.csv("data/PremadeSurveys/Most_Specific_All.csv")
 AllLess <- read.csv("data/PremadeSurveys/Least_Specific_All.csv")
@@ -368,6 +358,33 @@ for(y in 1:ncol(hierarchyclean)){
   }
   pathstrings_materials <- pathstrings_materials %>% distinct() %>% drop_na()
 }
+
+#Files for bootstrapping routine and sunburst plots
+ItemsHierarchy_sunburst <- data.frame(matrix(ncol=2, dimnames = list("", c("from", "to"))))
+for(y in 1:ncol(hierarchycleani)){
+  for(x in 1:nrow(hierarchycleani)){
+    ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst) + 1, 2] <- hierarchycleani[x,y]
+    if(!is.na(hierarchycleani[x,y]) && y == 1){ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst), 1] <- paste("Trash")}
+    if(!is.na(hierarchycleani[x,y]) && y != 1){ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst), 1] <- paste(hierarchycleani[x, y -1])}
+  }
+  ItemsHierarchy_sunburst <- ItemsHierarchy_sunburst %>% distinct() %>% drop_na()
+}
+
+MaterialsHierarchy_sunburst <- data.frame(matrix(ncol=2, dimnames = list("", c("from", "to"))))
+for(y in 1:ncol(hierarchyclean)){
+  for(x in 1:nrow(hierarchyclean)){
+    MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst) + 1, 2] <- hierarchyclean[x,y]
+    if(!is.na(hierarchyclean[x,y]) && y == 1){MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst), 1] <- paste("Trash")}
+    if(!is.na(hierarchyclean[x,y]) && y != 1){MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst), 1] <- paste(hierarchyclean[x, y -1])}
+  }
+  MaterialsHierarchy_sunburst <- MaterialsHierarchy_sunburst %>% distinct() %>% drop_na()
+}
+ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
+  rename(Key = Item) %>%
+  select(-readable)
+MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
+  rename(Key = Material) %>%
+  select(-readable)
 
 #Start server
 
