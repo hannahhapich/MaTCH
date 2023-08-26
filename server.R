@@ -1,7 +1,6 @@
 library(shiny)
 library(dplyr)
 library(data.table)
-library(DT)
 library(shinythemes)
 library(shinyTree)
 library(tidyr)
@@ -16,10 +15,10 @@ library(stringr)
 library(gridExtra)
 library(ggplot2)
 library(readr)
-library(Hmisc)
+#library(Hmisc)
 library(ggrepel)
-library(swfscMisc)
-library(circular)
+#library(swfscMisc)
+#library(circular)
 library(plotly)
 library(ggforce)
 library(skimr)
@@ -30,6 +29,7 @@ library(chRoma)
 library(tibble)
 library(aws.s3)
 library(digest)
+library(DT)
 
 setwd("/Users/hannahhapich/Documents/R_Scripts/TrashTaxonomy-master")
 
@@ -104,6 +104,18 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
     summarise(count = sum(count)) %>%
     ungroup() %>% 
     left_join(use_cases, by = "Item", keep = NULL)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Item) 
+  dataframeclean2[Items_Alias, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Item) %>% rename(Item = readable)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Material) 
+  dataframeclean2[Materials_Alias, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Material) %>% rename(Material = readable)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Use) 
+  dataframeclean2[PrimeUnclassifiable, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Use) %>% rename(Use = readable)
   
   return(dataframeclean2)
 }
@@ -644,13 +656,11 @@ server <- function(input,output,session) {
                                  rename(material = Material, 
                                         items = Item) %>%
                                  select(material, items, count))
-    
     Material_DF <- dataframe %>%
       rename(Count = count) %>%
       group_by(material) %>%
       summarise(Count = n()) %>%
       ungroup()
-    
     Material_DF_group <- dataframe %>%
       rename(Count = count) %>%
       group_by(material) %>%
@@ -684,8 +694,6 @@ server <- function(input,output,session) {
       group_by(items) %>%
       summarise(Count = n()) %>%
       ungroup()
-    
-    
     Item_DF_group <- dataframe %>%
       rename(Count = count) %>%
       group_by(items) %>%
