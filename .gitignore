@@ -8,3 +8,4 @@
 *rsconnect/
 s3_cred.csv
 openai.txt
+.DS_Store
