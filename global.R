@@ -44,9 +44,6 @@ library(plotly)
 library(shinyWidgets)
 library(shinyBS)
 
-
-setwd("/Users/hannahhapich/Documents/R_Scripts/TrashTaxonomy-master")
-
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclean, pathstrings_materials, aliascleani, pathstrings_items){
   dataframe <- lapply(file_paths, fread) %>%
     rbindlist(., fill = T) %>%
