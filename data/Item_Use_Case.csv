@@ -1,4 +1,4 @@
-﻿Item,Prime
+﻿Item,Use
 backpacks&bags,clothingandtextiles
 boots,clothingandtextiles
 clothfragments,clothingandtextiles
@@ -108,7 +108,7 @@ fishhook,fishinggear
 fishingline,fishinggear
 fishingline(anglers),fishinggear
 fishingline(entangled),fishinggear
-fishinglineORnet,fishinggear
+fishinglineornet,fishinggear
 fishinglures,fishinggear
 fishinglures&line,fishinggear
 fishingluresorlightsticks,fishinggear
