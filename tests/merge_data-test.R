@@ -59,7 +59,7 @@ for(y in 1:ncol(hierarchyclean)){
 
 
 
-merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, pathstrings_materials, aliasi, pathstrings_items, use_cases, prime_unclassifiable){
+merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   dataframe <- lapply(file_paths, fread) %>%
     rbindlist(., fill = T) %>%
     select(material, items, count) %>%
@@ -91,8 +91,6 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, pa
       bind_rows(material_key)
   }
   
-  unique_materials <- material_key %>%
-    left_join(pathstrings_materials, by = c("Material" = "materials"), relationship = "many-to-many") 
   
   #Run for items
   items_key <- inner_join(dataframeclean %>% select(items), 
@@ -117,16 +115,11 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, pa
       bind_rows(items_key)
   }
   
-  unique_items <- items_key %>%
-    left_join(pathstrings_items, by = c("Item" = "items"), relationship = "many-to-many") 
-  
   #Replace old material with merged material
   #Combine any new identical terms
   dataframeclean2 <- dataframeclean %>%
-    left_join(unique_materials, by="material", relationship = "many-to-many") %>%
-    left_join(unique_items, by="items") %>%
     mutate(count = as.numeric(count)) %>%
-    group_by(Material, pathString.x, Item, pathString.y) %>%
+    group_by(Material, Item) %>%
     summarise(count = sum(count)) %>%
     ungroup() %>% 
     left_join(use_cases, by = "Item", keep = NULL)
@@ -154,8 +147,6 @@ test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_2.
                    items_vectorDB = items_vectorDB, 
                    alias = alias, 
                    aliasi = aliasi, 
-                   pathstrings_materials = pathstrings_materials, 
-                   pathstrings_items = pathstrings_items,
                    use_cases = use_cases,
                    prime_unclassifiable = prime_unclassifiable)
 
