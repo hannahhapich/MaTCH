@@ -1,5 +1,4 @@
 ui <- fluidPage(
-  #Gray lab outlaws
   theme=shinytheme("cyborg"),
   titlePanel("Microplastics and Trash Taxonomy"),
   tags$head(
