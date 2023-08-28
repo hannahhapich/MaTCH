@@ -65,7 +65,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
   }
   
   unique_materials <- material_key %>%
-    left_join(pathstrings_materials, by = c("Material" = "materials")) 
+    left_join(pathstrings_materials, by = c("Material" = "materials"), relationship = "many-to-many") 
   
   #Run for items
   items_key <- inner_join(dataframeclean %>% select(items), 
@@ -91,12 +91,12 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
   }
   
   unique_items <- items_key %>%
-    left_join(pathstrings_items, by = c("Item" = "items")) 
+    left_join(pathstrings_items, by = c("Item" = "items"), relationship = "many-to-many") 
   
   #Replace old material with merged material
   #Combine any new identical terms
   dataframeclean2 <- dataframeclean %>%
-    left_join(unique_materials, by="material") %>%
+    left_join(unique_materials, by="material", relationship = "many-to-many") %>%
     left_join(unique_items, by="items") %>%
     mutate(count = as.numeric(count)) %>%
     group_by(Material, pathString.x, Item, pathString.y) %>%
