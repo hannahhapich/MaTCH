@@ -32,7 +32,7 @@ library(plotly)
 library(shinyWidgets)
 library(shinyBS)
 
-merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclean, pathstrings_materials, aliascleani, pathstrings_items){
+merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   dataframe <- lapply(file_paths, fread) %>%
     rbindlist(., fill = T) %>%
     select(material, items, count) %>%
@@ -43,11 +43,11 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
   dataframeclean <- mutate_all(dataframe, cleantext) 
   
   material_key <- inner_join(dataframeclean %>% select(material), 
-                             aliasclean, by = c("material" = "Alias")) %>%
+                             alias, by = c("material" = "Alias")) %>%
     distinct()
   
   materials_left <- anti_join(dataframeclean %>% select(material), 
-                              aliasclean, by = c("material" = "Alias")) %>%
+                              alias, by = c("material" = "Alias")) %>%
     distinct() %>%
     rename(text = material)
   
@@ -59,21 +59,19 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
       rename(Alias = text) %>%
       left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
       rename(material = text) %>%
-      inner_join(aliasclean, by = c("Alias")) %>%
+      inner_join(alias, by = c("Alias")) %>%
       select(material, Material)   %>%
       bind_rows(material_key)
   }
   
-  unique_materials <- material_key %>%
-    left_join(pathstrings_materials, by = c("Material" = "materials"), relationship = "many-to-many") 
   
   #Run for items
   items_key <- inner_join(dataframeclean %>% select(items), 
-                          aliascleani, by = c("items" = "Alias")) %>%
+                          aliasi, by = c("items" = "Alias")) %>%
     distinct()
   
   items_left <- anti_join(dataframeclean %>% select(items), 
-                          aliascleani, by = c("items" = "Alias")) %>%
+                          aliasi, by = c("items" = "Alias")) %>%
     distinct() %>%
     rename(text = items)
   
@@ -85,41 +83,39 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, aliasclea
       rename(Alias = text) %>%
       left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
       rename(items = text) %>%
-      inner_join(aliascleani, by = "Alias") %>%
+      inner_join(aliasi, by = "Alias") %>%
       select(items, Item)   %>%
       bind_rows(items_key)
   }
   
-  unique_items <- items_key %>%
-    left_join(pathstrings_items, by = c("Item" = "items"), relationship = "many-to-many") 
-  
   #Replace old material with merged material
   #Combine any new identical terms
   dataframeclean2 <- dataframeclean %>%
-    left_join(unique_materials, by="material", relationship = "many-to-many") %>%
-    left_join(unique_items, by="items") %>%
     mutate(count = as.numeric(count)) %>%
-    group_by(Material, pathString.x, Item, pathString.y) %>%
+    group_by(material, items) %>%
     summarise(count = sum(count)) %>%
     ungroup() %>% 
-    left_join(use_cases, by = "Item", keep = NULL)
+    rename(Item = items, 
+           Material = material) %>%
+    left_join(use_cases, by = c("Item"), keep = NULL)
   
   dataframeclean2 <- setkey(setDT(dataframeclean2), Item) 
-  dataframeclean2[Items_Alias, readable := i.readable]
+  dataframeclean2[aliasi, readable := i.readable]
   dataframeclean2 <- dataframeclean2 %>% select(-Item) %>% rename(Item = readable)
   
   dataframeclean2 <- setkey(setDT(dataframeclean2), Material) 
-  dataframeclean2[Materials_Alias, readable := i.readable]
+  dataframeclean2[alias, readable := i.readable]
   dataframeclean2 <- dataframeclean2 %>% select(-Material) %>% rename(Material = readable)
   
   dataframeclean2 <- setkey(setDT(dataframeclean2), Use) 
-  dataframeclean2[PrimeUnclassifiable, readable := i.readable]
+  dataframeclean2[prime_unclassifiable, readable := i.readable]
   dataframeclean2 <- dataframeclean2 %>% select(-Use) %>% rename(Use = readable)
   
   return(dataframeclean2)
 }
 
-
+use_cases <- read.csv("data/Item_Use_Case.csv")
+prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 #Build cleaning functions
 cleantext <- function(x) {
