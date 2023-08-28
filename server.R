@@ -418,7 +418,10 @@ server <- function(input,output,session) {
     
     #Make CSF-morphology dataframe
     morphology <- c("fragment","sphere","fiber","film","foam")
-    L <- c(1,1,1,1,1)
+    L_min <- c(0.95,0.95,0.95,0.95,0.95)
+    L_max <- c(1.05,1.05,1.05,1.05,1.05)
+    W_meas_min <- c(0.95,0.95,0.95,0.95,0.95)
+    W_meas_max <- c(1.05,1.05,1.05,1.05,1.05)
     W_min <- c(0.1,0.60,0.001,0.1,0.1)
     W_max <- c(1,1,0.5,1,1)
     H_min <- c(0.01,0.36,0.001,0.001,0.01)
@@ -435,8 +438,12 @@ server <- function(input,output,session) {
     dataframeclean <- left_join(dataframeclean, polymer_density, by = "polymer", copy = F)
     if("width_um" %in% colnames(dataframeclean) == TRUE) {
       dataframeclean <- data.frame(dataframeclean) %>%
-        mutate(L = as.numeric(length_um),
-               W = as.numeric(width_um),
+        mutate(L_min = as.numeric(L_min) * as.numeric(length_um),
+               L_mean = as.numeric(length_um),
+               L_max = as.numeric(L_max) * as.numeric(length_um),
+               W_meas_min = as.numeric(W_meas_min) * as.numeric(width_um),
+               W_meas_mean = as.numeric(width_um),
+               W_meas_max = as.numeric(W_meas_max) * as.numeric(width_um),
                H_min = as.numeric(H_min) * as.numeric(length_um),
                H_mean = (as.numeric(H_min) + as.numeric(H_max))/2 ,
                H_max = as.numeric(H_max) * as.numeric(length_um))
