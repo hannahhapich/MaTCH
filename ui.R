@@ -1,17 +1,3 @@
-library(shiny)
-library(dplyr)
-library(data.table)
-library(shinyjs)
-library(shinythemes)
-library(DT)
-library(shinyhelper)
-library(shinyTree)
-library(data.tree)
-library(collapsibleTree)
-library(plotly)
-library(shinyWidgets)
-library(shinyBS)
-
 ui <- fluidPage(
   theme=shinytheme("cyborg"),
   titlePanel("Microplastics and Trash Taxonomy"),
