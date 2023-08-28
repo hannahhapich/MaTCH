@@ -1,11 +1,27 @@
 #Isolated tests for the merge_data function. 
 
+
+#Build cleaning functions
+cleantext <- function(x) {
+  x <- tolower(gsub("[[:space:]]", "", x))
+  ifelse(x == "", NA, x)
+}
+
 items_vectorDB <- readRDS("data/items_vectorDB.rda")
 materials_vectorDB <- readRDS("data/materials_vectorDB.rda")
-aliusclean <- read.csv("data/PrimeMaterials.csv")|>
-                  mutate_all(cleantext)
-aliuscleani <- read.csv("data/PrimeItems.csv")|>
-                  mutate_all(cleantext)
+
+alias <- read.csv("data/PrimeMaterials.csv")
+
+#aliasclean <- read.csv("data/PrimeMaterials.csv")|>
+#                  mutate_all(cleantext)
+
+aliasi <- read.csv("data/PrimeItems.csv")
+
+#aliascleani <- read.csv("data/PrimeItems.csv")|>
+#                  mutate_all(cleantext)
+
+use_cases <- read.csv("data/Item_Use_Case.csv")
+prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 hierarchy <- read.csv("data/MaterialsHierarchyLower.csv")
 hierarchyi <- read.csv("data/ITEMSHierarchyLower.csv")
@@ -41,4 +57,105 @@ for(y in 1:ncol(hierarchyclean)){
   pathstrings_materials <- pathstrings_materials %>% distinct() %>% drop_na()
 }
 
-test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_2.csv"), materials_vectorDB = materials_vectorDB,items_vectorDB = items_vectorDB, aliasclean = aliasclean, aliascleani = aliascleani, pathstrings_materials = pathstrings_materials, pathstrings_items = pathstrings_items)
+
+
+merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, pathstrings_materials, aliasi, pathstrings_items, use_cases, prime_unclassifiable){
+  dataframe <- lapply(file_paths, fread) %>%
+    rbindlist(., fill = T) %>%
+    select(material, items, count) %>%
+    mutate(material = as.character(material),
+           items = as.character(items), 
+           count = as.numeric(count)) 
+  
+  dataframeclean <- mutate_all(dataframe, cleantext) 
+  
+  material_key <- inner_join(dataframeclean %>% select(material), 
+                             alias, by = c("material" = "Alias")) %>%
+    distinct()
+  
+  materials_left <- anti_join(dataframeclean %>% select(material), 
+                              alias, by = c("material" = "Alias")) %>%
+    distinct() %>%
+    rename(text = material)
+  
+  if(nrow(materials_left) > 0){
+    new_material_vDB <- add_collection(metadata = materials_left)
+    
+    material_key <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(material = text) %>%
+      inner_join(alias, by = c("Alias")) %>%
+      select(material, Material)   %>%
+      bind_rows(material_key)
+  }
+  
+  unique_materials <- material_key %>%
+    left_join(pathstrings_materials, by = c("Material" = "materials"), relationship = "many-to-many") 
+  
+  #Run for items
+  items_key <- inner_join(dataframeclean %>% select(items), 
+                          aliasi, by = c("items" = "Alias")) %>%
+    distinct()
+  
+  items_left <- anti_join(dataframeclean %>% select(items), 
+                          aliasi, by = c("items" = "Alias")) %>%
+    distinct() %>%
+    rename(text = items)
+  
+  if(nrow(items_left) > 0){
+    new_items_vDB <- add_collection(metadata = items_left)
+    
+    items_key <- query_collection(db = items_vectorDB, query_embeddings = new_items_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(items = text) %>%
+      inner_join(aliasi, by = "Alias") %>%
+      select(items, Item)   %>%
+      bind_rows(items_key)
+  }
+  
+  unique_items <- items_key %>%
+    left_join(pathstrings_items, by = c("Item" = "items"), relationship = "many-to-many") 
+  
+  #Replace old material with merged material
+  #Combine any new identical terms
+  dataframeclean2 <- dataframeclean %>%
+    left_join(unique_materials, by="material", relationship = "many-to-many") %>%
+    left_join(unique_items, by="items") %>%
+    mutate(count = as.numeric(count)) %>%
+    group_by(Material, pathString.x, Item, pathString.y) %>%
+    summarise(count = sum(count)) %>%
+    ungroup() %>% 
+    left_join(use_cases, by = "Item", keep = NULL)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Item) 
+  dataframeclean2[aliasi, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Item) %>% rename(Item = readable)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Material) 
+  dataframeclean2[alias, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Material) %>% rename(Material = readable)
+  
+  dataframeclean2 <- setkey(setDT(dataframeclean2), Use) 
+  dataframeclean2[prime_unclassifiable, readable := i.readable]
+  dataframeclean2 <- dataframeclean2 %>% select(-Use) %>% rename(Use = readable)
+  
+  return(dataframeclean2)
+}
+
+
+#Test starts
+
+test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_2.csv"), 
+                   materials_vectorDB = materials_vectorDB,
+                   items_vectorDB = items_vectorDB, 
+                   alias = alias, 
+                   aliasi = aliasi, 
+                   pathstrings_materials = pathstrings_materials, 
+                   pathstrings_items = pathstrings_items,
+                   use_cases = use_cases,
+                   prime_unclassifiable = prime_unclassifiable)
+
