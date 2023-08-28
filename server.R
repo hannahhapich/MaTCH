@@ -422,12 +422,26 @@ server <- function(input,output,session) {
     L_max <- c(1.05,1.05,1.05,1.05,1.05)
     W_meas_min <- c(0.95,0.95,0.95,0.95,0.95)
     W_meas_max <- c(1.05,1.05,1.05,1.05,1.05)
+    
+    #Min and max values given in Kooi Koelmans
     W_min <- c(0.1,0.60,0.001,0.1,0.1)
     W_max <- c(1,1,0.5,1,1)
+    W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
+    W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
     H_min <- c(0.01,0.36,0.001,0.001,0.01)
     H_max <- c(1,1,0.5,0.1,1)
+    H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
+    H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
+    
+    #Assuming min and max encompass 99.7% of normal distribution, calculate 95% confidence interval
+    W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
+    W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
+    H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
+    H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
+    
     morphology_shape <- data.frame(morphology=morphology,
-                                   L=L,
+                                   L_min=L_min,
+                                   L_max=L_max,
                                    W_min=W_min,
                                    W_max=W_max,
                                    H_min=H_min,
@@ -448,11 +462,13 @@ server <- function(input,output,session) {
                H_mean = (as.numeric(H_min) + as.numeric(H_max))/2 ,
                H_max = as.numeric(H_max) * as.numeric(length_um))
       dataframeclean <- data.frame(dataframeclean) %>%
-        mutate(volume_min_um_3 = L * W* H_min,
-               volume_mean_um_3 = L * W* H_mean,
-               volume_max_um_3 = L * W * H_max) 
+        mutate(volume_min_um_3 = L_min * W_meas_min* H_min,
+               volume_mean_um_3 = L_mean * W_meas_mean* H_mean,
+               volume_max_um_3 = L_max * W_meas_max * H_max) 
     }else{dataframeclean <- data.frame(dataframeclean) %>%
-      mutate(L = as.numeric(L) * as.numeric(length_um),
+      mutate(L_min = as.numeric(L_min) * as.numeric(length_um),
+             L_mean = as.numeric(length_um),
+             L_max = as.numeric(L_max) * as.numeric(length_um),
              W_min = as.numeric(W_min) * as.numeric(length_um),
              W_mean = (as.numeric(W_min) + as.numeric(W_max))/2 ,
              W_max = as.numeric(W_max) * as.numeric(length_um),
@@ -460,9 +476,9 @@ server <- function(input,output,session) {
              H_mean = (as.numeric(H_min) + as.numeric(H_max))/2 ,
              H_max = as.numeric(H_max) * as.numeric(length_um))
     dataframeclean <- data.frame(dataframeclean) %>%
-      mutate(volume_min_um_3 = L * W_min* H_min,
-             volume_mean_um_3 = L * W_mean* H_mean,
-             volume_max_um_3 = L * W_max * H_max) 
+      mutate(volume_min_um_3 = L_min * W_min* H_min,
+             volume_mean_um_3 = L_mean * W_mean* H_mean,
+             volume_max_um_3 = L_max * W_max * H_max) 
     }
     
     dataframeclean_particles <- data.frame(dataframeclean) %>%
