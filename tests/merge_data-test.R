@@ -83,10 +83,12 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   #Combine any new identical terms
   dataframeclean2 <- dataframeclean %>%
     mutate(count = as.numeric(count)) %>%
-    group_by(Material, Item) %>%
+    group_by(material, items) %>%
     summarise(count = sum(count)) %>%
     ungroup() %>% 
-    left_join(use_cases, by = "Item", keep = NULL)
+    rename(Item = items, 
+           Material = material) %>%
+    left_join(use_cases, by = c("Item"), keep = NULL)
   
   dataframeclean2 <- setkey(setDT(dataframeclean2), Item) 
   dataframeclean2[aliasi, readable := i.readable]
@@ -113,4 +115,6 @@ test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_2.
                    aliasi = aliasi, 
                    use_cases = use_cases,
                    prime_unclassifiable = prime_unclassifiable)
+
+
 
