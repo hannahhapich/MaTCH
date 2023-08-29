@@ -275,7 +275,7 @@ server <- function(input,output,session) {
     
     Materials_Plot <- sunburstplot(df_join_boot = material_grouped)
     
-    return(Materials_Plot)
+    print(Materials_Plot)
   })
   
   
@@ -309,7 +309,6 @@ server <- function(input,output,session) {
     
     Items_Plot <- sunburstplot(df_join_boot = item_grouped)
     print(Items_Plot)
-    return(Items_Plot)
   })
   
   ###END MERGING TOOL

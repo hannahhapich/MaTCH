@@ -155,7 +155,7 @@ BootMean <- function(data) {
 confidence_interval_width <- function(data){
   proportion = 0.95
   sample_size = length(data)
-  population_size = 100000
+  population_size = 10000
   1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
 }
 
