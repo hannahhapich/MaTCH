@@ -1,334 +1,340 @@
-source,density,Alias
-win_DB,1.1105,ABS
-win_DB,1.42,Acetal
-win_DB,1.06,AcrylicCyanoacrylate Adhesive
-win_DB,1.08,Acrylonitrile-Styrene-Acrylate 
-win_DB,0.31,Aramid
-win_DB,1.19,Cellulosic
-win_DB,1.72,ETFE-ECTFE
-win_DB,1.34,Epoxy
-win_DB,0.942,Ethylene Methyl Acrylate
-win_DB,0.939,Ethylene Vinyl Acetate
-win_DB,0.953,HDPE
-win_DB,0.9505,Ionomer
-win_DB,0.922,LDPE
-win_DB,0.92,LLDPE
-win_DB,1.65,Liquid Crystal Polymer
-win_DB,1.1,Nylon 11
-win_DB,1.03,Nylon 12
-win_DB,1.41,Nylon 46
-win_DB,1.3,Nylon 6
-win_DB,1.32,Nylon 6-66
-win_DB,1.25,Nylon 610
-win_DB,1.248,Nylon 612
-win_DB,1.33,Nylon 66
-win_DB,1.2,PC
-win_DB,2.1475,PFA
-win_DB,1.18,PMMA
-win_DB,1,PP
-win_DB,2.16,PTFE
-win_DB,1.78,PVDF
-win_DB,1.43,Phenolic
-win_DB,1.45,Polybutylene Terephthalate
-win_DB,1.4165,Polyetheretherketone
-win_DB,1.36,Polyetherimide 
-win_DB,1.49,Polyethersulfone
-win_DB,1.45,Polyethylene Terephthalate
-win_DB,1.42,"Polyimide, Thermoplastic"
-win_DB,1.24,Polylactic Acid (PLA)
-win_DB,1.12,Polyphenylene EtherPPO
-win_DB,1.61,Polyphenylene Sulfide (PPS)
-win_DB,1.49,Polyphthalamide (PPA)
-win_DB,1.05,Polystyrene
-win_DB,1.32,Polysulfone
-win_DB,1.18,Rubber or Thermoset Elastomer
-win_DB,1.15,Silicone
-win_DB,1.15,Siloxane
-win_DB,1.08,Styrene Acrylonitrile (SAN)
-win_DB,1.01,Styrene-Butadiene Thermoplastics
-win_DB,1.02,Thermoplastic Elastomers
-win_DB,1.19,Thermoplastic Polyurethane
-win_DB,1.82,Thermoset Fluoropolymer
-win_DB,1.783,Thermoset Polyester
-win_DB,1.42,Thermoset Polyimide
-win_DB,1.33,Vinyl (PVC)
-win_DB,1.08,Styrene Acrylonitrile (SAN)
-win_DB,1.01,Styrene-Butadiene Thermoplastics
-win_DB,1.42,"Polyimide, Thermoplastic"
-scraped_from_tax,1.3,Poly(acrylamide)
-scraped_from_tax,1.05,Poly(N-isopropyl acrylamide)
-scraped_from_tax,1,Poly(N-octyl acrylamide)
-scraped_from_tax,1.03,Poly(N-tert-butyl acrylamide)
-scraped_from_tax,1.15,Poly(N-phenyl acrylamide)
-scraped_from_tax,1.03,Poly(N-sec-butyl acrylamide)
-scraped_from_tax,1.41,Poly(acrylic acid)
-scraped_from_tax,1.15,Poly(benzyl acrylate)
-scraped_from_tax,1.08,Poly(butyl acrylate)
-scraped_from_tax,1.05,Poly(4-chlorophenyl acrylate)
-scraped_from_tax,1.4,Poly(2-cyanoethyl acrylate)
-scraped_from_tax,1.35,Poly(cyanomethyl acrylate)
-scraped_from_tax,1.08,Poly(cyclohexyl acrylate)
-scraped_from_tax,1.12,Poly(ethyl acrylate)
-scraped_from_tax,0.96,Poly(2-ethylhexyl acrylate)
-scraped_from_tax,1.03,Poly(hexyl acrylate)
-scraped_from_tax,1.07,Poly(isobutyl acrylate)
-scraped_from_tax,1.08,Poly(isopropyl acrylate)
-scraped_from_tax,1.22,Poly(methyl acrylate)
-scraped_from_tax,0.98,Poly(octyl acrylate)
-scraped_from_tax,1.11,Poly(propyl acrylate)
-scraped_from_tax,1.05,Poly(sec-butyl acrylate)
-scraped_from_tax,0.94,Poly(stearyl acrylate)
-scraped_from_tax,1,Poly(tert-butyl acrylate)
-scraped_from_tax,1.52,"Poly(2,2,3,3-Tetrafluoropropyl acrylate)"
-scraped_from_tax,1.18,Poly(acrylonitrile)
-scraped_from_tax,1.11,Poly(methacrylonitrile)
-scraped_from_tax,1.12,Poly(butylene adipate)
-scraped_from_tax,1.22,Poly(ethylene adipate)
-scraped_from_tax,1.18,Poly(propylene adipate)
-scraped_from_tax,0.859,Poly(butylene)
-scraped_from_tax,0.86,Poly(butyl ethylene)
-scraped_from_tax,0.94,Poly(cyclohexylethylene)
-scraped_from_tax,0.85,Poly(ethylene)
-scraped_from_tax,0.87,Poly(heptylethylene)
-scraped_from_tax,0.87,Poly(hexylethylene)
-scraped_from_tax,0.88,Poly(isobutene)
-scraped_from_tax,0.84,Poly(isobutylethylene)
-scraped_from_tax,0.9,Poly(isopropylethylene)
-scraped_from_tax,0.9,Poly(2-methylbutene)
-scraped_from_tax,0.865,Poly(octylethylene)
-scraped_from_tax,0.87,Poly(pentylethylene)
-scraped_from_tax,0.86,Poly(propylene)
-scraped_from_tax,0.85,Poly(propylethylene)
-scraped_from_tax,0.86,Poly(tert-butylethylene)
-scraped_from_tax,1.24,Nylon 3 - Poly(propiolactam)
-scraped_from_tax,1.08,Nylon 6 - Poly(caprolactam)
-scraped_from_tax,1.04,Nylon 8 - Polycapryllactam
-scraped_from_tax,1.02,Nylon 10 - Poly(decano-10-lactam)
-scraped_from_tax,1.02,Nylon 11 - Poly(undecano-11-lactam)
-scraped_from_tax,1,Nylon 12 - Poly(dodecano-12-lactam)
-scraped_from_tax,1.11,"Nylon 4,6 - Poly(tetramethylene adipamide)"
-scraped_from_tax,1.08,"Nylon 6,6 - Poly(hexamethylene adipamide)"
-scraped_from_tax,1.08,"Nylon 6,9 - Poly(hexamethylene azelamide)"
-scraped_from_tax,1.04,"Nylon 6,10 - Poly(hexamethylene sebacamide)"
-scraped_from_tax,1.06,"Nylon 6,12 - Poly(hexamethylene dodecanediamide)"
-scraped_from_tax,0.99,"Nylon 10,10 - Poly(decamethylene sebacamide)"
-scraped_from_tax,1.18,"Poly(hexamethylene isophthalamide), PA 6I"
-scraped_from_tax,1.18,"Poly(hexamethylene teraphthalamide), PA 6T"
-scraped_from_tax,1.44,Kevlar - Polyaramide
-scraped_from_tax,1.36,Nomex - Poly(m-phenylene terephthalamide)
-scraped_from_tax,1.1,"Poly(nonanmethylene teraphthalamide), PA 9T"
-scraped_from_tax,1.17,Poly(p-pentamethylenedibenzoic anhydride)
-scraped_from_tax,1.19,Poly(p-tetramethylenedibenzoic anhydride)
-scraped_from_tax,1.12,Poly(sebacic anhydride)
-scraped_from_tax,1.13,Poly(azelaic anhydride)
-scraped_from_tax,0.91,"Poly(1,2-butadiene)"
-scraped_from_tax,0.89,"Poly(1,4-butadiene)"
-scraped_from_tax,0.89,"Poly(1-ethyl-1,4-butadiene)"
-scraped_from_tax,0.905,"1,4-Polyisoprene (cis and trans)(Latex)"
-scraped_from_tax,0.89,"Poly(1,4-pentadiene)"
-scraped_from_tax,0.9,Poly(1-pentenylene)
-scraped_from_tax,1.25,Poly(dimethyl fumarate)
-scraped_from_tax,1.12,Poly(dibutyl fumarate)
-scraped_from_tax,1.18,Poly(diethyl fumarate)
-scraped_from_tax,1.21,Poly(dipropyl fumarate)
-scraped_from_tax,1.21,Poly(bisphenol A carbonate)
-scraped_from_tax,1.36,"Poly(4,4'-thiodiphenylene carbonate)"
-scraped_from_tax,1.18,Poly(bisphenol B carbonate)
-scraped_from_tax,1.24,Poly(bisphenol F carbonate)
-scraped_from_tax,1.42,Poly(ethylene carbonate)
-scraped_from_tax,1.26,Poly(propylene carbonate)
-scraped_from_tax,0.92,"Poly(2,6,3',5'-tetrachloro bisphenol A carbonate)"
-scraped_from_tax,1.08,Poly(tetramethyl bisphenol A carbonate)
-scraped_from_tax,1.3,Cellulose Acetate
-scraped_from_tax,1.33,Methyl Cellulose
-scraped_from_tax,1.14,Ethyl Cellulose
-scraped_from_tax,2,Poly(chlorotrifluoroethylene)
-scraped_from_tax,2.12,Poly(tetrafluoroethylene)
-scraped_from_tax,2.13,Poly(vinyl bromide)
-scraped_from_tax,1.38,Poly(vinyl chloride)
-scraped_from_tax,1.34,Poly(vinyl fluoride)
-scraped_from_tax,1.71,Poly(vinylidene chloride)
-scraped_from_tax,1.68,Poly(vinylidene fluoride)
-scraped_from_tax,1.33,Poly(methyl cyanoacrylate)
-scraped_from_tax,1.27,Poly(ethyl cyanoacrylate)
-scraped_from_tax,1.17,Poly(butyl cyanoacrylate)
-scraped_from_tax,1.11,Poly(hexyl cyanoacrylate)
-scraped_from_tax,1.07,Poly(octyl cyanoacrylate)
-scraped_from_tax,1.18,Bisphenol-A diglycidyl ether epoxy resin
-scraped_from_tax,1.17,Bisphenol-F diglycidyl ether epoxy resin
-scraped_from_tax,1.14,Poly(bis-A diglycidyl ether- alt - ethylenediamine)
-scraped_from_tax,1.1,Poly(bis-A diglycidyl ether- alt - hexamethylenediamine)
-scraped_from_tax,1.08,Poly(bis-A diglycidyl ether- alt - octamethylenediamine)
-scraped_from_tax,1.12,Poly(caprolactone)
-scraped_from_tax,1.35,Poly(ethylene naphthalate)
-scraped_from_tax,1.34,Poly(ethylene phthalate)
-scraped_from_tax,1.52,Polyglycolide
-scraped_from_tax,1.22,Poly(3-hydroxybutyrate)
-scraped_from_tax,1.22,Poly(4-hydroxybutyrate)
-scraped_from_tax,1.26,Polylactic acid
-scraped_from_tax,1.23,Polyacetal - Polyoxymethylene
-scraped_from_tax,0.98,Poly(3-butoxypropylene oxide)
-scraped_from_tax,1.34,Poly(epichlorohydrin)
-scraped_from_tax,1.13,Poly(ethylene glycol)
-scraped_from_tax,0.96,Poly(hexamethylene oxide)
-scraped_from_tax,1.1,Poly(3-methoxypropylene oxide)
-scraped_from_tax,0.97,Poly[oxy(hexyloxymethyl)ethylene]
-scraped_from_tax,1.17,Poly(oxymethylene-oxyethylene)
-scraped_from_tax,1.05,Poly(oxymethylene-oxytetramethylene)
-scraped_from_tax,1,Poly(propylene glycol)
-scraped_from_tax,0.98,Poly(tetrahydrofuran)
-scraped_from_tax,1.06,Poly(trimethylene glycol)
-scraped_from_tax,1.39,"Poly[1,1-bis(chloromethyl)trimethylene oxide]"
-scraped_from_tax,1.27,PEK - Poly(ether ketone)
-scraped_from_tax,1.28,PEKK - Poly(ether ketone ketone)
-scraped_from_tax,1.26,PEEK - Poly(ether ether ketone)
-scraped_from_tax,1.24,Poly(ethyleneketone)
-scraped_from_tax,1.11,Poly(propyleneketone)
-scraped_from_tax,1.33,Poly(ether ether sulfone)
-scraped_from_tax,1.37,Poly(ethersulfone)
-scraped_from_tax,1.29,Poly(phenylsulfone)
-scraped_from_tax,1.24,Bisphenol A Polysulfone
-scraped_from_tax,1.24,PoIy(1-chloro-1-butenylene) (Polychloroprene)
-scraped_from_tax,1.7,Poly(1-bromo-1-butenylene) (Polybromoprene)
-scraped_from_tax,0.87,Poly(4-bromostyrene)
-scraped_from_tax,1.22,Poly(2-chlorostyrene)
-scraped_from_tax,1.22,Poly(3-chlorostyrene)
-scraped_from_tax,1.23,Poly(4-chlorostyrene)
-scraped_from_tax,0.96,"Poly(2,5-difluorostyrene)"
-scraped_from_tax,1.2,Poly(4-fluorostyrene)
-scraped_from_tax,1.31,Poly(2-hydroxyethyl acrylate)
-scraped_from_tax,1.25,Poly(2-hydroxyethyl methacrylate)
-scraped_from_tax,1.33,Poly(2-hydroxypropyl methacrylate)
-scraped_from_tax,1.26,"Poly[(diethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]"
-scraped_from_tax,1.22,"Poly[(tetraethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]"
-scraped_from_tax,1.23,"Poly[(1,4-butanediol)-alt-(4,4'-diphenylmethane diisocyanate)]"
-scraped_from_tax,1.28,"Poly[(ethylene glycol)-alt-(4,4'-diphenylmethane diisocyanate)]"
-scraped_from_tax,1.05,"Poly[(polytetrahydrofuran 1000)-alt-(4,4'-diphenylmethane diisocyanate)]"
-scraped_from_tax,1.21,Poly(Bisphenol A isophthalate)
-scraped_from_tax,1.27,Poly(butylene isophthalate)
-scraped_from_tax,1.335,Poly(ethylene isophthalate)
-scraped_from_tax,1.29,Poly[dimethyl itaconate]
-scraped_from_tax,1.15,Poly[di(n-propyl) itaconate]
-scraped_from_tax,1.11,Poly[di(n-butyl) itaconate]
-scraped_from_tax,1.05,Poly[di(n-hexyl) itaconate]
-scraped_from_tax,1.14,Poly(N-acetylmethacrylamide)
-scraped_from_tax,1.13,Poly(N-benzyl methacrylamide)
-scraped_from_tax,1.13,Poly(methacrylamide)
-scraped_from_tax,1.02,Poly(N-tert-butylmethacrylamide)
-scraped_from_tax,1.29,Poly(methacrylic acid)
-scraped_from_tax,1.17,Poly(benzyl methacrylate)
-scraped_from_tax,1.05,Poly(butyl methacrylate)
-scraped_from_tax,1.1,Poly(cyclohexyl methacrylate)
-scraped_from_tax,0.95,Poly(decylmethacrylate)
-scraped_from_tax,0.93,Poly(dodecylmethacrylate)
-scraped_from_tax,1.09,Poly(2-ethoxyethyl methacrylate)
-scraped_from_tax,1.11,Poly(ethyl methacrylate)
-scraped_from_tax,1.01,Poly(hexyl methacrylate)
-scraped_from_tax,1.05,Poly(isobutyl methacrylate)
-scraped_from_tax,1.05,Poly(isopropyl methacrylate)
-scraped_from_tax,1.15,Poly(methyl methacrylate)
-scraped_from_tax,0.9,Poly(octadecyl methacrylate)
-scraped_from_tax,0.97,Poly(octyl methacrylate)
-scraped_from_tax,1.13,Poly(2-phenylethyl methacrylate)
-scraped_from_tax,1.21,Poly(phenyl methacrylate)
-scraped_from_tax,1.08,Poly(propyl methacrylate)
-scraped_from_tax,1.32,Poly(2-chloroethyl methacrylate)
-scraped_from_tax,1.05,Poly(sec-butyl methacrylate)
-scraped_from_tax,0.99,Poly(4-tert-butylcyclohexyl methacrylate)
-scraped_from_tax,1.02,Poly(tert-butyl methacrylate)
-scraped_from_tax,1.52,"Poly(2,2,3,3-tetrafluoropropyl methacrylate)"
-scraped_from_tax,1.1,Poly(2-methoxystyrene)
-scraped_from_tax,1.07,Poly(_-methylstyrene)
-scraped_from_tax,1.03,Poly(2-methylstyrene)
-scraped_from_tax,1.03,Poly(3-methylstyrene)
-scraped_from_tax,1.03,Poly(4-methylstyrene)
-scraped_from_tax,1.05,Polystyrene
-scraped_from_tax,0.95,Poly(4-tert-butylstyrene)
-scraped_from_tax,1.11,Poly(p-phenylene)
-scraped_from_tax,1.07,Poly(p-phenylene vinylene)
-scraped_from_tax,1.05,Poly(p-xylene)
-scraped_from_tax,1.2,Poly(2-chloro-p-xylylene)
-scraped_from_tax,1.06,"Poly(2,6-dimethyl-p-phenylene oxide)"
-scraped_from_tax,1.14,"Poly(2,6-diphenyl-p-phenylene oxide)"
-scraped_from_tax,1.36,Poly(p-phenylene oxide)
-scraped_from_tax,1.14,Poly(butylene sebacate)
-scraped_from_tax,1.09,Poly(ethylene sebacate)
-scraped_from_tax,1.03,Poly(hexylene sebacate)
-scraped_from_tax,0.99,Poly(diethylsiloxane) (PDES)
-scraped_from_tax,0.965,Poly(dimethylsiloxane) (PDMS)
-scraped_from_tax,1.09,Poly(methylphenylsiloxane) (PMPS)
-scraped_from_tax,1.26,"Poly(1,4-butylene succinate)"
-scraped_from_tax,1.3,Poly(ethylene succinate)
-scraped_from_tax,1.15,"Poly(1,6-hexylene succinate)"
-scraped_from_tax,1.3,Poly(trimethylene succinate)
-scraped_from_tax,1.21,Poly(Bisphenol A terephthalate)
-scraped_from_tax,1.26,Poly(butylene terephthalate)
-scraped_from_tax,1.2,Poly(cyclohexylenedimethylene terephthalate)
-scraped_from_tax,1.34,Poly(ethylene terephthalate)
-scraped_from_tax,1.34,Poly(trimethylene terephthalate)
-scraped_from_tax,1.33,"Poly(thio-1,4-phenylene)"
-scraped_from_tax,1.3,Poly(ethylene sulfide)
-scraped_from_tax,1.08,Poly(propylene sulfide)
-scraped_from_tax,1.29,Poly(vinyl alcohol)
-scraped_from_tax,1.16,Poly(4-vinyl phenol)
-scraped_from_tax,1.11,Poly(vinyl butyral)
-scraped_from_tax,1.24,Poly(vinyl formal)
-scraped_from_tax,1.19,Poly(vinyl acetate)
-scraped_from_tax,1.2,Poly(vinyl benzoate)
-scraped_from_tax,1.09,Poly(vinyl butyrate)
-scraped_from_tax,1.07,Poly(vinyl caproate)
-scraped_from_tax,1.3,Poly(vinyl formate)
-scraped_from_tax,1.12,Poly(vinyl propionate)
-scraped_from_tax,0.95,Poly(vinyl stearate)
-scraped_from_tax,1.08,Poly(vinyl valerate)
-scraped_from_tax,0.92,Poly(butyl vinyl ether)
-scraped_from_tax,0.97,Poly(ethyl vinyl ether)
-scraped_from_tax,0.93,Poly(hexyl vinyl ether)
-scraped_from_tax,0.92,Poly(isobutyl vinyl ether)
-scraped_from_tax,0.92,Poly(isopropyl vinyl ether)
-scraped_from_tax,1.05,Poly(methyl vinyl ether)
-scraped_from_tax,0.91,Poly(octyl vinyl ether)
-scraped_from_tax,0.94,Poly(propyl vinyl ether)
-scraped_from_tax,0.92,Poly(sec-butyl vinyl ether)
-scraped_from_tax,1.03,Poly(vinyl ethyl ketone)
-scraped_from_tax,1.12,Poly(vinyl methyl ketone)
-scraped_from_tax,1.14,Poly(methyl isopropenyl ketone)
-scraped_from_tax,1.19,Poly(vinyl phenyl ketone)
-scraped_from_tax,1.25,Poly(vinyl pyrrolidone)
-scraped_from_tax,0.98,Poly(vinyl butyl sulfide)
-scraped_from_tax,1.07,Poly(vinyl ethyl sulfide)
-scraped_from_tax,1.11,Poly(vinyl methyl sulfide)
-scraped_from_tax,1.15,Poly(vinyl phenyl sulfide)
-scraped_from_tax,1.02,Poly(vinyl propyl sulfide)
-primpke,0.91,polyethylenehigh-density
-primpke,0.91,polyethylene
-primpke,0.91,polyethylene-oxidized
-primpke,0.91,polyethylene-chlorinated
-primpke,0.92,polypropylene
-primpke,1.04,polystyrene
-primpke,1.21,polycarbonate
-primpke,1.22,polyamide
-primpke,1.38,polyvinylchloride
-primpke,1.2,cellophane
-primpke,1.2,cellulosechemicalmodified
-primpke,1,nitrilerubber
-primpke,1.35,polyester
-primpke,1.2,acrylates/polyurethanes/varnish
-primpke,1.2,ethylenemethacrylicacid
-primpke,1.2,polymethylmethacylate
-primpke,1.24,polysulfone
-primpke,1.32,polyetheretherketone
-primpke,1.23,polychloroprene
-primpke,0.91,polyisoprene-chlorinated
-primpke,1.3,polyacticacid
-primpke,1.15,polycaprolactone
-primpke,0.94,ethylene-vinyl-acetate
-primpke,1.6,polyimide
-primpke,1.41,polyoxymethylene
-primpke,1.2,acrylonitrile-butadiene
-primpke,1.03,rubbertype1
-primpke,1.03,rubbertype2
-primpke,1.1,rubbertype3
-primpke,1.1,polyphenyleneether
-primpke,2.2,polytetrafluorethylene
-primpke,1.5,urea-formaldehyde
+source,polymer,n,density,lower_conf,upper_conf
+win_DB,PP,8898,1,0.997838811,1.002161189
+win_DB,Thermoplastic Elastomers,7409,1.02,1.017612301,1.022387699
+win_DB,PC,5979,1.2,1.197321614,1.202678386
+win_DB,Nylon 66,5649,1.33,1.32723966,1.33276034
+win_DB,Vinyl (PVC),5527,1.33,1.327207558,1.332792442
+win_DB,Nylon 6,5288,1.3,1.297141542,1.302858458
+win_DB,ABS,3579,1.1105,1.106994257,1.114005743
+win_DB,Silicone,3006,1.15,1.146163343,1.153836657
+win_DB,Polybutylene Terephthalate,2448,1.45,1.445736292,1.454263708
+win_DB,HDPE,2392,0.953,0.948685433,0.957314567
+win_DB,Rubber or Thermoset Elastomer,2365,1.18,1.175660275,1.184339725
+win_DB,Polystyrene,2114,1.05,1.04540397,1.05459603
+win_DB,Epoxy,1982,1.34,1.335250191,1.344749809
+win_DB,Thermoplastic Polyurethane,1927,1.19,1.185181533,1.194818467
+win_DB,Acetal,1668,1.42,1.414814096,1.425185904
+win_DB,LDPE,1489,0.922,0.916506235,0.927493765
+win_DB,LLDPE,1308,0.92,0.914133053,0.925866947
+win_DB,Polyphenylene EtherPPO,948,1.12,1.113095973,1.126904027
+win_DB,Phenolic,893,1.43,1.422884564,1.437115436
+win_DB,Thermoset Polyester,880,1.783,1.77583173,1.79016827
+win_DB,PMMA,849,1.18,1.172700893,1.187299107
+win_DB,Polyphenylene Sulfide (PPS),846,1.61,1.602687852,1.617312148
+win_DB,Ethylene Vinyl Acetate,779,0.939,0.931377312,0.946622688
+win_DB,Polyethylene Terephthalate,737,1.45,1.442161463,1.457838537
+win_DB,PTFE,724,2.16,2.152090885,2.167909115
+win_DB,Polyetheretherketone,681,1.4165,1.40834324,1.42465676
+win_DB,Polyetherimide ,630,1.36,1.351517333,1.368482667
+win_DB,AcrylicCyanoacrylate Adhesive,534,1.06,1.050781893,1.069218107
+win_DB,Polyphthalamide (PPA),530,1.49,1.480746987,1.499253013
+win_DB,Nylon 12,525,1.03,1.020702796,1.039297204
+win_DB,Thermoset Fluoropolymer,499,1.82,1.810462413,1.829537587
+win_DB,Nylon 6-66,339,1.32,1.30841922,1.33158078
+win_DB,Nylon 46,331,1.41,1.398279636,1.421720364
+win_DB,Acrylonitrile-Styrene-Acrylate ,329,1.08,1.068243948,1.091756052
+win_DB,Nylon 612,322,1.248,1.236116434,1.259883566
+win_DB,Styrene-Butadiene Thermoplastics,298,1.01,0.99764568,1.02235432
+win_DB,Liquid Crystal Polymer,260,1.65,1.636771121,1.663228879
+win_DB,Cellulosic,244,1.19,1.176343178,1.203656822
+win_DB,Polyethersulfone,234,1.49,1.476053719,1.503946281
+win_DB,Styrene Acrylonitrile (SAN),207,1.08,1.065170042,1.094829958
+win_DB,Styrene Acrylonitrile (SAN),207,1.08,1.065170042,1.094829958
+win_DB,Polysulfone,195,1.32,1.304719629,1.335280371
+win_DB,Nylon 610,184,1.25,1.234268642,1.265731358
+win_DB,PVDF,176,1.78,1.763914439,1.796085561
+win_DB,"Polyimide, Thermoplastic",160,1.42,1.40312797,1.43687203
+win_DB,"Polyimide, Thermoplastic",160,1.42,1.40312797,1.43687203
+win_DB,Polylactic Acid (PLA),134,1.24,1.22156125,1.25843875
+win_DB,ETFE-ECTFE,131,1.72,1.701351034,1.738648966
+win_DB,Nylon 11,131,1.1,1.081351034,1.118648966
+win_DB,Thermoset Polyimide,126,1.42,1.400984139,1.439015861
+win_DB,Aramid,121,0.31,0.29059474,0.32940526
+win_DB,Ionomer,118,0.9505,0.930849316,0.970150684
+win_DB,Ethylene Methyl Acrylate,114,0.942,0.922007139,0.961992861
+win_DB,PFA,82,2.1475,2.123922921,2.171077079
+win_DB,Siloxane,34,1.15,1.113376339,1.186623661
+kooi_2019,PE,N/A,1.01,0.908172448,1.698874489
+kooi_2019,PP,N/A,0.945,0.908172448,1.698874489
+kooi_2019,PET,N/A,1.385,0.908172448,1.698874489
+kooi_2019,PA,N/A,1.145,0.908172448,1.698874489
+kooi_2019,PS,N/A,1.09,0.908172448,1.698874489
+kooi_2019,PVC,N/A,1.525,0.908172448,1.698874489
+kooi_2019,PVA,N/A,1.28,0.908172448,1.698874489
+polymerdatabase.com,Poly(acrylamide),N/A,1.3,,
+polymerdatabase.com,Poly(N-isopropyl acrylamide),N/A,1.05,,
+polymerdatabase.com,Poly(N-octyl acrylamide),N/A,1,,
+polymerdatabase.com,Poly(N-tert-butyl acrylamide),N/A,1.03,,
+polymerdatabase.com,Poly(N-phenyl acrylamide),N/A,1.15,,
+polymerdatabase.com,Poly(N-sec-butyl acrylamide),N/A,1.03,,
+polymerdatabase.com,Poly(acrylic acid),N/A,1.41,,
+polymerdatabase.com,Poly(benzyl acrylate),N/A,1.15,,
+polymerdatabase.com,Poly(butyl acrylate),N/A,1.08,,
+polymerdatabase.com,Poly(4-chlorophenyl acrylate),N/A,1.05,,
+polymerdatabase.com,Poly(2-cyanoethyl acrylate),N/A,1.4,,
+polymerdatabase.com,Poly(cyanomethyl acrylate),N/A,1.35,,
+polymerdatabase.com,Poly(cyclohexyl acrylate),N/A,1.08,,
+polymerdatabase.com,Poly(ethyl acrylate),N/A,1.12,,
+polymerdatabase.com,Poly(2-ethylhexyl acrylate),N/A,0.96,,
+polymerdatabase.com,Poly(hexyl acrylate),N/A,1.03,,
+polymerdatabase.com,Poly(isobutyl acrylate),N/A,1.07,,
+polymerdatabase.com,Poly(isopropyl acrylate),N/A,1.08,,
+polymerdatabase.com,Poly(methyl acrylate),N/A,1.22,,
+polymerdatabase.com,Poly(octyl acrylate),N/A,0.98,,
+polymerdatabase.com,Poly(propyl acrylate),N/A,1.11,,
+polymerdatabase.com,Poly(sec-butyl acrylate),N/A,1.05,,
+polymerdatabase.com,Poly(stearyl acrylate),N/A,0.94,,
+polymerdatabase.com,Poly(tert-butyl acrylate),N/A,1,,
+polymerdatabase.com,"Poly(2,2,3,3-Tetrafluoropropyl acrylate)",N/A,1.52,,
+polymerdatabase.com,Poly(acrylonitrile),N/A,1.18,,
+polymerdatabase.com,Poly(methacrylonitrile),N/A,1.11,,
+polymerdatabase.com,Poly(butylene adipate),N/A,1.12,,
+polymerdatabase.com,Poly(ethylene adipate),N/A,1.22,,
+polymerdatabase.com,Poly(propylene adipate),N/A,1.18,,
+polymerdatabase.com,Poly(butylene),N/A,0.859,,
+polymerdatabase.com,Poly(butyl ethylene),N/A,0.86,,
+polymerdatabase.com,Poly(cyclohexylethylene),N/A,0.94,,
+polymerdatabase.com,Poly(ethylene),N/A,0.85,,
+polymerdatabase.com,Poly(heptylethylene),N/A,0.87,,
+polymerdatabase.com,Poly(hexylethylene),N/A,0.87,,
+polymerdatabase.com,Poly(isobutene),N/A,0.88,,
+polymerdatabase.com,Poly(isobutylethylene),N/A,0.84,,
+polymerdatabase.com,Poly(isopropylethylene),N/A,0.9,,
+polymerdatabase.com,Poly(2-methylbutene),N/A,0.9,,
+polymerdatabase.com,Poly(octylethylene),N/A,0.865,,
+polymerdatabase.com,Poly(pentylethylene),N/A,0.87,,
+polymerdatabase.com,Poly(propylene),N/A,0.86,,
+polymerdatabase.com,Poly(propylethylene),N/A,0.85,,
+polymerdatabase.com,Poly(tert-butylethylene),N/A,0.86,,
+polymerdatabase.com,Nylon 3 - Poly(propiolactam),N/A,1.24,,
+polymerdatabase.com,Nylon 6 - Poly(caprolactam),N/A,1.08,,
+polymerdatabase.com,Nylon 8 - Polycapryllactam,N/A,1.04,,
+polymerdatabase.com,Nylon 10 - Poly(decano-10-lactam),N/A,1.02,,
+polymerdatabase.com,Nylon 11 - Poly(undecano-11-lactam),N/A,1.02,,
+polymerdatabase.com,Nylon 12 - Poly(dodecano-12-lactam),N/A,1,,
+polymerdatabase.com,"Nylon 4,6 - Poly(tetramethylene adipamide)",N/A,1.11,,
+polymerdatabase.com,"Nylon 6,6 - Poly(hexamethylene adipamide)",N/A,1.08,,
+polymerdatabase.com,"Nylon 6,9 - Poly(hexamethylene azelamide)",N/A,1.08,,
+polymerdatabase.com,"Nylon 6,10 - Poly(hexamethylene sebacamide)",N/A,1.04,,
+polymerdatabase.com,"Nylon 6,12 - Poly(hexamethylene dodecanediamide)",N/A,1.06,,
+polymerdatabase.com,"Nylon 10,10 - Poly(decamethylene sebacamide)",N/A,0.99,,
+polymerdatabase.com,"Poly(hexamethylene isophthalamide), PA 6I",N/A,1.18,,
+polymerdatabase.com,"Poly(hexamethylene teraphthalamide), PA 6T",N/A,1.18,,
+polymerdatabase.com,Kevlar - Polyaramide,N/A,1.44,,
+polymerdatabase.com,Nomex - Poly(m-phenylene terephthalamide),N/A,1.36,,
+polymerdatabase.com,"Poly(nonanmethylene teraphthalamide), PA 9T",N/A,1.1,,
+polymerdatabase.com,Poly(p-pentamethylenedibenzoic anhydride),N/A,1.17,,
+polymerdatabase.com,Poly(p-tetramethylenedibenzoic anhydride),N/A,1.19,,
+polymerdatabase.com,Poly(sebacic anhydride),N/A,1.12,,
+polymerdatabase.com,Poly(azelaic anhydride),N/A,1.13,,
+polymerdatabase.com,"Poly(1,2-butadiene)",N/A,0.91,,
+polymerdatabase.com,"Poly(1,4-butadiene)",N/A,0.89,,
+polymerdatabase.com,"Poly(1-ethyl-1,4-butadiene)",N/A,0.89,,
+polymerdatabase.com,"1,4-Polyisoprene (cis and trans)(Latex)",N/A,0.905,,
+polymerdatabase.com,"Poly(1,4-pentadiene)",N/A,0.89,,
+polymerdatabase.com,Poly(1-pentenylene),N/A,0.9,,
+polymerdatabase.com,Poly(dimethyl fumarate),N/A,1.25,,
+polymerdatabase.com,Poly(dibutyl fumarate),N/A,1.12,,
+polymerdatabase.com,Poly(diethyl fumarate),N/A,1.18,,
+polymerdatabase.com,Poly(dipropyl fumarate),N/A,1.21,,
+polymerdatabase.com,Poly(bisphenol A carbonate),N/A,1.21,,
+polymerdatabase.com,"Poly(4,4'-thiodiphenylene carbonate)",N/A,1.36,,
+polymerdatabase.com,Poly(bisphenol B carbonate),N/A,1.18,,
+polymerdatabase.com,Poly(bisphenol F carbonate),N/A,1.24,,
+polymerdatabase.com,Poly(ethylene carbonate),N/A,1.42,,
+polymerdatabase.com,Poly(propylene carbonate),N/A,1.26,,
+polymerdatabase.com,"Poly(2,6,3',5'-tetrachloro bisphenol A carbonate)",N/A,0.92,,
+polymerdatabase.com,Poly(tetramethyl bisphenol A carbonate),N/A,1.08,,
+polymerdatabase.com,Cellulose Acetate,N/A,1.3,,
+polymerdatabase.com,Methyl Cellulose,N/A,1.33,,
+polymerdatabase.com,Ethyl Cellulose,N/A,1.14,,
+polymerdatabase.com,Poly(chlorotrifluoroethylene),N/A,2,,
+polymerdatabase.com,Poly(tetrafluoroethylene),N/A,2.12,,
+polymerdatabase.com,Poly(vinyl bromide),N/A,2.13,,
+polymerdatabase.com,Poly(vinyl chloride),N/A,1.38,,
+polymerdatabase.com,Poly(vinyl fluoride),N/A,1.34,,
+polymerdatabase.com,Poly(vinylidene chloride),N/A,1.71,,
+polymerdatabase.com,Poly(vinylidene fluoride),N/A,1.68,,
+polymerdatabase.com,Poly(methyl cyanoacrylate),N/A,1.33,,
+polymerdatabase.com,Poly(ethyl cyanoacrylate),N/A,1.27,,
+polymerdatabase.com,Poly(butyl cyanoacrylate),N/A,1.17,,
+polymerdatabase.com,Poly(hexyl cyanoacrylate),N/A,1.11,,
+polymerdatabase.com,Poly(octyl cyanoacrylate),N/A,1.07,,
+polymerdatabase.com,Bisphenol-A diglycidyl ether epoxy resin,N/A,1.18,,
+polymerdatabase.com,Bisphenol-F diglycidyl ether epoxy resin,N/A,1.17,,
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - ethylenediamine),N/A,1.14,,
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - hexamethylenediamine),N/A,1.1,,
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - octamethylenediamine),N/A,1.08,,
+polymerdatabase.com,Poly(caprolactone),N/A,1.12,,
+polymerdatabase.com,Poly(ethylene naphthalate),N/A,1.35,,
+polymerdatabase.com,Poly(ethylene phthalate),N/A,1.34,,
+polymerdatabase.com,Polyglycolide,N/A,1.52,,
+polymerdatabase.com,Poly(3-hydroxybutyrate),N/A,1.22,,
+polymerdatabase.com,Poly(4-hydroxybutyrate),N/A,1.22,,
+polymerdatabase.com,Polylactic acid,N/A,1.26,,
+polymerdatabase.com,Polyacetal - Polyoxymethylene,N/A,1.23,,
+polymerdatabase.com,Poly(3-butoxypropylene oxide),N/A,0.98,,
+polymerdatabase.com,Poly(epichlorohydrin),N/A,1.34,,
+polymerdatabase.com,Poly(ethylene glycol),N/A,1.13,,
+polymerdatabase.com,Poly(hexamethylene oxide),N/A,0.96,,
+polymerdatabase.com,Poly(3-methoxypropylene oxide),N/A,1.1,,
+polymerdatabase.com,Poly[oxy(hexyloxymethyl)ethylene],N/A,0.97,,
+polymerdatabase.com,Poly(oxymethylene-oxyethylene),N/A,1.17,,
+polymerdatabase.com,Poly(oxymethylene-oxytetramethylene),N/A,1.05,,
+polymerdatabase.com,Poly(propylene glycol),N/A,1,,
+polymerdatabase.com,Poly(tetrahydrofuran),N/A,0.98,,
+polymerdatabase.com,Poly(trimethylene glycol),N/A,1.06,,
+polymerdatabase.com,"Poly[1,1-bis(chloromethyl)trimethylene oxide]",N/A,1.39,,
+polymerdatabase.com,PEK - Poly(ether ketone),N/A,1.27,,
+polymerdatabase.com,PEKK - Poly(ether ketone ketone),N/A,1.28,,
+polymerdatabase.com,PEEK - Poly(ether ether ketone),N/A,1.26,,
+polymerdatabase.com,Poly(ethyleneketone),N/A,1.24,,
+polymerdatabase.com,Poly(propyleneketone),N/A,1.11,,
+polymerdatabase.com,Poly(ether ether sulfone),N/A,1.33,,
+polymerdatabase.com,Poly(ethersulfone),N/A,1.37,,
+polymerdatabase.com,Poly(phenylsulfone),N/A,1.29,,
+polymerdatabase.com,Bisphenol A Polysulfone,N/A,1.24,,
+polymerdatabase.com,PoIy(1-chloro-1-butenylene) (Polychloroprene),N/A,1.24,,
+polymerdatabase.com,Poly(1-bromo-1-butenylene) (Polybromoprene),N/A,1.7,,
+polymerdatabase.com,Poly(4-bromostyrene),N/A,0.87,,
+polymerdatabase.com,Poly(2-chlorostyrene),N/A,1.22,,
+polymerdatabase.com,Poly(3-chlorostyrene),N/A,1.22,,
+polymerdatabase.com,Poly(4-chlorostyrene),N/A,1.23,,
+polymerdatabase.com,"Poly(2,5-difluorostyrene)",N/A,0.96,,
+polymerdatabase.com,Poly(4-fluorostyrene),N/A,1.2,,
+polymerdatabase.com,Poly(2-hydroxyethyl acrylate),N/A,1.31,,
+polymerdatabase.com,Poly(2-hydroxyethyl methacrylate),N/A,1.25,,
+polymerdatabase.com,Poly(2-hydroxypropyl methacrylate),N/A,1.33,,
+polymerdatabase.com,"Poly[(diethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]",N/A,1.26,,
+polymerdatabase.com,"Poly[(tetraethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]",N/A,1.22,,
+polymerdatabase.com,"Poly[(1,4-butanediol)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.23,,
+polymerdatabase.com,"Poly[(ethylene glycol)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.28,,
+polymerdatabase.com,"Poly[(polytetrahydrofuran 1000)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.05,,
+polymerdatabase.com,Poly(Bisphenol A isophthalate),N/A,1.21,,
+polymerdatabase.com,Poly(butylene isophthalate),N/A,1.27,,
+polymerdatabase.com,Poly(ethylene isophthalate),N/A,1.335,,
+polymerdatabase.com,Poly[dimethyl itaconate],N/A,1.29,,
+polymerdatabase.com,Poly[di(n-propyl) itaconate],N/A,1.15,,
+polymerdatabase.com,Poly[di(n-butyl) itaconate],N/A,1.11,,
+polymerdatabase.com,Poly[di(n-hexyl) itaconate],N/A,1.05,,
+polymerdatabase.com,Poly(N-acetylmethacrylamide),N/A,1.14,,
+polymerdatabase.com,Poly(N-benzyl methacrylamide),N/A,1.13,,
+polymerdatabase.com,Poly(methacrylamide),N/A,1.13,,
+polymerdatabase.com,Poly(N-tert-butylmethacrylamide),N/A,1.02,,
+polymerdatabase.com,Poly(methacrylic acid),N/A,1.29,,
+polymerdatabase.com,Poly(benzyl methacrylate),N/A,1.17,,
+polymerdatabase.com,Poly(butyl methacrylate),N/A,1.05,,
+polymerdatabase.com,Poly(cyclohexyl methacrylate),N/A,1.1,,
+polymerdatabase.com,Poly(decylmethacrylate),N/A,0.95,,
+polymerdatabase.com,Poly(dodecylmethacrylate),N/A,0.93,,
+polymerdatabase.com,Poly(2-ethoxyethyl methacrylate),N/A,1.09,,
+polymerdatabase.com,Poly(ethyl methacrylate),N/A,1.11,,
+polymerdatabase.com,Poly(hexyl methacrylate),N/A,1.01,,
+polymerdatabase.com,Poly(isobutyl methacrylate),N/A,1.05,,
+polymerdatabase.com,Poly(isopropyl methacrylate),N/A,1.05,,
+polymerdatabase.com,Poly(methyl methacrylate),N/A,1.15,,
+polymerdatabase.com,Poly(octadecyl methacrylate),N/A,0.9,,
+polymerdatabase.com,Poly(octyl methacrylate),N/A,0.97,,
+polymerdatabase.com,Poly(2-phenylethyl methacrylate),N/A,1.13,,
+polymerdatabase.com,Poly(phenyl methacrylate),N/A,1.21,,
+polymerdatabase.com,Poly(propyl methacrylate),N/A,1.08,,
+polymerdatabase.com,Poly(2-chloroethyl methacrylate),N/A,1.32,,
+polymerdatabase.com,Poly(sec-butyl methacrylate),N/A,1.05,,
+polymerdatabase.com,Poly(4-tert-butylcyclohexyl methacrylate),N/A,0.99,,
+polymerdatabase.com,Poly(tert-butyl methacrylate),N/A,1.02,,
+polymerdatabase.com,"Poly(2,2,3,3-tetrafluoropropyl methacrylate)",N/A,1.52,,
+polymerdatabase.com,Poly(2-methoxystyrene),N/A,1.1,,
+polymerdatabase.com,Poly(_-methylstyrene),N/A,1.07,,
+polymerdatabase.com,Poly(2-methylstyrene),N/A,1.03,,
+polymerdatabase.com,Poly(3-methylstyrene),N/A,1.03,,
+polymerdatabase.com,Poly(4-methylstyrene),N/A,1.03,,
+polymerdatabase.com,Polystyrene,N/A,1.05,,
+polymerdatabase.com,Poly(4-tert-butylstyrene),N/A,0.95,,
+polymerdatabase.com,Poly(p-phenylene),N/A,1.11,,
+polymerdatabase.com,Poly(p-phenylene vinylene),N/A,1.07,,
+polymerdatabase.com,Poly(p-xylene),N/A,1.05,,
+polymerdatabase.com,Poly(2-chloro-p-xylylene),N/A,1.2,,
+polymerdatabase.com,"Poly(2,6-dimethyl-p-phenylene oxide)",N/A,1.06,,
+polymerdatabase.com,"Poly(2,6-diphenyl-p-phenylene oxide)",N/A,1.14,,
+polymerdatabase.com,Poly(p-phenylene oxide),N/A,1.36,,
+polymerdatabase.com,Poly(butylene sebacate),N/A,1.14,,
+polymerdatabase.com,Poly(ethylene sebacate),N/A,1.09,,
+polymerdatabase.com,Poly(hexylene sebacate),N/A,1.03,,
+polymerdatabase.com,Poly(diethylsiloxane) (PDES),N/A,0.99,,
+polymerdatabase.com,Poly(dimethylsiloxane) (PDMS),N/A,0.965,,
+polymerdatabase.com,Poly(methylphenylsiloxane) (PMPS),N/A,1.09,,
+polymerdatabase.com,"Poly(1,4-butylene succinate)",N/A,1.26,,
+polymerdatabase.com,Poly(ethylene succinate),N/A,1.3,,
+polymerdatabase.com,"Poly(1,6-hexylene succinate)",N/A,1.15,,
+polymerdatabase.com,Poly(trimethylene succinate),N/A,1.3,,
+polymerdatabase.com,Poly(Bisphenol A terephthalate),N/A,1.21,,
+polymerdatabase.com,Poly(butylene terephthalate),N/A,1.26,,
+polymerdatabase.com,Poly(cyclohexylenedimethylene terephthalate),N/A,1.2,,
+polymerdatabase.com,Poly(ethylene terephthalate),N/A,1.34,,
+polymerdatabase.com,Poly(trimethylene terephthalate),N/A,1.34,,
+polymerdatabase.com,"Poly(thio-1,4-phenylene)",N/A,1.33,,
+polymerdatabase.com,Poly(ethylene sulfide),N/A,1.3,,
+polymerdatabase.com,Poly(propylene sulfide),N/A,1.08,,
+polymerdatabase.com,Poly(vinyl alcohol),N/A,1.29,,
+polymerdatabase.com,Poly(4-vinyl phenol),N/A,1.16,,
+polymerdatabase.com,Poly(vinyl butyral),N/A,1.11,,
+polymerdatabase.com,Poly(vinyl formal),N/A,1.24,,
+polymerdatabase.com,Poly(vinyl acetate),N/A,1.19,,
+polymerdatabase.com,Poly(vinyl benzoate),N/A,1.2,,
+polymerdatabase.com,Poly(vinyl butyrate),N/A,1.09,,
+polymerdatabase.com,Poly(vinyl caproate),N/A,1.07,,
+polymerdatabase.com,Poly(vinyl formate),N/A,1.3,,
+polymerdatabase.com,Poly(vinyl propionate),N/A,1.12,,
+polymerdatabase.com,Poly(vinyl stearate),N/A,0.95,,
+polymerdatabase.com,Poly(vinyl valerate),N/A,1.08,,
+polymerdatabase.com,Poly(butyl vinyl ether),N/A,0.92,,
+polymerdatabase.com,Poly(ethyl vinyl ether),N/A,0.97,,
+polymerdatabase.com,Poly(hexyl vinyl ether),N/A,0.93,,
+polymerdatabase.com,Poly(isobutyl vinyl ether),N/A,0.92,,
+polymerdatabase.com,Poly(isopropyl vinyl ether),N/A,0.92,,
+polymerdatabase.com,Poly(methyl vinyl ether),N/A,1.05,,
+polymerdatabase.com,Poly(octyl vinyl ether),N/A,0.91,,
+polymerdatabase.com,Poly(propyl vinyl ether),N/A,0.94,,
+polymerdatabase.com,Poly(sec-butyl vinyl ether),N/A,0.92,,
+polymerdatabase.com,Poly(vinyl ethyl ketone),N/A,1.03,,
+polymerdatabase.com,Poly(vinyl methyl ketone),N/A,1.12,,
+polymerdatabase.com,Poly(methyl isopropenyl ketone),N/A,1.14,,
+polymerdatabase.com,Poly(vinyl phenyl ketone),N/A,1.19,,
+polymerdatabase.com,Poly(vinyl pyrrolidone),N/A,1.25,,
+polymerdatabase.com,Poly(vinyl butyl sulfide),N/A,0.98,,
+polymerdatabase.com,Poly(vinyl ethyl sulfide),N/A,1.07,,
+polymerdatabase.com,Poly(vinyl methyl sulfide),N/A,1.11,,
+polymerdatabase.com,Poly(vinyl phenyl sulfide),N/A,1.15,,
+polymerdatabase.com,Poly(vinyl propyl sulfide),N/A,1.02,,
+Primpkeetal_2018,polyethylenehigh-density,N/A,0.91,,
+Primpkeetal_2018,polyethylene,N/A,0.91,,
+Primpkeetal_2018,polyethylene-oxidized,N/A,0.91,,
+Primpkeetal_2018,polyethylene-chlorinated,N/A,0.91,,
+Primpkeetal_2018,polypropylene,N/A,0.92,,
+Primpkeetal_2018,polystyrene,N/A,1.04,,
+Primpkeetal_2018,polycarbonate,N/A,1.21,,
+Primpkeetal_2018,polyamide,N/A,1.22,,
+Primpkeetal_2018,polyvinylchloride,N/A,1.38,,
+Primpkeetal_2018,cellophane,N/A,1.2,,
+Primpkeetal_2018,cellulosechemicalmodified,N/A,1.2,,
+Primpkeetal_2018,nitrilerubber,N/A,1,,
+Primpkeetal_2018,polyester,N/A,1.35,,
+Primpkeetal_2018,acrylates/polyurethanes/varnish,N/A,1.2,,
+Primpkeetal_2018,ethylenemethacrylicacid,N/A,1.2,,
+Primpkeetal_2018,polymethylmethacylate,N/A,1.2,,
+Primpkeetal_2018,polysulfone,N/A,1.24,,
+Primpkeetal_2018,polyetheretherketone,N/A,1.32,,
+Primpkeetal_2018,polychloroprene,N/A,1.23,,
+Primpkeetal_2018,polyisoprene-chlorinated,N/A,0.91,,
+Primpkeetal_2018,polyacticacid,N/A,1.3,,
+Primpkeetal_2018,polycaprolactone,N/A,1.15,,
+Primpkeetal_2018,ethylene-vinyl-acetate,N/A,0.94,,
+Primpkeetal_2018,polyimide,N/A,1.6,,
+Primpkeetal_2018,polyoxymethylene,N/A,1.41,,
+Primpkeetal_2018,acrylonitrile-butadiene,N/A,1.2,,
+Primpkeetal_2018,rubbertype1,N/A,1.03,,
+Primpkeetal_2018,rubbertype2,N/A,1.03,,
+Primpkeetal_2018,rubbertype3,N/A,1.1,,
+Primpkeetal_2018,polyphenyleneether,N/A,1.1,,
+Primpkeetal_2018,polytetrafluorethylene,N/A,2.2,,
+Primpkeetal_2018,urea-formaldehyde,N/A,1.5,,
