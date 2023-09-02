@@ -7,6 +7,8 @@ cleantext <- function(x) {
   ifelse(x == "", NA, x)
 }
 
+Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
+
 items_vectorDB <- readRDS("data/items_vectorDB.rda")
 materials_vectorDB <- readRDS("data/materials_vectorDB.rda")
 
