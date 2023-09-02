@@ -261,6 +261,7 @@ server <- function(input,output,session) {
       group_by(material) %>%
       summarise(Count = n()) %>%
       ungroup()
+    
     Material_DF_group <- dataframe %>%
       rename(Count = count) %>%
       group_by(material) %>%
