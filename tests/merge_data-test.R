@@ -122,7 +122,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 
 #Test starts
 
-test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_2.csv"), 
+test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_3.csv"), 
                    materials_vectorDB = materials_vectorDB,
                    items_vectorDB = items_vectorDB, 
                    alias = alias, 
