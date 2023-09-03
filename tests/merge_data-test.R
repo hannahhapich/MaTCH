@@ -24,6 +24,12 @@ use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
+  .confidence_interval_width <- function(proportion, sample_size, population_size){
+    1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
+  }
+  sample_size = length(file_paths)
+  population_size = 100000 
+  
   dataframe <- lapply(file_paths, 
                       function(x){fread(x) %>%
                           mutate(proportion = count/sum(count))
@@ -100,6 +106,9 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
     summarise(count = sum(count), 
               proportion = sum(proportion)) %>%
     ungroup() %>% 
+    mutate(proportion_width = .confidence_interval_width(proportion = proportion, sample_size = sample_size, population_size = population_size)) %>%
+    mutate(min_proportion = proportion - proportion_width, 
+           max_proportion = proportion + proportion_width) %>%
     rename(Item = items, 
            Material = material) %>%
     left_join(use_cases, by = c("Item"), keep = NULL)
