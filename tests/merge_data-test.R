@@ -1,6 +1,4 @@
 #Isolated tests for the merge_data function. 
-
-
 #Build cleaning functions
 cleantext <- function(x) {
   x <- tolower(gsub("[[:space:]]", "", x))
@@ -26,14 +24,25 @@ use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
-  dataframe <- lapply(file_paths, fread) %>%
+  dataframe <- lapply(file_paths, 
+                      function(x){fread(x) %>%
+                          mutate(proportion = count/sum(count))
+                }) %>%
     rbindlist(., fill = T) %>%
-    select(material, items, count) %>%
+    select(material, items, count, proportion) %>%
     mutate(material = as.character(material),
            items = as.character(items), 
-           count = as.numeric(count)) 
+           count = as.numeric(count),
+           proportion = as.numeric(proportion)) %>%
+    group_by(material, items) %>%
+    summarise(proportion = sum(proportion),
+              count = sum(count)) %>%
+    ungroup() %>%
+    mutate(proportion = proportion/sum(proportion))
   
-  dataframeclean <- mutate_all(dataframe, cleantext) 
+  dataframeclean <- dataframe %>%
+                  mutate(material = cleantext(material), 
+                             items = cleantext(items)) 
   
   material_key <- inner_join(dataframeclean %>% select(material), 
                              alias, by = c("material" = "Alias")) %>%
@@ -42,7 +51,8 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   materials_left <- anti_join(dataframeclean %>% select(material), 
                               alias, by = c("material" = "Alias")) %>%
     distinct() %>%
-    rename(text = material)
+    rename(text = material) %>%
+    as.data.table()
   
   if(nrow(materials_left) > 0){
     new_material_vDB <- add_collection(metadata = materials_left)
@@ -66,7 +76,8 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   items_left <- anti_join(dataframeclean %>% select(items), 
                           aliasi, by = c("items" = "Alias")) %>%
     distinct() %>%
-    rename(text = items)
+    rename(text = items) %>%
+    as.data.table()
   
   if(nrow(items_left) > 0){
     new_items_vDB <- add_collection(metadata = items_left)
@@ -86,7 +97,8 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   dataframeclean2 <- dataframeclean %>%
     mutate(count = as.numeric(count)) %>%
     group_by(material, items) %>%
-    summarise(count = sum(count)) %>%
+    summarise(count = sum(count), 
+              proportion = sum(proportion)) %>%
     ungroup() %>% 
     rename(Item = items, 
            Material = material) %>%

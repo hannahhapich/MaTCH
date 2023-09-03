@@ -631,7 +631,7 @@ server <- function(input,output,session) {
   
   output$contents3 <- renderDataTable(#server = F, 
                                       datatable({
-                                        df_()[, c("Use", "Material", "Item", "count")]
+                                        df_()[, c("Use", "Material", "Item", "count", "proportion")]
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(
