@@ -9,17 +9,8 @@ Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
 
 items_vectorDB <- readRDS("data/items_vectorDB.rda")
 materials_vectorDB <- readRDS("data/materials_vectorDB.rda")
-
 alias <- read.csv("data/PrimeMaterials.csv")
-
-#aliasclean <- read.csv("data/PrimeMaterials.csv")|>
-#                  mutate_all(cleantext)
-
 aliasi <- read.csv("data/PrimeItems.csv")
-
-#aliascleani <- read.csv("data/PrimeItems.csv")|>
-#                  mutate_all(cleantext)
-
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
@@ -138,6 +129,15 @@ test <- merge_data(file_paths = c("data/Test_Survey_1.csv", "data/Test_Survey_3.
                    aliasi = aliasi, 
                    use_cases = use_cases,
                    prime_unclassifiable = prime_unclassifiable)
+
+
+
+
+
+
+
+
+
 
 
 
