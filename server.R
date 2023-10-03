@@ -256,6 +256,8 @@ server <- function(input,output,session) {
                                  rename(material = Material, 
                                         items = Item) %>%
                                  select(material, items, count))
+    #dataframe <- read.csv("data/Test_Survey_2.csv")
+    #dataframe <- mutate_all(dataframe, cleantext)
     Material_DF <- dataframe %>%
       rename(Count = count) %>%
       group_by(material) %>%

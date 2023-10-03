@@ -376,7 +376,7 @@ for(y in 1:ncol(hierarchycleani)){
   pathstrings_items <- pathstrings_items %>% distinct() %>% drop_na()
 }
 
-pathstrings_materials <- data.frame(matrix(ncol=2, dimnames = list("", c("materials", "pathString"))))
+pathstrings_materials <- data.frame(matrix(ncol=2, dimnames = list("", c("material", "pathString"))))
 for(y in 1:ncol(hierarchyclean)){
   for(x in 1:nrow(hierarchyclean)){
     pathstrings_materials[nrow(pathstrings_materials) + 1, 1] <- hierarchyclean[x,y]
@@ -409,9 +409,12 @@ for(y in 1:ncol(hierarchyclean)){
   }
   MaterialsHierarchy_sunburst <- MaterialsHierarchy_sunburst %>% distinct() %>% drop_na()
 }
+
 ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
   rename(Key = Item) %>%
   select(-readable)
 MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
   rename(Key = Material) %>%
   select(-readable)
+
+
