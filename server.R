@@ -395,6 +395,9 @@ server <- function(input,output,session) {
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
+    
+    dataframe <- read.csv("tests/Sample_Dist_Data.csv")
+    
     if("width_um" %in% colnames(dataframe) == TRUE){dataframe <- dataframe %>%
       select(length_um, width_um, morphology, polymer)
     dataframe$width_um <- as.numeric(dataframe$width_um)
@@ -412,6 +415,11 @@ server <- function(input,output,session) {
     morph_conversion <- data.frame(morphology = morphology,
                                    morph_dimension = morph_dimension)
     dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
+    for(x in 1:nrow(dataframeclean)){
+      if(is.na(dataframeclean[x,"morph_dimension"])){
+        dataframeclean[x,"morph_dimension"] <- dataframeclean[x,"morphology"]
+      }
+    }
     dataframeclean <- dataframeclean %>%
       select(-morphology)
     dataframeclean <- dataframeclean %>%
@@ -428,7 +436,7 @@ server <- function(input,output,session) {
     polymer_density <- polymer_db %>%
       select(polymer, density_mg_um_3)
     
-    #Make CSF-morphology dataframe
+    #Make morphology dimension dataframe
     morphology <- c("fragment","sphere","fiber","film","foam")
     L_min <- c(0.95,0.95,0.95,0.95,0.95)
     L_max <- c(1.05,1.05,1.05,1.05,1.05)
@@ -497,6 +505,18 @@ server <- function(input,output,session) {
       mutate(min_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_min_um,
              mean_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_mean_um,
              max_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_max_um)
+    
+    dataframeclean_particles <- dataframeclean_particles %>%
+      left_join(trash_mass_clean, by = c("morphology" = "item",
+                                         "polymer" = "material"))
+    dataframeclean_particles$weight_estimate_g <- as.numeric(dataframeclean_particles$weight_estimate_g)
+    for(x in 1:nrow(dataframeclean_particles)){
+      if(! is.na(dataframeclean_particles[x, "weight_estimate_g"])){
+        dataframeclean_particles[x, "mean_mass_mg"] <- (dataframeclean_particles[x, "weight_estimate_g"]*1000)
+      }
+    }
+    
+    dataframeclean_particles <- dataframeclean_particles %>% select(-"weight_estimate_g")
     
     return(dataframeclean_particles)
     
@@ -678,7 +698,7 @@ server <- function(input,output,session) {
                                       style="bootstrap"))
   
   output$contents5 <- renderDataTable(datatable({
-                                        convertedParticles()[, c("length_um", "morphology", "polymer", "L", "H_mean", "volume_mean_um_3", "mean_mass_mg")]
+                                        convertedParticles()[, c("length_um", "morphology", "polymer", "L_mean", "H_mean", "volume_mean_um_3", "mean_mass_mg")]
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(

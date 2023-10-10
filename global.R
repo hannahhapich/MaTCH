@@ -138,7 +138,6 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 }
 
 
-
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
@@ -301,11 +300,13 @@ hierarchy <- read.csv("data/MaterialsHierarchyLower.csv")
 aliasi <- read.csv("data/PrimeItems.csv")
 hierarchyi <- read.csv("data/ITEMSHierarchyLower.csv")
 microcolor <- read.csv("data/Microplastics_Color.csv")
+trash_mass <- read.csv("data/trash_mass.csv")
 aliasclean <- mutate_all(alias, cleantext)
 aliascleani <- mutate_all(aliasi, cleantext)
 hierarchyclean <- mutate_all(hierarchy, cleantext)
 hierarchycleani <- mutate_all(hierarchyi, cleantext)
 microcolorclean <- mutate_all(microcolor, cleantext)
+trash_mass_clean <- mutate_all(trash_mass, cleantext)
 
 #Creating materials hierarchy
 Materials <- hierarchy
