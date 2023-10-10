@@ -212,9 +212,9 @@ AggregateTrees <- function(DF, Alias, Hierarchy){
     dplyr::select(Key, Count) %>%
     mutate(Key = ifelse(is.na(Key), "other", Key)) %>%
     right_join(Hierarchy) %>%
-    select(from, Key, Count) #%>%
-    #add_row(from = "trash", Key = "missing", Count = sum(DF$Count, na.rm = T) - sum(.$Count, na.rm = T))%>%
-    #mutate(Count = Count/sum(Count, na.rm = T))
+    select(from, Key, Count) %>%
+    add_row(from = "trash", Key = "missing", Count = sum(DF$Count, na.rm = T) - sum(.$Count, na.rm = T))%>%
+    mutate(Count = Count/sum(Count, na.rm = T))
   
   
   DF_network <- FromDataFrameNetwork(DF_v2, check = "check")
