@@ -179,6 +179,7 @@ BootMean <- function(data) {
 
 confidence_interval_width <- function(data){
   proportion = 0.95
+  #sample_size = sum(data$count)
   sample_size = length(data)
   population_size = 10000
   1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
@@ -191,23 +192,32 @@ AggregateTrees <- function(DF, Alias, Hierarchy){
   
   colnames(DF) <- c("Alias", "Count")
   
+  DF$Alias <- as.character(DF$Alias)
+  
   Hierarchy <- mutate_all(Hierarchy, cleantext)
   
   colnames(Hierarchy) <- c("from", "Key")
   
   Alias <- mutate_all(Alias, cleantext) 
   
+  DF <- DF %>% group_by(Alias) %>%
+    summarise(across(Count, sum))
+  
+  #duplicated(Hierarchy$Key)
+  
+  #Hierarchy$from[!Hierarchy$from %in% Hierarchy$Key]
+  
   DF_v2 <- DF %>%
     left_join(Alias) %>%
     dplyr::select(Key, Count) %>%
     mutate(Key = ifelse(is.na(Key), "other", Key)) %>%
     right_join(Hierarchy) %>%
-    select(from, Key, Count) %>%
-    add_row(from = "trash", Key = "missing", Count = sum(DF$Count, na.rm = T) - sum(.$Count, na.rm = T))%>%
-    mutate(Count = Count/sum(Count, na.rm = T))
+    select(from, Key, Count) #%>%
+    #add_row(from = "trash", Key = "missing", Count = sum(DF$Count, na.rm = T) - sum(.$Count, na.rm = T))%>%
+    #mutate(Count = Count/sum(Count, na.rm = T))
   
   
-  DF_network <- FromDataFrameNetwork(DF_v2)
+  DF_network <- FromDataFrameNetwork(DF_v2, check = "check")
   
   DF_network$Do(function(x) x$totalsum <- ifelse(is.null(x$Count), 0, x$Count) + sum(Get(x$children, "totalsum")), traversal = "post-order")
   
@@ -223,15 +233,16 @@ AggregateTrees <- function(DF, Alias, Hierarchy){
 
 grouped_uncertainty <- function(DF_group, Group_Alias, Group_Hierarchy, type){
   
-  groups <- DF_group
-  
   df_join = data.frame(from = character(), 
                        to = character(), 
                        count = numeric())
+  DF_group$Count = as.numeric(DF_group$Count)
+  
+  groups <- DF_group
   
   for(row in 1:nrow(groups)){
     df_subset <- DF_group %>%
-      inner_join(groups[row,]) %>%
+      #inner_join(groups[row,]) %>%
       select(Class, Count)
     
     df_join <- AggregateTrees(DF = df_subset, Alias = Group_Alias, Hierarchy = Group_Hierarchy) %>%
@@ -416,5 +427,4 @@ ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
 MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
   rename(Key = Material) %>%
   select(-readable)
-
 

@@ -256,23 +256,14 @@ server <- function(input,output,session) {
                                  rename(material = Material, 
                                         items = Item) %>%
                                  select(material, items, count))
-    #dataframe <- read.csv("data/Test_Survey_2.csv")
+    #dataframe <-read.csv("data/Test_Survey_2.csv")
     #dataframe <- mutate_all(dataframe, cleantext)
-    Material_DF <- dataframe %>%
-      rename(Count = count) %>%
-      group_by(material) %>%
-      summarise(Count = n()) %>%
-      ungroup()
-    
     Material_DF_group <- dataframe %>%
       rename(Count = count) %>%
-      group_by(material) %>%
-      summarise(Count = n()) %>%
-      ungroup() %>%
+      #group_by(material) %>%
+      #summarise(Count = n()) %>%
+      #ungroup() %>%
       rename(Class = material)
-    
-    MaterialTreeDF <- AggregateTrees(DF = Material_DF, Alias = MaterialsAlias_sunburst, Hierarchy = MaterialsHierarchy_sunburst) %>%
-      mutate(from = ifelse(from == "trash", "material", from))
     
     material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst, Group_Hierarchy = MaterialsHierarchy_sunburst, type = "material")
     
@@ -292,20 +283,12 @@ server <- function(input,output,session) {
                                         items = Item) %>%
                                  select(material, items, count))
     
-    Item_DF <- dataframe %>%
-      rename(Count = count) %>%
-      group_by(items) %>%
-      summarise(Count = n()) %>%
-      ungroup()
     Item_DF_group <- dataframe %>%
       rename(Count = count) %>%
-      group_by(items) %>%
-      summarise(Count = n()) %>%
-      ungroup() %>%
+      #group_by(items) %>%
+      #summarise(Count = n()) %>%
+      #ungroup() %>%
       rename(Class = items)
-    
-    ItemTreeDF <- AggregateTrees(DF = Item_DF, Alias = ItemsAlias_sunburst, Hierarchy = ItemsHierarchy_sunburst) %>%
-      mutate(from = ifelse(from == "trash", "items", from))
     
     #Item prop uncertainty
     item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
