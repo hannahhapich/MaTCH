@@ -142,6 +142,9 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
+primeItems <- read.csv("data/PrimeItems.csv")
+primeMaterials <- read.csv("data/PrimeMaterials.csv")
+
 #Build cleaning functions
 cleantext <- function(x) {
   x <- tolower(gsub("[[:space:]]", "", x))
@@ -369,8 +372,7 @@ Sys.setenv(
   "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
   "AWS_DEFAULT_REGION" = "us-east-2"
 )
-primeItems <- read.csv("data/PrimeItems.csv")
-primeMaterials <- read.csv("data/PrimeMaterials.csv")
+
 
 #make item and material pathstrings for merging tool
 pathstrings_items <- data.frame(matrix(ncol=2, dimnames = list("", c("items", "pathString"))))
