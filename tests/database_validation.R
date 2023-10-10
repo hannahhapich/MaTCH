@@ -16,7 +16,7 @@ cleantext <- function(x) {
 
 #Read in relational tables
 material_alias <- read.csv("data/validation/PrimeMaterials_Clean.csv")
-material_hierarchy <- read.csv("data/validation/MaterialsHierarchyLower.csv")
+material_hierarchy <- read.csv("data/MaterialsHierarchyLower.csv")
 item_alias <- read.csv("data/validation/PrimeItems_Clean.csv")
 item_hierarchy <- read.csv("data/validation/ITEMSHierarchyLower.csv")
 use_case_alias <- read.csv("data/validation/PrimeUnclassifiable.csv")
@@ -79,6 +79,13 @@ for(x in 1:nrow(prime_use_terms)){
 prime_use_terms <- prime_use_terms %>% drop_na(invalid)
 print(prime_use_terms)
 #should return NA
+
+#check for recursive material hierarchy terms
+clean_material_hierarchy <- mutate_all(material_hierarchy, cleantext)
+for(y in 1:ncol(clean_material_hierarchy)){
+  
+}
+
 
 #check that all prime items are in hierarchy and visa vera
 item_hierarchy_terms <- data.frame(unique = unique(unlist(item_hierarchy)))
@@ -167,7 +174,6 @@ for(x in 1:nrow(similarity_rank)){
 }
 
 rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(rank_total_count$rank_total)/nrow(item_alias))*100)
-
 
 
 #Retrieve embeddings for prime materials
