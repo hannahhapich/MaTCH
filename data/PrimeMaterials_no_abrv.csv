@@ -87,33 +87,20 @@ woodandpaper,woodandpaper,wood and paper
 woodandpaper,paper&lumber,wood and paper
 concreteorasphalt,concreteorasphalt,concrete OR asphalt
 concreteorasphalt,concrete/asphalt,concrete OR asphalt
-pest,pest,PEST
 "1,4-polyisoprene(cisandtrans)(latex)","1,4-polyisoprene(cisandtrans)(latex)","1,4-Polyisoprene (cis and trans)(Latex)"
-abs,abs,ABS
-abs,polyethersulfone,ABS
-abs,acrylonitrilebutadienestyrene,ABS
-abs,acrylonitrilebutadienestyrene(abs),ABS
 acrylic,acrylic,Acrylic
-ar,ar,AR
 bisphenolapolysulfone,bisphenolapolysulfone,Bisphenol A Polysulfone
 bisphenol-adiglycidyletherepoxyresin,bisphenol-adiglycidyletherepoxyresin,Bisphenol-A diglycidyl ether epoxy resin
 bisphenol-fdiglycidyletherepoxyresin,bisphenol-fdiglycidyletherepoxyresin,Bisphenol-F diglycidyl ether epoxy resin
-ca,ca,CA
-ca,celluloseacetate,CA
-ca,cellulose,CA
 cellophane,cellophane,Cellophane
 cellulosederivatives(ethercellulose),cellulosederivatives(ethercellulose),Cellulose Derivatives (Ether Cellulose)
 cellulosenitrate,cellulosenitrate,Cellulose Nitrate
 cotton,cotton,cotton
 epdmrubber(ethylenepropylenedienemonomerrubber),epdmrubber(ethylenepropylenedienemonomerrubber),EPDM rubber (ethylene propylene diene monomer rubber)
-er,er,ER
-er,epoxyresin,ER
 ethylcellulose,ethylcellulose,Ethyl Cellulose
 ethylene-propylene,ethylene-propylene,Ethylene-propylene
 isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
 kevlar-polyaramide,kevlar-polyaramide,Kevlar - Polyaramide
-ldpe,ldpe,LDPE
-ldpe,lowdensitypolyethylene,LDPE
 melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 methylcellulose,methylcellulose,Methyl Cellulose
 mineral,mineral,mineral
@@ -135,69 +122,11 @@ nylon6-poly(caprolactam),nylon6-poly(caprolactam),Nylon 6 - Poly(caprolactam)
 nylon8-polycapryllactam,nylon8-polycapryllactam,Nylon 8 - Polycapryllactam
 olefin,olefin,Olefin
 other,othermaterial,other
-pa,pa,PA
-pa,polyamide,PA
-pa,nylon,PA
-pa,pa/nylon,PA
-pa;er,pa;er,PA;ER
-pa;er,pa/epoxyresin,PA;ER
-paa,paa,PAA
-paa,polyacrylicacid,PAA
-paa,poly(acrylicacid),PAA
-pai,pai,PAI
-pai,poly(trimellitamideimide),PAI
-pam,pam,PAM
-pam,polyacrylamide,PAM
-pam,poly(acrylamide),PAM
-pan,pan,PAN
-pan,polyacrylonitrile,PAN
-pan,acrylonitrile,PAN
-pan,poly(acrylonitrile),PAN
-pba,pba,PBA
-pba,phenylbutricacid,PBA
-pbt,pbt,PBT
-pbt,polybutyleneterephthalate,PBT
-pbt,poly(butyleneterephthalate),PBT
-pc,pc,PC
-pc,polycarbonate,PC
-pdms,pdms,PDMS
-pdms,polydimethylsiloxane,PDMS
-pdms,poly(dimethylsiloxane)(pdms),PDMS
-pe,pe,PE
-pe,polyethylene,PE
-pe,poly(ethylene),PE
-pe+pp,pe+pp,PE+PP
-pe+pp,cope-pp,PE+PP
-pe+ps,pe+ps,PE+PS
-pe+ps,polyethylene+polystyrene,PE+PS
 peek-poly(etheretherketone),peek-poly(etheretherketone),PEEK - Poly(ether ether ketone)
 pek-poly(etherketone),pek-poly(etherketone),PEK - Poly(ether ketone)
 pekk-poly(etherketoneketone),pekk-poly(etherketoneketone),PEKK - Poly(ether ketone ketone)
-pes,pes,PES
-pes,pesu,PES
-pest,polyester,PEST
-pet,pet,PET
-pet,polyethyleneterephthalate,PET
-pet,pete,PET
-pet,poly(ethyleneterephthalate),PET
-pet-pest,pet-pest,PET-PEST
-pet+olefin,pet+olefin,PET+olefin
-peva,peva,PEVA
-peva,polyethylene-vinylacetate,PEVA
-peva,ethylene-vinylacetate,PEVA
 phenolformaldehyde,phenolformaldehyde,Phenol formaldehyde
-pi,pi,PI
-pi,polyimide,PI
-pi,polyimides,PI
-pla,pla,PLA
-pla,picolinicacid,PLA
 plasticadditive,plasticadditive,Plastic additive
-pmma,pmma,PMMA
-pmma,polymethylmethacrylate,PMMA
-pmma,poly(methylmethacrylate),PMMA
-pmps,pmps,PMPS
-pmps,polymethylphenylsiloxane,PMPS
-pmps,poly(methylphenylsiloxane)(pmps),PMPS
 poiy(1-chloro-1-butenylene)(polychloroprene),poiy(1-chloro-1-butenylene)(polychloroprene),PoIy(1-chloro-1-butenylene) (Polychloroprene)
 poly(_-methylstyrene),poly(_-methylstyrene),Poly(-methylstyrene)
 poly(1-bromo-1-butenylene)(polybromoprene),poly(1-bromo-1-butenylene)(polybromoprene),Poly(1-bromo-1-butenylene) (Polybromoprene)
@@ -444,38 +373,7 @@ polyvinylesters,polyvinylesters,Polyvinylesters
 polyvinylethers,polyvinylethers,Polyvinylethers
 polyvinylketones,polyvinylketones,Polyvinylketones
 polyvinylsulfides,polyvinylsulfides,Polyvinylsulfides
-pp,pp,PP
-pp,polypropylene,PP
-pp,poly(propylene),PP
-pps,pps,PPS
-pps,polyphenylenesulfide,PPS
-pps,polyphenylenesulfide(pps),PPS
-ps,ps,PS
-ptfe,ptfe,PTFE
-ptfe,polytetrafluoroethylene,PTFE
-ptfe,poly(tetrafluoroethylene),PTFE
-ptt,ptt,PTT
-ptt,polytrimethyleneterephthalate,PTT
-pu,pu,PU
-pu,polyurethane,PU
-pu,pur,PU
-pu,urethane,PU
-pva,pva,PVA
-pva,polyvinylalcohol,PVA
-pva,poly(vinylalcohol),PVA
-pvc,pvc,PVC
-pvc,polyvinylchloride,PVC
-pvc,poly(vinylchloride),PVC
-pvdf,pvdf,PVDF
-pvdf,poly(vinylideneflourine),PVDF
 rayon,rayon,Rayon
-san,san,SAN
-san,styreneacrylonitrileresin,SAN
-san,styrene-acytonitrile(san),SAN
-sbr,sbr,SBR
-sbr,styrene-butadienerubber,SBR
-sbr,butadiene/butylrubber,SBR
-sbr,styrene-butadiene,SBR
 semi-syntheticcellulose,semi-syntheticcellulose,semi-synthetic cellulose
 silicone,silicone,Silicone
 styrene-isoprene,styrene-isoprene,Styrene-isoprene

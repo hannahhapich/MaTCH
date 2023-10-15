@@ -41,9 +41,9 @@ glass,beer bottle
 metal,beer cans
 glass,beverage bottles
 metal,beverage cans
-glass,beverage conatiners
-metal,beverage conatiners
-plastic,beverage conatiners
+glass,beverage containers
+metal,beverage containers
+plastic,beverage containers
 sanitarywaste,blister pack
 metal,boat parts
 plastic,boat parts
@@ -188,7 +188,7 @@ metal,disposablebbq's
 plastic,dog waste bags
 plastic,drink bottles<=0.5l
 hard plastics,drink bottles>0.5l
-food,drinks
+organic,drinks
 sanitarywaste,drug paraphanalia OR syringes
 sanitarywaste,drugs
 metal,drums
@@ -252,7 +252,7 @@ plastic,floor cover
 ceramic,flower pots
 plastic,Foam
 metal,foil
-food,food
+organic,food
 metal,food cans
 glass,food OR beverage ware
 metal,food OR beverage ware

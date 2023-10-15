@@ -1,10 +1,5 @@
 library(data.table)
-
-#Colors
-colors <- c("red", "blue", "green")
-color_probs <- c(0.3, 0.5, 0.2)
-
-colors_simulated <- sample(colors, size = 10000, replace = T, prob = color_probs)
+library(poweRlaw)
 
 #Polymers
 curb_materials_2_20 <- c("glass", "metallic", "organic", "paint", "tire wear & asphalt", "mineral")
@@ -12,18 +7,63 @@ track_materials_2_20 <- c("glass", "metallic", "organic", "paint", "tire wear & 
 curb_materials_20_125 <- c("glass", "metallic", "organic", "paint", "asphalt", "tire wear", "mineral")
 track_materials_20_125 <- c("glass", "metallic", "organic", "paint", "asphalt", "tire wear", "mineral")
 
-curb_prob_2_20 <- c(0.000228, 0.0117, 0.0125, 0.00942, 0.188, 0.778)
+curb_prob_2_20 <- as.numeric(c(0.000228, 0.0117, 0.0125, 0.00942, 0.188, 0.778))
 track_prob_2_20 <- c(0.00E+00, 1.17E-02, 8.10E-03, 5.17E-03, 1.29E-01, 8.46E-01)
 curb_prob_20_125 <- c(0.00E+00, 1.75E-03, 2.17E-02, 2.65E-03, 6.93E-02, 1.08E-01, 7.96E-01)
 track_prob_20_125 <- c(0.00E+00, 3.72E-03, 2.68E-02, 1.75E-03, 4.00E-02, 3.33E-02, 8.94E-01)
 
-curb_materials_simulated_2_20 <- sample.int(curb_materials_2_20, size = 1030000000000, replace = T, prob = curb_prob_2_20)
+curb_materials_simulated_2_20 <- sample(x = curb_materials_2_20, size = 100000, replace = T, prob = curb_prob_2_20)
+track_materials_simulated_2_20 <- sample(x = track_materials_2_20, size = 100000, replace = T, prob = track_prob_2_20)
+curb_materials_simulated_20_125 <- sample(x = curb_materials_20_125, size = 100000, replace = T, prob = curb_prob_20_125)
+track_materials_simulated_20_125 <- sample(x = track_materials_20_125, size = 100000, replace = T, prob = track_prob_20_125)
+
 
 #Sizes
-particle_sizes_simulated <- rpois(10000, lambda = 0.5)
+# Particle size distribution, set seed for reproducibility
+set.seed(123)
+particle_sizes <- rplcon(1000000, xmin = 1, alpha = 1.6)
+particle_sizes_simulated <- data.frame(sizes = particle_sizes)
+particle_sizes_2_20 <- filter(particle_sizes_simulated, sizes <= 20 & sizes >= 2)
+particle_sizes_20_125 <- filter(particle_sizes_simulated, sizes <= 125 & sizes > 20)
 
-#Dataset
-simulated_dataset <- data.table(colors = colors_simulated, polymers = polymers_simulated, sizes = particle_sizes_simulated)
+#Sample from each particle size group for each sample
+set.seed(456)
+curb_sizes_2_20 <- particle_sizes_2_20[sample(nrow(particle_sizes_2_20), 100000), ]
+set.seed(789)
+track_sizes_2_20 <- particle_sizes_2_20[sample(nrow(particle_sizes_2_20), 100000), ]
+set.seed(101)
+curb_sizes_20_125 <- particle_sizes_20_125[sample(nrow(particle_sizes_20_125), 100000), ]
+set.seed(112)
+track_sizes_20_125 <- particle_sizes_20_125[sample(nrow(particle_sizes_20_125), 100000), ]
+
+#Morphology assumptions
+materials <- c("glass", "metallic", "organic", "paint", "asphalt", "tire wear", "mineral", "tire wear & asphalt")
+morphology <- c("fragment", "fragment", "fragment", "film", "fragment", "fragment", "fragment", "fragment")
+morph_conversion <- data.frame (materials = materials,
+                                morphology = morphology)
+
+#Datasets
+simulated_curb_2_20 <- data.table(materials = curb_materials_simulated_2_20, sizes = curb_sizes_2_20) %>%
+  left_join(morph_conversion, by = "materials")
+simulated_track_2_20 <- data.table(materials = track_materials_simulated_2_20, sizes = track_sizes_2_20) %>%
+  left_join(morph_conversion, by = "materials")
+simulated_curb_20_125 <- data.table(materials = curb_materials_simulated_20_125, sizes = curb_sizes_20_125) %>%
+  left_join(morph_conversion, by = "materials")
+simulated_track_20_125 <- data.table(materials = track_materials_simulated_20_125, sizes = track_sizes_20_125) %>%
+  left_join(morph_conversion, by = "materials")
+
+#Save datasets
+write.csv(simulated_curb_2_20, "data/simulated_data/simulated_curb_2_20.csv")
+write.csv(simulated_track_2_20, "data/simulated_data/simulated_track_2_20.csv")
+write.csv(simulated_curb_20_125, "data/simulated_data/simulated_curb_20_125.csv")
+write.csv(simulated_track_20_125, "data/simulated_data/simulated_track_20_125.csv")
+
+
+
+
+
+
+
 
 
 CFfnx = function(a, #default alpha from Koelmans et al (2020)
@@ -53,40 +93,7 @@ CF <- CFfnx(x1M = 20,#lower measured length
 print(CF)
 #1.051974
 
-#Rescale code from Nizamali
-n = 100000
-df <-data.frame(n = c(1:n),
-                Alpha = numeric(n),
-                Size = numeric(n))
 
-#### ======SIZE======= ####
-
-# parameters from Kooi et al 2021
-m.alpha.w = 1.6
-sd.alpha.w = 0.05
-min.alpha.w = 1.5
-max.alpha.w = 1.7
-size.min = 1    #um
-size.max = 20 #um
-
-# Alpha (-)
-df$Alpha <- rtnorm(n = n, mean = m.alpha.w, sd = sd.alpha.w, lower = min.alpha.w, upper = max.alpha.w)
-
-# Size (um)
-for(i in 1:n){
-  success <- FALSE
-  while(!success){
-    U = runif(1, 0, 1) 
-    size = size.min*(1-U)^(1/(1-df$Alpha[i]))
-    success <- size <= size.max}
-  df[which(df$n == i),]$Size= size
-}
-
-p <- ggplot(df, aes(x=Size)) + 
-  geom_density() #+ 
-  #scale_x_continuous(trans='log10')
-
-p
 
 
 
