@@ -396,7 +396,7 @@ server <- function(input,output,session) {
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
     
-    dataframe <- read.csv("tests/Sample_Dist_Data.csv")
+    #dataframe <- read.csv("tests/Sample_Dist_Data.csv")
     
     if("width_um" %in% colnames(dataframe) == TRUE){dataframe <- dataframe %>%
       select(length_um, width_um, morphology, polymer)
