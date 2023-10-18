@@ -14,7 +14,7 @@ server <- function(input,output,session) {
     dataframeclean <- mutate_all(dataframe, cleantext) 
     
   #Material query tool cleaning
-    for(row in 1:nrow(dataframeclean)) { 
+    for(row in 1:nrow(dataframeclean)) {
       
       if(is.na(dataframeclean[row,"material"]) | dataframeclean[row,"material"] == "") {
         dataframe[row, "PrimeMaterial"] <- NA
@@ -22,11 +22,11 @@ server <- function(input,output,session) {
         next #Corrects for cases when there is no val. 
       }
       
-      if(any(PrimeUnclassifiable == dataframeclean[row,"material"])) {
-        dataframe[row, "MoreSpecificMaterial"] <- "Unclassifiable"
-        dataframe[row, "PrimeMaterial"] <- NA
-        #next #Corrects for cases when unclassifiable
-      }
+      #if(any(PrimeUnclassifiable == dataframeclean[row,"material"])) {
+      #  dataframe[row, "MoreSpecificMaterial"] <- "Unclassifiable"
+      #  dataframe[row, "PrimeMaterial"] <- NA
+      #  #next #Corrects for cases when unclassifiable
+      #}
       
       #Identify Alias Row and Alias name in database
       Primename <- unique(aliasclean[unname(unlist(apply(aliasclean, 2, function(x) which(x == dataframeclean[row,"material"], arr.ind = T)))), "Material"])
@@ -47,7 +47,6 @@ server <- function(input,output,session) {
           match5 <- top_five[[5]]
           
           dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "100px"))
-          
       }
       
       else{
@@ -116,11 +115,11 @@ server <- function(input,output,session) {
         next #Corrects for cases when there is no val. 
       }
       
-      if(any(PrimeUnclassifiable == dataframeclean[row,"items"])) {
-        dataframe[row, "MoreSpecificItem"] <- "Unclassifiable"
-        dataframe[row, "PrimeItem"] <- NA
-        next #Corrects for cases when unclassifiable
-      }
+      #if(any(PrimeUnclassifiable == dataframeclean[row,"items"])) {
+      #  dataframe[row, "MoreSpecificItem"] <- "Unclassifiable"
+      #  dataframe[row, "PrimeItem"] <- NA
+      #  next #Corrects for cases when unclassifiable
+      #}
       
       #Identify Alias Row and Alias name
       Primename <- unique(aliascleani[unname(unlist(apply(aliascleani, 2, function(x) which(x == dataframeclean[row,"items"], arr.ind = T)))), "Item"])
@@ -200,7 +199,6 @@ server <- function(input,output,session) {
       dataframe[row, "LessSpecificItem"] <- paste(vals[!is.na(vals)], collapse = " | ")
       
     }
-    
     
     return(dataframe)
   })
@@ -396,7 +394,7 @@ server <- function(input,output,session) {
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
     
-    #dataframe <- read.csv("tests/Sample_Dist_Data.csv")
+    #dataframe <- read.csv("data/simulated_data/simulated_track_20_125.csv")
     
     if("width_um" %in% colnames(dataframe) == TRUE){dataframe <- dataframe %>%
       select(length_um, width_um, morphology, polymer)

@@ -208,13 +208,13 @@ sanitarywaste,femininehygeneitems
 metal,fencing
 plastic,fenders
 plastic,fertilizer OR animal feed bags
-plastic,Fiber
-plastic,Fiber bundle
+plastic,fiber
+plastic,fiber bundle
 fibreglass,fibre glass OR fragments
 plastic,filament <5mm
-plastic,Film
-plastic,film (think OR flexible e.g. straw wrapper)
-plastic,Film;Fragment
+plastic,film
+plastic,film (thin OR flexible e.g. straw wrapper)
+plastic,film+fragment
 plastic,filmfragments
 plastic,filmstrip
 plastic,filter box
@@ -243,14 +243,13 @@ metal,"fishing: lures, rods OR poles"
 metal,"fishing: sinkers, lures, hooks"
 plastic,fishingnetandnetpieces>50cm
 metal,fishingweights OR hooks OR lures
-metal,fishpot(eel)
 plastic,fizzy drink bottle
 plastic,flip-flops
 plastic,floats (fishing buoys) OR reels
 plastic,floats for fishing nets
 plastic,floor cover
 ceramic,flower pots
-plastic,Foam
+plastic,foam
 metal,foil
 organic,food
 metal,food cans
@@ -267,7 +266,7 @@ metal,fork
 plastic,fork
 wood,fork
 paper OR cardboard,forsale posters
-plastic,Fragment
+plastic,fragment
 glass OR ceramic,fragments (trash)
 metal,fragments (trash)
 organic,fragments (trash)
@@ -313,7 +312,6 @@ plastic,Line
 glass,liquor bottles
 plastic,lobster and fish tags
 rubber,lobster claw bands
-metal,lobster OR crab pots & tops
 wood,lollipop sticks & cotton buds
 wood,lolly sticks
 wood,lumber OR building material
@@ -347,13 +345,12 @@ paper,newspapers & magazines
 metal,non-beverage containers OR bottles
 plastic,non-beverage containers OR bottles
 plastic,non-food related plastic packaging
-plastic,Nurdle
-metal,octopus pots
+plastic,nurdle
 other,oil
 metal,oil drums
 metal,oil or petrol can
 other,oil OR tar
-plastic,Other
+plastic,other
 other,"other bottles, containers and drums"
 metal,other cans (<4l)
 metal,other food cans OR wrappers
@@ -423,7 +420,7 @@ plastic,rope small
 organic,ropes OR strapping bands
 plastic,ropes OR strapping bands
 rubber,rubber bands
-plastic,Rubbery fragment
+plastic,rubbery fragment
 cloth,sacking
 cloth,"sails, canvas"
 paper,salt packaging
@@ -450,8 +447,8 @@ plastic,shipping OR packaging
 cloth,shoes
 rubber,shoes
 cloth,shoes OR sandals
-paper,shopping bags incl. pieces
-plastic,shopping bags incl. pieces
+paper,shopping bag
+plastic,shopping bag
 metal,shopping trolleys
 plastic,shopping trolleys
 metal,shotgun cartridges
@@ -466,7 +463,7 @@ other,slack OR coal
 metal,small electronic items
 plastic,"small plastic bags, e.g., freezer bags"
 hard plastics,soft drink bottles
-plastic,Sphere
+plastic,sphere
 foam,sponge
 organic,sponge
 plastic,sponge
@@ -548,3 +545,16 @@ wood,wood boards
 wood,wooden trap
 paper,wrappers
 plastic,wrappers
+paper,label
+plastic,label
+cloth,hat
+plastic,tube
+metal,tube
+plastic,container
+metal,container
+wood,container
+metal,paperclip
+wood,box
+metal,box
+plastic,box
+plastic,packet

@@ -4,6 +4,7 @@ Item,Alias,readable
 4or6packyokes,4/6packyokes,4 OR 6 pack yokes
 4or6packyokes,4or6packyokes,4 OR 6 pack yokes
 "advertisements,signs","advertisements,signs","advertisements, signs"
+"advertisements,signs",flyer,"advertisements, signs"
 aerosolcans,aerosol/spraycans,aerosol cans
 aerosolcans,aerosolcans,aerosol cans
 aerosolcans,aerosolcan,aerosol cans
@@ -134,6 +135,7 @@ boatparts,boatparts,boat parts
 bobbins(fishing),bobbins(fishing),bobbins (fishing)
 bolts,bolts,bolts
 "bolts,nails,andscrews","bolts,nails,andscrews","bolts, nails, and screws"
+"bolts,nails,andscrews",washer,"bolts, nails, and screws"
 books,books,books
 boots,rubberbootorshoe,boots
 boots,rubberboots,boots
@@ -156,6 +158,9 @@ bottlecaps,plasticbottlecap,bottle caps
 "bottlecaps,lids&pulltabs",foambottleseals&tabs,"bottle caps, lids & pull tabs"
 "bottlecaps,lids&pulltabs","bottlecaps,lids&pulltabs","bottle caps, lids & pull tabs"
 bottlelabel,bottlelabel,bottle label
+label,label,label
+label,sticker,label
+label,labels,label
 bottleneckrings,plasticringsfrombottlecaps/lids,bottle neck rings
 bottleneckrings,bottleneckrings,bottle neck rings
 "bottles,etc.>2l",beveragebottles:2litresormore(plastic),"bottles, etc. >2L"
@@ -184,6 +189,7 @@ bottles<2l,beveragebottles:lessthan2litres,bottles <2L
 "bricks,cinderblocks,chunksofcement","bricks,cinderblocks,chunksofcement","bricks, cinderblocks, chunks of cement"
 "bricks,cinderblocks,chunksofcement",aggregate&brick,"bricks, cinderblocks, chunks of cement"
 brokenglass,otherglass,broken glass
+brokenglass,shard,broken glass
 brokenglass,glasspiece(unid.),broken glass
 brokenglass,otherglass(commentreq.),broken glass
 brokenglass,glasspieces(2.5cm-10cm),broken glass
@@ -283,6 +289,7 @@ cigarettebutts,cigarettebutts,cigarette butts
 cigarettebutts,cigarettes,cigarette butts
 cigarettebutts,cigaerettes,cigarette butts
 cigarettebutts,cigarrettes,cigarette butts
+cigarettebutts,cigarrette,cigarette butts
 cigarettebutts,cigarettebutt,cigarette butts
 cigarettebuttsandfilters,cigarettesorcigarettefilters,cigarette butts and filters
 cigarettebuttsandfilters,cigarettebuttsandfilters,cigarette butts and filters
@@ -291,6 +298,7 @@ cigarettebuttsandfilters,cigs&cigfilters,cigarette butts and filters
 cigarettefilters,papersfilters,cigarette filters
 cigarettefilters,cigarettefilters,cigarette filters
 cigarettefilters,filters,cigarette filters
+cigarettefilters,filter,cigarette filters
 cigarettelighters,cigarettelighters&packaging,cigarette lighters
 cigarettelighters,disposablecigarettelighters,cigarette lighters
 cigarettelighters,cigarettelighters,cigarette lighters
@@ -316,7 +324,11 @@ clothfragments,otherfabric,cloth fragments
 clothfragments,fabricpieces,cloth fragments
 clothing,articlesofclothing,clothing
 clothing,clothing,clothing
+clothing,shirt,clothing
+clothing,jacket,clothing
 clothing,thongs,clothing
+hat,hats,hat
+hat,hat,hat
 "clothing,hats,gloves&towels","clothing,hats,gloves&towels","clothing, hats, gloves & towels"
 clothing&shoes,footwear&shoes,clothing & shoes
 clothing&shoes,"clothing(clothes,shoes)",clothing & shoes
@@ -352,9 +364,12 @@ condoms,condoms,condoms
 condoms,condoms(cautionifpickingup!),condoms
 "constructionmaterial(brick,cement,pipes)",buildingmaterials,"constructionmaterial(brick,cement,pipes)"
 "constructionmaterial(brick,cement,pipes)","constructionmaterial(brick,cement,pipes)","constructionmaterial(brick,cement,pipes)"
+containersortubes,tubecontainer,containers OR tubes
 containersortubes,plasticpipeortube,containers OR tubes
 containersortubes,containers/tubes,containers OR tubes
 containersortubes,containersortubes,containers OR tubes
+tube,tubes,tube
+tube,tube,tube
 contraceptives,contraceptives,contraceptives
 corks,corks,corks
 "cosmetics(bottles&containerse.g.sunlotion,shampoo,showergel,deodorant)",othercosmeticbottles&containers,"cosmetics(bottles&containerse.g.sunlotion,shampoo,showergel,deodorant)"
@@ -372,6 +387,8 @@ craborlobsterorfishtraps,crablobsterfishtraps(plastic),crab or lobster or fish t
 crabtrapinneedofremoval,crabtrapinneedofremoval,crab trap in need of removal
 crabtrapthathasbeenremoved,crabtrapthathasbeenremoved,crab trap that has been removed
 crates,crates,crates
+container,containers,container
+container,container,container
 cratesandcontainers,cratesandcontainers,crates and containers
 cratesandcontainersorbaskets,cratesandcontainers/baskets,crates and containers OR baskets
 cratesandcontainersorbaskets,cratesandcontainersorbaskets,crates and containers OR baskets
@@ -483,30 +500,35 @@ fastfoodcontainersorcups,containers:fastfood,fastfoodcontainers OR cups
 fastfoodcontainersorcups,take-outpackaging,fastfoodcontainers OR cups
 fastfoodcontainersorcups,fastfoodcontainersorcups,fastfoodcontainers OR cups
 femininehygeneitems,femininehygeneitems,femininehygeneitems
+femininehygeneitems,pad,femininehygeneitems
+femininehygeneitems,pads,femininehygeneitems
 fencing,fencing,fencing
 fenders,fenders,fenders
 fertilizeroranimalfeedbags,fertiliser/animalfeedbags,fertilizer OR animal feed bags
 fertilizeroranimalfeedbags,fertiliser/anima;deefbags,fertilizer OR animal feed bags
 fertilizeroranimalfeedbags,fertilizeroranimalfeedbags,fertilizer OR animal feed bags
-fiber,fiber,Fiber
-fiber,fibres,Fiber
-fiber,fibers,Fiber
-fiberbundle,fiberbundle,Fiber bundle
+fiber,fiber,fiber
+fiber,fibres,fiber
+fiber,fibers,fiber
+fiberbundle,fiberbundle,fiber bundle
 fibreglassorfragments,fibreglassfragments,fibre glass OR fragments
 fibreglassorfragments,fibreglass/fragments,fibre glass OR fragments
 fibreglassorfragments,fibreglass,fibre glass OR fragments
 fibreglassorfragments,fibreglassorfragments,fibre glass OR fragments
 filament<5mm,films<5mm,filament <5mm
 filament<5mm,filament<5mm,filament <5mm
-film,film,Film
-film,films,Film
-film;fragment,film;fragment,Film;Fragment
-film;fragment,films;fragments,Film;Fragment
-film(thinkorflexiblee.g.strawwrapper),plasticfilm,film (think OR flexible e.g. straw wrapper)
-film(thinkorflexiblee.g.strawwrapper),film(thin/flexiblee.g.strawwrapper),film (think OR flexible e.g. straw wrapper)
-film(thinkorflexiblee.g.strawwrapper),film-likeplastics(gladwrapandchipbags),film (think OR flexible e.g. straw wrapper)
-film(thinkorflexiblee.g.strawwrapper),"plasticfilm,wrapperortape",film (think OR flexible e.g. straw wrapper)
-film(thinkorflexiblee.g.strawwrapper),film(thinkorflexiblee.g.strawwrapper),film (think OR flexible e.g. straw wrapper)
+film,film,film
+film,films,film
+film+fragment,film;fragment,film+fragment
+film+fragment,films;fragments,film+fragment
+film+fragment,film+fragment,film+fragment
+film+fragment,films+fragments,film+fragment
+film(thinorflexiblee.g.strawwrapper),strawwrapper,film (thin OR flexible e.g. straw wrapper)
+film(thinorflexiblee.g.strawwrapper),plasticfilm,film (thin OR flexible e.g. straw wrapper)
+film(thinorflexiblee.g.strawwrapper),film(thin/flexiblee.g.strawwrapper),film (thin OR flexible e.g. straw wrapper)
+film(thinorflexiblee.g.strawwrapper),film-likeplastics(gladwrapandchipbags),film (thin OR flexible e.g. straw wrapper)
+film(thinorflexiblee.g.strawwrapper),"plasticfilm,wrapperortape",film (thin OR flexible e.g. straw wrapper)
+film(thinorflexiblee.g.strawwrapper),film(thinorflexiblee.g.strawwrapper),film (thin OR flexible e.g. straw wrapper)
 filmfragments,films/fragments,film fragments
 filmfragments,filmfragments,film fragments
 filmstrip,filmstrip(movie),filmstrip
@@ -569,7 +591,7 @@ fishingweights,fishingweights,fishing weights
 fishingweightsorhooksorlures,fishingweights/hooks/lures,fishingweights OR hooks OR lures
 fishingweightsorhooksorlures,fishingweightsorhooksorlures,fishingweights OR hooks OR lures
 fishpot,fishpot,fish pot
-fishpot(eel),fishpot(eel),fishpot(eel)
+fishpot,fishpot(eel),fish pot
 fizzydrinkbottle,fizzydrinkbottle,fizzy drink bottle
 flip-flops,flipflop,flip-flops
 flip-flops,flip-flops,flip-flops
@@ -579,32 +601,34 @@ floatsforfishingnets,floatsforfishingnets,floats for fishing nets
 floorcover,floorcover,floor cover
 flowerpots,plasticflowerpots,flower pots
 flowerpots,flowerpots,flower pots
-foam,foameduserplastic(>1mm),Foam
-foam,foamfragments,Foam
-foam,misc.foam,Foam
-foam,otherfoam,Foam
-foam,foamedplasticfragments,Foam
-foam,foamedplastic<5mm,Foam
-foam,foameduserplastics,Foam
-foam,"polystyrene(foam,fromesky's.buoysetc.)",Foam
-foam,styrofoam<5mm,Foam
-foam,plasticorfoampieces,Foam
-foam,foampieces(5mmorless),Foam
-foam,"styrofoamchunks,small",Foam
-foam,foampieces(5mm-2.5cm),Foam
-foam,foampieces,Foam
-foam,"styrofoamchunks,large",Foam
-foam,foam,Foam
-foam,foams,Foam
-foam,styrofoam,Foam
-foam,polystyrene,Foam
-foam,extrudedpolystyrene,Foam
+foam,foameduserplastic(>1mm),foam
+foam,foamfragments,foam
+foam,misc.foam,foam
+foam,otherfoam,foam
+foam,foamedplasticfragments,foam
+foam,foamedplastic<5mm,foam
+foam,foameduserplastics,foam
+foam,"polystyrene(foam,fromesky's.buoysetc.)",foam
+foam,styrofoam<5mm,foam
+foam,plasticorfoampieces,foam
+foam,foampieces(5mmorless),foam
+foam,"styrofoamchunks,small",foam
+foam,foampieces(5mm-2.5cm),foam
+foam,foampieces,foam
+foam,"styrofoamchunks,large",foam
+foam,foam,foam
+foam,foams,foam
+foam,styrofoam,foam
+foam,polystyrene,foam
+foam,extrudedpolystyrene,foam
 foil,"foilwrapper,aluminiumfoil",foil
 foil,alumninumfoil,foil
 foil,"metal(soft,tinfoil)",foil
 foil,"othermetal,foil",foil
 foil,foil,foil
 food,foodwaste,food
+food,candy,food
+food,gum,food
 food,foodother,food
 food,food,food
 foodcans,foodcans,food cans
@@ -635,9 +659,12 @@ foodwrappersorcontainers,foodwrappers/containers,food wrappers or containers
 football,football,football
 fork,fork,fork
 forsaleposters,forsaleposters,forsale posters
-fragment,fragment,Fragment
-fragment,fragments,Fragment
-fragment,granules<5mm,Fragment
+fragment,fragment,fragment
+fragment,fragments,fragment
+fragment,granules<5mm,fragment
+fragments(trash),part,fragments(trash)
+fragments(trash),scraps,fragments(trash)
+fragments(trash),scrap,fragments(trash)
 fragments(trash),otherfragments,fragments(trash)
 fragments(trash),foampieces(2.5cm-10cm),fragments(trash)
 fragments(trash),fragmentsofsoftplastic,fragments(trash)
@@ -670,6 +697,7 @@ fragments(trash),rubberdebris,fragments(trash)
 fragments(trash),rubberpieces<50cm,fragments(trash)
 fragments(trash),woodfragments,fragments(trash)
 fragments(trash),fragments(trash),fragments(trash)
+furniture,bookend,furniture
 furniture,furnishings,furniture
 furniture,furnishings(wood),furniture
 furniture,furnishings(plastic),furniture
@@ -746,6 +774,7 @@ lids,plasticlid,lids
 lids,plasticlids,lids
 lids,"plasticlids(coffee,jars+)",lids
 lids,"plasticlids:coffee,jars,etc.",lids
+lids,lid,lids
 lids,lids,lids
 lightbulbs,lightglobes/bulbs,light bulbs
 lightbulbs,lightbulbs,light bulbs
@@ -763,12 +792,12 @@ lobsterandfishtags,tags(fishingandindustry),lobster and fish tags
 lobsterandfishtags,lobsterandfishtags,lobster and fish tags
 lobsterclawbands,lobsterbands,lobster claw bands
 lobsterclawbands,lobsterclawbands,lobster claw bands
-lobsterorcrabpots&tops,crab/lobsterpots,lobster OR crab pots & tops
-lobsterorcrabpots&tops,lobster/crabpotsandtops,lobster OR crab pots & tops
-lobsterorcrabpots&tops,lobster/crabpots&tops,lobster OR crab pots & tops
-lobsterorcrabpots&tops,crab/lobsterpotsandtops,lobster OR crab pots & tops
-lobsterorcrabpots&tops,lobster/crabpots,lobster OR crab pots & tops
-lobsterorcrabpots&tops,lobsterorcrabpots&tops,lobster OR crab pots & tops
+fishpot,crab/lobsterpots,fish pot
+fishpot,lobster/crabpotsandtops,fish pot
+fishpot,lobster/crabpots&tops,fish pot
+fishpot,crab/lobsterpotsandtops,fish pot
+fishpot,lobster/crabpots,fish pot
+fishpot,lobsterorcrabpots&tops,fish pot
 lollipopsticks&cottonbuds,lollipopsticks&cottonbuds,lollipop sticks & cotton buds
 lollysticks,lollysticks,lolly sticks
 lumberorbuildingmaterial,otherpaperorlumber,lumber OR building material
@@ -851,6 +880,7 @@ motorbikesorparts,motorbikes/parts,motorbikes OR parts
 motorbikesorparts,motorbikesorparts,motorbikes OR parts
 nails,nails,nails
 napkins,napkins,napkins
+napkins,napkin,napkins
 napkins,napkins/wipes,napkins
 netsandpiecesofnet,net(estimatesize),nets and pieces of net
 netsandpiecesofnet,plasticnetornetpieces,nets and pieces of net
@@ -874,28 +904,28 @@ non-beveragecontainersorbottles,non-beveragecontainersorbottles,non-beverage con
 non-foodrelatedplasticpackaging,otherplastic/foampackaging,non-food related plastic packaging
 non-foodrelatedplasticpackaging,noidplastic,non-food related plastic packaging
 non-foodrelatedplasticpackaging,non-foodrelatedplasticpackaging,non-food related plastic packaging
-nurdle,plasticnurdles,Nurdle
-nurdle,nurdle,Nurdle
-octopuspots,octopusjar,octopus pots
-octopuspots,octopuspots,octopus pots
-octopuspots,octopustops,octopus pots
+nurdle,plasticnurdles,nurdle
+nurdle,nurdle,nurdle
+fishpot,octopusjar,fish pot
+fishpot,octopuspots,fish pot
+fishpot,octopustops,fish pot
 oil,oil,oil
 oildrums,oildrums,oil drums
 oilorpetrolcan,oilorpetrolcan,oil or petrol can
 oilortar,oil/tar,oil OR tar
 oilortar,oilortar,oil OR tar
-other,othermetalpieces<50cm,Other
-other,other(metal),Other
-other,otherrubber,Other
-other,othercloth,Other
-other,otherrubberpieces,Other
-other,otherunknown,Other
-other,other(pleasespecifyortakephoto),Other
-other,other(specify),Other
-other,othermetal,Other
-other,other(pleasespecifyortakeaphoto),Other
-other,other:,Other
-other,other,Other
+other,othermetalpieces<50cm,other
+other,other(metal),other
+other,otherrubber,other
+other,othercloth,other
+other,otherrubberpieces,other
+other,otherunknown,other
+other,other(pleasespecifyortakephoto),other
+other,other(specify),other
+other,othermetal,other
+other,other(pleasespecifyortakeaphoto),other
+other,other:,other
+other,other,other
 "otherbottles,containersanddrums",otherbottles&containers(drums),"other bottles, containers and drums"
 "otherbottles,containersanddrums","drinks(bottles,containersanddrums)","other bottles, containers and drums"
 "otherbottles,containersanddrums",conatinerdrums,"other bottles, containers and drums"
@@ -929,6 +959,7 @@ oysternetsormusselbagsincludingplasticstoppers,oysternetsormusselbagsincludingpl
 oysternetsormusselbagsincludingplasticstoppers,"nusselsnets,oysternets",oyster nets or mussel bags including plastic stoppers
 oystertrays(roundfromoystercultures),oystertrays(roundfromoystercultures),oyster trays (round from oyster cultures)
 packaging,plasticpackaging,packaging
+packaging,packingmaterial,packaging
 packaging,hardplasticpackaging,packaging
 packaging,paperpackaging,packaging
 packaging,packaging,packaging
@@ -947,6 +978,7 @@ paper,paper,paper
 paper,paperdebris,paper
 paper,paperfragments,paper
 paper,stationary,paper
+paperornapkinsortissues,tissue,paper OR napkins OR tissues
 paperornapkinsortissues,paper/tissue/napkin,paper OR napkins OR tissues
 paperornapkinsortissues,paper/napkins/tissues,paper OR napkins OR tissues
 paperornapkinsortissues,paperornapkinsortissues,paper OR napkins OR tissues
@@ -992,6 +1024,7 @@ pulltabs:beverages,pulltabs,pull tabs: beverages
 pulltabs:beverages,pulltabs:beverages,pull tabs: beverages
 rags,rags,rags
 reciepts,receipts,reciepts
+reciepts,receipt,reciepts
 reciepts,paperreceipt,reciepts
 reciepts,plastic-coatedreceipt,reciepts
 reciepts,reciepts,reciepts
@@ -1034,8 +1067,12 @@ ropesorstrappingbands,ropesorstrappingbands,ropes OR strapping bands
 rubberbands,"rubberbands(small,forkitchen/household/potuse)",rubber bands
 rubberbands,rubberbands,rubber bands
 rubberbands,rubberband,rubber bands
-rubberyfragment,rubberfragments,Rubbery fragment
-rubberyfragment,rubberyfragment,Rubbery fragment
+paperclip,paperclip,paperclip
+paperclip,paper-clip,paperclip
+paperclip,paperclips,paperclip
+paperclip,paper-clips,paperclip
+rubberyfragment,rubberfragments,rubbery fragment
+rubberyfragment,rubberyfragment,rubbery fragment
 sacking,sacking(hessian),sacking
 sacking,sacking,sacking
 sacking,burlapsack,sacking
@@ -1064,9 +1101,9 @@ screws,screws,screws
 scuba&snorkelgear,scuba&snorkelgear,scuba&snorkelgear
 scubaweights,scubaweights,scuba weights
 "sharpneedles,lancets,metalcatheters","sharpneedles,lancets,metalcatheters","sharp needles, lancets, metal catheters"
-sheet,sheet,Sheet
-sheet,flake,Sheet
-sheet,sheets,Sheet
+sheet,sheet,sheet
+sheet,flake,sheet
+sheet,sheets,sheet
 sheet-likeuserpellets,sheet-likeuserpellets,sheet-like user pellets
 sheet-likeuserplastic(>1mm),threadlikeuserplastic(>1mm),sheet-like user plastic (>1mm)
 sheet-likeuserplastic(>1mm),sheetlikeuserplastics,sheet-like user plastic (>1mm)
@@ -1093,7 +1130,9 @@ shoesorsandals,shoes/sandals,shoes OR sandals
 shoesorsandals,"shoes,flipflops,sandals,tennis,etc.",shoes OR sandals
 shoesorsandals,"shoesandsandals(e.g.leather,cloth)",shoes OR sandals
 shoesorsandals,shoesorsandals,shoes OR sandals
-shoppingbagsincl.pieces,shoppingbagsincl.pieces,shopping bags incl. pieces
+shoppingbag,shoppingbag,shopping bag
+shoppingbag,shoppingbagsincl.pieces,shopping bag
+shoppingbag,shoppingbags,shopping bag
 shoppingtrolleys,shoppingtrolleys,shopping trolleys
 shotguncartridges,shotgunshellsorwadding,shotgun cartridges
 shotguncartridges,shotguncartridges,shotgun cartridges
@@ -1121,12 +1160,12 @@ smallelectronicitems,smallelectronicitems,small electronic items
 "smallplasticbags,e.g.,freezerbags","smallplasticbags,e.g.,freezerbags","small plastic bags, e.g., freezer bags"
 softdrinkbottles,softdrinkother,soft drink bottles
 softdrinkbottles,softdrinkbottles,soft drink bottles
-sphere,sphere,Sphere
-sphere,sphericals,Sphere
-sphere,spherical,Sphere
-sphere,spheres,Sphere
-sphere,smallindustrialspheres(<5mm),Sphere
-sphere,spheruloidspellets<5mm,Sphere
+sphere,sphere,sphere
+sphere,sphericals,sphere
+sphere,spherical,sphere
+sphere,spheres,sphere
+sphere,smallindustrialspheres(<5mm),sphere
+sphere,spheruloidspellets<5mm,sphere
 sponge,foamsponge,sponge
 sponge,sponge,sponge
 spoon,spoon,spoon
@@ -1245,6 +1284,7 @@ unbaggeddogfaeces,dogpoop(un-bagged),unbagged dog faeces
 unbaggeddogfaeces,dogshit,unbagged dog faeces
 utensil,utensils,utensil
 utensil,utensil,utensil
+utensil,utensilhandle,utensil
 utensil,plasticutensils,utensil
 utensil,utensils(plastic),utensil
 utensil,plasticutensil,utensil
@@ -1254,6 +1294,8 @@ utensil,woodenutensils,utensil
 waterbottles,plasticwaterbottle,water bottles
 waterbottles,waterbottles,water bottles
 wetwipes,wetwipe,wet wipes
+wetwipes,wipe,wet wipes
+wetwipes,wipes,wet wipes
 wetwipes,wetwipes,wet wipes
 wheels,wheels,wheels
 winebottle,winebottle,wine bottle
@@ -1272,5 +1314,11 @@ woodboards,woodboards,wood boards
 woodboards,"wood(posts,beams,shiphulls)",wood boards
 woodentrap,woodentrap,wooden trap
 wrappers,foilwrappers,wrappers
+wrappers,wrapper,wrappers
+wrappers,gumwrapper,wrappers
 wrappers,wrappers,wrappers
 wrappers,wrappers(foil/metal),wrappers
+box,box,box
+box,boxes,box
+packet,packet,packet
+packet,packets,packet

@@ -193,6 +193,16 @@ for(x in 1:nrow(similarity_rank)){
 
 rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(rank_total_count$rank_total)/nrow(words_to_match))*100)
 
+#Save item vector DB
+words_to_match <- item_alias_clean %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+item_DB_full <- add_collection(metadata = words_to_match)
+#save to rda file
+saveRDS(item_DB_full, file = "data/items_vectorDB.rda")
+
+
 
 #Retrieve embeddings for prime materials
 material_alias <- read.csv("data/PrimeMaterials_no_abrv.csv")
@@ -245,6 +255,14 @@ for(x in 1:nrow(similarity_rank)){
 
 rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(rank_total_count$rank_total)/nrow(words_to_match))*100)
 
+#Save material vector DB
+words_to_match <- material_alias %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+material_DB_full <- add_collection(metadata = words_to_match)
+#save to rda file
+saveRDS(material_DB_full, file = "data/materials_vectorDB.rda")
 
 
 
@@ -269,6 +287,23 @@ rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(ran
 #predictions <- predict(fine_tuned_model, new_data)
 
 # Further iterations, adjustments, or improvements as necessary
+
+ourclean <- read.csv("tests/our_clean_community_particle.csv")
+ourclean_clean <- mutate_all(ourclean, cleantext)
+ourclean_clean <- ourclean_clean %>% left_join(Items_Alias, by = c("items" = "Alias"))
+dataframeclean <- ourclean_clean %>% filter(is.na(Item)) %>% distinct()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

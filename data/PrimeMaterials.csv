@@ -60,6 +60,7 @@ paperorcardboard,paper/carton,paper OR cardboard
 plastic,plastic,plastic
 plastic,plastics,plastic
 plastic,plasticmaterials,plastic
+plastic,polymeric,plastic
 plastic,plasticfragments,plastic
 polystyrene,plastic/polystyrene,polystyrene
 plastic,plastic/styrofoam,plastic
@@ -93,7 +94,7 @@ abs,abs,ABS
 abs,polyethersulfone,ABS
 abs,acrylonitrilebutadienestyrene,ABS
 abs,acrylonitrilebutadienestyrene(abs),ABS
-acrylic,acrylic,Acrylic
+PAN,acrylic,PAN
 ar,ar,AR
 bisphenolapolysulfone,bisphenolapolysulfone,Bisphenol A Polysulfone
 bisphenol-adiglycidyletherepoxyresin,bisphenol-adiglycidyletherepoxyresin,Bisphenol-A diglycidyl ether epoxy resin
@@ -114,6 +115,10 @@ isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
 kevlar-polyaramide,kevlar-polyaramide,Kevlar - Polyaramide
 ldpe,ldpe,LDPE
 ldpe,lowdensitypolyethylene,LDPE
+ldpe,low-densitypolyethylene,LDPE
+hdpe,hdpe,HDPE
+hdpe,highdensitypolyethylene,HDPE
+hdpe,high-densitypolyethylene,HDPE
 melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 methylcellulose,methylcellulose,Methyl Cellulose
 mineral,mineral,mineral
@@ -139,8 +144,9 @@ pa,pa,PA
 pa,polyamide,PA
 pa,nylon,PA
 pa,pa/nylon,PA
-pa;er,pa;er,PA;ER
-pa;er,pa/epoxyresin,PA;ER
+pa+er,pa+er,PA+ER
+pa+er,pa;er,PA+ER
+pa+er,pa/epoxyresin,PA+ER
 paa,paa,PAA
 paa,polyacrylicacid,PAA
 paa,poly(acrylicacid),PAA
@@ -180,7 +186,8 @@ pet,pet,PET
 pet,polyethyleneterephthalate,PET
 pet,pete,PET
 pet,poly(ethyleneterephthalate),PET
-pet-pest,pet-pest,PET-PEST
+pet+pest,pet-pest,PET+PEST
+pet+pest,pet+pest,PET+PEST
 pet+olefin,pet+olefin,PET+olefin
 peva,peva,PEVA
 peva,polyethylene-vinylacetate,PEVA
@@ -476,11 +483,15 @@ sbr,sbr,SBR
 sbr,styrene-butadienerubber,SBR
 sbr,butadiene/butylrubber,SBR
 sbr,styrene-butadiene,SBR
-semi-syntheticcellulose,semi-syntheticcellulose,semi-synthetic cellulose
+ca,semi-syntheticcellulose,CA
 silicone,silicone,Silicone
 styrene-isoprene,styrene-isoprene,Styrene-isoprene
 styrene-maleic,styrene-maleic,Styrene-maleic
 urea-formaldehyde,urea-formaldehyde,Urea-formaldehyde
 vinyl,vinyl,Vinyl
-vinyon,vinyon,Vinyon
+vinyl,vinyon,Vinyl
 wool,wool,wool
+co-polymers,co-polymers,Co-Polymers
+co-polymers,copolymers,Co-polymers
+co-polymers,copolymer,Co-polymers
+co-polymers,co-polymer,Co-polymers

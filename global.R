@@ -32,6 +32,8 @@ library(plotly)
 library(shinyWidgets)
 library(shinyBS)
 
+#setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
+
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   .confidence_interval_width <- function(proportion, sample_size, population_size){
     1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
@@ -140,6 +142,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
+PrimeUnclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 primeItems <- read.csv("data/PrimeItems.csv")
 primeMaterials <- read.csv("data/PrimeMaterials.csv")
@@ -184,7 +187,7 @@ confidence_interval_width <- function(data){
   #sample_size = sum(data$count)
   sample_size = length(data)
   population_size = 10000
-  1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
+  1.96*abs(sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1)))
 }
 
 AggregateTrees <- function(DF, Alias, Hierarchy){
@@ -255,8 +258,8 @@ grouped_uncertainty <- function(DF_group, Group_Alias, Group_Hierarchy, type){
   df_join_boot <- df_join %>%
     group_by(from, to) %>%
     summarise(mean_prop = mean(totalsum, na.rm = T), 
-              min_prop = confidence_interval_width(totalsum) - mean(totalsum, na.rm = T), 
-              max_prop = confidence_interval_width(totalsum) + mean(totalsum, na.rm = T))
+              min_prop = mean(totalsum, na.rm = T) - confidence_interval_width(totalsum), 
+              max_prop = mean(totalsum, na.rm = T) + confidence_interval_width(totalsum))
   
 }
 
@@ -272,7 +275,7 @@ sunburstplot <-function(df_join_boot){
                   ")%", 
                   sep = "")
   
-  values[df_join_boot$mean_prop < 0.1] <- NA
+  values[df_join_boot$mean_prop < 0.07] <- NA
   
   plot_ly() %>%
     add_trace(
@@ -283,8 +286,12 @@ sunburstplot <-function(df_join_boot){
       domain = list(column = 1), 
       branchvalues = 'total',
       texttemplate = values,
-      values = df_join_boot$mean_prop) 
+      values = df_join_boot$mean_prop) %>%
+    layout(colorway = c("#8DD3C7", "#FFFFB3", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5", "#D9D9D9", "#BC80BD"))
+    
 }
+
+#brewer.pal(n = 10, name = "Set3")
 
 ###create function to derive correction factor (CF) from Koelmans et al (equation 2)
 CFfnx = function(a, #default alpha from Koelmans et al (2020)

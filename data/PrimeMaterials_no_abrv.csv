@@ -1,6 +1,16 @@
 Material,Alias,readable
+"1,4-polyisoprene(cisandtrans)(latex)","1,4-polyisoprene(cisandtrans)(latex)","1,4-Polyisoprene (cis and trans)(Latex)"
 biohazard,toxic,biohazard
 biohazard,biohazard,biohazard
+biohazard,medicalwaste,biohazard
+biohazard,medical/personalhygiene,biohazard
+biohazard,medical,biohazard
+bisphenolapolysulfone,bisphenolapolysulfone,Bisphenol A Polysulfone
+bisphenol-adiglycidyletherepoxyresin,bisphenol-adiglycidyletherepoxyresin,Bisphenol-A diglycidyl ether epoxy resin
+bisphenol-fdiglycidyletherepoxyresin,bisphenol-fdiglycidyletherepoxyresin,Bisphenol-F diglycidyl ether epoxy resin
+cellophane,cellophane,Cellophane
+cellulosederivatives(ethercellulose),cellulosederivatives(ethercellulose),Cellulose Derivatives (Ether Cellulose)
+cellulosenitrate,cellulosenitrate,Cellulose Nitrate
 ceramic,pottery/ceramic,ceramic
 ceramic,concrete/pottery,ceramic
 ceramic,pottery/ceramics,ceramic
@@ -15,9 +25,19 @@ cloth,fabric/cloth,cloth
 cloth,naturalproducts/clothes,cloth
 cloth,cloth/fabric,cloth
 cloth,textiles,cloth
-cotton,textiles/naturalfibers,cotton
 cloth,cloth/textile,cloth
 cloth,clothmaterials,cloth
+co-polymers,co-polymers,Co-Polymers
+co-polymers,copolymers,Co-polymers
+co-polymers,copolymer,Co-polymers
+co-polymers,co-polymer,Co-polymers
+concreteorasphalt,concreteorasphalt,concrete OR asphalt
+concreteorasphalt,concrete/asphalt,concrete OR asphalt
+cotton,textiles/naturalfibers,cotton
+cotton,cotton,cotton
+epdmrubber(ethylenepropylenedienemonomerrubber),epdmrubber(ethylenepropylenedienemonomerrubber),EPDM rubber (ethylene propylene diene monomer rubber)
+ethylcellulose,ethylcellulose,Ethyl Cellulose
+ethylene-propylene,ethylene-propylene,Ethylene-propylene
 faeces,animalfaeces,faeces
 faeces,faeces,faeces
 fibreglass,fibreglass,fibreglass
@@ -25,7 +45,6 @@ foam,foam,foam
 polystyrene,polystyrene,foam
 foam,polystyrenefoam,foam
 foam,styrofoam,foam
-polystyrene,styro.,polystyrene
 foam,foamedplastic,foam
 glass,glass,glass
 glassorceramic,glassorceramic,glass OR ceramic
@@ -34,74 +53,13 @@ glassorceramic,glass/ceramic,glass OR ceramic
 glassorceramic,glass/ceramics,glass OR ceramic
 glassorceramic,glass&ceramic,glass OR ceramic
 hardplastics,hardplastics,hard plastics
+isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
+kevlar-polyaramide,kevlar-polyaramide,Kevlar - Polyaramide
+leather,leather,leather
+melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 metal,metals,metal
 metal,metalmaterials,metal
 metal,metal,metal
-leather,leather,leather
-organic,food,organic
-organic,biodegradable,organic
-organic,organic,organic
-organic,organics,organic
-organic,organicitems,organic
-organic,organicmatter,organic
-other,miscellaneous,other
-other,other,other
-other,others,other
-other,mixedmaterials,other
-other,otheritems,other
-woodandpaper,cigarette,wood and paper
-otherplastic,otherplastic,other plastic
-other,unidentified,other
-paper,paper,paper
-paperorcardboard,paperorcardboard,paper OR cardboard
-paperorcardboard,paper/cardboardmaterials,paper OR cardboard
-paperorcardboard,paper/cardboard,paper OR cardboard
-paperorcardboard,paper/carton,paper OR cardboard
-plastic,plastic,plastic
-plastic,plastics,plastic
-plastic,plasticmaterials,plastic
-plastic,plasticfragments,plastic
-polystyrene,plastic/polystyrene,polystyrene
-plastic,plastic/styrofoam,plastic
-plastic,artificialpolymermaterials,plastic
-rubber,rubbermaterials,rubber
-rubber,rubber,rubber
-sanitarywaste,sanitarywaste,sanitary waste
-sanitarywaste,personalhygiene,sanitary waste
-biohazard,medicalwaste,biohazard
-sanitarywaste,sanitary,sanitary waste
-biohazard,medical/personalhygiene,biohazard
-biohazard,medical,biohazard
-softplastics,softplastics,soft plastics
-wood,wood,wood
-wood,woodydebris,wood
-processedwood,processedwood,processed wood
-wood,man.wood,wood
-wood,lumber,wood
-processedwood,processedlumber,processed wood
-woodandpaper,woodmaterials,wood and paper
-wood,timber,wood
-processedwood,processed/workedwood,processed wood
-wood,wood(machined),wood
-woodandpaper,woodandpaper,wood and paper
-woodandpaper,paper&lumber,wood and paper
-concreteorasphalt,concreteorasphalt,concrete OR asphalt
-concreteorasphalt,concrete/asphalt,concrete OR asphalt
-"1,4-polyisoprene(cisandtrans)(latex)","1,4-polyisoprene(cisandtrans)(latex)","1,4-Polyisoprene (cis and trans)(Latex)"
-acrylic,acrylic,Acrylic
-bisphenolapolysulfone,bisphenolapolysulfone,Bisphenol A Polysulfone
-bisphenol-adiglycidyletherepoxyresin,bisphenol-adiglycidyletherepoxyresin,Bisphenol-A diglycidyl ether epoxy resin
-bisphenol-fdiglycidyletherepoxyresin,bisphenol-fdiglycidyletherepoxyresin,Bisphenol-F diglycidyl ether epoxy resin
-cellophane,cellophane,Cellophane
-cellulosederivatives(ethercellulose),cellulosederivatives(ethercellulose),Cellulose Derivatives (Ether Cellulose)
-cellulosenitrate,cellulosenitrate,Cellulose Nitrate
-cotton,cotton,cotton
-epdmrubber(ethylenepropylenedienemonomerrubber),epdmrubber(ethylenepropylenedienemonomerrubber),EPDM rubber (ethylene propylene diene monomer rubber)
-ethylcellulose,ethylcellulose,Ethyl Cellulose
-ethylene-propylene,ethylene-propylene,Ethylene-propylene
-isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
-kevlar-polyaramide,kevlar-polyaramide,Kevlar - Polyaramide
-melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 methylcellulose,methylcellulose,Methyl Cellulose
 mineral,mineral,mineral
 neoprene,neoprene,neoprene
@@ -121,11 +79,33 @@ nylon6-poly(caprolactam),nylon6-poly(caprolactam),Nylon 6 - Poly(caprolactam)
 "nylon6,9-poly(hexamethyleneazelamide)","nylon6,9-poly(hexamethyleneazelamide)","Nylon 6,9 - Poly(hexamethylene azelamide)"
 nylon8-polycapryllactam,nylon8-polycapryllactam,Nylon 8 - Polycapryllactam
 olefin,olefin,Olefin
+organic,food,organic
+organic,biodegradable,organic
+organic,organic,organic
+organic,organics,organic
+organic,organicitems,organic
+organic,organicmatter,organic
+other,miscellaneous,other
+other,other,other
+other,others,other
+other,mixedmaterials,other
+other,otheritems,other
+other,unidentified,other
 other,othermaterial,other
-peek-poly(etheretherketone),peek-poly(etheretherketone),PEEK - Poly(ether ether ketone)
-pek-poly(etherketone),pek-poly(etherketone),PEK - Poly(ether ketone)
-pekk-poly(etherketoneketone),pekk-poly(etherketoneketone),PEKK - Poly(ether ketone ketone)
+otherplastic,otherplastic,other plastic
+paper,paper,paper
+paperorcardboard,paperorcardboard,paper OR cardboard
+paperorcardboard,paper/cardboardmaterials,paper OR cardboard
+paperorcardboard,paper/cardboard,paper OR cardboard
+paperorcardboard,paper/carton,paper OR cardboard
 phenolformaldehyde,phenolformaldehyde,Phenol formaldehyde
+plastic,plastic,plastic
+plastic,plastics,plastic
+plastic,plasticmaterials,plastic
+plastic,polymeric,plastic
+plastic,plasticfragments,plastic
+plastic,plastic/styrofoam,plastic
+plastic,artificialpolymermaterials,plastic
 plasticadditive,plasticadditive,Plastic additive
 poiy(1-chloro-1-butenylene)(polychloroprene),poiy(1-chloro-1-butenylene)(polychloroprene),PoIy(1-chloro-1-butenylene) (Polychloroprene)
 poly(_-methylstyrene),poly(_-methylstyrene),Poly(-methylstyrene)
@@ -362,6 +342,8 @@ polyphenylenes(polyaromatics),polyphenylenes(polyaromatics),Polyphenylenes (POLY
 polyphenylethers(polyphenyleneoxide),polyphenylethers(polyphenyleneoxide),Polyphenylethers (POLYPHENYLENEOXIDE)
 polysebacates,polysebacates,Polysebacates
 polysiloxanes,polysiloxanes,Polysiloxanes
+polystyrene,styro.,polystyrene
+polystyrene,plastic/polystyrene,polystyrene
 "polystyrenes(polyphenylethylenes,_-methylstyrene)","polystyrenes(polyphenylethylenes,_-methylstyrene)","POLYSTYRENES (POLYPHENYLETHYLENES, _-Methylstyrene)"
 polystyrenes(polyphenylethylenes),polystyrenes(polyphenylethylenes),Polystyrenes (POLYPHENYLETHYLENES)
 polysuccinates,polysuccinates,Polysuccinates
@@ -373,12 +355,30 @@ polyvinylesters,polyvinylesters,Polyvinylesters
 polyvinylethers,polyvinylethers,Polyvinylethers
 polyvinylketones,polyvinylketones,Polyvinylketones
 polyvinylsulfides,polyvinylsulfides,Polyvinylsulfides
+processedwood,processedwood,processed wood
+processedwood,processedlumber,processed wood
+processedwood,processed/workedwood,processed wood
 rayon,rayon,Rayon
-semi-syntheticcellulose,semi-syntheticcellulose,semi-synthetic cellulose
+rubber,rubbermaterials,rubber
+rubber,rubber,rubber
+sanitarywaste,sanitarywaste,sanitary waste
+sanitarywaste,personalhygiene,sanitary waste
+sanitarywaste,sanitary,sanitary waste
 silicone,silicone,Silicone
+softplastics,softplastics,soft plastics
 styrene-isoprene,styrene-isoprene,Styrene-isoprene
 styrene-maleic,styrene-maleic,Styrene-maleic
 urea-formaldehyde,urea-formaldehyde,Urea-formaldehyde
 vinyl,vinyl,Vinyl
-vinyon,vinyon,Vinyon
+vinyl,vinyon,Vinyl
+wood,wood,wood
+wood,woodydebris,wood
+wood,man.wood,wood
+wood,lumber,wood
+wood,timber,wood
+wood,wood(machined),wood
+woodandpaper,cigarette,wood and paper
+woodandpaper,woodmaterials,wood and paper
+woodandpaper,woodandpaper,wood and paper
+woodandpaper,paper&lumber,wood and paper
 wool,wool,wool
