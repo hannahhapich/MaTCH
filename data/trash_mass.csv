@@ -1,5 +1,6 @@
-weight_estimate_g,item,material
+weight_estimate_g,items,material
 6.46,bag (grocery),plastic
+6.46,bag (grocery),paper
 8.52,"bag (zip-lock, produce, other)",paper
 8.52,"bag (zip-lock, produce, other)",plastic
 25.39,bags,paper
@@ -14,8 +15,8 @@ weight_estimate_g,item,material
 82.5,batteries,metal
 22.97,beverage bottles,plastic
 16.94,beverage cans,metal
-22.3,beverage conatiners,paper
-22.3,beverage conatiners,plastic
+22.3,beverage containers,paper
+22.3,beverage containers,plastic
 82.5,"bolts, nails, and screws",metal
 82.5,"bolts, nails, and screws",plastic
 82.5,"bolts, nails, and screws",foam
@@ -35,6 +36,7 @@ weight_estimate_g,item,material
 82.5,car parts,plastic
 82.5,"cd, cd-box",plastic
 0.29,cigarette butts,plastic
+0.29,cigarette butts,paper
 0.29,cigarette filters,plastic
 0.29,cigarette filters,organic
 82.5,cigarette lighters,plastic
@@ -46,12 +48,15 @@ weight_estimate_g,item,material
 0.29,cigar tips,plastic
 82.5,cloth fragments,cloth
 82.5,clothing,cloth
+82.5,clothing,plastic
 82.5,"clothing, hats, gloves & towels",plastic
 82.5,"clothing, hats, gloves & towels",organic
 5.05,coffee cup,paper
 15.05,coffee cup,metal
 3.64,coffee cup lid,plastic
 29.8,containers OR tubes,plastic
+29.8,containers OR tubes,paper
+29.8,containers OR tubes,metal
 29.8,"cosmetics(bottles&containerse.g.sunlotion,shampoo,showergel,deodorant)",plastic
 82.5,cotton bud sticks,paper
 82.5,cotton bud sticks,plastic
@@ -67,7 +72,7 @@ weight_estimate_g,item,material
 82.5,drugs,plastic
 82.5,ear plugs,plastic
 82.5,ear plugs,rubber
-14.61,film (think OR flexible e.g. straw wrapper),plastic
+14.61,film (thin OR flexible e.g. straw wrapper),plastic
 5.05,foil,metal
 29,food,food
 29,food,plastic
@@ -80,16 +85,16 @@ weight_estimate_g,item,material
 15.42,food wrappers or containers,paper OR cardboard
 15.42,food wrappers or containers,plastic
 15.42,food wrappers or containers,metal
-1.05,Fragment,glass
-1.05,Fragment,plastic
-1.05,Fragment,metal
-1.05,Fragment,paper
-1.05,Fragment,rubber
-1.05,Fragment,cloth
-1.05,Fragment,foam
-1.05,Fragment,paper OR cardboard
-1.05,Fragment,wood
-1.05,Fragment,other
+1.05,fragments(trash),glass
+1.05,fragments(trash),plastic
+1.05,fragments(trash),metal
+1.05,fragments(trash),paper
+1.05,fragments(trash),rubber
+1.05,fragments(trash),cloth
+1.05,fragments(trash),foam
+1.05,fragments(trash),paper OR cardboard
+1.05,fragments(trash),wood
+1.05,fragments(trash),other
 82.5,gloves,rubber
 82.5,gloves,plastic
 82.5,gloves,cloth
@@ -128,6 +133,7 @@ weight_estimate_g,item,material
 82.5,Other,other
 82.5,Other,glass
 82.5,Other,concrete OR asphalt
+82.5,Other,wood
 29.8,"other bottles, containers and drums",plastic
 29.8,"other bottles, containers and drums",paper
 82.5,packaging,foam
@@ -155,8 +161,8 @@ weight_estimate_g,item,material
 13.94,plates,paper
 1.3,popsicle stick,wood
 2,pull tabs: beverages,metal
-5,reciepts,paper
-5,reciepts,plastic
+5,receipts,paper
+5,receipts,plastic
 8,rope,cloth
 8,rope,organic
 8,rubber bands,rubber

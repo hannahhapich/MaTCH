@@ -438,3 +438,67 @@ MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
   rename(Key = Material) %>%
   select(-readable)
 
+#data tables for count to mass conversion
+#Make polymer-density dataframe
+#Output correct survey sheet
+polymer_db_ <- data.frame(polymer_db)
+polymer_db_$material <- cleantext(polymer_db_$material)
+polymer_db_$density <- as.numeric(polymer_db_$density)
+polymer_db_$lower_conf <- as.numeric(polymer_db_$lower_conf)
+polymer_db_$upper_conf <- as.numeric(polymer_db_$upper_conf)
+density_mg_um_3 <- polymer_db_$density * 1e-9
+density_min <- polymer_db_$lower_conf * 1e-9
+density_max <- polymer_db_$upper_conf * 1e-9
+polymer_db_ <- polymer_db_ %>%
+  mutate(density_mg_um_3 = density_mg_um_3,
+         density_max = density_max,
+         density_min = density_min)
+polymer_density <- polymer_db_ %>%
+  select(material, density_mg_um_3, density_max, density_min)
+
+#Add +/- 5% error for measured particle dimensions
+morphology <- c("fragment","sphere","fiber","film","foam")
+meas_min <- 0.95
+meas_max <- 1.05
+
+#Min and max values given in Kooi Koelmans
+W_min <- c(0.1,0.60,0.001,0.1,0.1)
+W_max <- c(1,1,0.5,1,1)
+W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
+W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
+H_min <- c(0.01,0.36,0.001,0.001,0.01)
+H_max <- c(1,1,0.5,0.1,1)
+H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
+H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
+
+#Assuming min and max encompass 99.7% of normal distribution, calculate 95% confidence interval
+W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
+W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
+H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
+H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
+
+morphology_shape <- data.frame(morphology=morphology,
+                               L_min=L_min,
+                               L_max=L_max,
+                               W_min=W_min,
+                               W_max=W_max,
+                               H_min=H_min,
+                               H_max=H_max
+)
+
+#convert morphologies in TT to morphologies with defined dimensions
+morphology <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "film", "fragment", "rubberyfragment", "fiberbundle")
+morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
+morph_conversion <- data.frame(morphology = morphology,
+                               morph_dimension = morph_dimension)
+dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
+for(x in 1:nrow(dataframeclean)){
+  if(is.na(dataframeclean[x,"morph_dimension"])){
+    dataframeclean[x,"morph_dimension"] <- dataframeclean[x,"morphology"]
+  }
+}
+dataframeclean <- dataframeclean %>%
+  select(-morphology)
+dataframeclean <- dataframeclean %>%
+  rename(morphology = morph_dimension)
+
