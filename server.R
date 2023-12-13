@@ -393,7 +393,15 @@ server <- function(input,output,session) {
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
-   
+    
+    if (!"morphology" %in% colnames(dataframe) | !"material" %in% colnames(dataframe)) {
+      show_alert(
+        title = "There was an error during data loading",
+        text = paste0("Please make sure data includes columns labelled 'morphology' and 'material'."),
+        type = "warning")
+      return(NULL)
+    }
+    
     dataframe$length_um <- as.numeric(dataframe$length_um)
     dataframe$morphology <- as.character(dataframe$morphology)
     dataframe$material <- as.character(dataframe$material)
