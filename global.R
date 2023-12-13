@@ -231,11 +231,126 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     }
   }
   
-  dataframeclean_particles <- dataframeclean_particles %>% select(-"weight_estimate_g")
+  dataframeclean_particles <- dataframeclean_particles %>% 
+    select(-c(weight_estimate_g, L_min, L_max, W_min, W_max, H_min, H_max, density_mg_um_3, density_min, density_max, W_mean, H_mean, L_mean))
   
   return(dataframeclean_particles)
 }
 
+#dataframe <- read.csv("tests/count_mass_concentration.csv")
+
+concentration_count_mass <- function(dataframe, morphology_shape, polymer_density){
+  dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
+  dataframe$avg_length_um <- as.numeric(dataframe$avg_length_um)
+  dataframe$morphology <- as.character(dataframe$morphology)
+  dataframe$material <- as.character(dataframe$material)
+  dataframe$material_percent <- as.numeric(dataframe$material_percent)
+  dataframe$morphology_percent <- as.numeric(dataframe$morphology_percent)
+  dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  if("avg_width_um" %in% colnames(dataframe) == TRUE){dataframe$avg_width_um <- as.numeric(dataframe$avg_width_um)}
+  if("avg_height_um" %in% colnames(dataframe) == TRUE){dataframe$avg_height_um <- as.numeric(dataframe$avg_height_um)}
+  if("avg_density" %in% colnames(dataframe) == TRUE){dataframe$avg_density <- as.numeric(dataframe$avg_density)}
+  dataframeclean <- mutate_all(dataframe, cleantext) 
+  
+  dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
+  dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)
+  
+  if("avg_width_um" %in% colnames(dataframeclean)){
+    for(x in 1:nrow(dataframeclean)){
+      if(is.na(dataframeclean[x, "avg_width_um"])) {
+        dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "W_min"]) * as.numeric(dataframeclean[x, "avg_length_um"])
+        dataframeclean[x, "W_mean"] <- (as.numeric(dataframeclean[x, "W_min"]) + as.numeric(dataframeclean[x, "W_max"]))/2
+        dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "W_max"]) * as.numeric(dataframeclean[x, "avg_length_um"])
+      }else{
+        dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "avg_width_um"]) * meas_min
+        dataframeclean[x, "W_mean"] <- as.numeric(dataframeclean[x, "avg_width_um"])
+        dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "avg_width_um"]) * meas_max
+      }
+    }
+  }
+  if("avg_height_um" %in% colnames(dataframeclean)){
+    for(x in 1:nrow(dataframeclean)){
+      if(is.na(dataframeclean[x, "avg_height_um"])) {
+        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "H_min"]) * as.numeric(dataframeclean[x, "avg_length_um"])
+        dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
+        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "H_max"]) * as.numeric(dataframeclean[x, "avg_length_um"])
+      }else{
+        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "avg_height_um"]) * meas_min
+        dataframeclean[x, "H_mean"] <- as.numeric(dataframeclean[x, "avg_height_um"])
+        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "avg_height_um"]) * meas_max
+      }
+    }
+  }
+  
+  dataframeclean <- dataframeclean %>%
+    mutate(L_min = as.numeric(L_min) * as.numeric(avg_length_um),
+           L_mean = as.numeric(avg_length_um),
+           L_max = as.numeric(L_max) * as.numeric(avg_length_um))
+  
+  dataframeclean <- data.frame(dataframeclean) %>%
+    mutate(volume_min_um_3 = L_min * W_min* H_min,
+           volume_mean_um_3 = L_mean * W_mean* H_mean,
+           volume_max_um_3 = L_max * W_max * H_max) 
+  
+  dataframeclean <- dataframeclean %>%
+    select(-c(L_min, L_mean, L_max, W_min, W_mean, W_max, H_min, H_mean, H_max, density_max, density_min, avg_height_um, avg_width_um, avg_length_um, material, morphology))
+  
+  dataframeclean <- dataframeclean %>%
+    mutate(density_mg_um_3 = as.numeric(dataframeclean$density_mg_um_3) * as.numeric(dataframeclean$material_percent) * 0.01,
+               volume_min_um_3 = as.numeric(dataframeclean$volume_min_um_3) * as.numeric(dataframeclean$morphology_percent) * 0.01,
+               volume_mean_um_3 = as.numeric(dataframeclean$volume_mean_um_3) * as.numeric(dataframeclean$morphology_percent) * 0.01,
+               volume_max_um_3 = as.numeric(dataframeclean$volume_max_um_3) * as.numeric(dataframeclean$morphology_percent) * 0.01) %>%
+    select(-c(material_percent, morphology_percent))
+  
+  dataframeclean <- replace(dataframeclean, is.na(dataframeclean), 0)
+  dataframeclean$concentration_particle_vol <- as.numeric(dataframeclean$concentration_particle_vol)
+  dataframeclean$sample_ID <- as.character(dataframeclean$sample_ID)
+  
+  if("avg_density" %in% colnames(dataframeclean)){
+    dataframeclean$avg_density <- as.numeric(dataframeclean$avg_density)
+    summary_table <- dataframeclean %>%
+      group_by(sample_ID) %>%
+      summarise_at(c("concentration_particle_vol", "avg_density", "density_mg_um_3", "volume_min_um_3", "volume_max_um_3", "volume_mean_um_3"), mean)
+  }else{
+    summary_table <- dataframeclean %>%
+      group_by(sample_ID) %>%
+      summarise_at(c("concentration_particle_vol", "density_mg_um_3", "volume_min_um_3", "volume_max_um_3", "volume_mean_um_3"), mean)
+  }
+  
+  summary_table[summary_table==0]<-NA
+  dataframeclean <- summary_table
+  
+  if("avg_density" %in% colnames(dataframeclean)){
+    for(x in 1:nrow(dataframeclean)){
+      if(is.na(dataframeclean[x, "avg_density"])) {
+        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
+        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
+        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+      }else{
+        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
+        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
+        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+      }
+    }
+  }else{
+    for(x in 1:nrow(dataframeclean)){
+        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
+        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
+        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+      }
+  }
+  
+  dataframeclean <- dataframeclean %>%
+    add_column(min_concentration_mg_vol = as.numeric(dataframeclean$min_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol),
+               mean_concentration_mg_vol = as.numeric(dataframeclean$mean_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol),
+               max_concentration_mg_vol = as.numeric(dataframeclean$max_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol)) %>%
+    select(sample_ID, min_concentration_mg_vol, mean_concentration_mg_vol, max_concentration_mg_vol)
+  
+  dataframe <- left_join(dataframe, dataframeclean, by = "sample_ID")
+    
+  dataframeclean_particles <- data.frame(dataframe)
+  return(dataframeclean_particles)
+}
 
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
@@ -281,7 +396,6 @@ BootMean <- function(data) {
 
 confidence_interval_width <- function(data){
   proportion = 0.95
-  #sample_size = sum(data$count)
   sample_size = length(data)
   population_size = 10000
   1.96*abs(sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1)))
@@ -557,22 +671,24 @@ polymer_density <- polymer_db_ %>%
 morphology <- c("fragment","sphere","fiber","film","foam")
 meas_min <- 0.95
 meas_max <- 1.05
+L_min <- c(0.95, 0.95, 0.95, 0.95, 0.95)
+L_max <- c(1.05, 1.05, 1.05, 1.05, 1.05)
 
 #Min and max values given in Kooi Koelmans
 W_min <- c(0.1,0.60,0.001,0.1,0.1)
 W_max <- c(1,1,0.5,1,1)
-W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
-W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
+#W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
+#W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
 H_min <- c(0.01,0.36,0.001,0.001,0.01)
 H_max <- c(1,1,0.5,0.1,1)
-H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
-H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
+#H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
+#H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
 
 #Assuming min and max encompass 99.7% of normal distribution, calculate 95% confidence interval
-W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
-W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
-H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
-H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
+#W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
+#W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
+#H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
+#H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
 
 morphology_shape <- data.frame(morphology=morphology,
                                L_min=L_min,
@@ -588,14 +704,14 @@ morphology <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "f
 morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
 morph_conversion <- data.frame(morphology = morphology,
                                morph_dimension = morph_dimension)
-dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
-for(x in 1:nrow(dataframeclean)){
-  if(is.na(dataframeclean[x,"morph_dimension"])){
-    dataframeclean[x,"morph_dimension"] <- dataframeclean[x,"morphology"]
-  }
-}
-dataframeclean <- dataframeclean %>%
-  select(-morphology)
-dataframeclean <- dataframeclean %>%
-  rename(morphology = morph_dimension)
+# dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
+# for(x in 1:nrow(dataframeclean)){
+#   if(is.na(dataframeclean[x,"morph_dimension"])){
+#     dataframeclean[x,"morph_dimension"] <- dataframeclean[x,"morphology"]
+#   }
+# }
+# dataframeclean <- dataframeclean %>%
+#   select(-morphology)
+# dataframeclean <- dataframeclean %>%
+#   rename(morphology = morph_dimension)
 
