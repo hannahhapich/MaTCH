@@ -30,7 +30,8 @@ library(data.tree)
 library(collapsibleTree)
 library(plotly)
 library(shinyWidgets)
-library(shinyBS)
+#library(shinyBS)
+library(bs4Dash)
 
 #setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
 
