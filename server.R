@@ -213,7 +213,13 @@ server <- function(input,output,session) {
 
   df_ <- reactive({
     req(input$df_)
-    merge_data(file_paths = input$df_$datapath, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB,alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+    merge_data(file_paths = input$df_$datapath, 
+               materials_vectorDB = materials_vectorDB, 
+               items_vectorDB = items_vectorDB,
+               alias = alias, 
+               aliasi = aliasi, 
+               use_cases = use_cases, 
+               prime_unclassifiable = prime_unclassifiable)
   })
   
   #Share data ----
