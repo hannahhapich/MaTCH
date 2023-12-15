@@ -1,6 +1,6 @@
 ui <- fluidPage(
   theme=shinytheme("cyborg"),
-  titlePanel("Microplastics and Trash Taxonomy"),
+  #titlePanel("Microplastics and Trash Taxonomy"),
   tags$head(
     # Note the wrapping of the string in HTML()
     tags$style(HTML("
@@ -155,7 +155,7 @@ ui <- fluidPage(
     
     #Relational Tables ----
     tabPanel("Relational Tables",
-             titlePanel(tags$h4("View and Download Relational Tables")),
+             #titlePanel(tags$h4("View and Download Relational Tables")),
              
              # PAGE BREAK
              tags$hr(),
@@ -576,7 +576,7 @@ ui <- fluidPage(
     
     #Tool ----
     tabPanel("Query Tool",
-             titlePanel(tags$h4("Query the Relational Tables with Trash Survey Sheets")),
+             #titlePanel(tags$h4("Query the Relational Tables with Trash Survey Sheets")),
              fluidRow(
                column(2, 
                       prettySwitch("share_decision0",
@@ -629,7 +629,7 @@ ui <- fluidPage(
     ),
     #Survey Merging Tool ----
     tabPanel("Survey Merging and Visualization",
-             titlePanel(tags$h4("Merge two or more exisitng survey sheets into one dataset")),
+             #titlePanel(tags$h4("Merge two or more exisitng survey sheets into one dataset")),
              
              fluidRow(
                column(2, 
@@ -674,7 +674,7 @@ ui <- fluidPage(
     
     #Concentration Conversion Tool ----
     tabPanel("Particle Mass Calculator",
-             titlePanel(tags$h4("Convert between count, mass, and volume of particle level microplastic data")),
+             #titlePanel(tags$h4("Convert between count, mass, and volume of particle level microplastic data")),
              
              fluidRow(
                column(2, 
@@ -688,7 +688,7 @@ ui <- fluidPage(
                         helper(type = "inline",
                                title = "Upload Help",
                                content = c("To use the tool, upload a csv file to the upload file tab. This file need to be a csv with one column named -length_um- one named -morphology- and another named -polymer-. Data should be reported at the particle level."),
-                               size = "m"),
+                               size = "m")
                       
                       
                ),
@@ -723,7 +723,7 @@ ui <- fluidPage(
     
     #Data Correction Tool ----
     tabPanel("Microplastic Concentration Allignment",
-             titlePanel(tags$h4("Correct your microplastic concentration data to fit the full distribution of microplastic sizes")),
+             #titlePanel(tags$h4("Correct your microplastic concentration data to fit the full distribution of microplastic sizes")),
              
              fluidRow(
                column(2, 
@@ -771,7 +771,7 @@ ui <- fluidPage(
     
     #Surveys for Download ----
     tabPanel("Surveys for Download",
-             titlePanel(tags$h4("View and download suggested trash surveys to fit your study needs")),
+             #titlePanel(tags$h4("View and download suggested trash surveys to fit your study needs")),
              
              fluidRow(
                column(2, 
