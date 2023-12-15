@@ -620,107 +620,107 @@ server <- function(input,output,session) {
   
 
   
-  # output$plot3 <- renderPlot({
-  #   req(convertedParticles())
-  #   ggplot(convertedParticles(), aes(x = morphology, y = volume_mean_um_3, fill = factor(morphology))) +
-  #     geom_flat_violin(
-  #       position = position_nudge(x = 0.1),
-  #       alpha = 0.5,
-  #       scale = "width",
-  #       trim = FALSE,
-  #       width = 0.8,
-  #       lwd = 1,
-  #     ) +
-  #     geom_boxplot(
-  #       width = 0.12,
-  #       outlier.shape = 8,
-  #       outlier.color = "navy",
-  #       alpha = 1
-  #     ) +
-  #     stat_dots(
-  #       position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
-  #       dotsize = 15,
-  #       side = "left",
-  #       justification = 1.1,
-  #       binwidth = 0.08,
-  #       alpha = 1.0
-  #     ) +
-  #     scale_fill_brewer(palette = "Spectral") +
-  #     labs(
-  #       title = "Particle Volume by Morphology Type",
-  #       x = "Morphology",
-  #       y = "Volume (um3)",
-  #       fill = "Morphology"
-  #     ) +
-  #     coord_flip() +
-  #     dark_theme_gray() +
-  #     theme(
-  #       axis.text = element_text(size = 15),
-  #       axis.title = element_text(size = 18),
-  #       plot.title = element_text(size = 18)
-  #     )
-  # })
-  # 
-  # output$plot4 <- renderPlot({
-  #   req(convertedParticles())
-  #   ggplot(convertedParticles(), aes(x = polymer, y = mean_mass_mg, fill = factor(polymer))) +
-  #     geom_flat_violin(
-  #       position = position_nudge(x = 0.1),
-  #       alpha = 0.5,
-  #       scale = "width",
-  #       trim = FALSE,
-  #       width = 0.8,
-  #       lwd = 1,
-  #     ) +
-  #     geom_boxplot(
-  #       width = 0.12,
-  #       outlier.shape = 8,
-  #       outlier.color = "navy",
-  #       alpha = 1
-  #     ) +
-  #     stat_dots(
-  #       position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
-  #       dotsize = 15,
-  #       side = "left",
-  #       justification = 1.1,
-  #       binwidth = 0.08,
-  #       alpha = 1.0
-  #     ) +
-  #     scale_fill_brewer(palette = "Spectral") +
-  #     labs(
-  #       title = "Particle Mass by Polymer Type",
-  #       x = "Polymer",
-  #       y = "Mass (mg)",
-  #       fill = "Polymer"
-  #     ) +
-  #     coord_flip() +
-  #     dark_theme_gray() +
-  #     theme(
-  #       axis.text = element_text(size = 15),
-  #       axis.title = element_text(size = 18),
-  #       plot.title = element_text(size = 18)
-  #     )
-  # })
-  # 
-  # 
-  # 
-  # output$downloadPlot3 <- downloadHandler(
-  #   filename = function() { "particle_volume_plot.pdf" },
-  #   content = function(file) {
-  #     pdf(file, paper = "default")
-  #     plot(plot3())
-  #     dev.off()
-  #   }
-  # )
-  # 
-  # output$downloadPlot4 <- downloadHandler(
-  #   filename = function() { "particle_mass_plot.pdf" },
-  #   content = function(file) {
-  #     pdf(file, paper = "default")
-  #     plot(plot4())
-  #     dev.off()
-  #   }
-  # )
+  output$plot3 <- renderPlot({
+    req(convertedParticles())
+    ggplot(convertedParticles(), aes(x = morphology, y = volume_mean_um_3, fill = factor(morphology))) +
+      geom_violin(
+        position = position_nudge(x = 0.1),
+        alpha = 0.5,
+        scale = "width",
+        trim = FALSE,
+        width = 0.8,
+        lwd = 1,
+      ) +
+      geom_boxplot(
+        width = 0.12,
+        outlier.shape = 8,
+        outlier.color = "navy",
+        alpha = 1
+      ) +
+      stat_dots(
+        position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
+        dotsize = 15,
+        side = "left",
+        justification = 1.1,
+        binwidth = 0.08,
+        alpha = 1.0
+      ) +
+      scale_fill_brewer(palette = "Spectral") +
+      labs(
+        title = "Particle Volume by Morphology Type",
+        x = "Morphology",
+        y = "Volume (um3)",
+        fill = "Morphology"
+      ) +
+      coord_flip() +
+      dark_theme_gray() +
+      theme(
+        axis.text = element_text(size = 15),
+        axis.title = element_text(size = 18),
+        plot.title = element_text(size = 18)
+      )
+  })
+
+  output$plot4 <- renderPlot({
+    req(convertedParticles())
+    ggplot(convertedParticles(), aes(x = material, y = mean_mass_mg, fill = factor(material))) +
+      geom_violin(
+        position = position_nudge(x = 0.1),
+        alpha = 0.5,
+        scale = "width",
+        trim = FALSE,
+        width = 0.8,
+        lwd = 1,
+      ) +
+      geom_boxplot(
+        width = 0.12,
+        outlier.shape = 8,
+        outlier.color = "navy",
+        alpha = 1
+      ) +
+      stat_dots(
+        position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
+        dotsize = 15,
+        side = "left",
+        justification = 1.1,
+        binwidth = 0.08,
+        alpha = 1.0
+      ) +
+      scale_fill_brewer(palette = "Spectral") +
+      labs(
+        title = "Particle Mass by Polymer Type",
+        x = "Polymer",
+        y = "Mass (mg)",
+        fill = "Polymer"
+      ) +
+      coord_flip() +
+      dark_theme_gray() +
+      theme(
+        axis.text = element_text(size = 15),
+        axis.title = element_text(size = 18),
+        plot.title = element_text(size = 18)
+      )
+  })
+
+
+
+  output$downloadPlot3 <- downloadHandler(
+    filename = function() { "particle_volume_plot.pdf" },
+    content = function(file) {
+      pdf(file, paper = "default")
+      plot(plot3())
+      dev.off()
+    }
+  )
+
+  output$downloadPlot4 <- downloadHandler(
+    filename = function() { "particle_mass_plot.pdf" },
+    content = function(file) {
+      pdf(file, paper = "default")
+      plot(plot4())
+      dev.off()
+    }
+  )
   
   output$downloadData1 <- downloadHandler(    
     filename = function() {
