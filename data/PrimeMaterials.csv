@@ -15,7 +15,7 @@ cloth,fabric/cloth,cloth
 cloth,naturalproducts/clothes,cloth
 cloth,cloth/fabric,cloth
 cloth,textiles,cloth
-cloth,textiles/naturalfibers,cloth
+cotton,textiles/naturalfibers,cotton
 cloth,cloth/textile,cloth
 cloth,clothmaterials,cloth
 faeces,animalfaeces,faeces
@@ -25,7 +25,7 @@ foam,foam,foam
 polystyrene,polystyrene,foam
 foam,polystyrenefoam,foam
 foam,styrofoam,foam
-foam,styro.,foam
+polystyrene,styro.,polystyrene
 foam,foamedplastic,foam
 glass,glass,glass
 glassorceramic,glassorceramic,glass OR ceramic
@@ -38,7 +38,7 @@ metal,metals,metal
 metal,metalmaterials,metal
 metal,metal,metal
 leather,leather,leather
-food,food,food
+organic,food,organic
 organic,biodegradable,organic
 organic,organic,organic
 organic,organics,organic
@@ -49,7 +49,7 @@ other,other,other
 other,others,other
 other,mixedmaterials,other
 other,otheritems,other
-other,cigarette,other
+woodandpaper,cigarette,wood and paper
 otherplastic,otherplastic,other plastic
 other,unidentified,other
 paper,paper,paper
@@ -60,29 +60,30 @@ paperorcardboard,paper/carton,paper OR cardboard
 plastic,plastic,plastic
 plastic,plastics,plastic
 plastic,plasticmaterials,plastic
+plastic,polymeric,plastic
 plastic,plasticfragments,plastic
-plastic,plastic/polystyrene,plastic
+polystyrene,plastic/polystyrene,polystyrene
 plastic,plastic/styrofoam,plastic
 plastic,artificialpolymermaterials,plastic
 rubber,rubbermaterials,rubber
 rubber,rubber,rubber
 sanitarywaste,sanitarywaste,sanitary waste
 sanitarywaste,personalhygiene,sanitary waste
-sanitarywaste,medicalwaste,sanitary waste
+biohazard,medicalwaste,biohazard
 sanitarywaste,sanitary,sanitary waste
-sanitarywaste,medical/personalhygiene,sanitary waste
-sanitarywaste,medical,sanitary waste
+biohazard,medical/personalhygiene,biohazard
+biohazard,medical,biohazard
 softplastics,softplastics,soft plastics
 wood,wood,wood
 wood,woodydebris,wood
 processedwood,processedwood,processed wood
-processedwood,man.wood,processed wood
-processedwood,lumber,processed wood
+wood,man.wood,wood
+wood,lumber,wood
 processedwood,processedlumber,processed wood
-processedwood,woodmaterials,processed wood
-processedwood,timber,processed wood
+woodandpaper,woodmaterials,wood and paper
+wood,timber,wood
 processedwood,processed/workedwood,processed wood
-processedwood,wood(machined),processed wood
+wood,wood(machined),wood
 woodandpaper,woodandpaper,wood and paper
 woodandpaper,paper&lumber,wood and paper
 concreteorasphalt,concreteorasphalt,concrete OR asphalt
@@ -93,7 +94,7 @@ abs,abs,ABS
 abs,polyethersulfone,ABS
 abs,acrylonitrilebutadienestyrene,ABS
 abs,acrylonitrilebutadienestyrene(abs),ABS
-acrylic,acrylic,Acrylic
+PAN,acrylic,PAN
 ar,ar,AR
 bisphenolapolysulfone,bisphenolapolysulfone,Bisphenol A Polysulfone
 bisphenol-adiglycidyletherepoxyresin,bisphenol-adiglycidyletherepoxyresin,Bisphenol-A diglycidyl ether epoxy resin
@@ -114,6 +115,10 @@ isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
 kevlar-polyaramide,kevlar-polyaramide,Kevlar - Polyaramide
 ldpe,ldpe,LDPE
 ldpe,lowdensitypolyethylene,LDPE
+ldpe,low-densitypolyethylene,LDPE
+hdpe,hdpe,HDPE
+hdpe,highdensitypolyethylene,HDPE
+hdpe,high-densitypolyethylene,HDPE
 melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 methylcellulose,methylcellulose,Methyl Cellulose
 mineral,mineral,mineral
@@ -139,8 +144,9 @@ pa,pa,PA
 pa,polyamide,PA
 pa,nylon,PA
 pa,pa/nylon,PA
-pa;er,pa;er,PA;ER
-pa;er,pa/epoxyresin,PA;ER
+pa+er,pa+er,PA+ER
+pa+er,pa;er,PA+ER
+pa+er,pa/epoxyresin,PA+ER
 paa,paa,PAA
 paa,polyacrylicacid,PAA
 paa,poly(acrylicacid),PAA
@@ -180,7 +186,8 @@ pet,pet,PET
 pet,polyethyleneterephthalate,PET
 pet,pete,PET
 pet,poly(ethyleneterephthalate),PET
-pet-pest,pet-pest,PET-PEST
+pet+pest,pet-pest,PET+PEST
+pet+pest,pet+pest,PET+PEST
 pet+olefin,pet+olefin,PET+olefin
 peva,peva,PEVA
 peva,polyethylene-vinylacetate,PEVA
@@ -476,11 +483,15 @@ sbr,sbr,SBR
 sbr,styrene-butadienerubber,SBR
 sbr,butadiene/butylrubber,SBR
 sbr,styrene-butadiene,SBR
-semi-syntheticcellulose,semi-syntheticcellulose,semi-synthetic cellulose
+ca,semi-syntheticcellulose,CA
 silicone,silicone,Silicone
 styrene-isoprene,styrene-isoprene,Styrene-isoprene
 styrene-maleic,styrene-maleic,Styrene-maleic
 urea-formaldehyde,urea-formaldehyde,Urea-formaldehyde
 vinyl,vinyl,Vinyl
-vinyon,vinyon,Vinyon
+vinyl,vinyon,Vinyl
 wool,wool,wool
+co-polymers,co-polymers,Co-Polymers
+co-polymers,copolymers,Co-polymers
+co-polymers,copolymer,Co-polymers
+co-polymers,co-polymer,Co-polymers

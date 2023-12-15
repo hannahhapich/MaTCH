@@ -14,7 +14,7 @@ server <- function(input,output,session) {
     dataframeclean <- mutate_all(dataframe, cleantext) 
     
   #Material query tool cleaning
-    for(row in 1:nrow(dataframeclean)) { 
+    for(row in 1:nrow(dataframeclean)) {
       
       if(is.na(dataframeclean[row,"material"]) | dataframeclean[row,"material"] == "") {
         dataframe[row, "PrimeMaterial"] <- NA
@@ -22,11 +22,11 @@ server <- function(input,output,session) {
         next #Corrects for cases when there is no val. 
       }
       
-      if(any(PrimeUnclassifiable == dataframeclean[row,"material"])) {
-        dataframe[row, "MoreSpecificMaterial"] <- "Unclassifiable"
-        dataframe[row, "PrimeMaterial"] <- NA
-        #next #Corrects for cases when unclassifiable
-      }
+      #if(any(PrimeUnclassifiable == dataframeclean[row,"material"])) {
+      #  dataframe[row, "MoreSpecificMaterial"] <- "Unclassifiable"
+      #  dataframe[row, "PrimeMaterial"] <- NA
+      #  #next #Corrects for cases when unclassifiable
+      #}
       
       #Identify Alias Row and Alias name in database
       Primename <- unique(aliasclean[unname(unlist(apply(aliasclean, 2, function(x) which(x == dataframeclean[row,"material"], arr.ind = T)))), "Material"])
@@ -47,7 +47,6 @@ server <- function(input,output,session) {
           match5 <- top_five[[5]]
           
           dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "100px"))
-          
       }
       
       else{
@@ -116,11 +115,11 @@ server <- function(input,output,session) {
         next #Corrects for cases when there is no val. 
       }
       
-      if(any(PrimeUnclassifiable == dataframeclean[row,"items"])) {
-        dataframe[row, "MoreSpecificItem"] <- "Unclassifiable"
-        dataframe[row, "PrimeItem"] <- NA
-        next #Corrects for cases when unclassifiable
-      }
+      #if(any(PrimeUnclassifiable == dataframeclean[row,"items"])) {
+      #  dataframe[row, "MoreSpecificItem"] <- "Unclassifiable"
+      #  dataframe[row, "PrimeItem"] <- NA
+      #  next #Corrects for cases when unclassifiable
+      #}
       
       #Identify Alias Row and Alias name
       Primename <- unique(aliascleani[unname(unlist(apply(aliascleani, 2, function(x) which(x == dataframeclean[row,"items"], arr.ind = T)))), "Item"])
@@ -201,7 +200,6 @@ server <- function(input,output,session) {
       
     }
     
-    
     return(dataframe)
   })
   
@@ -213,6 +211,7 @@ server <- function(input,output,session) {
 
   df_ <- reactive({
     req(input$df_)
+    
     merge_data(file_paths = input$df_$datapath, 
                materials_vectorDB = materials_vectorDB, 
                items_vectorDB = items_vectorDB,
@@ -256,32 +255,37 @@ server <- function(input,output,session) {
   
   output$plot1 <- renderPlotly({
     req(input$df_)
-    #req(input$d_f_)
     
     dataframe <- as.data.frame(df_() %>% 
                                  rename(material = Material, 
                                         items = Item) %>%
                                  select(material, items, count))
-    Material_DF <- dataframe %>%
-      rename(Count = count) %>%
-      group_by(material) %>%
-      summarise(Count = n()) %>%
-      ungroup()
     
     Material_DF_group <- dataframe %>%
       rename(Count = count) %>%
-      group_by(material) %>%
-      summarise(Count = n()) %>%
-      ungroup() %>%
       rename(Class = material)
-    
-    MaterialTreeDF <- AggregateTrees(DF = Material_DF, Alias = MaterialsAlias_sunburst, Hierarchy = MaterialsHierarchy_sunburst) %>%
-      mutate(from = ifelse(from == "trash", "material", from))
     
     material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst, Group_Hierarchy = MaterialsHierarchy_sunburst, type = "material")
     
-    Materials_Plot <- sunburstplot(df_join_boot = material_grouped)
+    #Making readable alias display for sunburst plot
+    primeMaterials_SB <- primeMaterials %>%
+      add_row(Material = "material", Alias = "material", readable = "material") %>%
+      add_row(Material = "trash", Alias = "trash", readable = "trash")
+    material_grouped_readable <- left_join(material_grouped, primeMaterials_SB, by = c("from" = "Alias"))
+    material_grouped_readable <- material_grouped_readable %>% 
+      ungroup() %>%
+      select(-c("Material", "from")) 
+    material_grouped_readable <- material_grouped_readable %>%
+      rename(from = readable) %>%
+      left_join(primeMaterials_SB, by = c("to" = "Alias"))
+    material_grouped_readable <- material_grouped_readable %>% 
+      ungroup() %>%
+      select(-c("Material", "to")) 
+    material_grouped_readable <- material_grouped_readable %>%
+      rename(to = readable) %>%
+      group_by(from, to)
     
+    Materials_Plot <- sunburstplot(df_join_boot = material_grouped_readable)
     print(Materials_Plot)
   })
   
@@ -296,25 +300,32 @@ server <- function(input,output,session) {
                                         items = Item) %>%
                                  select(material, items, count))
     
-    Item_DF <- dataframe %>%
-      rename(Count = count) %>%
-      group_by(items) %>%
-      summarise(Count = n()) %>%
-      ungroup()
     Item_DF_group <- dataframe %>%
       rename(Count = count) %>%
-      group_by(items) %>%
-      summarise(Count = n()) %>%
-      ungroup() %>%
       rename(Class = items)
-    
-    ItemTreeDF <- AggregateTrees(DF = Item_DF, Alias = ItemsAlias_sunburst, Hierarchy = ItemsHierarchy_sunburst) %>%
-      mutate(from = ifelse(from == "trash", "items", from))
     
     #Item prop uncertainty
     item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
     
-    Items_Plot <- sunburstplot(df_join_boot = item_grouped)
+    #Making readable alias display for sunburst plot
+    primeItems_SB <- primeItems %>%
+      add_row(Item = "items", Alias = "items", readable = "items") %>%
+      add_row(Item = "trash", Alias = "trash", readable = "trash")
+    item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
+    item_grouped_readable <- item_grouped_readable %>% 
+      ungroup() %>%
+      select(-c("Item", "from")) 
+    item_grouped_readable <- item_grouped_readable %>%
+      rename(from = readable) %>%
+      left_join(primeItems_SB, by = c("to" = "Alias"))
+    item_grouped_readable <- item_grouped_readable %>% 
+      ungroup() %>%
+      select(-c("Item", "to")) 
+    item_grouped_readable <- item_grouped_readable %>%
+      rename(to = readable) %>%
+      group_by(from, to)
+    
+    Items_Plot <- sunburstplot(df_join_boot = item_grouped_readable)
     print(Items_Plot)
   })
   
@@ -389,110 +400,13 @@ server <- function(input,output,session) {
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
-    if("width_um" %in% colnames(dataframe) == TRUE){dataframe <- dataframe %>%
-      select(length_um, width_um, morphology, polymer)
-    dataframe$width_um <- as.numeric(dataframe$width_um)
-    }else{dataframe <- dataframe %>%
-      select(length_um, morphology, polymer)}
     
-    dataframe$length_um <- as.numeric(dataframe$length_um)
-    dataframe$morphology <- as.character(dataframe$morphology)
-    dataframe$polymer <- as.character(dataframe$polymer)
-    dataframeclean <- mutate_all(dataframe, cleantext) 
-    
-    #convert morphologies in TT to morphologies with defined dimensions
-    morphology <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "film", "fragment", "rubberyfragment", "fiberbundle")
-    morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
-    morph_conversion <- data.frame(morphology = morphology,
-                                   morph_dimension = morph_dimension)
-    dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
-    dataframeclean <- dataframeclean %>%
-      select(-morphology)
-    dataframeclean <- dataframeclean %>%
-      rename(morphology = morph_dimension)
-    
-    #Make polymer-density dataframe
-    #Output correct survey sheet
-    polymer_db <- data.frame(polymer_db)
-    polymer_db$polymer <- cleantext(polymer_db$polymer)
-    polymer_db$density <- as.numeric(polymer_db$density)
-    density_mg_um_3 <- polymer_db$density * 1e-9
-    polymer_db <- polymer_db %>%
-      mutate(density_mg_um_3 = density_mg_um_3)
-    polymer_density <- polymer_db %>%
-      select(polymer, density_mg_um_3)
-    
-    #Make CSF-morphology dataframe
-    morphology <- c("fragment","sphere","fiber","film","foam")
-    L_min <- c(0.95,0.95,0.95,0.95,0.95)
-    L_max <- c(1.05,1.05,1.05,1.05,1.05)
-    W_meas_min <- c(0.95,0.95,0.95,0.95,0.95)
-    W_meas_max <- c(1.05,1.05,1.05,1.05,1.05)
-    
-    #Min and max values given in Kooi Koelmans
-    W_min <- c(0.1,0.60,0.001,0.1,0.1)
-    W_max <- c(1,1,0.5,1,1)
-    W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
-    W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
-    H_min <- c(0.01,0.36,0.001,0.001,0.01)
-    H_max <- c(1,1,0.5,0.1,1)
-    H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
-    H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
-    
-    #Assuming min and max encompass 99.7% of normal distribution, calculate 95% confidence interval
-    W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
-    W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
-    H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
-    H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
-    
-    morphology_shape <- data.frame(morphology=morphology,
-                                   L_min=L_min,
-                                   L_max=L_max,
-                                   W_min=W_min,
-                                   W_max=W_max,
-                                   H_min=H_min,
-                                   H_max=H_max
-    )
-    
-    dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
-    dataframeclean <- left_join(dataframeclean, polymer_density, by = "polymer", copy = F)
-    if("width_um" %in% colnames(dataframeclean) == TRUE) {
-      dataframeclean <- data.frame(dataframeclean) %>%
-        mutate(L_min = as.numeric(L_min) * as.numeric(length_um),
-               L_mean = as.numeric(length_um),
-               L_max = as.numeric(L_max) * as.numeric(length_um),
-               W_meas_min = as.numeric(W_meas_min) * as.numeric(width_um),
-               W_meas_mean = as.numeric(width_um),
-               W_meas_max = as.numeric(W_meas_max) * as.numeric(width_um),
-               H_min = as.numeric(H_min) * as.numeric(length_um),
-               H_mean = (as.numeric(H_min) + as.numeric(H_max))/2 ,
-               H_max = as.numeric(H_max) * as.numeric(length_um))
-      dataframeclean <- data.frame(dataframeclean) %>%
-        mutate(volume_min_um_3 = L_min * W_meas_min* H_min,
-               volume_mean_um_3 = L_mean * W_meas_mean* H_mean,
-               volume_max_um_3 = L_max * W_meas_max * H_max) 
-    }else{dataframeclean <- data.frame(dataframeclean) %>%
-      mutate(L_min = as.numeric(L_min) * as.numeric(length_um),
-             L_mean = as.numeric(length_um),
-             L_max = as.numeric(L_max) * as.numeric(length_um),
-             W_min = as.numeric(W_min) * as.numeric(length_um),
-             W_mean = (as.numeric(W_min) + as.numeric(W_max))/2 ,
-             W_max = as.numeric(W_max) * as.numeric(length_um),
-             H_min = as.numeric(H_min) * as.numeric(length_um),
-             H_mean = (as.numeric(H_min) + as.numeric(H_max))/2 ,
-             H_max = as.numeric(H_max) * as.numeric(length_um))
-    dataframeclean <- data.frame(dataframeclean) %>%
-      mutate(volume_min_um_3 = L_min * W_min* H_min,
-             volume_mean_um_3 = L_mean * W_mean* H_mean,
-             volume_max_um_3 = L_max * W_max * H_max) 
+    if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
+    }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+       "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+      concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
     }
-    
-    dataframeclean_particles <- data.frame(dataframeclean) %>%
-      mutate(min_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_min_um,
-             mean_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_mean_um,
-             max_mass_mg = dataframeclean$density_mg_um_3 * dataframeclean$volume_max_um)
-    
-    return(dataframeclean_particles)
     
     })
   
@@ -672,7 +586,7 @@ server <- function(input,output,session) {
                                       style="bootstrap"))
   
   output$contents5 <- renderDataTable(datatable({
-                                        convertedParticles()[, c("length_um", "morphology", "polymer", "L", "H_mean", "volume_mean_um_3", "mean_mass_mg")]
+                                        convertedParticles()
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(
