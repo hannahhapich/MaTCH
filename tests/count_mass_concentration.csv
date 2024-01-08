@@ -1,0 +1,11 @@
+﻿sample_ID,concentration_particle_vol,avg_length_um,material,material_percent,morphology,morphology_percent,avg_density,avg_width_um,avg_height_um
+1,100,20,cellophane,20,fiber,30,9.8E-10,,
+1,100,20,polystyrene,75,foam,30,9.8E-10,,
+1,100,20,polyimide,5,film,40,9.8E-10,,
+2,200,100,cellophane,30,fiber,50,,20,
+2,200,100,polystyrene,20,fragment,50,,20,
+2,200,100,polyimide,50,,,,20,
+3,300,80,cellophane,90,sphere,100,,,80
+3,300,80,polystyrene,5,,,,,80
+3,300,80,polyimide,5,,,,,80
+4,10,,other,100,glass,100,,,
