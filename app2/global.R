@@ -390,18 +390,6 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
 #dataframe <- read.csv("tests/rescaling_concentration.csv")
 
 correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
-  ##outside of function
-  # req(input$calculate_distribution)
-  # req(input$concentrationData)
-  # req(input$concentration_type)
-  # req(input$corrected_min)
-  # req(input$corrected_max)
-  # 
-  # #clean incoming data
-  # infile <- input$concentrationData
-  # file <- fread(infile$datapath)
-  # dataframe <- as.data.frame(file) %>%
-  #   select(study_media, concentration, size_min, size_max, concentration_units)
   
   ##start function here
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
@@ -483,6 +471,10 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   return(dataframeclean)
 }
 
+
+correctionFactor_particle <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
+  
+}
 
 #Make df for alpha values
 study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota")
@@ -863,4 +855,6 @@ morph_conversion <- data.frame(morphology = morphology,
 #   select(-morphology)
 # dataframeclean <- dataframeclean %>%
 #   rename(morphology = morph_dimension)
+
+
 
