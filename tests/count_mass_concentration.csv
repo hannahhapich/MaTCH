@@ -8,4 +8,6 @@
 3,300,80,cellophane,90,sphere,100,,,80
 3,300,80,polystyrene,5,,,,,80
 3,300,80,polyimide,5,,,,,80
-4,10,,other,100,glass,100,,,
+4,10,,glass,20,other,20,,,
+4,10,,glass,40,bottles & jars,40,,,
+4,10,,foam,20,cups,20,,,

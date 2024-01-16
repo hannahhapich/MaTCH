@@ -140,6 +140,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   return(dataframeclean2)
 }
 
+
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean){
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$morphology <- as.character(dataframe$morphology)
@@ -256,6 +257,10 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
   dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)
   
+  dataframeclean_trash <- dataframeclean %>%
+    left_join(trash_mass_clean, by = c("morphology" = "items",
+                                 "material" = "material"))
+  
   if("avg_width_um" %in% colnames(dataframeclean)){
     for(x in 1:nrow(dataframeclean)){
       if(is.na(dataframeclean[x, "avg_width_um"])) {
@@ -319,37 +324,66 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   }
   
   summary_table[summary_table==0]<-NA
-  dataframeclean <- summary_table
+  dataframeclean_summary <- summary_table
   
-  if("avg_density" %in% colnames(dataframeclean)){
-    for(x in 1:nrow(dataframeclean)){
-      if(is.na(dataframeclean[x, "avg_density"])) {
-        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
-        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
-        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+  if("avg_density" %in% colnames(dataframeclean_summary)){
+    for(x in 1:nrow(dataframeclean_summary)){
+      if(is.na(dataframeclean_summary[x, "avg_density"])) {
+        dataframeclean_summary[x, "min_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x, "volume_min_um_3"])
+        dataframeclean_summary[x, "mean_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x,"volume_mean_um_3"])
+        dataframeclean_summary[x, "max_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x, "volume_max_um_3"])
       }else{
-        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
-        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
-        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "avg_density"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+        dataframeclean_summary[x, "min_mass_mg"] <- as.numeric(dataframeclean_summary[x, "avg_density"]) * as.numeric(dataframeclean_summary[x, "volume_min_um_3"])
+        dataframeclean_summary[x, "mean_mass_mg"] <- as.numeric(dataframeclean_summary[x, "avg_density"]) * as.numeric(dataframeclean_summary[x,"volume_mean_um_3"])
+        dataframeclean_summary[x, "max_mass_mg"] <- as.numeric(dataframeclean_summary[x, "avg_density"]) * as.numeric(dataframeclean_summary[x, "volume_max_um_3"])
       }
     }
   }else{
-    for(x in 1:nrow(dataframeclean)){
-        dataframeclean[x, "min_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_min_um_3"])
-        dataframeclean[x, "mean_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x,"volume_mean_um_3"])
-        dataframeclean[x, "max_mass_mg"] <- as.numeric(dataframeclean[x, "density_mg_um_3"]) * as.numeric(dataframeclean[x, "volume_max_um_3"])
+    for(x in 1:nrow(dataframeclean_summary)){
+      dataframeclean_summary[x, "min_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x, "volume_min_um_3"])
+      dataframeclean_summary[x, "mean_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x,"volume_mean_um_3"])
+      dataframeclean_summary[x, "max_mass_mg"] <- as.numeric(dataframeclean_summary[x, "density_mg_um_3"]) * as.numeric(dataframeclean_summary[x, "volume_max_um_3"])
       }
   }
   
-  dataframeclean <- dataframeclean %>%
-    add_column(min_concentration_mg_vol = as.numeric(dataframeclean$min_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol),
-               mean_concentration_mg_vol = as.numeric(dataframeclean$mean_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol),
-               max_concentration_mg_vol = as.numeric(dataframeclean$max_mass_mg) * as.numeric(dataframeclean$concentration_particle_vol)) %>%
+  dataframeclean_summary <- dataframeclean_summary %>%
+    add_column(min_concentration_mg_vol = as.numeric(dataframeclean_summary$min_mass_mg) * as.numeric(dataframeclean_summary$concentration_particle_vol),
+               mean_concentration_mg_vol = as.numeric(dataframeclean_summary$mean_mass_mg) * as.numeric(dataframeclean_summary$concentration_particle_vol),
+               max_concentration_mg_vol = as.numeric(dataframeclean_summary$max_mass_mg) * as.numeric(dataframeclean_summary$concentration_particle_vol)) %>%
     select(sample_ID, min_concentration_mg_vol, mean_concentration_mg_vol, max_concentration_mg_vol)
   
-  dataframe <- left_join(dataframe, dataframeclean, by = "sample_ID")
+  dataframe <- left_join(dataframe, dataframeclean_summary, by = "sample_ID")
+  
+  
+  dataframeclean_trash$weight_estimate_g <- as.numeric(dataframeclean_trash$weight_estimate_g)
+  for(x in 1:nrow(dataframeclean_trash)){
+    if(! is.na(dataframeclean_trash[x, "weight_estimate_g"])){
+      dataframeclean_trash[x, "mean_mass_mg"] <- (dataframeclean_trash[x, "weight_estimate_g"]*1000)
+    }
+  }
+  dataframeclean_trash <- dataframeclean_trash %>% drop_na(mean_mass_mg) %>%
+    select(sample_ID, concentration_particle_vol, material, morphology, morphology_percent, mean_mass_mg)
+  
+  dataframeclean_trash$mean_mass_mg <- as.numeric(dataframeclean_trash$mean_mass_mg)
+  dataframeclean_trash$morphology_percent <- as.numeric(dataframeclean_trash$morphology_percent)
+  dataframeclean_trash$concentration_particle_vol <- as.numeric(dataframeclean_trash$concentration_particle_vol)
+  dataframeclean_trash$mean_concentration_mg <- (dataframeclean_trash$mean_mass_mg * dataframeclean_trash$morphology_percent * 0.01 * dataframeclean_trash$concentration_particle_vol)
+  
+  summary_table_trash <- dataframeclean_trash %>%
+    group_by(sample_ID) %>%
+    summarise_at(c("mean_concentration_mg"), mean) 
+  
+  dataframeclean_particles <- left_join(dataframe, summary_table_trash, by = "sample_ID", copy = F)
+  
+  for(x in 1:nrow(dataframeclean_particles)){
+    if(! is.na(dataframeclean_particles[x, "mean_concentration_mg"])){
+      dataframeclean_particles[x, "mean_concentration_mg_vol"] <- (dataframeclean_particles[x, "mean_concentration_mg"])
+    }
+  }
+  
+  dataframeclean_particles <- dataframeclean_particles %>% select(-mean_concentration_mg)
     
-  dataframeclean_particles <- data.frame(dataframe)
+  dataframeclean_particles <- data.frame(dataframeclean_particles)
   return(dataframeclean_particles)
 }
 

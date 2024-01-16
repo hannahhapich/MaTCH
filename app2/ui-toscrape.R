@@ -1,3 +1,4 @@
+
 ui <- fluidPage(
   theme=shinytheme("cyborg"),
   titlePanel("Microplastics and Trash Taxonomy"),
@@ -38,7 +39,7 @@ ui <- fluidPage(
                                   This tool was developed by collating and comparing categories and terms used from over 50 commonly used in trash survey sheets.</h5>"),
                       shiny::HTML("<h5>We are grateful for the funding for this project provided by the National Marine Sanctuary Foundation, the National Oceanic and Atmospheric Administration Marine Debris Program, and the Benioff Ocean Initiative</h5>")
                       
-                      ),
+               ),
                column(3)
              ),
              
@@ -78,9 +79,9 @@ ui <- fluidPage(
                       shiny::HTML("<h5>This tool queries the relational tables with an uploaded trash survey list. To use the tool, upload a csv file to the upload file tab. 
                                   The file needs to be a csv with one column named -material- and another named -items-. 
                                   The material should correspond to the item names in the same row.</h5>")
-                      ),
+               ),
                column(3)
-                      ),
+             ),
              tags$hr(),
              
              
@@ -145,13 +146,13 @@ ui <- fluidPage(
                       shiny::HTML("<br><br><center> <h1>Citation</h1> </center>
                                   <br>"),
                       shiny::HTML("<h5> H. Hapich, W. Cowger, A. Gray, Jambeck Research Group. 2020. Trash Taxonomy. https://trashtaxonomy.shinyapps.io/trashtaxonomy/</h5>")
-                      ),
+               ),
                column(3)
              )
              
              
              #end of about panel
-             ),
+    ),
     
     #Relational Tables ----
     tabPanel("Relational Tables",
@@ -214,10 +215,10 @@ ui <- fluidPage(
                       shiny::HTML("<h5>This table describes how the unique material types relate to one another in a hierarchical structure (ex: foam and rubber are a subset of plastic).</h5>"),
                       #shinyTree(outputId = "materialhierarchy"),
                       
-                        #collapsibleTreeOutput(outputId = "material_tree", width = "100%", height = "500px")
+                      #collapsibleTreeOutput(outputId = "material_tree", width = "100%", height = "500px")
                       checkboxInput("show2", "Show Table", width = '50%'),
                       shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
-                        
+                      
                ),
                column(1)
              ),
@@ -568,11 +569,11 @@ ui <- fluidPage(
                       shiny::HTML("<br><br><center> <h1>Citation</h1> </center>
                                   <br>"),
                       shiny::HTML("<h5> H. Hapich, W. Cowger, A. Gray, Jambeck Research Group. 2020. Trash Taxonomy. https://trashtaxonomy.shinyapps.io/trashtaxonomy/</h5>")
-                      ),
+               ),
                column(3)
              )
              
-             ),
+    ),
     
     #Tool ----
     tabPanel("Query Tool",
@@ -638,11 +639,11 @@ ui <- fluidPage(
                                title = "Upload Help",
                                content = c("To use the tool, upload a csv file to the upload file tab. This file need to be a csv with one column named -material- one named -items- and another named -count-. The material should correspond to the item names in the same row."),
                                size = "m")
-             ),
-             
-             column(10, 
-                    dataTableOutput('contents3')
-             )
+               ),
+               
+               column(10, 
+                      dataTableOutput('contents3')
+               )
                
              ),
              
@@ -664,7 +665,7 @@ ui <- fluidPage(
                ),
                column(1)
              ),
-
+             
              fluidRow(
                align="center",
                hr(),
@@ -701,17 +702,17 @@ ui <- fluidPage(
                  column(1),
                  column(5,
                         plotOutput('plot3', width = "500px", height = "500px"),
-
+                        
                         downloadButton('downloadPlot3', 'Download Plot')
                  ),
                  column(5,
                         plotOutput('plot4', width = "500px", height = "500px"),
-
+                        
                         downloadButton('downloadPlot4', 'Download Plot')
                  ),
                  column(1)
                ),
-
+               
              ),
              
              fluidRow(
@@ -757,8 +758,8 @@ ui <- fluidPage(
                
                column(10, 
                       dataTableOutput('contents6'),
-             ),
-             
+               ),
+               
              ),
              
              
@@ -810,9 +811,9 @@ ui <- fluidPage(
                tags$p("Citation: H. Hapich, W. Cowger, A. Gray, Jambeck Research Group. 2020. Trash Taxonomy. https://trashtaxonomy.shinyapps.io/trashtaxonomy/")
              )
     ),
-             
-             
-
-    )
-    #)
-             )
+    
+    
+    
+  )
+  #)
+)
