@@ -387,6 +387,120 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   return(dataframeclean_particles)
 }
 
+#dataframe <- read.csv("tests/rescaling_concentration.csv")
+
+correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
+  ##outside of function
+  # req(input$calculate_distribution)
+  # req(input$concentrationData)
+  # req(input$concentration_type)
+  # req(input$corrected_min)
+  # req(input$corrected_max)
+  # 
+  # #clean incoming data
+  # infile <- input$concentrationData
+  # file <- fread(infile$datapath)
+  # dataframe <- as.data.frame(file) %>%
+  #   select(study_media, concentration, size_min, size_max, concentration_units)
+  
+  ##start function here
+  dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
+  dataframe$size_min <- as.numeric(dataframe$size_min)
+  dataframe$size_max <- as.numeric(dataframe$size_max)
+  if("study_media" %in% colnames(dataframe) == TRUE){
+    dataframe$study_media <- as.character(dataframe$study_media)}
+  if("known_alpha" %in% colnames(dataframe) == TRUE){
+    dataframe$known_alpha <- as.numeric(dataframe$known_alpha)}
+  dataframeclean <- mutate_all(dataframe, cleantext) 
+  
+  if("study_media" %in% colnames(dataframe) == TRUE){
+    if(metric == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "length")}
+    if(metric == "mass (ug)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "mass")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "mass")}
+    if(metric == "volume (um3)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "volume")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "volume")}
+    if(metric == "surface area (um2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "surface_area")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "surface_area")}
+    if(metric == "specific surface area (g/m2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "specific_surface_area")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "specific_surface_area")}
+    }
+  
+  if("known_alpha" %in% colnames(dataframeclean) == TRUE){
+    for(x in 1:nrow(dataframeclean)){
+      if(! is.na(dataframeclean[x, "known_alpha"])){
+        dataframeclean[x, "alpha"] <- (dataframeclean[x, "known_alpha"])
+      }
+    }
+  }
+  
+  for(x in 1:nrow(dataframeclean)){
+    if(is.na(dataframeclean[x, "alpha"])){
+      dataframeclean[x, "alpha"] <- 1.6
+    }
+  }
+
+  
+  dataframeclean <- dataframeclean %>%
+    add_column(correction_factor = NA,
+               corrected_concentration = NA)
+  
+  # x1D_set = 1
+  # x2D_set = 5000
+  #Extrapolated parameters
+  x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
+  x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
+  
+  for(x in 1:nrow(dataframeclean)) {
+    x1M_set = as.numeric(dataframeclean$size_min[[x]])
+    x2M_set = as.numeric(dataframeclean$size_max[[x]])
+    alpha = as.numeric(dataframeclean$alpha[[x]])
+    
+    CF <- CFfnx(x1M = x1M_set,#lower measured length
+                x2M = x2M_set, #upper measured length
+                x1D = x1D_set, #default lower size range
+                x2D = x2D_set,  #default upper size range
+                a = alpha #alpha for count 
+                
+    )
+    
+    CF <- as.numeric(CF)
+    
+    CF <- format(round(CF, 2), nsmall = 2)
+    
+    
+    dataframeclean$correction_factor[[x]] <- CF
+    
+    dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration[[x]])
+    
+  }
+  
+  return(dataframeclean)
+}
+
+
+#Make df for alpha values
+study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota")
+length <- c(2.07, 2.64, 2.57, 3.25, 2.54, 2.59)
+mass <- c(1.32, 1.65, 1.50, 1.56, 1.40, 1.41)
+volume <- c(1.48, 1.68, 1.50, 1.53, 1.45, 1.40)
+surface_area <- c(1.50, 2.00, 1.75, 1.89, 1.73, 1.69)
+specific_surface_area <- c(1.98, 2.71, 2.54, 2.82, 2.58, 2.46)
+
+alpha_vals <- data.frame(study_media=study_media,
+                         length=length,
+                         mass=mass,
+                         volume=volume,
+                         surface_area=surface_area,
+                         specific_surface_area=specific_surface_area
+)
+
+
 use_cases <- read.csv("data/Item_Use_Case.csv")
 prime_unclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 PrimeUnclassifiable <- read.csv("data/PrimeUnclassifiable.csv")

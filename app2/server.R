@@ -408,95 +408,36 @@ server <- function(input,output,session) {
       concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
     }
     
+    if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe)){
+      correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+    }
+    # }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+    #          "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+    #   concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
+    # }
+    
     })
   
   
-  correctionFactor <- reactive({
-    req(input$calculate_distribution)
-    req(input$concentrationData)
-    req(input$concentration_type)
-    req(input$corrected_min)
-    req(input$corrected_max)
-    
-    #clean incoming data
-    infile <- input$concentrationData
-    file <- fread(infile$datapath)
-    dataframe <- as.data.frame(file) %>%
-      select(study_media, concentration, size_min, size_max, concentration_units)
-    dataframe$concentration <- as.numeric(dataframe$concentration)
-    dataframe$size_min <- as.numeric(dataframe$size_min)
-    dataframe$size_max <- as.numeric(dataframe$size_max)
-    dataframe$study_media <- as.character(dataframe$study_media)
-    dataframe$concentration_units <- as.character(dataframe$concentration_units)
-    dataframeclean <- mutate_all(dataframe, cleantext) 
-    
-    #Make df for alpha values
-    study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota")
-    length <- c(2.07, 2.64, 2.57, 3.25, 2.54, 2.59)
-    mass <- c(1.32, 1.65, 1.50, 1.56, 1.40, 1.41)
-    volume <- c(1.48, 1.68, 1.50, 1.53, 1.45, 1.40)
-    surface_area <- c(1.50, 2.00, 1.75, 1.89, 1.73, 1.69)
-    specific_surface_area <- c(1.98, 2.71, 2.54, 2.82, 2.58, 2.46)
-    
-    alpha_vals <- data.frame(study_media=study_media,
-                             length=length,
-                             mass=mass,
-                             volume=volume,
-                             surface_area=surface_area,
-                             specific_surface_area=specific_surface_area
-    )
-    
-    if(input$concentration_type == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length")], by = "study_media", all.x=TRUE)
-                                                    dataframeclean <- dataframeclean %>%
-                                                      rename("alpha" = "length")}
-    if(input$concentration_type == "mass (ug)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "mass")], by = "study_media", all.x=TRUE)
-                                                  dataframeclean <- dataframeclean %>%
-                                                    rename("alpha" = "mass")}
-    if(input$concentration_type == "volume (um3)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "volume")], by = "study_media", all.x=TRUE)
-                                                    dataframeclean <- dataframeclean %>%
-                                                      rename("alpha" = "volume")}
-    if(input$concentration_type == "surface area (um2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "surface_area")], by = "study_media", all.x=TRUE)
-                                                          dataframeclean <- dataframeclean %>%
-                                                            rename("alpha" = "surface_area")}
-    if(input$concentration_type == "specific surface area (g/m2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "specific_surface_area")], by = "study_media", all.x=TRUE)
-                                                                    dataframeclean <- dataframeclean %>%
-                                                                      rename("alpha" = "specific_surface_area")}
-    
-    dataframeclean <- dataframeclean %>%
-      add_column(correction_factor = NA,
-                 corrected_concentration = NA)
-    
-    
-    #Extrapolated parameters
-    x1D_set = as.numeric(input$corrected_min) #lower limit default extrapolated range is 1 um
-    x2D_set = as.numeric(input$corrected_max) #upper limit default extrapolated range is 5 mm
-    
-    for(x in 1:nrow(dataframeclean)) {
-      x1M_set = as.numeric(dataframeclean$size_min[[x]])
-      x2M_set = as.numeric(dataframeclean$size_max[[x]])
-      alpha = as.numeric(dataframeclean$alpha[[x]])
-      
-       CF <- CFfnx(x1M = x1M_set,#lower measured length
-                   x2M = x2M_set, #upper measured length
-                   x1D = x1D_set, #default lower size range
-                   x2D = x2D_set,  #default upper size range
-                   a = alpha #alpha for count 
-                                                     
-      )
-       
-       CF <- as.numeric(CF)
-       
-       CF <- format(round(CF, 2), nsmall = 2)
-         
-      
-      dataframeclean$correction_factor[[x]] <- CF
-      
-      dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration[[x]])
-      
-    }
-    
-    return(dataframeclean)
-  })
+  # correctionFactor <- reactive({
+  #   req(input$concentrationData)
+  #   req(input$concentration_type)
+  #   req(input$corrected_min)
+  #   req(input$corrected_max)
+  #   
+  #   #clean incoming data
+  #   infile <- input$concentrationData
+  #   file <- fread(infile$datapath)
+  #   dataframe <- as.data.frame(file)
+  #   
+  #   if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+  #     particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
+  #   }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+  #            "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+  #     concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
+  #   }
+  #   
+  # })
   
   output$contents <- renderDataTable(#server = F,
                                      datatable({

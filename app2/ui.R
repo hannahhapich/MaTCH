@@ -63,39 +63,23 @@ ui <- dashboardPage(dark = T,
                                                     box(width = 12,
                                                         collapsed = T,
                                                         style = "height: 50vh; overflow-y: auto;",
-                                                        footer = tags$small("Options for processing the spectra."),
-                                                        title = prettySwitch(inputId = "active_preprocessing",
-                                                                             label = "Advanced Settings",
-                                                                             inline = T,
-                                                                             value = F,
-                                                                             status = "success",
-                                                                             fill = T),
+                                                        footer = tags$small("Options for rescaling and mass conversion techniques."),
+                                                        title = "Advanced Settings",
                                                         fluidRow(
                                                           box(width = 12,
-                                                              footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
-                                                              title = prettySwitch("threshold_decision",
-                                                                                   label = "Threshold Signal-Noise",
-                                                                                   inline = T,
-                                                                                   value = T,
-                                                                                   status = "success",
-                                                                                   fill = T),
+                                                              #footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
+                                                              title = "Rescaling Settings",
                                                               collapsed = T,
-                                                              numericInput(
-                                                                "MinSNR",
-                                                                "Minimum Value",
-                                                                value = 4,
-                                                                min = -10000,
-                                                                max = 10000,
-                                                                step = 1
-                                                              ),
                                                               br(),
-                                                              selectInput(inputId = "signal_selection", 
-                                                                          label = "Signal Thresholding Technique", 
-                                                                          choices = c("Signal Over Noise" = "run_sig_over_noise", 
-                                                                                      "Signal Times Noise" = "sig_times_noise", 
-                                                                                      "Total Signal" = "log_tot_sig")), 
+                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)","mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")) %>%
+                                                                helper(type = "inline",
+                                                                       title = "Selection Help",
+                                                                       content = c("Select the measured characteristic of your particles over which to normalize"),
+                                                                       size = "m"),
+                                                              br(),
+                                                              numericInput('corrected_min', "Corrected Particle Range Minimum", 1, min = 1),
                                                               br(), 
-                                                              plotOutput("snr_plot", height = "10vh")
+                                                              numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1)
                                                           )
                                                         ),
                                                         fluidRow(
@@ -278,27 +262,28 @@ ui <- dashboardPage(dark = T,
                                 ## Plot ----
                                 fluidRow(
                                   #verbatimTextOutput("event_test"),
-                                  box(title = HTML(paste0("Spectra")), 
+                                  box(title = HTML(paste0("Cleaned Data")), 
                                       maximizable = T,
                                       width = 12,
                                       #background = "black",
-                                      label = uiOutput("correlation_head"),
-                                      h4(id = "placeholder1", "Upload some data to get started..."),
-                                      uiOutput("progress_bars"),
+                                      # label = uiOutput("correlation_head"),
+                                      # h4(id = "placeholder1", "Upload some data to get started..."),
+                                      # uiOutput("progress_bars"),
                                       fluidRow(
-                                        plotlyOutput("heatmap",inline = T),
-                                        plotlyOutput("MyPlotC", inline = T),
+                                        dataTableOutput('contents5'),
+                                        # plotlyOutput("heatmap",inline = T),
+                                        # plotlyOutput("MyPlotC", inline = T),
                                         div(style = "overflow-x: scroll",
-                                            DT::dataTableOutput("eventmetadata")   
-                                        )),
-                                      dropdownMenu = boxDropdown(
-                                        boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
-                                      ),
-                                      sidebar = boxSidebar(
-                                        id = "mycardsidebar",
-                                        fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                                 DT::dataTableOutput("event"))
-                                      )
+                                        DT::dataTableOutput("eventmetadata")
+                                       ))
+                                      # dropdownMenu = boxDropdown(
+                                      #   boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
+                                      # ),
+                                      # sidebar = boxSidebar(
+                                      #   id = "mycardsidebar",
+                                      #   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                      #            DT::dataTableOutput("event"))
+                                      # )
                                   )
                                 )
                                 
