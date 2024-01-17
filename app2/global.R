@@ -32,6 +32,7 @@ library(plotly)
 library(shinyWidgets)
 #library(shinyBS)
 library(bs4Dash)
+library(classInt)
 
 #setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
 
@@ -391,7 +392,6 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
 
 correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
   
-  ##start function here
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
   dataframe$size_min <- as.numeric(dataframe$size_min)
   dataframe$size_max <- as.numeric(dataframe$size_max)
@@ -454,13 +454,11 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
                 x1D = x1D_set, #default lower size range
                 x2D = x2D_set,  #default upper size range
                 a = alpha #alpha for count 
-                
     )
     
     CF <- as.numeric(CF)
     
     CF <- format(round(CF, 2), nsmall = 2)
-    
     
     dataframeclean$correction_factor[[x]] <- CF
     
@@ -472,8 +470,87 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
 }
 
 
-correctionFactor_particle <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
+dataframe <- read.csv("tests/rescaling_particle.csv")
+correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, binning_type){
+  dataframe$length_um <- as.numeric(dataframe$length_um)
+  dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  if("sample_volume" %in% colnames(dataframe) == TRUE){
+    dataframe$sample_volume <- as.numeric(dataframe$sample_volume)}
   
+  unique_sample_ID <- unique(dataframe$sample_ID)
+  unique_sample_ID <- as.data.frame(unique_sample_ID) %>%
+    rename(sample_ID = unique_sample_ID)
+  unique_alpha <- data.frame()
+  
+  for(x in 1:nrow(unique_sample_ID)){
+    subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
+    int <- classify_intervals(subset$length_um, style = "quantile")
+    midpoints <- get_midpoints(x = int)
+    midpoints <- as.data.frame(midpoints)
+    freq <- midpoints %>% count(midpoints) %>%
+      rename(length_um = midpoints,
+             abundance = n)
+    freq$log_size <- log10(freq$length_um)
+    freq$log_abundance <- log10(freq$abundance)
+    r1model <- lm(log_abundance ~ log_size, data = freq)
+    alpha <-as.numeric(coef(r1model)[2])
+    subset_ <- subset %>% add_column(alpha = alpha) %>% select(sample_ID, alpha)
+    subset_ <- unique(subset_)
+    unique_alpha <- rbind(unique_alpha, subset_)
+  }
+  
+  dataframe <- left_join(dataframe, unique_alpha, by = "sample_ID")
+  
+  if("sample_volume" %in% colnames(dataframe) == TRUE){
+    dataframe_ <- data.table()
+    
+    for(x in 1:nrow(unique_sample_ID)){
+      subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[1]])
+      particle_number <- subset %>% count(sample_volume) %>%
+        rename(particle_number = n)
+      concentration <- (as.numeric(particle_number$particle_number))/(as.numeric(particle_number$sample_volume))
+      subset <- subset %>% add_column(concentration = concentration)
+      
+      subset <- subset %>%
+        add_column(correction_factor = NA,
+                   corrected_concentration = NA)
+      #max(subset$length_um)
+      x1D_set = 1
+      x2D_set = 5000
+      #Extrapolated parameters
+      #x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
+      #x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
+      
+      x1M_set = as.numeric(min(subset$length_um))
+      x2M_set = as.numeric(max(subset$length_um))
+      alpha = as.numeric(subset$alpha[1])
+        
+      CF <- CFfnx(x1M = x1M_set,#lower measured length
+                  x2M = x2M_set, #upper measured length
+                  x1D = x1D_set, #default lower size range
+                  x2D = x2D_set,  #default upper size range
+                  a = alpha #alpha for count 
+                    
+      )
+        
+      CF <- as.numeric(CF)
+      CF <- format(round(CF, 4), nsmall = 2)
+      subset$correction_factor <- CF
+      subset$corrected_concentration <- as.numeric(subset$correction_factor) * as.numeric(subset$concentration)
+      
+      dataframe_ <- rbind(dataframe_, subset)
+    }
+    
+    dataframe <- dataframe_
+  }
+  
+}
+
+#create function to extract midpoints from binning outputs
+get_midpoints <- function(x, dp=2){
+  lower <- as.numeric(gsub(",.*","",gsub("\\(|\\[|\\)|\\]","", x)))
+  upper <- as.numeric(gsub(".*,","",gsub("\\(|\\[|\\)|\\]","", x)))
+  return(round(lower+(upper-lower)/2, dp))
 }
 
 #Make df for alpha values
