@@ -414,27 +414,6 @@ server <- function(input,output,session) {
     
     })
   
-  
-  # correctionFactor <- reactive({
-  #   req(input$concentrationData)
-  #   req(input$concentration_type)
-  #   req(input$corrected_min)
-  #   req(input$corrected_max)
-  #   
-  #   #clean incoming data
-  #   infile <- input$concentrationData
-  #   file <- fread(infile$datapath)
-  #   dataframe <- as.data.frame(file)
-  #   
-  #   if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-  #     particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
-  #   }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
-  #            "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-  #     concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
-  #   }
-  #   
-  # })
-  
   output$contents <- renderDataTable(#server = F,
                                      datatable({
                                        df()[, c("material","items",  input$variable)]

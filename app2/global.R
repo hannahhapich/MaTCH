@@ -389,7 +389,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
 }
 
 #dataframe <- read.csv("tests/rescaling_concentration.csv")
-
+#dataframe <- read.csv("tests/rescaling_binned.csv")
 correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
   
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
@@ -399,8 +399,10 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     dataframe$study_media <- as.character(dataframe$study_media)}
   if("known_alpha" %in% colnames(dataframe) == TRUE){
     dataframe$known_alpha <- as.numeric(dataframe$known_alpha)}
+  if("sample_ID"  %in% colnames(dataframe) == TRUE){
+    dataframe$sample_ID <- as.character(dataframe$sample_ID)}
   dataframeclean <- mutate_all(dataframe, cleantext) 
-  
+  #metric <- "length (um)"
   if("study_media" %in% colnames(dataframe) == TRUE){
     if(metric == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
@@ -417,7 +419,42 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     if(metric == "specific surface area (g/m2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "specific_surface_area")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
       rename("alpha" = "specific_surface_area")}
+    dataframeclean <- dataframeclean %>% select(-study_media)
     }
+  
+  if("sample_ID" %in% colnames(dataframeclean) == TRUE){
+    unique_bins <- dataframeclean %>% count(sample_ID, size_min, size_max)
+    bin_numbers <- unique_bins %>% count(sample_ID)
+    alpha_bins <- bin_numbers %>% filter(n >= 5)
+    if(nrow(alpha_bins) >= 1){
+      unique_alpha <- data.frame()
+      for(x in 1:nrow(alpha_bins)){
+        sample_name <- alpha_bins$sample_ID[[x]]
+        sample_bins <- dataframeclean %>% filter(sample_ID == sample_name)
+        midpoint <- (as.numeric(sample_bins$size_min) + as.numeric(sample_bins$size_max))/2
+        sample_bins <- sample_bins %>%
+          add_column(midpoint = midpoint) %>%
+          select(sample_ID, midpoint, concentration_particle_vol, alpha)
+        sample_bins$log_size <- log10(sample_bins$midpoint)
+        sample_bins$concentration_particle_vol <- as.numeric(sample_bins$concentration_particle_vol)
+        sample_bins$log_abundance <- log10(sample_bins$concentration_particle_vol)
+        r1model <- lm(log_abundance ~ log_size, data = sample_bins)
+        alpha <- as.numeric(coef(r1model)[2])
+        sample_bins$alpha <- alpha
+        sample_bins <- sample_bins %>% select(sample_ID, alpha)
+        sample_bins <- unique(sample_bins)
+        unique_alpha <- rbind(unique_alpha, sample_bins)
+        unique_alpha <- unique_alpha %>% rename(alpha_calc = alpha)
+      }
+      dataframeclean <- dataframeclean %>% left_join(unique_alpha, by = "sample_ID")
+      for(x in 1:nrow(dataframeclean)){
+        if(! is.na(dataframeclean[x, "alpha_calc"])){
+          dataframeclean[x, "alpha"] <- dataframeclean[x, "alpha_calc"]
+        }
+      }
+      dataframeclean <- dataframeclean %>% select(-alpha_calc)
+    }
+  }
   
   if("known_alpha" %in% colnames(dataframeclean) == TRUE){
     for(x in 1:nrow(dataframeclean)){
@@ -425,6 +462,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
         dataframeclean[x, "alpha"] <- (dataframeclean[x, "known_alpha"])
       }
     }
+    dataframeclean <- dataframeclean %>% select(-known_alpha)
   }
   
   for(x in 1:nrow(dataframeclean)){
@@ -438,6 +476,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     add_column(correction_factor = NA,
                corrected_concentration = NA)
   
+  #corrected_min <- 1
+  #corrected_max <- 5000
   # x1D_set = 1
   # x2D_set = 5000
   #Extrapolated parameters
@@ -457,15 +497,12 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     )
     
     CF <- as.numeric(CF)
-    
-    CF <- format(round(CF, 2), nsmall = 2)
-    
+    CF <- format(round(CF, 4), nsmall = 2)
     dataframeclean$correction_factor[[x]] <- CF
-    
     dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration[[x]])
     
   }
-  
+  dataframeclean <- dataframeclean %>% select(-c(size_min, size_max))
   return(dataframeclean)
 }
 

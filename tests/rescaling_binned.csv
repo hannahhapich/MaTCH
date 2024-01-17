@@ -1,0 +1,10 @@
+﻿sample_ID,concentration_particle_vol,size_min,size_max,study_media,known_alpha
+1,100,300,1000,marine surface,2
+1,100,1000,3000,marine surface,2
+2,100,400,3000,,1.9
+3,100,320,600,marine sediment,
+4,1000,50,100,,
+4,100,101,500,,
+4,10,501,1000,,
+4,5,1000,2000,,
+4,3,2000,4000,,
