@@ -82,18 +82,24 @@ ui <- dashboardPage(dark = T,
                                                               numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1)
                                                           )
                                                         ),
+                                                    
                                                         fluidRow(
                                                           box(width = 12,
-                                                              footer = tags$small("Min-Max normalization improves comparability, for many applications, between spectra except in cases
-                                                                                                where raw intensity values are necessary for interpreation. For example raw values can be useful for thresholding. 
-                                                                                                Min-Max normalization rescales spectral intensity values between 0-1"),
-                                                              title = prettySwitch("make_rel_decision",
-                                                                                   label = "Min-Max Normalize",
-                                                                                   inline = T,
-                                                                                   value = T,
-                                                                                   status = "success",
-                                                                                   fill = T),
-                                                              collapsed = T
+                                                              collapsed = T,
+                                                              footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
+                                                                                  'quantile' provides quantile breaks.
+                                                                                  'equal' divides the range into 'n' parts.
+                                                                                  'fixed' divides into classes of length 'n'.
+                                                                                  'sd' creates classes proportionate to the standard deviation of the data provided"),
+                                                              title = "Alpha Value Calculation",
+                                                              br(),
+                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","fixed","sd")) %>%
+                                                                helper(type = "inline",
+                                                                       title = "Selection Help",
+                                                                       content = c("Select the measured characteristic of your particles over which to normalize"),
+                                                                       size = "m"),
+                                                              br(),
+                                                              numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
                                                           )
                                                         ),
                                                         fluidRow(

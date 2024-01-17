@@ -470,8 +470,9 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
 }
 
 
-dataframe <- read.csv("tests/rescaling_particle.csv")
-correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, binning_type){
+#dataframe <- read.csv("tests/rescaling_particle.csv")
+correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, binning_type, bin_number){
+  
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$sample_ID <- as.character(dataframe$sample_ID)
   if("sample_volume" %in% colnames(dataframe) == TRUE){
@@ -484,7 +485,8 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
   
   for(x in 1:nrow(unique_sample_ID)){
     subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
-    int <- classify_intervals(subset$length_um, style = "quantile")
+    int <- classify_intervals(subset$length_um, n = bin_number, style = binning_type)
+    #int <- classify_intervals(subset$length_um, n = 5, style = "quantile")
     midpoints <- get_midpoints(x = int)
     midpoints <- as.data.frame(midpoints)
     freq <- midpoints %>% count(midpoints) %>%
@@ -505,7 +507,7 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
     dataframe_ <- data.table()
     
     for(x in 1:nrow(unique_sample_ID)){
-      subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[1]])
+      subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
       particle_number <- subset %>% count(sample_volume) %>%
         rename(particle_number = n)
       concentration <- (as.numeric(particle_number$particle_number))/(as.numeric(particle_number$sample_volume))
@@ -515,11 +517,11 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
         add_column(correction_factor = NA,
                    corrected_concentration = NA)
       #max(subset$length_um)
-      x1D_set = 1
-      x2D_set = 5000
+      #x1D_set = 1
+      #x2D_set = 5000
       #Extrapolated parameters
-      #x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
-      #x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
+      x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
+      x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
       
       x1M_set = as.numeric(min(subset$length_um))
       x2M_set = as.numeric(max(subset$length_um))
@@ -539,11 +541,11 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
       subset$corrected_concentration <- as.numeric(subset$correction_factor) * as.numeric(subset$concentration)
       
       dataframe_ <- rbind(dataframe_, subset)
+      
     }
-    
-    dataframe <- dataframe_
+    dataframe_ <- dataframe_ %>% select(-sample_volume)
   }
-  
+  dataframe <- dataframe_ %>% distinct(sample_ID, alpha, .keep_all = TRUE) %>% select(-length_um)
 }
 
 #create function to extract midpoints from binning outputs
