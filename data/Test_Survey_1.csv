@@ -1,8 +1,9 @@
-﻿material,items,count
-metal,fenders,1
-rubber,tires,1
-glass,beverageconatiners,10
-metal,foodwrappersorcontainers,17
-plastic,fishinglineornet,4
-glass/metal,shoppingtrolleys,1
-paper,cardboard,9
+﻿material,morphology,beep_boop
+metal,fenders,
+rubber,tires,
+glass,beverage conatiners,
+metal,foodwrappersorcontainers,
+plastic,fishinglineornet,
+glass/metal,shopping trolleys,
+paper,cardboard,
+glass/metal,shopping trolleys,

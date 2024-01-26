@@ -36,6 +36,107 @@ library(classInt)
 
 #setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
 
+file_paths <- read.csv("data/Test_Survey_1.csv")
+merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
+  dataframe <- file_paths %>%
+    mutate(material = as.character(material),
+           morphology = as.character(morphology))
+  
+  dataframeclean <- dataframe %>%
+    mutate(material = cleantext(material), 
+           morphology = cleantext(morphology)) 
+  
+  dataframe <- dataframe %>%
+    rename(material_raw = material,
+           morphology_raw = morphology) %>%
+    add_column(material = cleantext(dataframe$material),
+               morphology = cleantext(dataframe$morphology))
+  
+  material_key <- inner_join(dataframeclean %>% select(material), 
+                             alias, by = c("material" = "Alias")) %>%
+    distinct()
+  
+  materials_left <- anti_join(dataframeclean %>% select(material), 
+                              alias, by = c("material" = "Alias")) %>%
+    distinct() %>%
+    rename(text = material) %>%
+    as.data.table()
+  
+  if(nrow(materials_left) > 0){
+    new_material_vDB <- add_collection(metadata = materials_left)
+    
+    material_key <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(material = text) %>%
+      inner_join(alias, by = c("Alias")) %>%
+      select(material, Material, readable)   %>%
+      bind_rows(material_key)
+  }
+  
+  
+  #Run for items
+  items_key <- inner_join(dataframeclean %>% select(morphology), 
+                          aliasi, by = c("morphology" = "Alias")) %>%
+    distinct()
+  
+  items_left <- anti_join(dataframeclean %>% select(morphology), 
+                          aliasi, by = c("morphology" = "Alias")) %>%
+    distinct() %>%
+    rename(text = morphology) %>%
+    as.data.table()
+  
+  if(nrow(items_left) > 0){
+    new_items_vDB <- add_collection(metadata = items_left)
+    
+    items_key <- query_collection(db = items_vectorDB, query_embeddings = new_items_vDB, top_n = 1, type = "dotproduct") %>%
+      left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
+      rename(Alias = text) %>%
+      left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
+      rename(items = text) %>%
+      inner_join(aliasi, by = "Alias") %>%
+      select(items, Item, readable)   %>%
+      bind_rows(items_key)
+  }
+  
+  
+  #Replace old material with merged material
+  dataframeclean <- dataframeclean %>% 
+    left_join(material_key, by = "material") %>%
+    select(-Material) %>%
+    rename(material_new = readable)
+  
+  #Replace old item with merged item
+  dataframeclean <- dataframeclean %>% 
+    left_join(items_key, by = c("morphology")) %>%
+    select(-Item) %>%
+    rename(morphology_new = readable)
+  
+  dataframeclean <- dataframeclean %>% 
+    select("material", "morphology", "material_new", "morphology_new") 
+  dataframeclean <- unique(dataframeclean[c("material", "morphology", "material_new", "morphology_new")])
+
+  dataframe <- dataframe %>%
+    left_join(dataframeclean, by = c("material", "morphology"))
+  dataframe <- dataframe %>%
+    select(-c(material, morphology)) %>%
+    rename(material = material_new,
+           morphology = morphology_new) %>%
+    select(morphology_raw, everything()) %>% 
+    select(material_raw, everything()) %>% 
+    select(morphology, everything()) %>% 
+    select(material, everything())
+  
+  dataframe <- dataframe %>% select(morphology_raw, everything()) 
+  dataframe <- dataframe %>% select(material_raw, everything()) 
+  dataframe <- dataframe %>% select(morphology, everything()) 
+  dataframe <- dataframe %>% select(material, everything())
+  
+  return(dataframeclean2)
+}
+
+
 merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   .confidence_interval_width <- function(proportion, sample_size, population_size){
     1.96*sqrt((1/sample_size)*proportion * (1-proportion) * (population_size-sample_size)/(population_size-1))
@@ -43,11 +144,8 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   sample_size = length(file_paths)
   population_size = 100000 
   
-  dataframe <- lapply(file_paths, 
-                      function(x){fread(x) %>%
-                          mutate(proportion = count/sum(count))
-                      }) %>%
-    rbindlist(., fill = T) %>%
+  dataframe <- file_paths %>%
+    mutate(proportion = count/sum(count))%>%
     select(material, items, count, proportion) %>%
     mutate(material = as.character(material),
            items = as.character(items), 
@@ -82,7 +180,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
       left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
       rename(material = text) %>%
       inner_join(alias, by = c("Alias")) %>%
-      select(material, Material)   %>%
+      select(material, Material, readable)   %>%
       bind_rows(material_key)
   }
   
@@ -107,36 +205,62 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
       left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
       rename(items = text) %>%
       inner_join(aliasi, by = "Alias") %>%
-      select(items, Item)   %>%
+      select(items, Item, readable)   %>%
       bind_rows(items_key)
   }
   
+  
   #Replace old material with merged material
+  dataframeclean <- dataframeclean %>% 
+    left_join(material_key, by = "material") %>%
+    select(-c(material, readable)) %>%
+    rename(material = Material)
+  
+  #Replace old item with merged item
+  dataframeclean <- dataframeclean %>% 
+    left_join(items_key, by = "items") %>%
+    select(-c(items, readable)) %>%
+    rename(items = Item)
+  
+  dataframeclean <- dataframeclean %>%
+    left_join(use_cases, by = c("items"="Item"), keep = NULL)
+  
   #Combine any new identical terms
   dataframeclean2 <- dataframeclean %>%
     mutate(count = as.numeric(count)) %>%
-    group_by(material, items) %>%
+    group_by(material, items, Use) %>%
     summarise(count = sum(count), 
               proportion = sum(proportion)) %>%
     ungroup() %>% 
     mutate(proportion_width = .confidence_interval_width(proportion = proportion, sample_size = sample_size, population_size = population_size)) %>%
     mutate(min_proportion = proportion - proportion_width, 
-           max_proportion = proportion + proportion_width) %>%
-    rename(Item = items, 
-           Material = material) %>%
-    left_join(use_cases, by = c("Item"), keep = NULL)
+           max_proportion = proportion + proportion_width)
   
-  dataframeclean2 <- setkey(setDT(dataframeclean2), Item) 
+  dataframeclean2 <- setkey(setDT(dataframeclean2), items) 
   dataframeclean2[aliasi, readable := i.readable]
-  dataframeclean2 <- dataframeclean2 %>% select(-Item) %>% rename(Item = readable)
+  dataframeclean2 <- dataframeclean2 %>% select(-items) %>% rename(items = readable)
   
-  dataframeclean2 <- setkey(setDT(dataframeclean2), Material) 
+  dataframeclean2 <- setkey(setDT(dataframeclean2), material) 
   dataframeclean2[alias, readable := i.readable]
-  dataframeclean2 <- dataframeclean2 %>% select(-Material) %>% rename(Material = readable)
+  dataframeclean2 <- dataframeclean2 %>% select(-material) %>% rename(material = readable)
   
   dataframeclean2 <- setkey(setDT(dataframeclean2), Use) 
   dataframeclean2[prime_unclassifiable, readable := i.readable]
-  dataframeclean2 <- dataframeclean2 %>% select(-Use) %>% rename(Use = readable)
+  dataframeclean2 <- dataframeclean2 %>% select(-Use) %>% rename(use = readable) %>% select(-proportion_width)
+  
+  dataframeclean2$min_proportion <- as.numeric(dataframeclean2$min_proportion)
+  dataframeclean2$max_proportion <- as.numeric(dataframeclean2$max_proportion)
+  
+  for(x in 1:nrow(dataframeclean2)){
+    if(dataframeclean2$min_proportion[[x]] < 0){
+      dataframeclean2$min_proportion[[x]] <- 0
+    }
+    if(dataframeclean2$max_proportion[[x]] > 1){
+      dataframeclean2$max_proportion[[x]] <- 1
+    }
+  }
+  
+  dataframeclean2 <- dataframeclean2[,c("material","items","use","count","proportion","min_proportion","max_proportion")]
   
   return(dataframeclean2)
 }

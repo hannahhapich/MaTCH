@@ -401,6 +401,15 @@ server <- function(input,output,session) {
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
     
+    file_paths = test
+    merge_data(file_paths = input$particleData$datapath, 
+               materials_vectorDB = materials_vectorDB, 
+               items_vectorDB = items_vectorDB,
+               alias = alias, 
+               aliasi = aliasi, 
+               use_cases = use_cases, 
+               prime_unclassifiable = prime_unclassifiable)
+    
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
     }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
@@ -410,7 +419,7 @@ server <- function(input,output,session) {
       correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
     }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
        correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
-    }
+    }else if(){}
     
     })
   
