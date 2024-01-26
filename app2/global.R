@@ -36,7 +36,18 @@ library(classInt)
 
 #setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
 
-#file_paths <- read.csv("data/Test_Survey_1.csv")
+#Data for embeddings generation via chRoma
+items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
+materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
+Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
+creds <- read.csv("data/s3_cred.csv")
+Sys.setenv(
+  "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
+  "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
+  "AWS_DEFAULT_REGION" = "us-east-2"
+)
+
+file_paths <- read.csv("tests/count_mass_particle.csv")
 merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   dataframe <- file_paths %>%
     mutate(material = as.character(material),
@@ -59,6 +70,7 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   materials_left <- anti_join(dataframeclean %>% select(material), 
                               alias, by = c("material" = "Alias")) %>%
     distinct() %>%
+    drop_na() %>%
     rename(text = material) %>%
     as.data.table()
   
@@ -84,6 +96,7 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   items_left <- anti_join(dataframeclean %>% select(morphology), 
                           aliasi, by = c("morphology" = "Alias")) %>%
     distinct() %>%
+    drop_na() %>%
     rename(text = morphology) %>%
     as.data.table()
   
@@ -133,7 +146,7 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   dataframe <- dataframe %>% select(morphology, everything()) 
   dataframe <- dataframe %>% select(material, everything())
   
-  return(dataframeclean2)
+  return(dataframe)
 }
 
 
@@ -961,17 +974,6 @@ MicroOnly <- read.csv("data/PremadeSurveys/Most_Specific_Microplastics.csv")
 AllMore <- read.csv("data/PremadeSurveys/Most_Specific_All.csv")
 AllLess <- read.csv("data/PremadeSurveys/Least_Specific_All.csv")
 polymer_db <- read.csv("data/median_polymer_density.csv")
-
-#Data for embeddings generation via chRoma
-items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
-materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
-Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
-creds <- read.csv("data/s3_cred.csv")
-Sys.setenv(
-  "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
-  "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
-  "AWS_DEFAULT_REGION" = "us-east-2"
-)
 
 
 #make item and material pathstrings for merging tool

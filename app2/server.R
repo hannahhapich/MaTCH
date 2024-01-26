@@ -209,17 +209,17 @@ server <- function(input,output,session) {
   
   ###START MERGING TOOL
 
-  df_ <- reactive({
-    req(input$df_)
-    
-    merge_data(file_paths = input$df_$datapath, 
-               materials_vectorDB = materials_vectorDB, 
-               items_vectorDB = items_vectorDB,
-               alias = alias, 
-               aliasi = aliasi, 
-               use_cases = use_cases, 
-               prime_unclassifiable = prime_unclassifiable)
-  })
+  # df_ <- reactive({
+  #   req(input$df_)
+  #   
+  #   merge_data(file_paths = input$df_$datapath, 
+  #              materials_vectorDB = materials_vectorDB, 
+  #              items_vectorDB = items_vectorDB,
+  #              alias = alias, 
+  #              aliasi = aliasi, 
+  #              use_cases = use_cases, 
+  #              prime_unclassifiable = prime_unclassifiable)
+  # })
   
   #Share data ----
   observeEvent(input$df, {
@@ -405,20 +405,28 @@ server <- function(input,output,session) {
     #merge_data(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
     
     
-    # if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-    #   dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
-    # }else{dataframe2 <- dataframe}
+     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+     }else{dataframe2 <- dataframe}
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
-    }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+      dataframe3 <- particle_count_mass(dataframe = dataframe2, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
+    }else{dataframe3 <- dataframe2}
+      
+    if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
        "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
-    }else if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe)){
-      correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
-    }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+      dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
+    }else{dataframe4 <- dataframe3} 
+    
+    if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe)){
+      dataframe5 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+    }else{dataframe5 <- dataframe4} 
+    
+    if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
        correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
     }
+    
+    return(dataframe3)
     
     })
   
