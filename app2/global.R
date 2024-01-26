@@ -36,7 +36,7 @@ library(classInt)
 
 #setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
 
-file_paths <- read.csv("data/Test_Survey_1.csv")
+#file_paths <- read.csv("data/Test_Survey_1.csv")
 merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   dataframe <- file_paths %>%
     mutate(material = as.character(material),
