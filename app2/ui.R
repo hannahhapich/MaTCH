@@ -62,12 +62,11 @@ ui <- dashboardPage(dark = T,
                                                   fluidRow(
                                                     box(width = 12,
                                                         collapsed = T,
-                                                        style = "height: 50vh; overflow-y: auto;",
+                                                        style = "height: 27vh; overflow-y: auto;",
                                                         footer = tags$small("Options for rescaling and mass conversion techniques."),
                                                         title = "Advanced Settings",
                                                         fluidRow(
                                                           box(width = 12,
-                                                              #footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
                                                               title = "Rescaling Settings",
                                                               collapsed = T,
                                                               br(),
@@ -104,140 +103,40 @@ ui <- dashboardPage(dark = T,
                                                         fluidRow(
                                                           box(width = 12,
                                                               collapsed = T,
-                                                              footer = tags$small("Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
-                                                                            Derivative transformation uses the order specified. 
-                                                                            If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired. 
-                                                                            Smoothing uses the SG filter on an window of points, specifying the wavenumber window larger will make the spectra more smooth.
-                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like."),
-                                                              title =  prettySwitch(inputId = "smooth_decision",
-                                                                                    label = "Smoothing/Derivative",
-                                                                                    inline = T,
-                                                                                    value = T,
-                                                                                    status = "success",
-                                                                                    fill = T),
-                                                              sliderInput("smoother", "Polynomial", min = 0, max = 5, value = 3),
-                                                              sliderInput("derivative_order", "Derivative Order", min = 0, max = 3, value = 1),
-                                                              sliderInput("smoother_window", "Wavenumber Window", min = 50, max = 200, value = 60, step = 5),
-                                                              prettySwitch("derivative_abs", 
-                                                                           label = "Absolute Value",  
+                                                              footer = tags$small("If you do not have a polymer identification for every particle, this option will create a weighted average of polymer densities for a given
+                                                                                  morphology, and apply this average density to particles of unknown polymer type within that morphology. You may also choose to weight by sample,
+                                                                                  or to not wieght by individual morphology type."),
+                                                              title = prettySwitch(inputId = "polymer_avg_decision",
+                                                                           label = "Polymer Weighted Average",
                                                                            inline = T,
                                                                            value = T,
                                                                            status = "success",
-                                                                           fill = T))),
+                                                                           fill = T),
+                                                              checkboxGroupInput(inputId = "weighted_choice",
+                                                                                 label = "Weighted Average Method",
+                                                                                 choices = c("Weight by Morphology" = "morph_weight",
+                                                                                             "Weight by Sample" = "sample_weight"),
+                                                                                 selected = "morph_weight",
+                                                                                 inline = T)
+                                                            )
+
+                                                        ),
+                                                              
                                                         fluidRow(
                                                           box(width = 12,
-                                                              footer = tags$small("Options for conforming spectra to a new wavenumber resolution.
-                                                                                                Conformation technique specifies the strategy for performing the conformation. 
-                                                                                                Nearest will use the nearest value to the wavenumber resolution specified, this is 
-                                                                                                faster but less accurate. Linear Interpolation will perform a linear regression between 
-                                                                                                the nearest points to identify the intensity values at the new wavenumbers. Wavenumber Resolution 
-                                                                                                will set the step size in wavenumbers for the new wavenumber values."),
-                                                              title = prettySwitch("conform_decision",
-                                                                                   label = "Conform Wavenumbers",
+                                                              footer = tags$small("All unknown terms for 'morphology' and 'material' will be matched via embedding similarity to existing terms in our database. The highest percent similarity
+                                                                                  match will display as default. However, if you wish to review the top five matches from the natural language processing model, you may do so here and override 
+                                                                                  the choice."),
+                                                              title = prettySwitch("embedding_match_choice",
+                                                                                   label = "View Embedding Matches",
                                                                                    inline = T,
                                                                                    value = F,
                                                                                    status = "success",
                                                                                    fill = T),
-                                                              collapsed = T,
-                                                              selectInput(inputId = "conform_selection", 
-                                                                          label = "Conformation Technique", 
-                                                                          choices = c("Nearest" = "roll",
-                                                                                      "Linear Interpolation" = "interp")), 
-                                                              br(),
-                                                              sliderInput("conform_res", "Wavenumber Resolution", min = 4, max = 16, value = 5)
+                                                               collapsed = T
                                                               
                                                           )
-                                                        ),
-                                                        fluidRow(
-                                                          box(
-                                                            width = 12,
-                                                            collapsed = T,
-                                                            footer = tags$small("Open Specy assumes spectra are in Absorbance units. If the uploaded spectrum is not in absorbance units, 
-                                                                    use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation 
-                                                                    which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk 
-                                                                    equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the 
-                                                                    intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy
-                                                                    assumes that the uploaded data is an absorbance spectrum."),
-                                                            title =  prettySwitch(inputId = "intensity_decision",
-                                                                                  label = "Intensity Adjustment",
-                                                                                  value = F,
-                                                                                  inline = T,
-                                                                                  status = "success",
-                                                                                  fill = T),
-                                                            radioButtons("intensity_corr", "Intensity Units",
-                                                                         c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))
-                                                          )),
-                                                        fluidRow(
-                                                          box(width = 12,
-                                                              collapsed = T,
-                                                              footer = tags$small("This algorithm automatically fits to the baseline by fitting 
-                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit algorithm."),
-                                                              title = prettySwitch("baseline_decision",
-                                                                                   label = "Baseline Correction",
-                                                                                   inline = T,
-                                                                                   value = F,
-                                                                                   status = "success",
-                                                                                   fill = T),
-                                                              sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8)
-                                                          )),
-                                                        fluidRow(
-                                                          box(width = 12,
-                                                              collapsed = T,
-                                                              footer = tags$small("Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.
-                                                                                     These options control the maximum and minimum wavenumbers in the range to crop the spectra."),
-                                                              title =  prettySwitch("range_decision",
-                                                                                    label = "Range Selection",
-                                                                                    inline = T,
-                                                                                    value = F,
-                                                                                    status = "success",
-                                                                                    fill = T),
-                                                              numericInput(
-                                                                "MinRange",
-                                                                "Minimum Wavenumber",
-                                                                value = 0,
-                                                                min = NA,
-                                                                max = NA,
-                                                                step = NA,
-                                                                width = NULL
-                                                              ),
-                                                              numericInput(
-                                                                "MaxRange",
-                                                                "Maximum Wavenumber",
-                                                                value = 6000,
-                                                                min = NA,
-                                                                max = NA,
-                                                                step = NA,
-                                                                width = NULL
-                                                              ))),
-                                                        fluidRow(
-                                                          box(width = 12,
-                                                              collapsed = T,
-                                                              footer = tags$small("Sometimes peaks are undersireable. 
-                                                                                     These options will replace peak regions with the mean of their edges. 
-                                                                                     Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
-                                                                                     Defaults are set to flatten the CO2 region in infrared spectra."),
-                                                              title = prettySwitch("co2_decision",
-                                                                                   label = "Flatten Region",
-                                                                                   inline = T,
-                                                                                   value = F,
-                                                                                   status = "success",
-                                                                                   fill = T),
-                                                              numericInput(
-                                                                "MinFlat",
-                                                                "Minimum Wavenumber",
-                                                                value = 2200,
-                                                                min = 1,
-                                                                max = 6000,
-                                                                step = 1
-                                                              ),
-                                                              numericInput(
-                                                                "MaxFlat",
-                                                                "Maximum Wavenumber",
-                                                                value = 2400,
-                                                                min = 1,
-                                                                max = 6000,
-                                                                step = 1
-                                                              )))
+                                                        )
                                                         
                                                     )
                                                   )
