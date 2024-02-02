@@ -71,7 +71,7 @@ ui <- dashboardPage(dark = T,
                                                               title = "Rescaling Settings",
                                                               collapsed = T,
                                                               br(),
-                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)","mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")) %>%
+                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")) %>%
                                                                 helper(type = "inline",
                                                                        title = "Selection Help",
                                                                        content = c("Select the measured characteristic of your particles over which to normalize"),
@@ -89,11 +89,10 @@ ui <- dashboardPage(dark = T,
                                                               footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
                                                                                   'quantile' provides quantile breaks.
                                                                                   'equal' divides the range into 'n' parts.
-                                                                                  'fixed' divides into classes of length 'n'.
                                                                                   'sd' creates classes proportionate to the standard deviation of the data provided"),
                                                               title = "Alpha Value Calculation",
                                                               br(),
-                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","fixed","sd")) %>%
+                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","sd")) %>%
                                                                 helper(type = "inline",
                                                                        title = "Selection Help",
                                                                        content = c("Select the measured characteristic of your particles over which to normalize"),
@@ -276,20 +275,22 @@ ui <- dashboardPage(dark = T,
                                       # h4(id = "placeholder1", "Upload some data to get started..."),
                                       # uiOutput("progress_bars"),
                                       fluidRow(
-                                        dataTableOutput('contents5'),
+                                        # dataTableOutput('contents5'),
+                                        div(style = "overflow-x: scroll",
+                                            DT::dataTableOutput("contents5")
                                         # plotlyOutput("heatmap",inline = T),
                                         # plotlyOutput("MyPlotC", inline = T),
-                                        div(style = "overflow-x: scroll",
-                                        DT::dataTableOutput("eventmetadata")
+                                        # div(style = "overflow-x: scroll",
+                                        # DT::dataTableOutput("eventmetadata")
                                        ))
                                       # dropdownMenu = boxDropdown(
                                       #   boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
                                       # ),
-                                      # sidebar = boxSidebar(
-                                      #   id = "mycardsidebar",
-                                      #   fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                      #            DT::dataTableOutput("event"))
-                                      # )
+                                       # sidebar = boxSidebar(
+                                       #   id = "mycardsidebar",
+                                       #   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                       #            DT::dataTableOutput("event"))
+                                       # )
                                   )
                                 )
                                 
