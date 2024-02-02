@@ -37,6 +37,7 @@ hardplastics,hardplastics,hard plastics
 metal,metals,metal
 metal,metalmaterials,metal
 metal,metal,metal
+metal,metallic,metal
 leather,leather,leather
 organic,food,organic
 organic,biodegradable,organic
@@ -52,6 +53,7 @@ other,otheritems,other
 woodandpaper,cigarette,wood and paper
 otherplastic,otherplastic,other plastic
 other,unidentified,other
+paint,paint,paint
 paper,paper,paper
 paperorcardboard,paperorcardboard,paper OR cardboard
 paperorcardboard,paper/cardboardmaterials,paper OR cardboard
@@ -74,6 +76,14 @@ sanitarywaste,sanitary,sanitary waste
 biohazard,medical/personalhygiene,biohazard
 biohazard,medical,biohazard
 softplastics,softplastics,soft plastics
+tirewear&asphalt,tirewear&asphalt,tire wear & asphalt
+tirewear&asphalt,tirewearandasphalt,tire wear & asphalt
+tirewear&asphalt,tirewear/asphalt,tire wear & asphalt
+tirewear&asphalt,tyrewear&asphalt,tire wear & asphalt
+tirewear&asphalt,tyrewearandasphalt,tire wear & asphalt
+tirewear&asphalt,tyrewear/asphalt,tire wear & asphalt
+tirewear,tirewear,tire wear
+tirewear,tyrewear,tire wear
 wood,wood,wood
 wood,woodydebris,wood
 processedwood,processedwood,processed wood
@@ -88,10 +98,10 @@ woodandpaper,woodandpaper,wood and paper
 woodandpaper,paper&lumber,wood and paper
 concreteorasphalt,concreteorasphalt,concrete OR asphalt
 concreteorasphalt,concrete/asphalt,concrete OR asphalt
+asphalt,asphalt,asphalt
 pest,pest,PEST
 "1,4-polyisoprene(cisandtrans)(latex)","1,4-polyisoprene(cisandtrans)(latex)","1,4-Polyisoprene (cis and trans)(Latex)"
 abs,abs,ABS
-abs,polyethersulfone,ABS
 abs,acrylonitrilebutadienestyrene,ABS
 abs,acrylonitrilebutadienestyrene(abs),ABS
 PAN,acrylic,PAN
@@ -109,6 +119,7 @@ cotton,cotton,cotton
 epdmrubber(ethylenepropylenedienemonomerrubber),epdmrubber(ethylenepropylenedienemonomerrubber),EPDM rubber (ethylene propylene diene monomer rubber)
 er,er,ER
 er,epoxyresin,ER
+epoxy,epoxy,epoxy
 ethylcellulose,ethylcellulose,Ethyl Cellulose
 ethylene-propylene,ethylene-propylene,Ethylene-propylene
 isobutylene-isoprene,isobutylene-isoprene,Isobutylene-isoprene
@@ -119,24 +130,34 @@ ldpe,low-densitypolyethylene,LDPE
 hdpe,hdpe,HDPE
 hdpe,highdensitypolyethylene,HDPE
 hdpe,high-densitypolyethylene,HDPE
+hdpe,polyethylenehigh-density,HDPE
 melamine-formaldehyde,melamine-formaldehyde,Melamine-formaldehyde
 methylcellulose,methylcellulose,Methyl Cellulose
 mineral,mineral,mineral
 neoprene,neoprene,neoprene
+neoprene,polychloroprene,neoprene
 nomex-poly(m-phenyleneterephthalamide),nomex-poly(m-phenyleneterephthalamide),Nomex - Poly(m-phenylene terephthalamide)
 nonpolymeric,nonpolymeric,nonpolymeric
 notplastic,notplastic,not plastic
 nylon10-poly(decano-10-lactam),nylon10-poly(decano-10-lactam),Nylon 10 - Poly(decano-10-lactam)
 "nylon10,10-poly(decamethylenesebacamide)","nylon10,10-poly(decamethylenesebacamide)","Nylon 10,10 - Poly(decamethylene sebacamide)"
 nylon11-poly(undecano-11-lactam),nylon11-poly(undecano-11-lactam),Nylon 11 - Poly(undecano-11-lactam)
+nylon11-poly(undecano-11-lactam),nylon11,Nylon 11 - Poly(undecano-11-lactam)
 nylon12-poly(dodecano-12-lactam),nylon12-poly(dodecano-12-lactam),Nylon 12 - Poly(dodecano-12-lactam)
+nylon12-poly(dodecano-12-lactam),nylon12,Nylon 12 - Poly(dodecano-12-lactam)
 nylon3-poly(propiolactam),nylon3-poly(propiolactam),Nylon 3 - Poly(propiolactam)
 "nylon4,6-poly(tetramethyleneadipamide)","nylon4,6-poly(tetramethyleneadipamide)","Nylon 4,6 - Poly(tetramethylene adipamide)"
+"nylon4,6-poly(tetramethyleneadipamide)",nylon46,"Nylon 4,6 - Poly(tetramethylene adipamide)"
+nylon6-poly(caprolactam),nylon6,Nylon 6 - Poly(caprolactam)
 nylon6-poly(caprolactam),nylon6-poly(caprolactam),Nylon 6 - Poly(caprolactam)
 "nylon6,10-poly(hexamethylenesebacamide)","nylon6,10-poly(hexamethylenesebacamide)","Nylon 6,10 - Poly(hexamethylene sebacamide)"
+"nylon6,10-poly(hexamethylenesebacamide)",nylon610,"Nylon 6,10 - Poly(hexamethylene sebacamide)"
 "nylon6,12-poly(hexamethylenedodecanediamide)","nylon6,12-poly(hexamethylenedodecanediamide)","Nylon 6,12 - Poly(hexamethylene dodecanediamide)"
+"nylon6,12-poly(hexamethylenedodecanediamide)",nylon612,"Nylon 6,12 - Poly(hexamethylene dodecanediamide)"
 "nylon6,6-poly(hexamethyleneadipamide)","nylon6,6-poly(hexamethyleneadipamide)","Nylon 6,6 - Poly(hexamethylene adipamide)"
+"nylon6,6-poly(hexamethyleneadipamide)",nylon66,"Nylon 6,6 - Poly(hexamethylene adipamide)"
 "nylon6,9-poly(hexamethyleneazelamide)","nylon6,9-poly(hexamethyleneazelamide)","Nylon 6,9 - Poly(hexamethylene azelamide)"
+nylon6-66,nylon6-66,Nylon 6-66
 nylon8-polycapryllactam,nylon8-polycapryllactam,Nylon 8 - Polycapryllactam
 olefin,olefin,Olefin
 other,othermaterial,other
@@ -176,11 +197,18 @@ pe+pp,pe+pp,PE+PP
 pe+pp,cope-pp,PE+PP
 pe+ps,pe+ps,PE+PS
 pe+ps,polyethylene+polystyrene,PE+PS
-peek-poly(etheretherketone),peek-poly(etheretherketone),PEEK - Poly(ether ether ketone)
-pek-poly(etherketone),pek-poly(etherketone),PEK - Poly(ether ketone)
-pekk-poly(etherketoneketone),pekk-poly(etherketoneketone),PEKK - Poly(ether ketone ketone)
+peek,peek-poly(etheretherketone),PEEK
+peek,polyetheretherketone,PEEK
+peek,poly(etheretherketone),PEEK
+peek,peek,PEEK
+pek,pek-poly(etherketone),PEK
+pek,poly(etherketone),PEK
+pek,pek,PEK
+pekk,pekk,PEKK
+pekk,pekk-poly(etherketoneketone),PEKK
+pekk,poly(etherketoneketone),PEKK
 pes,pes,PES
-pes,pesu,PES
+pes,polyethersulfone,PES
 pest,polyester,PEST
 pet,pet,PET
 pet,polyethyleneterephthalate,PET
@@ -191,15 +219,20 @@ pet+pest,pet+pest,PET+PEST
 pet+olefin,pet+olefin,PET+olefin
 peva,peva,PEVA
 peva,polyethylene-vinylacetate,PEVA
-peva,ethylene-vinylacetate,PEVA
+eva,ethylene-vinyl-acetate,EVA
+eva,ethylenevinylacetate,EVA
+eva,eva,EVA
 phenolformaldehyde,phenolformaldehyde,Phenol formaldehyde
 pi,pi,PI
 pi,polyimide,PI
 pi,polyimides,PI
 pla,pla,PLA
-pla,picolinicacid,PLA
+pla,polylacticacid(pla),PLA
+pla,polyacticacid,PLA
+picolinicacid,picolinicacid,picolinic acid
 plasticadditive,plasticadditive,Plastic additive
 pmma,pmma,PMMA
+pmma,polymethylmethacylate,PMMA
 pmma,polymethylmethacrylate,PMMA
 pmma,poly(methylmethacrylate),PMMA
 pmps,pmps,PMPS
@@ -460,6 +493,7 @@ pps,polyphenylenesulfide(pps),PPS
 ps,ps,PS
 ptfe,ptfe,PTFE
 ptfe,polytetrafluoroethylene,PTFE
+ptfe,polytetrafluorethylene,PTFE
 ptfe,poly(tetrafluoroethylene),PTFE
 ptt,ptt,PTT
 ptt,polytrimethyleneterephthalate,PTT
@@ -473,25 +507,104 @@ pva,poly(vinylalcohol),PVA
 pvc,pvc,PVC
 pvc,polyvinylchloride,PVC
 pvc,poly(vinylchloride),PVC
+pvc,vinyl(pvc),PVC
 pvdf,pvdf,PVDF
-pvdf,poly(vinylideneflourine),PVDF
+pvdf,poly(vinylidenefluoride),PVDF
+pvdf,polyvinylidenefluoride,PVDF
 rayon,rayon,Rayon
 san,san,SAN
 san,styreneacrylonitrileresin,SAN
 san,styrene-acytonitrile(san),SAN
+san,styreneacrylonitrile(san),SAN
 sbr,sbr,SBR
 sbr,styrene-butadienerubber,SBR
 sbr,butadiene/butylrubber,SBR
 sbr,styrene-butadiene,SBR
 ca,semi-syntheticcellulose,CA
-silicone,silicone,Silicone
+silicone,silicone,silicone
 styrene-isoprene,styrene-isoprene,Styrene-isoprene
 styrene-maleic,styrene-maleic,Styrene-maleic
 urea-formaldehyde,urea-formaldehyde,Urea-formaldehyde
-vinyl,vinyl,Vinyl
-vinyl,vinyon,Vinyl
+vinyl,vinyl,vinyl
+vinyl,vinyon,vinyl
 wool,wool,wool
 co-polymers,co-polymers,Co-Polymers
 co-polymers,copolymers,Co-polymers
 co-polymers,copolymer,Co-polymers
 co-polymers,co-polymer,Co-polymers
+tpe,thermoplasticelastomers,TPE
+tpe,thermo-plasticelastomers,TPE
+tpe,tpe,TPE
+rubberorthermosetelastomer,rubberorthermosetelastomer,rubber OR thermoset elastomer
+thermosetelastomer,thermosetelastomer,thermoset elastomer
+acetal,acetal,acetal
+lldpe,lldpe,LLDPE
+lldpe,linearlowdensitypolyethylene,LLDPE
+lldpe,linearlow-densitypolyethylene,LLDPE
+tpu,tpu,TPU
+tpu,thermoplasticpolyurethane,TPU
+ppe,ppe,PPE
+ppe,polyphenyleneether,PPE
+ppe,polyphenyleneetherppo,PPE
+polyethylene-ether,polyethyleneether,polyethylene-ether
+polyethylene-ether,polyethylene-ether,polyethylene-ether
+phenolicresin,phenolic,phenolic resin
+phenolicresin,phenolicresin,phenolic resin
+thermosetpolyester,thermosetpolyester,thermoset polyester
+pei,polyetherimide,PEI
+pei,pei,PEI
+acryliccyanoacrylateadhesive,acryliccyanoacrylateadhesive,acrylic cyanoacrylate adhesive
+ppa,polyphthalamide(ppa),PPA
+ppa,polyphthalamide,PPA
+ppa,ppa,PPA
+thermosetfluoropolymer,thermosetfluoropolymer,thermoset fluoropolymer
+asa,acrylonitrile-styrene-acrylate,ASA
+asa,acrylonitrilestyreneacrylate,ASA
+asa,asa,ASA
+styrene-butadienethermoplastics,styrene-butadienethermoplastics,styrene-butadiene thermoplastics
+styrene-butadienethermoplastics,styrenebutadienethermoplastics,styrene-butadiene thermoplastics
+lcp,liquidcrystalpolymer,LCP
+lcp,liquid-crystalpolymer,LCP
+lcp,lcp,LCP
+cellulosic,cellulosic,cellulosic
+psu,polysulfone,PSU
+psu,psu,PSU
+pithermoplastic,"polyimide,thermoplastic",PI thermoplastic
+pithermoplastic,pithermoplastic,PI thermoplastic
+thermosetpolyimide,thermosetpolyimide,thermoset polyimide
+etfe-ectfe,etfe-ectfe,ETFE-ECTFE
+etfe-ectfe,ethylenetetrafluoroethlene/ethylenechlorotrifluoroethylene,ETFE-ECTFE
+etfe-ectfe,ethylenetetrafluoroethlene-ethylenechlorotrifluoroethylene,ETFE-ECTFE
+aromaticpolyamide,aromaticpolyamide,aromatic polyamide
+aromaticpolyamide,aramid,aromatic polyamide
+ionomer,ionomer,ionomer
+ema,ethylenemethylacrylate,EMA
+ema,ema,EMA
+pfa,perfluoroalkoxyalkane,PFA
+pfa,pfa,PFA
+siloxane,siloxane,siloxane
+oxidizedpe,polyethylene-oxidized,oxidized PE
+oxidizedpe,oxidizedPE,oxidized PE
+oxidizedpe,oxidizedpolyethylene,oxidized PE
+chlorinatedpe,polyethylene-chlorinated,chlorinated PE
+chlorinatedpe,chlorinatedPE,chlorinated PE
+chlorinatedpe,chlorinatedpolyethylene,chlorinated PE
+modifiedcellulosechemical,cellulosechemicalmodified,modified cellulose chemical
+modifiedcellulosechemical,modifiedcellulosechemical,modified cellulose chemical
+nitrilerubber,nitrilerubber,nitrile rubber
+acrylates/polyurethanes/varnish,acrylates/polyurethanes/varnish,acrylates/polyurethanes/varnish
+emaa,ethylenemethacrylicacid,EMAA
+emaa,emaa,EMAA
+acrylonitrile-butadiene,acrylonitrile-butadiene,acrylonitrile-butadiene
+rubbertype1,rubbertype1,rubber type 1
+rubbertype2,rubbertype2,rubber type 2
+rubbertype3,rubbertype3,rubber type 3
+chlorinatedpi,polyisoprene-chlorinated,chlorinated PI
+chlorinatedpi,chlorinatedpi,chlorinated PI
+pcl,polycaprolactone,PCL
+pcl,pcl,PCL
+pom,polyoxymethylene,POM
+pom,pom,POM
+thermoplastics,thermoplastics,Thermoplastics
+pesu,pesu,PESU
+pesu,polyethersulfone,PESU
