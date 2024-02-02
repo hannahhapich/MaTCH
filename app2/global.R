@@ -278,7 +278,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
   return(dataframeclean2)
 }
 
-
+#dataframe <- read.csv("tests/count_mass_particle.csv")
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean){
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$morphology <- as.character(dataframe$morphology)
@@ -541,23 +541,43 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   dataframeclean <- mutate_all(dataframe, cleantext) 
   #metric <- "length (um)"
   if("study_media" %in% colnames(dataframe) == TRUE){
-    if(metric == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length")], by = "study_media", all.x=TRUE)
+    if(metric == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length", "length_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
-      rename("alpha" = "length")}
-    if(metric == "mass (ug)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "mass")], by = "study_media", all.x=TRUE)
+      rename("alpha" = "length",
+             "sd" = "length_sd")}
+    if(metric == "width (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "width", "width_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
-      rename("alpha" = "mass")}
-    if(metric == "volume (um3)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "volume")], by = "study_media", all.x=TRUE)
+      rename("alpha" = "length",
+             "sd" = "width_sd")}
+    if(metric == "mass (ug)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "mass", "mass_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
-      rename("alpha" = "volume")}
-    if(metric == "surface area (um2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "surface_area")], by = "study_media", all.x=TRUE)
+      rename("alpha" = "mass",
+             "sd" = "mass_sd")}
+    if(metric == "volume (um3)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "volume", "volume_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
-      rename("alpha" = "surface_area")}
-    if(metric == "specific surface area (g/m2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "specific_surface_area")], by = "study_media", all.x=TRUE)
+      rename("alpha" = "volume",
+             "sd" = "volume_sd")}
+    if(metric == "surface area (um2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "surface_area", "surface_area_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
-      rename("alpha" = "specific_surface_area")}
-    dataframeclean <- dataframeclean %>% select(-study_media)
-    }
+      rename("alpha" = "surface_area",
+             "sd" = "surface_area_sd")}
+    if(metric == "specific surface area (g/m2)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "specific_surface_area", "specific_surface_area_sd")], by = "study_media", all.x=TRUE)
+    dataframeclean <- dataframeclean %>%
+      rename("alpha" = "specific_surface_area",
+             "sd" = "specific_surface_area_sd")}
+    alpha_lower <- (dataframeclean$alpha) - (dataframeclean$sd)
+    alpha_upper <- (dataframeclean$alpha) + (dataframeclean$sd)
+    dataframeclean <- dataframeclean %>% 
+      add_column(alpha_lower = alpha_lower,
+                 alpha_upper = alpha_upper) %>%
+      select(-study_media, -sd)
+  }else{
+    dataframeclean <- dataframeclean %>% 
+      add_column(alpha = NA,
+                 alpha_lower = NA,
+                 alpha_upper = NA
+      )
+  }
   
   if("sample_ID" %in% colnames(dataframeclean) == TRUE){
     unique_bins <- dataframeclean %>% count(sample_ID, size_min, size_max)
@@ -566,19 +586,26 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     if(nrow(alpha_bins) >= 1){
       unique_alpha <- data.frame()
       for(x in 1:nrow(alpha_bins)){
+        x = 1
         sample_name <- alpha_bins$sample_ID[[x]]
         sample_bins <- dataframeclean %>% filter(sample_ID == sample_name)
         midpoint <- (as.numeric(sample_bins$size_min) + as.numeric(sample_bins$size_max))/2
         sample_bins <- sample_bins %>%
-          add_column(midpoint = midpoint) %>%
-          select(sample_ID, midpoint, concentration_particle_vol, alpha)
+          add_column(midpoint = midpoint,
+                     alpha_calc_lower = NA,
+                     alpha_calc_upper = NA) %>%
+          select(sample_ID, midpoint, concentration_particle_vol, alpha, alpha_calc_lower, alpha_calc_upper)
         sample_bins$log_size <- log10(sample_bins$midpoint)
         sample_bins$concentration_particle_vol <- as.numeric(sample_bins$concentration_particle_vol)
         sample_bins$log_abundance <- log10(sample_bins$concentration_particle_vol)
         r1model <- lm(log_abundance ~ log_size, data = sample_bins)
-        alpha <- as.numeric(coef(r1model)[2])
+        alpha <- -(as.numeric(coef(r1model)[2]))
         sample_bins$alpha <- alpha
-        sample_bins <- sample_bins %>% select(sample_ID, alpha)
+        r1model_sum <- summary.lm(r1model)
+        error <- as.numeric(coef(r1model_sum)[4])
+        sample_bins$alpha_calc_lower <- alpha - error
+        sample_bins$alpha_calc_upper <- alpha + error
+        sample_bins <- sample_bins %>% select(sample_ID, alpha, alpha_calc_lower, alpha_calc_upper)
         sample_bins <- unique(sample_bins)
         unique_alpha <- rbind(unique_alpha, sample_bins)
         unique_alpha <- unique_alpha %>% rename(alpha_calc = alpha)
@@ -587,16 +614,31 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
       for(x in 1:nrow(dataframeclean)){
         if(! is.na(dataframeclean[x, "alpha_calc"])){
           dataframeclean[x, "alpha"] <- dataframeclean[x, "alpha_calc"]
+          dataframeclean[x, "alpha_lower"] <- dataframeclean[x, "alpha_calc_lower"]
+          dataframeclean[x, "alpha_upper"] <- dataframeclean[x, "alpha_calc_upper"]
         }
       }
-      dataframeclean <- dataframeclean %>% select(-alpha_calc)
+      dataframeclean <- dataframeclean %>% select(-c(alpha_calc, alpha_calc_lower, alpha_calc_upper))
     }
   }
   
   if("known_alpha" %in% colnames(dataframeclean) == TRUE){
     for(x in 1:nrow(dataframeclean)){
       if(! is.na(dataframeclean[x, "known_alpha"])){
+        known_alpha_val <- as.numeric(dataframeclean[x, "known_alpha"])
         dataframeclean[x, "alpha"] <- (dataframeclean[x, "known_alpha"])
+        if(metric == "length (um)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * length_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * length_coef)}
+        if(metric == "width (um)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * width_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * width_coef)}
+        if(metric == "mass (ug)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * mass_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * mass_coef)}
+        if(metric == "volume (um3)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * volume_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * volume_coef)}
+        if(metric == "surface area (um2)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * surface_area_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * surface_area_coef)}
+        if(metric == "specific surface area (g/m2)"){dataframeclean[x, "alpha_lower"] <- known_alpha_val - (known_alpha_val * specific_surface_area_coef)
+        dataframeclean[x, "alpha_upper"] <- known_alpha_val + (known_alpha_val * specific_surface_area_coef)}
       }
     }
     dataframeclean <- dataframeclean %>% select(-known_alpha)
@@ -605,41 +647,119 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   for(x in 1:nrow(dataframeclean)){
     if(is.na(dataframeclean[x, "alpha"])){
       dataframeclean[x, "alpha"] <- 1.6
+      if(metric == "length (um)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * length_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * length_coef)}
+      if(metric == "width (um)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * width_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * width_coef)}
+      if(metric == "mass (ug)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * mass_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * mass_coef)}
+      if(metric == "volume (um3)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * volume_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * volume_coef)}
+      if(metric == "surface area (um2)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * surface_area_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * surface_area_coef)}
+      if(metric == "specific surface area (g/m2)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * specific_surface_area_coef)
+      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * specific_surface_area_coef)}
     }
   }
-
+  
+  if("sample_ID" %in% colnames(dataframeclean) == TRUE){
+    unique_bins <- dataframeclean %>% count(sample_ID, size_min, size_max)
+    bin_numbers <- unique_bins %>% count(sample_ID)
+    bins_add <- bin_numbers %>% filter(n >= 2)
+    
+    dataframeclean_ <- dataframeclean %>% distinct(sample_ID, .keep_all = T)
+    
+    if(nrow(bins_add) >= 1){
+      sample_add <- data.frame()
+      for(x in 1:nrow(bins_add)){
+        #x = 2
+        sample_name <- bins_add$sample_ID[[x]]
+        sample_bins <- dataframeclean %>% filter(sample_ID == sample_name)
+        sample_bins$size_min <- as.numeric(sample_bins$size_min)
+        sample_bins$size_max <- as.numeric(sample_bins$size_max)
+        sample_bins$concentration_particle_vol <- as.numeric(sample_bins$concentration_particle_vol)
+        row <- which(grepl(sample_name, dataframeclean_$sample_ID))
+        dataframeclean_$size_min[[row]] <- min(sample_bins$size_min)
+        dataframeclean_$size_max[[row]] <- max(sample_bins$size_max)
+        dataframeclean_$concentration_particle_vol[[row]] <- sum(sample_bins$concentration_particle_vol)
+        
+      }
+    }
+    
+    dataframeclean <- dataframeclean_
+    # dataframeclean <- dataframeclean %>%
+    #   add_column(correction_factor = NA,
+    #              corrected_concentration = NA)
+    ID <- dataframe %>% select(sample_ID)
+    ID_clean <- mutate_all(ID, cleantext) 
+    unique_ID <- unique(ID)
+    unique_ID_clean <- unique(ID_clean)
+    ID_raw_clean <- data.table(unique_ID = unique_ID, unique_ID_clean = unique_ID_clean) %>%
+      rename(unique_ID = unique_ID.sample_ID,
+             unique_ID_clean = unique_ID_clean.sample_ID)
+    
+    unique_ID_clean <- as.list(unique_ID_clean$sample_ID)
+    dataframeclean <- dataframeclean %>% arrange(factor(sample_ID, levels = unique_ID_clean))
+    dataframeclean$alpha <- as.numeric(dataframeclean$alpha)
+  }
   
   dataframeclean <- dataframeclean %>%
     add_column(correction_factor = NA,
-               corrected_concentration = NA)
+               correction_factor_lower = NA,
+               correction_factor_upper = NA,
+               corrected_concentration = NA,
+               corrected_concentration_lower = NA,
+               corrected_concentration_upper = NA)
   
-  #corrected_min <- 1
-  #corrected_max <- 5000
-  # x1D_set = 1
-  # x2D_set = 5000
+  
+  # corrected_min <- 1
+  # corrected_max <- 5000
+  #  x1D_set = 1
+  #  x2D_set = 5000
   #Extrapolated parameters
   x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
   x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
   
   for(x in 1:nrow(dataframeclean)) {
+    #mean alpha
     x1M_set = as.numeric(dataframeclean$size_min[[x]])
     x2M_set = as.numeric(dataframeclean$size_max[[x]])
     alpha = as.numeric(dataframeclean$alpha[[x]])
-    
     CF <- CFfnx(x1M = x1M_set,#lower measured length
                 x2M = x2M_set, #upper measured length
                 x1D = x1D_set, #default lower size range
                 x2D = x2D_set,  #default upper size range
-                a = alpha #alpha for count 
+                a = alpha #alpha
     )
-    
-    CF <- as.numeric(CF)
-    CF <- format(round(CF, 4), nsmall = 2)
-    dataframeclean$correction_factor[[x]] <- CF
+    dataframeclean$correction_factor[[x]] <- as.numeric(CF)
     dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration[[x]])
     
+    #min alpha
+    alpha = as.numeric(dataframeclean$alpha_lower[[x]])
+    CF <- CFfnx(x1M = x1M_set,#lower measured length
+                x2M = x2M_set, #upper measured length
+                x1D = x1D_set, #default lower size range
+                x2D = x2D_set,  #default upper size range
+                a = alpha #alpha
+    )
+    dataframeclean$correction_factor_lower[[x]] <- as.numeric(CF)
+    dataframeclean$corrected_concentration_lower[[x]] <- as.numeric(dataframeclean$correction_factor_lower[[x]]) * as.numeric(dataframeclean$concentration[[x]])
+    
+    #max alpha
+    alpha = as.numeric(dataframeclean$alpha_upper[[x]])
+    CF <- CFfnx(x1M = x1M_set,#lower measured length
+                x2M = x2M_set, #upper measured length
+                x1D = x1D_set, #default lower size range
+                x2D = x2D_set,  #default upper size range
+                a = alpha #alpha
+    )
+    dataframeclean$correction_factor_upper[[x]] <- as.numeric(CF)
+    dataframeclean$corrected_concentration_upper[[x]] <- as.numeric(dataframeclean$correction_factor_upper[[x]]) * as.numeric(dataframeclean$concentration[[x]])
   }
-  dataframeclean <- dataframeclean %>% select(-c(size_min, size_max))
+  dataframeclean <- dataframeclean %>% 
+    select(-c(size_min, size_max)) %>%
+    mutate_if(is.numeric, round, digits=2)
+  
   return(dataframeclean)
 }
 
@@ -658,7 +778,11 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
   unique_alpha <- data.frame()
   
   for(x in 1:nrow(unique_sample_ID)){
+   #x = 1
     subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
+    sample_size <- as.numeric(nrow(subset))
+    #bin_number = 5
+    #binning_type = "sd"
     int <- classify_intervals(subset$length_um, n = bin_number, style = binning_type)
     #int <- classify_intervals(subset$length_um, n = 5, style = "quantile")
     midpoints <- get_midpoints(x = int)
@@ -669,8 +793,16 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
     freq$log_size <- log10(freq$length_um)
     freq$log_abundance <- log10(freq$abundance)
     r1model <- lm(log_abundance ~ log_size, data = freq)
-    alpha <-as.numeric(coef(r1model)[2])
-    subset_ <- subset %>% add_column(alpha = alpha) %>% select(sample_ID, alpha)
+    alpha <- -(as.numeric(coef(r1model)[2]))
+    r1model_sum <- summary.lm(r1model)
+    #error <- (1/sqrt(sample_size))/2
+    error <- as.numeric(coef(r1model_sum)[4])
+    alpha_lower <- alpha - error
+    alpha_upper <- alpha + error
+    subset_ <- subset %>% add_column(alpha = alpha,
+                                     alpha_lower = alpha_lower,
+                                     alpha_upper = alpha_upper) %>% 
+      select(sample_ID, alpha, alpha_lower, alpha_upper)
     subset_ <- unique(subset_)
     unique_alpha <- rbind(unique_alpha, subset_)
   }
@@ -681,45 +813,70 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
     dataframe_ <- data.table()
     
     for(x in 1:nrow(unique_sample_ID)){
+      #x = 2
       subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
       particle_number <- subset %>% count(sample_volume) %>%
         rename(particle_number = n)
       concentration <- (as.numeric(particle_number$particle_number))/(as.numeric(particle_number$sample_volume))
-      subset <- subset %>% add_column(concentration = concentration)
-      
-      subset <- subset %>%
-        add_column(correction_factor = NA,
-                   corrected_concentration = NA)
-      #max(subset$length_um)
+      subset <- subset %>% add_column(concentration = concentration,
+                                      correction_factor = NA,
+                                      correction_factor_lower = NA,
+                                      correction_factor_upper = NA,
+                                      corrected_concentration = NA,
+                                      corrected_concentration_lower = NA,
+                                      corrected_concentration_upper = NA)
       #x1D_set = 1
       #x2D_set = 5000
       #Extrapolated parameters
       x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
       x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
       
+      #mean alpha
       x1M_set = as.numeric(min(subset$length_um))
       x2M_set = as.numeric(max(subset$length_um))
       alpha = as.numeric(subset$alpha[1])
-        
       CF <- CFfnx(x1M = x1M_set,#lower measured length
                   x2M = x2M_set, #upper measured length
                   x1D = x1D_set, #default lower size range
                   x2D = x2D_set,  #default upper size range
-                  a = alpha #alpha for count 
-                    
+                  a = alpha #alpha
       )
-        
-      CF <- as.numeric(CF)
-      CF <- format(round(CF, 4), nsmall = 2)
-      subset$correction_factor <- CF
+      
+      subset$correction_factor <- as.numeric(CF)
       subset$corrected_concentration <- as.numeric(subset$correction_factor) * as.numeric(subset$concentration)
+      
+      #min alpha
+      alpha = as.numeric(subset$alpha_lower[1])
+      CF <- CFfnx(x1M = x1M_set,#lower measured length
+                  x2M = x2M_set, #upper measured length
+                  x1D = x1D_set, #default lower size range
+                  x2D = x2D_set,  #default upper size range
+                  a = alpha #alpha
+      )
+      subset$correction_factor_lower <- as.numeric(CF)
+      subset$corrected_concentration_lower <- as.numeric(subset$correction_factor_lower) * as.numeric(subset$concentration)
+      
+      #max alpha
+      alpha = as.numeric(subset$alpha_upper[1])
+      CF <- CFfnx(x1M = x1M_set,#lower measured length
+                  x2M = x2M_set, #upper measured length
+                  x1D = x1D_set, #default lower size range
+                  x2D = x2D_set,  #default upper size range
+                  a = alpha #alpha
+      )
+      subset$correction_factor_upper <- as.numeric(CF)
+      subset$corrected_concentration_upper <- as.numeric(subset$correction_factor_upper) * as.numeric(subset$concentration)
+      
+      
       
       dataframe_ <- rbind(dataframe_, subset)
       
     }
-    dataframe_ <- dataframe_ %>% select(-sample_volume)
+    #dataframe_ <- dataframe_ %>% select(-sample_volume)
   }
-  dataframe <- dataframe_ %>% distinct(sample_ID, alpha, .keep_all = TRUE) %>% select(-length_um)
+  #dataframe <- dataframe_ %>% distinct(sample_ID, alpha, .keep_all = TRUE) %>% select(-length_um)
+  dataframe <- dataframe_
+  return(dataframe)
 }
 
 #create function to extract midpoints from binning outputs
@@ -732,18 +889,40 @@ get_midpoints <- function(x, dp=2){
 #Make df for alpha values
 study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota")
 length <- c(2.07, 2.64, 2.57, 3.25, 2.54, 2.59)
+length_sd <- c(0.03, 0.01, 0.20, 0.19, 0.01, 0.04)
+width <- c(1.96, 2.70, 2.51, 2.87, 2.55, 2.52)
+width_sd <- c(0.026, 0.008, 0.091, 0.167, 0.015, 0.07)
 mass <- c(1.32, 1.65, 1.50, 1.56, 1.40, 1.41)
+mass_sd <- c(0.009, 0.071, 0.026, 0.077, 0.002, 0.060)
 volume <- c(1.48, 1.68, 1.50, 1.53, 1.45, 1.40)
+volume_sd <- c(0.063, 0.081, 0.023, 0.013, 0.004, 0.004)
 surface_area <- c(1.50, 2.00, 1.75, 1.89, 1.73, 1.69)
+surface_area_sd <- c(0.009, 0.065, 0.050, 0.055, 0.005, 0.023)
 specific_surface_area <- c(1.98, 2.71, 2.54, 2.82, 2.58, 2.46)
+specific_surface_area_sd <- c(0.297, 0.009, 0.082, 0.096, 0.013, 0.092)
 
-alpha_vals <- data.frame(study_media=study_media,
-                         length=length,
+alpha_vals <- data.frame(study_media = study_media,
+                         length = length,
+                         length_sd = length_sd,
+                         width = width,
+                         width_sd = width_sd,
                          mass=mass,
-                         volume=volume,
-                         surface_area=surface_area,
-                         specific_surface_area=specific_surface_area
+                         mass_sd = mass_sd,
+                         volume = volume,
+                         volume_sd = volume_sd,
+                         surface_area = surface_area,
+                         surface_area_sd = surface_area_sd,
+                         specific_surface_area = specific_surface_area,
+                         specific_surface_area_sd = specific_surface_area_sd
 )
+
+#Find average coefficient of variability to create upper and lower alpha vals from given values and for a = 1.6
+length_coef <- as.numeric(mean(length_sd/length)) #0.0289907
+width_coef <- as.numeric(mean(width_sd/width)) #0.02405526
+mass_coef <- as.numeric(mean(mass_sd/mass)) #0.02675376
+volume_coef <- as.numeric(mean(volume_sd/volume)) #0.02003795
+surface_area_coef <- as.numeric(mean(surface_area_sd/surface_area)) #0.0187786
+specific_surface_area_coef <- as.numeric(mean(specific_surface_area_sd/specific_surface_area)) #0.0436807
 
 
 use_cases <- read.csv("data/Item_Use_Case.csv")
@@ -1047,8 +1226,11 @@ polymer_db_ <- polymer_db_ %>%
   mutate(density_mg_um_3 = density_mg_um_3,
          density_max = density_max,
          density_min = density_min)
+polymer_db_ <- polymer_db_ %>% 
+  left_join(material_alias, by = c("material" = "Alias")) %>%
+  select(-c("Material"))
 polymer_density <- polymer_db_ %>%
-  select(material, density_mg_um_3, density_max, density_min)
+  select(material, density_mg_um_3, density_max, density_min, readable)
 
 #Add +/- 5% error for measured particle dimensions
 morphology <- c("fragment","sphere","fiber","film","foam")
@@ -1087,16 +1269,5 @@ morphology <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "f
 morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
 morph_conversion <- data.frame(morphology = morphology,
                                morph_dimension = morph_dimension)
-# dataframeclean <- left_join(dataframeclean, morph_conversion, by = "morphology", copy = FALSE)
-# for(x in 1:nrow(dataframeclean)){
-#   if(is.na(dataframeclean[x,"morph_dimension"])){
-#     dataframeclean[x,"morph_dimension"] <- dataframeclean[x,"morphology"]
-#   }
-# }
-# dataframeclean <- dataframeclean %>%
-#   select(-morphology)
-# dataframeclean <- dataframeclean %>%
-#   rename(morphology = morph_dimension)
-
 
 
