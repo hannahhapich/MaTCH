@@ -423,10 +423,10 @@ server <- function(input,output,session) {
     }else{dataframe5 <- dataframe4} 
     
     if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-       correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
-    }
+      dataframe6 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
+    }else{dataframe6 <- dataframe5}
     
-    return(dataframe3)
+    return(dataframe6)
     
     })
   
