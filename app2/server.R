@@ -517,7 +517,8 @@ server <- function(input,output,session) {
                                       class = "display",
                                       style="bootstrap"))
   
-  output$contents5 <- renderDataTable(datatable({
+  output$contents5 <- renderDataTable(server = F,
+                                      datatable({
                                         convertedParticles()
                                       }, 
                                       extensions = 'Buttons',
@@ -528,10 +529,31 @@ server <- function(input,output,session) {
                                         autoWidth = TRUE,
                                         ordering = TRUE,
                                         dom = 'Bfrtip',
-                                        buttons = c('copy', 'csv', 'excel', 'pdf')
-                                      ),
+                                        buttons = list(
+                                          list(extend = "csv", text = "Download Results", filename = "data",
+                                               exportOptions = list(
+                                                 modifier = list(page = "all")
+                                               )
+                                          )
+                                      )),
                                       class = "display",
                                       style="bootstrap"))
+  
+  # output$contents5 <- renderDataTable(datatable({
+  #                                       convertedParticles()
+  #                                     }, 
+  #                                     extensions = 'Buttons',
+  #                                     options = list(
+  #                                       paging = TRUE,
+  #                                       searching = TRUE,
+  #                                       fixedColumns = TRUE,
+  #                                       autoWidth = TRUE,
+  #                                       ordering = TRUE,
+  #                                       dom = 'Bfrtip',
+  #                                       buttons = c('copy', 'csv', 'excel', 'pdf')
+  #                                     ),
+  #                                     class = "display",
+  #                                     style="bootstrap"))
   
   output$contents6 <- renderDataTable(#server = F, 
                                       datatable({
