@@ -203,6 +203,9 @@ item_DB_full <- add_collection(metadata = words_to_match)
 saveRDS(item_DB_full, file = "data/items_vectorDB.rda")
 
 
+material_alias <- read.csv("data/PrimeMaterials.csv")
+# not_abrv <- anti_join(material_alias_full, material_alias, by = "readable")
+# write.csv(not_abrv, "data/not_abrv_materials.csv")
 
 #Retrieve embeddings for prime materials
 material_alias <- read.csv("data/PrimeMaterials_no_abrv.csv")
@@ -296,6 +299,40 @@ dataframeclean <- ourclean_clean %>% filter(is.na(Item)) %>% distinct()
 
 
 
+
+#polymer database stats and validating terms present across relational tables
+polymer_db_clean <- mutate_all(polymer_db, cleantext)
+
+polymer_alias <- polymer_db_clean %>% left_join(Materials_Alias, by = c("material" = "Alias"))
+polymer_no_alias <- polymer_alias %>% filter(is.na(Material))
+polymer_alias_dupl <- polymer_alias %>% filter(!is.na(Material))
+polymer_alias_dupl[duplicated(polymer_alias_dupl$readable), ]
+
+material_polymer <- Materials_Alias %>% 
+  left_join(polymer_db_clean, by = c("Alias" = "material")) %>%
+  select(-c("Alias", "Material")) %>%
+  arrange(density) %>% 
+  distinct(readable, .keep_all = T)
+
+
+alias_no_density <- material_polymer %>% filter(is.na(density))
+material_polymer_terms <- material_polymer %>% select(readable)
+
+
+hierarchy_present <- data.table()
+for(x in 1:nrow(material_polymer_terms)){
+  term <- material_polymer_terms$readable[[x]]
+  rows <- material_hierarchy %>% filter_all(any_vars(. %in% c(term)))
+  hierarchy_present <- rbind(hierarchy_present, rows)
+}
+#1004 rows of hierarchy present in density db
+
+hierarchy_present_ <- hierarchy_present %>% filter(X1 == "plastic")
+#959 of 1004 rows of hierarchy are plastic branches
+
+hierarchy_present_ <- hierarchy_present_ %>%
+  distinct(X2, .keep_all = F)
+#49 total distinct X2 values, 43 are polymer classes
 
 
 
