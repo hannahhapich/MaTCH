@@ -529,13 +529,15 @@ server <- function(input,output,session) {
                                         autoWidth = TRUE,
                                         ordering = TRUE,
                                         dom = 'Bfrtip',
-                                        buttons = list(
-                                          list(extend = "csv", text = "Download Results", filename = "data",
-                                               exportOptions = list(
-                                                 modifier = list(page = "all")
-                                               )
-                                          )
-                                      )),
+                                        buttons = c('copy', 'csv', 'excel')
+                                      #     list(
+                                      #     list(extend = "csv", text = "Download Results", filename = "data",
+                                      #          exportOptions = list(
+                                      #            modifier = list(page = "all")
+                                      #          )
+                                      #     )
+                                      # )
+                                      ),
                                       class = "display",
                                       style="bootstrap"))
   
