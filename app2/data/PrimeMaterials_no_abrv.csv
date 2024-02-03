@@ -369,8 +369,8 @@ softplastics,softplastics,soft plastics
 styrene-isoprene,styrene-isoprene,Styrene-isoprene
 styrene-maleic,styrene-maleic,Styrene-maleic
 urea-formaldehyde,urea-formaldehyde,Urea-formaldehyde
-vinyl,vinyl,Vinyl
-vinyl,vinyon,Vinyl
+vinyl,vinyl,vinyl
+vinyl,vinyon,vinyl
 wood,wood,wood
 wood,woodydebris,wood
 wood,man.wood,wood
@@ -382,3 +382,43 @@ woodandpaper,woodmaterials,wood and paper
 woodandpaper,woodandpaper,wood and paper
 woodandpaper,paper&lumber,wood and paper
 wool,wool,wool
+paint,paint,paint
+tirewear&asphalt,tirewear&asphalt,tire wear & asphalt
+tirewear&asphalt,tirewearandasphalt,tire wear & asphalt
+tirewear&asphalt,tirewear/asphalt,tire wear & asphalt
+tirewear&asphalt,tyrewear&asphalt,tire wear & asphalt
+tirewear&asphalt,tyrewearandasphalt,tire wear & asphalt
+tirewear&asphalt,tyrewear/asphalt,tire wear & asphalt
+tirewear,tirewear,tire wear
+tirewear,tyrewear,tire wear
+asphalt,asphalt,asphalt
+epoxy,epoxy,epoxy
+nylon6-66,nylon6-66,Nylon 6-66
+silicone,silicone,silicone
+rubberorthermosetelastomer,rubberorthermosetelastomer,rubber OR thermoset elastomer
+thermosetelastomer,thermosetelastomer,thermoset elastomer
+acetal,acetal,acetal
+polyethylene-ether,polyethyleneether,polyethylene-ether
+polyethylene-ether,polyethylene-ether,polyethylene-ether
+phenolicresin,phenolic,phenolic resin
+phenolicresin,phenolicresin,phenolic resin
+thermosetpolyester,thermosetpolyester,thermoset polyester
+acryliccyanoacrylateadhesive,acryliccyanoacrylateadhesive,acrylic cyanoacrylate adhesive
+thermosetfluoropolymer,thermosetfluoropolymer,thermoset fluoropolymer
+styrene-butadienethermoplastics,styrene-butadienethermoplastics,styrene-butadiene thermoplastics
+styrene-butadienethermoplastics,styrenebutadienethermoplastics,styrene-butadiene thermoplastics
+cellulosic,cellulosic,cellulosic
+thermosetpolyimide,thermosetpolyimide,thermoset polyimide
+aromaticpolyamide,aromaticpolyamide,aromatic polyamide
+aromaticpolyamide,aramid,aromatic polyamide
+ionomer,ionomer,ionomer
+siloxane,siloxane,siloxane
+modifiedcellulosechemical,cellulosechemicalmodified,modified cellulose chemical
+modifiedcellulosechemical,modifiedcellulosechemical,modified cellulose chemical
+nitrilerubber,nitrilerubber,nitrile rubber
+acrylates/polyurethanes/varnish,acrylates/polyurethanes/varnish,acrylates/polyurethanes/varnish
+acrylonitrile-butadiene,acrylonitrile-butadiene,acrylonitrile-butadiene
+rubbertype1,rubbertype1,rubber type 1
+rubbertype2,rubbertype2,rubber type 2
+rubbertype3,rubbertype3,rubber type 3
+thermoplastics,thermoplastics,Thermoplastics

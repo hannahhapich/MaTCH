@@ -279,13 +279,14 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 }
 
 #dataframe <- read.csv("tests/count_mass_particle.csv")
-particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean){
+particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$morphology <- as.character(dataframe$morphology)
   dataframe$material <- as.character(dataframe$material)
   if("width_um" %in% colnames(dataframe) == TRUE){dataframe$width_um <- as.numeric(dataframe$width_um)}
   if("height_um" %in% colnames(dataframe) == TRUE){dataframe$height_um <- as.numeric(dataframe$height_um)}
   if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)}
+  if("sample_ID" %in% colnames(dataframe) == TRUE){dataframe$sample_ID <- as.character(dataframe$sample_ID)}
   dataframeclean <- mutate_all(dataframe, cleantext) 
   
   dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
@@ -370,9 +371,57 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
       dataframeclean_particles[x, "mean_mass_mg"] <- (dataframeclean_particles[x, "weight_estimate_g"]*1000)
     }
   }
+  # polymer_avg_decision = T
+  # morph_weight = F
+  # sample_weight = F
+  if(polymer_avg_decision == T){
+    dataframeclean_particles$density_mg_um_3 <- as.numeric(dataframeclean_particles$density_mg_um_3)
+    dataframeclean_particles$volume_mean_um_3 <- as.numeric(dataframeclean_particles$volume_mean_um_3)
+    dataframeclean_particles$mean_mass_mg <- as.numeric(dataframeclean_particles$mean_mass_mg)
+    dataframeclean_particles$density_max <- as.numeric(dataframeclean_particles$density_max)
+    dataframeclean_particles$density_min <- as.numeric(dataframeclean_particles$density_min)
+    dataframeclean_particles_avg <- dataframeclean_particles
+    for(x in 1:nrow(dataframeclean_particles)){
+      if(is.na(dataframeclean_particles$mean_mass_mg[[x]]) && ! is.na(dataframeclean_particles$volume_mean_um_3[[x]])){
+        # if(all(weighted_choice == c("morph_weight", "sample_weight")) && "sample_ID" %in% colnames(dataframeclean_particles) == TRUE){
+        if(morph_weight == T && sample_weight == T && "sample_ID" %in% colnames(dataframeclean_particles) == TRUE){
+          dataframeclean_particles_avg <- dataframeclean_particles_avg %>% filter(sample_ID == dataframeclean_particles$sample_ID[[x]])
+          density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
+          dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
+          upper_diff <- (dataframeclean_particles_avg$density_max) - (dataframeclean_particles_avg$density_mg_um_3)
+          lower_diff <- (dataframeclean_particles_avg$density_mg_um_3) - (dataframeclean_particles_avg$density_min)
+        }else if(morph_weight == T || morph_weight == T && sample_weight == T && !("sample_ID" %in% colnames(dataframeclean_particles))){
+          dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
+          density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
+          dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
+          upper_diff <- (dataframeclean_particles_avg$density_max) - (dataframeclean_particles_avg$density_mg_um_3)
+          lower_diff <- (dataframeclean_particles_avg$density_mg_um_3) - (dataframeclean_particles_avg$density_min)
+        }else if(morph_weight == T && "sample_ID" %in% colnames(dataframeclean_particles) == TRUE){
+          dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
+          dataframeclean_particles_avg <- dataframeclean_particles_avg %>% filter(sample_ID == dataframeclean_particles$sample_ID[[x]])
+          density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
+          dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
+          upper_diff <- (dataframeclean_particles_avg$density_max) - (dataframeclean_particles_avg$density_mg_um_3)
+          lower_diff <- (dataframeclean_particles_avg$density_mg_um_3) - (dataframeclean_particles_avg$density_min)
+        }else{
+          density <- mean(dataframeclean_particles$density_mg_um_3, na.rm = T)
+          dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
+          upper_diff <- (dataframeclean_particles$density_max) - (dataframeclean_particles$density_mg_um_3)
+          lower_diff <- (dataframeclean_particles$density_mg_um_3) - (dataframeclean_particles$density_min)
+        }
+        upper_conf <- mean(upper_diff, na.rm = T) 
+        lower_conf <- mean(lower_diff, na.rm = T)
+        dataframeclean_particles$max_mass_mg[[x]] <- dataframeclean_particles$mean_mass_mg[[x]] + upper_conf
+        dataframeclean_particles$min_mass_mg[[x]] <- dataframeclean_particles$mean_mass_mg[[x]] + lower_conf
+      }
+    }
+  }
   
   dataframeclean_particles <- dataframeclean_particles %>% 
     select(-c(weight_estimate_g, L_min, L_max, W_min, W_max, H_min, H_max, density_mg_um_3, density_min, density_max, W_mean, H_mean, L_mean))
+  
+   dataframeclean_particles <- dataframeclean_particles %>%
+     mutate_if(is.numeric, signif, digits=3)
   
   return(dataframeclean_particles)
 }
@@ -522,6 +571,10 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   dataframeclean_particles <- dataframeclean_particles %>% select(-mean_concentration_mg)
     
   dataframeclean_particles <- data.frame(dataframeclean_particles)
+  
+  dataframeclean_particles <- dataframeclean_particles %>%
+    mutate_if(is.numeric, signif, digits=3)
+  
   return(dataframeclean_particles)
 }
 
@@ -538,6 +591,10 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     dataframe$known_alpha <- as.numeric(dataframe$known_alpha)}
   if("sample_ID"  %in% colnames(dataframe) == TRUE){
     dataframe$sample_ID <- as.character(dataframe$sample_ID)}
+  if("concentration_upper" %in% colnames(dataframe) == TRUE){
+    dataframe$concentration_upper <- as.numeric(dataframe$concentration_upper)}
+  if("concentration_lower" %in% colnames(dataframe) == TRUE){
+    dataframe$concentration_lower <- as.numeric(dataframe$concentration_lower)}
   dataframeclean <- mutate_all(dataframe, cleantext) 
   #metric <- "length (um)"
   if("study_media" %in% colnames(dataframe) == TRUE){
@@ -683,6 +740,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
         dataframeclean_$size_max[[row]] <- max(sample_bins$size_max)
         dataframeclean_$concentration_particle_vol[[row]] <- sum(sample_bins$concentration_particle_vol)
         
+        
       }
     }
     
@@ -758,7 +816,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   }
   dataframeclean <- dataframeclean %>% 
     select(-c(size_min, size_max)) %>%
-    mutate_if(is.numeric, round, digits=2)
+    mutate_if(is.numeric, signif, digits=3)
   
   return(dataframeclean)
 }
@@ -876,6 +934,10 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
   }
   #dataframe <- dataframe_ %>% distinct(sample_ID, alpha, .keep_all = TRUE) %>% select(-length_um)
   dataframe <- dataframe_
+  
+  dataframe <- dataframe %>%
+    mutate_if(is.numeric, signif, digits=3)
+  
   return(dataframe)
 }
 

@@ -13,6 +13,9 @@ ui <- dashboardPage(dark = T,
                         menuItem("About", 
                                  tabName = "About", 
                                  icon = icon("question")),
+                        menuItem("Download Test Data", 
+                                 tabName = "test", 
+                                 icon = icon("download")),
                         menuItem("Relational Tables", 
                                  tabName = "RelationalTables", 
                                  icon = icon("table")),
@@ -106,20 +109,33 @@ ui <- dashboardPage(dark = T,
                                                               footer = tags$small("If you do not have a polymer identification for every particle, this option will create a weighted average of polymer densities for a given
                                                                                   morphology, and apply this average density to particles of unknown polymer type within that morphology. You may also choose to weight by sample,
                                                                                   or to not wieght by individual morphology type."),
-                                                              title = prettySwitch(inputId = "polymer_avg_decision",
+                                                              title = prettySwitch("polymer_avg_decision",
                                                                            label = "Polymer Weighted Average",
                                                                            inline = T,
                                                                            value = T,
                                                                            status = "success",
                                                                            fill = T),
-                                                              checkboxGroupInput(inputId = "weighted_choice",
-                                                                                 label = "Weighted Average Method",
-                                                                                 choices = c("Weight by Morphology" = "morph_weight",
-                                                                                             "Weight by Sample" = "sample_weight"),
-                                                                                 selected = "morph_weight",
-                                                                                 inline = T)
-                                                            )
+                                                              prettySwitch("morph_weight",
+                                                                           label = "Weight by Morphology",
+                                                                           inline = T,
+                                                                           value = F,
+                                                                           status = "success",
+                                                                           fill = T),
+                                                              prettySwitch("sample_weight",
+                                                                           label = "Weight by Sample",
+                                                                           inline = T,
+                                                                           value = F,
+                                                                           status = "success",
+                                                                           fill = T)
+                                                            #   checkboxGroupInput(inputId = "weighted_choice",
+                                                            #                      label = "Weighted Average Method",
+                                                            #                      choices = c("Weight by Morphology" = "morph_weight",
+                                                            #                                  "Weight by Sample" = "sample_weight"),
+                                                            #                      selected = "morph_weight",
+                                                            #                      inline = T)
+                                                            # )
 
+                                                        )
                                                         ),
                                                               
                                                         fluidRow(
@@ -165,31 +181,13 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 ## Plot ----
                                 fluidRow(
-                                  #verbatimTextOutput("event_test"),
                                   box(title = HTML(paste0("Cleaned Data")), 
                                       maximizable = T,
                                       width = 12,
-                                      #background = "black",
-                                      # label = uiOutput("correlation_head"),
-                                      # h4(id = "placeholder1", "Upload some data to get started..."),
-                                      # uiOutput("progress_bars"),
                                       fluidRow(
-                                        # dataTableOutput('contents5'),
                                         div(style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents5")
-                                        # plotlyOutput("heatmap",inline = T),
-                                        # plotlyOutput("MyPlotC", inline = T),
-                                        # div(style = "overflow-x: scroll",
-                                        # DT::dataTableOutput("eventmetadata")
                                        ))
-                                      # dropdownMenu = boxDropdown(
-                                      #   boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
-                                      # ),
-                                       # sidebar = boxSidebar(
-                                       #   id = "mycardsidebar",
-                                       #   fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                       #            DT::dataTableOutput("event"))
-                                       # )
                                   )
                                 )
                                 
@@ -280,14 +278,6 @@ ui <- dashboardPage(dark = T,
                                          img(src="NOAA.png", width = "50%"),
                                          img(src="NMSF.png", width = "50%"),
                                          img(src="boi.png", width = "50%")
-                                         
-                                         #downloadButton(NOAA, label="Download")
-                                         #tags$div(align = "center",
-                                         #        tags$a("Sample Data",
-                                         #              onclick = "window.open('https://drive.google.com/file/d/1YKyEDf4VbZaeSlV6yxgh0XVqstvel6LQ/view', '_blank')",
-                                         #             class="btn btn-primary btn-lg")
-                                         #     )
-                                         
                                   ),
                                   column(3)
                                 ),
@@ -312,6 +302,82 @@ ui <- dashboardPage(dark = T,
                                 
                                 
                                 #end of about panel
+                        ),
+
+                        tabItem(tabName = "test",
+                                
+                                fluidRow(
+                                  column(12,
+
+                                         shiny::HTML("<br><br><center> <h1>Download Test Data</h1> </center><br>"),
+                                         shiny::HTML("<h5>      Describe your data to download a template, and view what data cleaning can be perfomed by MaTCH! </h5>")
+
+                                  )
+                                ),
+                                br(),
+                                
+                                #column(8,
+                                       fluidRow( 
+                                         column(4, 
+                                                ## Preprocessing ----
+                                                #fluidRow(
+                                                  box(width = 12,
+                                                      #collapsed = F,
+                                                      style = "height: 70vh; overflow-y: scroll",
+                                                      title = "Choose Data Type",
+                                                      selectInput('reporting_level', "Data Reporting Level", c("", "Sample (particles/volume)","Particle")), #%>%
+                                                         # popover(title = "Data Reporting Level",
+                                                         #   content = "Choose the level at which your data was reported. Sample data is in the format of plastics concentrations as a particle count per volume. 
+                                                         #   Particle data has individual rows for each particle found, detailing their characteristics.", 
+                                                         #   placement = "right"),
+                                                      "Known Data Characteristics",
+                                                      checkboxGroupInput('characteristics', 
+                                                                         "", 
+                                                                         br(),
+                                                                         choices = NULL),
+                                                      
+                                                      box(width = 12,
+                                                          collapsed = T,
+                                                        title = "Advanced Data Characteristics",
+                                                        style = "overflow-y:",
+                                                        checkboxGroupInput('advanced', 
+                                                                           "", 
+                                                                           choices = NULL) %>%
+                                                          popover(
+                                                            title = "If you like, we share your uploaded data table and settings with the plastic community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded data tables will appear here: https://osf.io/rjg3c. If you have particles of known density, volume, or mass that you can share, please upload a .csv file.",
+                                                            content = "Share Decision", placement = "right"
+                                                          )
+                                                      )
+                                                      )
+                                                  #)
+                                                ),
+                                         column(8,
+                                                box(title = HTML(paste0("Test Data")), 
+                                                    maximizable = T,
+                                                    width = 12,
+                                                    div(style = "overflow-x: scroll",
+                                                        DT::dataTableOutput("testDataDownload")
+                                                    )
+                                                ),
+                                                box(title = "Functions Available",
+                                                    maximizable = T,
+                                                    width = 12,
+                                                    HTML(paste0("Cleaning functions able to be performed by Match:")),
+                                                    textOutput("function1"),
+                                                    textOutput("function2"),
+                                                    textOutput("function3"),
+                                                    textOutput("function4")
+                                                )
+                                                
+                                            )
+                                         ),
+                                       #),
+                                
+                                fluidRow(
+                                  align="center",
+                                  hr(),
+                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray, Jambeck Research Group. 2020. Trash Taxonomy. https://trashtaxonomy.shinyapps.io/trashtaxonomy/")
+                                )
                         ),
                         
                         #Relational Tables ----

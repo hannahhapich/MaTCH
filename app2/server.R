@@ -410,7 +410,8 @@ server <- function(input,output,session) {
      }else{dataframe2 <- dataframe}
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe3 <- particle_count_mass(dataframe = dataframe2, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean)
+      dataframe3 <- particle_count_mass(dataframe = dataframe2, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
+                                        polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
     }else{dataframe3 <- dataframe2}
       
     if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
@@ -429,6 +430,125 @@ server <- function(input,output,session) {
     return(dataframe6)
     
     })
+  
+  #Test data
+  
+  observeEvent(input$reporting_level, {
+    if(input$reporting_level == "Sample (particles/volume)"){
+      updateCheckboxGroupInput(inputId = "characteristics",
+                               choices = c("Material Proportion" = "material",
+                                           "Morphologic Proportion" = "morph",
+                                           "Study Media" = "media",
+                                           "Min/Max Particle Size Range" = "range",
+                                           "Average Particle Length (um)" = "length"))
+      
+      updateCheckboxGroupInput(inputId = "advanced", label = "",
+                               choices = c("Concentration Size Bins" = "binned",
+                                           "Average Particle Width (um)" = "width",
+                                           "Average Particle Height (um)" = "height",
+                                           "Known Alpha Value" = "alpha",
+                                           "Average Particle Density (mg/um3)" = "density"))
+    }
+    if(input$reporting_level == "Particle"){
+      updateCheckboxGroupInput(inputId = "characteristics",
+                               choices = c("Material" = "material_p",
+                                           "Morphology" = "morph_p",
+                                           "Particle Length (um)" = "length_p",
+                                           "Sample ID" = "sample"))
+      
+      updateCheckboxGroupInput(inputId = "advanced", label = "",
+                               choices = c("Particle Width (um)" = "width_p",
+                                           "Particle Height (um)" = "height_p",
+                                           "Sample Volume" = "volume",
+                                           "Particle Density (mg/um3)" = "density_p"))
+    }
+  }
+  )
+  
+  testData <- reactive({
+    req(input$reporting_level)
+    req(input$characteristics)
+    data = data.frame(matrix(ncol = 0, nrow = 3))
+    if(input$reporting_level == "Sample (particles/volume)"){
+      concentration_particle_vol = c(100, 100, 100)
+      sample_ID = c("test", "test", "test")
+      data <- data %>% add_column(concentration_particle_vol = concentration_particle_vol, sample_ID = sample_ID)
+      if ("material" %in% as.vector(input$characteristics)){material = c("PE", "LDPE", NA)
+        material_percent = c(70, 30, NA)
+        data <- add_column(data, material = material, material_percent = material_percent)}
+      if ("morph" %in% as.vector(input$characteristics)){morphology = c("fiber", "fragment", "film")
+        morphology_percent = c(70, 20, 10)
+        data <- add_column(data, morphology = morphology, morphology_percent = morphology_percent)}
+      if ("media" %in% as.vector(input$characteristics)){study_media = c("marine surface", "marine surface", "marine surface")
+        data <- add_column(data, study_media = study_media)}
+      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$characteristics)){size_min = c(50, 201, 1001)
+        size_max = c(200, 1000, 5000)
+        data <- add_column(data, size_min = size_min, size_max = size_max)}
+      if ("length" %in% as.vector(input$characteristics)){avg_length_um = c(100, 100, 100)
+        data <- add_column(data, avg_length_um = avg_length_um)}
+      if ("width" %in% as.vector(input$advanced)){avg_width_um = c(20, 20, 20)
+        data <- add_column(data, avg_width_um = avg_width_um)}
+      if ("height" %in% as.vector(input$advanced)){avg_height_um = c(80, 80, 80)
+        data <- add_column(data, avg_height_um = avg_height_um)}
+      if ("alpha" %in% as.vector(input$advanced)){known_alpha = c(1.80, 1.80, 1.80)
+        data <- add_column(data, known_alpha = known_alpha)}
+      if ("density" %in% as.vector(input$advanced)){avg_density = c(0.00000000098,0.00000000098, 0.00000000098)
+        data <- add_column(data, avg_density = avg_density)}
+    }
+    
+    if(input$reporting_level == "Particle"){
+      if ("material_p" %in% as.vector(input$characteristics)){material = c("PE", "LDPE", "PET")
+      data <- add_column(data, material = material)}
+      if ("morph_p" %in% as.vector(input$characteristics)){morphology = c("fiber", "fragment", "film")
+      data <- add_column(data, morphology = morphology)}
+      if ("length_p" %in% as.vector(input$characteristics)){length_um = c(120, 70, 80)
+      data <- add_column(data, length_um = length_um)}
+      if ("sample" %in% as.vector(input$characteristics)){sample_ID = c("test", "test", "test")
+      data <- add_column(data, sample_ID = sample_ID)}
+      if ("width_p" %in% as.vector(input$advanced)){width_um = c(NA, 30, NA)
+      data <- add_column(data, width_um = width_um)}
+      if ("height_p" %in% as.vector(input$advanced)){height_um = c(20, NA, NA)
+      data <- add_column(data, height_um = height_um)}
+      if ("volume" %in% as.vector(input$advanced)){sample_volume = c(80, 80, 80)
+      data <- add_column(data, sample_volume = sample_volume)}
+      if ("density_p" %in% as.vector(input$advanced)){density = c(NA, 0.00000000098, NA)
+      data <- add_column(data, density = density)}
+    }
+    
+    return(data)
+  })
+  
+  
+  observeEvent(input$characteristics, {
+    functions_perf <- c()
+    if("material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) || "material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics)){
+      functions_perf <- append(functions_perf, "semantic matching of material and morphology")
+      output$function1 <- renderText({paste("-Semantic matching of material and morphology")})}
+
+    if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics) ||
+       "material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) && "length" %in% as.vector(input$characteristics)){
+      functions_perf <- append(functions_perf, "count to mass conversion")
+      output$function2 <- renderText({paste("-Count to mass conversion")})}
+
+    if("range" %in% as.vector(input$characteristics) || "length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics) && "volume" %in% as.vector(input$advanced)){
+      functions_perf <- append(functions_perf, "perform particle size rescaling")
+      output$function3 <- renderText({paste("-Perform particle size rescaling")})
+    }else if("length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics)){
+      functions_perf <- append(functions_perf, "calculate correction factor for size rescaling")
+      output$function4 <- renderText({paste("-Calculate correction factor for size rescaling")})
+    }
+    
+    if(length(functions_perf) > 0){
+      output$functions_performed <- renderText({paste(paste(functions_perf, collapse = ", "), ".")})
+    }
+    
+  }, ignoreNULL = FALSE, ignoreInit = TRUE)
+  
+  
+  
+  
+  
+  #Output tables
   
   output$contents <- renderDataTable(#server = F,
                                      datatable({
@@ -534,6 +654,22 @@ server <- function(input,output,session) {
                                       class = "display",
                                       style="bootstrap"))
   
+  output$testDataDownload <- renderDataTable(server = F,
+                                      datatable({
+                                        testData()
+                                      }, 
+                                      extensions = 'Buttons',
+                                      options = list(
+                                        paging = TRUE,
+                                        searching = TRUE,
+                                        fixedColumns = TRUE,
+                                        autoWidth = TRUE,
+                                        ordering = TRUE,
+                                        dom = 'Bfrtip',
+                                        buttons = c('copy', 'csv', 'excel')
+                                      ),
+                                      class = "display",
+                                      style="bootstrap"))
   
   output$contents6 <- renderDataTable(#server = F, 
                                       datatable({
