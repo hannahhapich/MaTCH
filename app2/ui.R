@@ -365,8 +365,8 @@ ui <- dashboardPage(dark = T,
                                                     HTML(paste0("Cleaning functions able to be performed by Match:")),
                                                     textOutput("function1"),
                                                     textOutput("function2"),
-                                                    textOutput("function3"),
-                                                    textOutput("function4")
+                                                    textOutput("function3")#,
+                                                    #textOutput("function4")
                                                 )
                                                 
                                             )

@@ -518,32 +518,44 @@ server <- function(input,output,session) {
     return(data)
   })
   
-  
   observeEvent(input$characteristics, {
+    req(input$characteristics)
     functions_perf <- c()
     if("material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) || "material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics)){
-      functions_perf <- append(functions_perf, "semantic matching of material and morphology")
-      output$function1 <- renderText({paste("-Semantic matching of material and morphology")})}
+      output$function1 <- renderText({paste("-Semantic matching of material and morphology")})
+    }else if(!("material" %in% as.vector(input$characteristics)) || !("morph" %in% as.vector(input$characteristics))){
+        output$function1 <- renderText("")
+    }else if(!("material_p" %in% as.vector(input$characteristics)) || !("morph_p" %in% as.vector(input$characteristics))){
+        output$function1 <- renderText("")
+    }
 
     if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics) ||
        "material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) && "length" %in% as.vector(input$characteristics)){
-      functions_perf <- append(functions_perf, "count to mass conversion")
-      output$function2 <- renderText({paste("-Count to mass conversion")})}
+      #functions_perf <- append(functions_perf, "count to mass conversion")
+      output$function2 <- renderText({paste("-Count to mass conversion")})
+    }else if(!("material" %in% as.vector(input$characteristics)) || !("morph" %in% as.vector(input$characteristics)) || !("length" %in% as.vector(input$characteristics))){
+      output$function2 <- renderText("")
+    }else if(!("material_p" %in% as.vector(input$characteristics)) || !("morph_p" %in% as.vector(input$characteristics)) || !("length_p" %in% as.vector(input$characteristics))){
+      output$function2 <- renderText("")
+    }
 
     if("range" %in% as.vector(input$characteristics) || "length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics) && "volume" %in% as.vector(input$advanced)){
-      functions_perf <- append(functions_perf, "perform particle size rescaling")
+      #functions_perf <- append(functions_perf, "perform particle size rescaling")
       output$function3 <- renderText({paste("-Perform particle size rescaling")})
-    }else if("length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics)){
-      functions_perf <- append(functions_perf, "calculate correction factor for size rescaling")
-      output$function4 <- renderText({paste("-Calculate correction factor for size rescaling")})
+    }else if("length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics)  && !("volume" %in% as.vector(input$advanced))){
+      output$function3 <- renderText({paste("-Calculate correction factor for size rescaling")})
+    }else if(!("range" %in% as.vector(input$characteristics)) && input$reporting_level == "Sample (particles/volume)"){
+      output$function3 <- renderText("")
+    }else if(!("sample" %in% as.vector(input$characteristics)) || !("length_p" %in% as.vector(input$characteristics))){
+      output$function3 <- renderText("")
     }
-    
-    if(length(functions_perf) > 0){
-      output$functions_performed <- renderText({paste(paste(functions_perf, collapse = ", "), ".")})
-    }
-    
+
+    # if(length(functions_perf) > 0){
+    #   output$functions_performed <- renderText({paste(paste(functions_perf, collapse = ", "), ".")})
+    # }
+
   }, ignoreNULL = FALSE, ignoreInit = TRUE)
-  
+
   
   
   
