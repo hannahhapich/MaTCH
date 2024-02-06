@@ -469,7 +469,6 @@ server <- function(input,output,session) {
   
   testData <- reactive({
     req(input$reporting_level)
-    #req(input$characteristics)
     data = data.frame(matrix(ncol = 0, nrow = 3))
     if(input$reporting_level == "Sample (particles/volume)"){
       concentration_particle_vol = c(100, 100, 100)
