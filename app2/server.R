@@ -447,7 +447,9 @@ server <- function(input,output,session) {
                                            "Average Particle Width (um)" = "width",
                                            "Average Particle Height (um)" = "height",
                                            "Known Alpha Value" = "alpha",
-                                           "Average Particle Density (mg/um3)" = "density"))
+                                           "Average Particle Density (mg/um3)" = "density",
+                                           "Known Error (+/- SD)" = "sd_error",
+                                           "Known Error (lower and upper bounds)" = "error"))
     }
     if(input$reporting_level == "Particle"){
       updateCheckboxGroupInput(inputId = "characteristics",
@@ -467,7 +469,7 @@ server <- function(input,output,session) {
   
   testData <- reactive({
     req(input$reporting_level)
-    req(input$characteristics)
+    #req(input$characteristics)
     data = data.frame(matrix(ncol = 0, nrow = 3))
     if(input$reporting_level == "Sample (particles/volume)"){
       concentration_particle_vol = c(100, 100, 100)
@@ -494,6 +496,12 @@ server <- function(input,output,session) {
         data <- add_column(data, known_alpha = known_alpha)}
       if ("density" %in% as.vector(input$advanced)){avg_density = c(0.00000000098,0.00000000098, 0.00000000098)
         data <- add_column(data, avg_density = avg_density)}
+      if ("sd_error" %in% as.vector(input$advanced)){error_SD = c(18, 18, 18)
+      data <- add_column(data, error_SD = error_SD)}
+      if ("error" %in% as.vector(input$advanced)){error_upper = c(110, 110, 110)
+      error_lower = c(90, 90, 90)
+      data <- add_column(data, error_upper = error_upper,
+                         error_lower = error_lower)}
     }
     
     if(input$reporting_level == "Particle"){
@@ -531,7 +539,6 @@ server <- function(input,output,session) {
 
     if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics) ||
        "material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) && "length" %in% as.vector(input$characteristics)){
-      #functions_perf <- append(functions_perf, "count to mass conversion")
       output$function2 <- renderText({paste("-Count to mass conversion")})
     }else if(!("material" %in% as.vector(input$characteristics)) || !("morph" %in% as.vector(input$characteristics)) || !("length" %in% as.vector(input$characteristics))){
       output$function2 <- renderText("")
@@ -540,7 +547,6 @@ server <- function(input,output,session) {
     }
 
     if("range" %in% as.vector(input$characteristics) || "length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics) && "volume" %in% as.vector(input$advanced)){
-      #functions_perf <- append(functions_perf, "perform particle size rescaling")
       output$function3 <- renderText({paste("-Perform particle size rescaling")})
     }else if("length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics)  && !("volume" %in% as.vector(input$advanced))){
       output$function3 <- renderText({paste("-Calculate correction factor for size rescaling")})
@@ -550,9 +556,6 @@ server <- function(input,output,session) {
       output$function3 <- renderText("")
     }
 
-    # if(length(functions_perf) > 0){
-    #   output$functions_performed <- renderText({paste(paste(functions_perf, collapse = ", "), ".")})
-    # }
 
   }, ignoreNULL = FALSE, ignoreInit = TRUE)
 

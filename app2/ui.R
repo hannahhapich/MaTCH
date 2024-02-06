@@ -323,28 +323,31 @@ ui <- dashboardPage(dark = T,
                                                 #fluidRow(
                                                   box(width = 12,
                                                       #collapsed = F,
-                                                      style = "height: 70vh; overflow-y: scroll",
+                                                      #style = "height: 50vh; overflow-y: scroll",
+                                                      style = "height: 70vh, overflow-y: auto",
                                                       title = "Choose Data Type",
-                                                      selectInput('reporting_level', "Data Reporting Level", c("", "Sample (particles/volume)","Particle")), #%>%
-                                                         # popover(title = "Data Reporting Level",
-                                                         #   content = "Choose the level at which your data was reported. Sample data is in the format of plastics concentrations as a particle count per volume. 
-                                                         #   Particle data has individual rows for each particle found, detailing their characteristics.", 
-                                                         #   placement = "right"),
+                                                      selectInput('reporting_level', "Data Reporting Level", c("", "Sample (particles/volume)","Particle")) %>%
+                                                         popover(title = "Data Reporting Level",
+                                                           content = "Choose the level at which your data was reported. Sample data is in the format of plastics concentrations as a particle count per volume.
+                                                           Particle data contains individual rows for each particle found detailing its characteristics.",
+                                                           placement = "right"),
                                                       "Known Data Characteristics",
                                                       checkboxGroupInput('characteristics', 
                                                                          "", 
                                                                          br(),
-                                                                         choices = NULL),
+                                                                         choices = NULL) %>%
+                                                        popover(title = "Data Characteristics",
+                                                                content = "Choose the commonly associated metadata you have available to describe your particles.",
+                                                                placement = "right"),
                                                       
                                                       box(width = 12,
                                                           collapsed = T,
                                                         title = "Advanced Data Characteristics",
-                                                        style = "overflow-y:",
                                                         checkboxGroupInput('advanced', 
                                                                            "", 
                                                                            choices = NULL) %>%
                                                           popover(
-                                                            title = "If you like, we share your uploaded data table and settings with the plastic community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded data tables will appear here: https://osf.io/rjg3c. If you have particles of known density, volume, or mass that you can share, please upload a .csv file.",
+                                                            title = "Choose from advanced, less commonly associated metadata you may have to describe your particles.",
                                                             content = "Share Decision", placement = "right"
                                                           )
                                                       )
@@ -365,8 +368,7 @@ ui <- dashboardPage(dark = T,
                                                     HTML(paste0("Cleaning functions able to be performed by Match:")),
                                                     textOutput("function1"),
                                                     textOutput("function2"),
-                                                    textOutput("function3")#,
-                                                    #textOutput("function4")
+                                                    textOutput("function3")
                                                 )
                                                 
                                             )
