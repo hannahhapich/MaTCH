@@ -630,6 +630,50 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(3),
                                   column(6,
+                                         shiny::HTML("<br><br><center> <h1>Material-Density Relational Table</h1> </center><br>"),
+                                         shiny::HTML("<h5>This table relates materials to all known material densities. Sources also displayed.</h5>"),
+                                         checkboxInput("show9", "Show Table", width = '50%')
+                                         
+                                  ),
+                                  column(3)
+                                ),
+                                
+                                # PAGE BREAK
+                                tags$hr(),
+                                
+                                fluidRow(
+                                  column(3),
+                                  column(6,
+                                         
+                                         tags$div(align = "center", 
+                                                  downloadButton('downloadData9', 'Download')
+                                         )
+                                         
+                                  ),
+                                  column(3)
+                                ),
+                                
+                                fluidRow(
+                                  column(1),
+                                  column(10,
+                                         
+                                         conditionalPanel(condition = "input.show9 == true",
+                                                          DT::dataTableOutput('table9')
+                                         )
+                                  ), 
+                                  column(1)
+                                ),
+                                
+                                fluidRow(
+                                  
+                                  style = "height:50px;"),
+                                
+                                # PAGE BREAK
+                                tags$hr(),
+                                
+                                fluidRow(
+                                  column(3),
+                                  column(6,
                                          shiny::HTML("<br><br><center> <h1>Manufacturer Brand Relational Table</h1> </center><br>"),
                                          shiny::HTML("<h5>This table relates brand types to their respective manufacturer.</h5>"),
                                          checkboxInput("show6", "Show Table", width = '50%')

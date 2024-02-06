@@ -889,6 +889,15 @@ server <- function(input,output,session) {
     }
   )
   
+  output$downloadData9 <- downloadHandler(    
+    filename = function() {
+      paste(deparse(substitute(polymer_db)), '.csv', sep='')
+    },
+    content = function(file) {
+      write.csv(polymer_db, file, row.names=FALSE)
+    }
+  )
+  
   output$downloadtest <- downloadHandler(    
     filename = function() {
       paste(deparse(substitute(NOAA)), '.csv', sep='')
@@ -928,6 +937,10 @@ server <- function(input,output,session) {
   
   output$table8 = DT::renderDataTable({
     PrimeUnclassifiable
+  }, style="bootstrap")
+  
+  output$table9 = DT::renderDataTable({
+    polymer_db
   }, style="bootstrap")
   
   #embeddings <- mongo(url = readLines("data/embeddings_mdb.rtf", warn = FALSE))
