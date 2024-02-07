@@ -393,26 +393,38 @@ server <- function(input,output,session) {
     return(data)
   })
   
-  #particle count-volume-mass converter
+  #MaTCH Tool
   
-  convertedParticles <- reactive({
+  convertedTerms <- reactive({
     req(input$particleData)
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
     
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+      dataframe2 <- dataframe2 %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
+    }else{dataframe2 <- dataframe}
+    
+    return(dataframe2)
+    
+  })
+  
+  convertedParticles <- reactive({
+    req(input$particleData)
+    # infile <- input$particleData
+    # file <- fread(infile$datapath)
+    # dataframe <- as.data.frame(file)
+    
     #file_paths = test
     #merge_data(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
     
-    
-     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
-     }else{dataframe2 <- dataframe}
+    dataframe <- convertedTerms()
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe3 <- particle_count_mass(dataframe = dataframe2, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
+      dataframe3 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
-    }else{dataframe3 <- dataframe2}
+    }else{dataframe3 <- dataframe}
       
     if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
        "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
@@ -430,6 +442,123 @@ server <- function(input,output,session) {
     return(dataframe6)
     
     })
+  
+  #Summary Table
+  # observeEvent(input$particleData, {
+  #   
+  # })
+  
+  
+  
+  #summaryResults <- eventReactive(input$particleData, {
+  summaryResults <- reactive({
+    req(input$particleData)
+    dataframe <- convertedParticles()
+     
+     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+       summary_table <- dataframe %>% group_by(sample_ID) %>%
+         summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
+       summary_table <- summary_table %>%
+         add_column(volume_upper = as.numeric(summary_table$volume_max_um_3) - as.numeric(summary_table$volume_mean_um_3),
+                    volume_lower = as.numeric(summary_table$volume_mean_um_3) - as.numeric(summary_table$volume_min_um_3),
+                    mass_upper = as.numeric(summary_table$max_mass_mg) - as.numeric(summary_table$mean_mass_mg),
+                    mass_lower = as.numeric(summary_table$mean_mass_mg) - as.numeric(summary_table$min_mass_mg)) %>%
+         select(-c(volume_min_um_3, volume_max_um_3, min_mass_mg, max_mass_mg))
+       summary_table <- summary_table %>%
+         add_column(volume_error = (as.numeric(summary_table$volume_upper) + as.numeric(summary_table$volume_lower))/2,
+                    mass_error = (as.numeric(summary_table$mass_upper) + as.numeric(summary_table$mass_lower))/2) %>%
+         select(-c(volume_upper, volume_lower, mass_upper, mass_lower))
+       summary_table <- summary_table %>%
+         unite(average_mass_mg, c(mean_mass_mg, mass_error), sep = "+/-") %>%
+         unite(average_volume_um_3, c(volume_mean_um_3, volume_error), sep = "+/-") %>%
+         select(-c(mean_mass_mg, mass_error, volume_mean_um_3, volume_error))
+     }else if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && !("sample_ID" %in% colnames(dataframe))){
+       summary_table <- dataframe %>% group_by(morphology) %>%
+         summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
+       summary_table <- summary_table %>%
+         add_column(volume_upper = as.numeric(summary_table$volume_max_um_3) - as.numeric(summary_table$volume_mean_um_3),
+                    volume_lower = as.numeric(summary_table$volume_mean_um_3) - as.numeric(summary_table$volume_min_um_3),
+                    mass_upper = as.numeric(summary_table$max_mass_mg) - as.numeric(summary_table$mean_mass_mg),
+                    mass_lower = as.numeric(summary_table$mean_mass_mg) - as.numeric(summary_table$min_mass_mg)) %>%
+         select(-c(volume_min_um_3, volume_max_um_3, min_mass_mg, max_mass_mg))
+       summary_table <- summary_table %>%
+         add_column(volume_error = (as.numeric(summary_table$volume_upper) + as.numeric(summary_table$volume_lower))/2,
+                    mass_error = (as.numeric(summary_table$mass_upper) + as.numeric(summary_table$mass_lower))/2) %>%
+         select(-c(volume_upper, volume_lower, mass_upper, mass_lower))
+       summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       
+       summary_table$average_mass_mg <- paste(summary_table$mean_mass_mg, summary_table$mass_error, sep="+/-")
+       summary_table$average_volume_um_3 <- paste(summary_table$volume_mean_um_3, summary_table$volume_error, sep="+/-")
+       summary_table <- summary_table %>%
+         select(-c(mean_mass_mg, mass_error, volume_mean_um_3, volume_error))
+     }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe)){
+       summary_table <- dataframe %>% group_by(sample_ID) %>%
+         summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower", "corrected_concentration", "corrected_concentration_upper", "corrected_concentration_lower"), mean)
+       summary_table <- summary_table %>%
+         add_column(alpha_error = ((as.numeric(summary_table$alpha_upper) - as.numeric(summary_table$alpha)) + (as.numeric(summary_table$alpha) - as.numeric(summary_table$alpha_lower)))/2,
+                    concentration_error = ((as.numeric(summary_table$corrected_concentration_upper) - as.numeric(summary_table$corrected_concentration)) + (as.numeric(summary_table$corrected_concentration) - as.numeric(summary_table$corrected_concentration_lower)))/2) %>%
+         select(-c(alpha_upper, alpha_lower, corrected_concentration_upper, corrected_concentration_lower)) %>%
+         rename(alpha_ = alpha,
+                corrected_concentration_ = corrected_concentration)
+       summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       summary_table$alpha <- paste(summary_table$alpha_, summary_table$alpha_error, sep="+/-")
+       summary_table$corrected_concentration <- paste(summary_table$corrected_concentration_, summary_table$concentration_error, sep="+/-")
+       summary_table <- summary_table %>%
+         select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
+     }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && !("sample_volume" %in% colnames(dataframe))){
+       summary_table <- dataframe %>% group_by(sample_ID) %>%
+         summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower"), mean)
+       summary_table <- summary_table %>%
+         add_column(alpha_error = ((as.numeric(summary_table$alpha_upper) - as.numeric(summary_table$alpha)) + (as.numeric(summary_table$alpha) - as.numeric(summary_table$alpha_lower)))/2) %>%
+         select(-c(alpha_upper, alpha_lower)) %>%
+         rename(alpha_ = alpha)
+       summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       summary_table$alpha <- paste(summary_table$alpha_, summary_table$alpha_error, sep="+/-")
+       summary_table <- summary_table %>%
+         select(-c(alpha_, alpha_error))
+     }else if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+        "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+       summary_table <- dataframe %>% group_by(sample_ID) %>%
+         summarise_at(c("concentration_particle_vol", "min_concentration_mg_vol", "mean_concentration_mg_vol", "max_concentration_mg_vol", "volume_min_um_3", "volume_max_um_3", "volume_mean_um_3"), mean)
+       summary_table <- summary_table %>%
+         add_column(volume_error = ((as.numeric(summary_table$volume_max_um_3) - as.numeric(summary_table$volume_mean_um_3)) + (as.numeric(summary_table$volume_mean_um_3) - as.numeric(summary_table$volume_min_um_3)))/2,
+                    concentration_error = ((as.numeric(summary_table$max_concentration_mg_vol) - as.numeric(summary_table$mean_concentration_mg_vol)) + (as.numeric(summary_table$mean_concentration_mg_vol) - as.numeric(summary_table$min_concentration_mg_vol)))/2) %>%
+         select(-c(volume_max_um_3, volume_min_um_3, max_concentration_mg_vol, min_concentration_mg_vol))
+       summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       summary_table$concentration_um_3_vol <- paste(summary_table$volume_mean_um_3, summary_table$volume_error, sep="+/-")
+       summary_table$concentration_mg_vol <- paste(summary_table$mean_concentration_mg_vol, summary_table$concentration_error, sep="+/-")
+       summary_table <- summary_table %>%
+         select(-c(volume_mean_um_3, volume_error, mean_concentration_mg_vol, concentration_error))
+     }else if("concentration_particle_vol" %in% colnames(dataframe) && "alpha" %in% colnames(dataframe)){
+       summary_table <- dataframe %>% select(concentration_particle_vol, alpha, alpha_upper, alpha_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
+       summary_table <- summary_table %>%
+         add_column(alpha_error = ((as.numeric(summary_table$alpha_upper) - as.numeric(summary_table$alpha)) + (as.numeric(summary_table$alpha) - as.numeric(summary_table$alpha_lower)))/2,
+                    concentration_error = ((as.numeric(summary_table$corrected_concentration_upper) - as.numeric(summary_table$corrected_concentration)) + (as.numeric(summary_table$corrected_concentration) - as.numeric(summary_table$corrected_concentration_lower)))/2) %>%
+         select(-c(alpha_upper, alpha_lower, corrected_concentration_upper, corrected_concentration_lower)) %>%
+         rename(alpha_ = alpha,
+                corrected_concentration_ = corrected_concentration)
+       summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       summary_table$alpha <- paste(summary_table$alpha_, summary_table$alpha_error, sep="+/-")
+       summary_table$corrected_concentration <- paste(summary_table$corrected_concentration_, summary_table$concentration_error, sep="+/-")
+       summary_table <- summary_table %>%
+         select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
+     }
+     
+     #summary_table <- as.data.frame(summary_table)
+     
+     #return(summary_table)
+
+   })
   
   #Test data
   
@@ -654,6 +783,23 @@ server <- function(input,output,session) {
   output$contents5 <- renderDataTable(server = F,
                                       datatable({
                                         convertedParticles()
+                                      }, 
+                                      extensions = 'Buttons',
+                                      options = list(
+                                        paging = TRUE,
+                                        searching = TRUE,
+                                        fixedColumns = TRUE,
+                                        autoWidth = TRUE,
+                                        ordering = TRUE,
+                                        dom = 'Bfrtip',
+                                        buttons = c('copy', 'csv', 'excel')
+                                      ),
+                                      class = "display",
+                                      style="bootstrap"))
+  
+  output$contents7 <- renderDataTable(server = F,
+                                      datatable({
+                                        summaryResults()
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(

@@ -47,7 +47,7 @@ Sys.setenv(
   "AWS_DEFAULT_REGION" = "us-east-2"
 )
 
-#file_paths <- read.csv("tests/count_mass_particle.csv")
+#file_paths <- read.csv("app2/tests/count_mass_particle.csv")
 merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable){
   dataframe <- file_paths %>%
     mutate(material = as.character(material),
@@ -77,14 +77,35 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   if(nrow(materials_left) > 0){
     new_material_vDB <- add_collection(metadata = materials_left)
     
-    material_key <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 1, type = "dotproduct") %>%
+    material_unknown_key <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 5, type = "dotproduct") %>%
       left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
       rename(Alias = text) %>%
       left_join(new_material_vDB$metadata, by = c("query_id" = "id")) %>%
-      rename(material = text) %>%
+      rename(material = text) 
+    
+    material_embedding <- material_unknown_key %>%
+      add_column(rank = rep(seq(5), nrow(material_unknown_key)/5)) %>%
+      select(Alias, material, rank) %>% 
+      pivot_wider(names_from = rank, values_from = Alias)
+    
+    material_embedding <- material_embedding %>%
+      rename(material_raw = 1,
+             material_match_1 = 2,
+             material_match_2 = 3,
+             material_match_3 = 4,
+             material_match_4 = 5,
+             material_match_5 = 6)
+    
+    material_unknown_key <- material_unknown_key %>% 
+      distinct(material, .keep_all = T) %>%
+      select(Alias, material)
+    
+    material_key <- material_unknown_key %>%
       inner_join(alias, by = c("Alias")) %>%
-      select(material, Material, readable)   %>%
+      select(material, Material, readable) %>%
       bind_rows(material_key)
+    
+    
   }
   
   
@@ -103,13 +124,32 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   if(nrow(items_left) > 0){
     new_items_vDB <- add_collection(metadata = items_left)
     
-    items_key <- query_collection(db = items_vectorDB, query_embeddings = new_items_vDB, top_n = 1, type = "dotproduct") %>%
-      left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
+    items_unknown_key <- query_collection(db = items_vectorDB, query_embeddings = new_items_vDB, top_n = 5, type = "dotproduct") %>%
+      left_join(items_vectorDB$metadata, by = c("db_id" = "id"))  %>%
       rename(Alias = text) %>%
       left_join(new_items_vDB$metadata, by = c("query_id" = "id")) %>%
-      rename(items = text) %>%
+      rename(morphology = text) 
+    
+    items_embedding <- items_unknown_key %>%
+      add_column(rank = rep(seq(5), nrow(items_unknown_key)/5)) %>%
+      select(Alias, morphology, rank) %>% 
+      pivot_wider(names_from = rank, values_from = Alias)
+    
+    items_embedding <- items_embedding %>%
+      rename(morphology_raw = 1,
+             morphology_match_1 = 2,
+             morphology_match_2 = 3,
+             morphology_match_3 = 4,
+             morphology_match_4 = 5,
+             morphology_match_5 = 6)
+    
+    items_unknown_key <- items_unknown_key %>% 
+      distinct(morphology, .keep_all = T) %>%
+      select(Alias, morphology)
+    
+    items_key <- items_unknown_key %>%
       inner_join(aliasi, by = "Alias") %>%
-      select(items, Item, readable)   %>%
+      select(morphology, Item, readable)   %>%
       bind_rows(items_key)
   }
   
@@ -135,11 +175,11 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   dataframe <- dataframe %>%
     select(-c(material, morphology)) %>%
     rename(material = material_new,
-           morphology = morphology_new) %>%
-    select(morphology_raw, everything()) %>% 
-    select(material_raw, everything()) %>% 
-    select(morphology, everything()) %>% 
-    select(material, everything())
+           morphology = morphology_new)
+  
+  dataframe <- dataframe %>%
+    left_join(material_embedding, by = "material_raw") %>%
+    left_join(items_embedding, by = "morphology_raw")
   
   dataframe <- dataframe %>% select(morphology_raw, everything()) 
   dataframe <- dataframe %>% select(material_raw, everything()) 
@@ -603,7 +643,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
     }
   }
     
-  if(all(c("error_upper", "error_lower")) %in% colnames(dataframeclean_summary) == TRUE){
+  if("error_upper" %in% colnames(dataframeclean_summary) == TRUE && "error_lower" %in% colnames(dataframeclean_summary) == TRUE){
     dataframeclean_summary <- dataframeclean_summary %>%
       add_column(min_concentration_particle_vol_er = as.numeric(dataframeclean_summary$error_lower),
                  max_concentration_particle_vol_er = as.numeric(dataframeclean_summary$error_upper))
@@ -626,7 +666,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
     add_column(min_concentration_mg_vol = as.numeric(dataframeclean_summary$min_mass_mg) * as.numeric(dataframeclean_summary$min_concentration_particle_vol),
                mean_concentration_mg_vol = as.numeric(dataframeclean_summary$mean_mass_mg) * as.numeric(dataframeclean_summary$concentration_particle_vol),
                max_concentration_mg_vol = as.numeric(dataframeclean_summary$max_mass_mg) * as.numeric(dataframeclean_summary$max_concentration_particle_vol)) %>%
-    select(sample_ID, min_concentration_mg_vol, mean_concentration_mg_vol, max_concentration_mg_vol)
+    select(sample_ID, min_concentration_mg_vol, mean_concentration_mg_vol, max_concentration_mg_vol, volume_min_um_3, volume_max_um_3, volume_mean_um_3)
   
   
   dataframe <- left_join(dataframe, dataframeclean_summary, by = "sample_ID")
@@ -1397,7 +1437,7 @@ polymer_db_ <- polymer_db_ %>%
          density_max = density_max,
          density_min = density_min)
 polymer_db_ <- polymer_db_ %>% 
-  left_join(material_alias, by = c("material" = "Alias")) %>%
+  left_join(Materials_Alias, by = c("material" = "Alias")) %>%
   select(-c("Material"))
 polymer_density <- polymer_db_ %>%
   select(material, density_mg_um_3, density_max, density_min, readable)

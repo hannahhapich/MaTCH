@@ -181,6 +181,14 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 ## Plot ----
                                 fluidRow(
+                                  box(title = HTML(paste0("Data Summary")), 
+                                      maximizable = T,
+                                      width = 8,
+                                      fluidRow(
+                                        div(style = "overflow-x: scroll",
+                                            DT::dataTableOutput("contents7")
+                                        ))
+                                  ),
                                   box(title = HTML(paste0("Cleaned Data")), 
                                       maximizable = T,
                                       width = 12,
