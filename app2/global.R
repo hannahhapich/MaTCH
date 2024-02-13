@@ -475,15 +475,16 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
 }
 
 #dataframe <- read.csv("tests/count_mass_concentration.csv")
+#dataframe_CF <- dataframeclean
 
-concentration_count_mass <- function(dataframe, morphology_shape, polymer_density){
+concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF){
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
-  dataframe$avg_length_um <- as.numeric(dataframe$avg_length_um)
-  dataframe$morphology <- as.character(dataframe$morphology)
-  dataframe$material <- as.character(dataframe$material)
-  dataframe$material_percent <- as.numeric(dataframe$material_percent)
-  dataframe$morphology_percent <- as.numeric(dataframe$morphology_percent)
+  #dataframe$avg_length_um <- as.numeric(dataframe$avg_length_um)
   dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)}
+  if("material" %in% colnames(dataframe) == TRUE){dataframe$material <- as.character(dataframe$material)}
+  if("material_percent" %in% colnames(dataframe) == TRUE){dataframe$material_percent <- as.numeric(dataframe$material_percent)}
+  if("morphology_percent" %in% colnames(dataframe) == TRUE){dataframe$morphology_percent <- as.numeric(dataframe$morphology_percent)}
   if("avg_width_um" %in% colnames(dataframe) == TRUE){dataframe$avg_width_um <- as.numeric(dataframe$avg_width_um)}
   if("avg_height_um" %in% colnames(dataframe) == TRUE){dataframe$avg_height_um <- as.numeric(dataframe$avg_height_um)}
   if("avg_density" %in% colnames(dataframe) == TRUE){dataframe$avg_density <- as.numeric(dataframe$avg_density)}
@@ -491,13 +492,27 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   if("error_upper" %in% colnames(dataframe) == TRUE){dataframe$error_upper <- as.numeric(dataframe$error_upper)}
   if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
   dataframeclean <- mutate_all(dataframe, cleantext) 
+  if("morphology" %in% colnames(dataframe) == TRUE){dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
+                                                    dataframeclean_trash <- dataframeclean %>%
+                                                      left_join(trash_mass_clean, by = c("morphology" = "items",
+                                                                                          "material" = "material"))}
+  if("material" %in% colnames(dataframe) == TRUE){dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)}
   
-  dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
-  dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)
+  dataframeclean$size_min <- as.numeric(dataframeclean$size_min)
+  dataframeclean$size_max <- as.numeric(dataframeclean$size_max)
   
-  dataframeclean_trash <- dataframeclean %>%
-    left_join(trash_mass_clean, by = c("morphology" = "items",
-                                 "material" = "material"))
+  corrected_DF <- corrected_DF %>% select(sample_ID, alpha, alpha_upper, alpha_lower)
+  corrected_DF$alpha <- as.numeric(corrected_DF$alpha)
+  corrected_DF$alpha_upper <- as.numeric(corrected_DF$alpha_upper)
+  corrected_DF$alpha_lower <- as.numeric(corrected_DF$alpha_lower)
+  dataframeclean <- dataframeclean %>% left_join(corrected_DF, by = "sample_ID") %>% add_column(avg_length_um = NA)
+  
+  for(x in 1:nrow(dataframeclean)){
+    dataframeclean$avg_length_um[[x]] <- mean_val(a = dataframeclean$alpha[[x]], x_b = dataframeclean$size_max[[x]], x_a = dataframeclean$size_min[[x]])
+    dataframeclean$L_min[[x]] <- mean_val(a = dataframeclean$alpha_lower[[x]], x_b = dataframeclean$size_max[[x]], x_a = dataframeclean$size_min[[x]])
+    dataframeclean$L_max[[x]] <- mean_val(a = dataframeclean$alpha_upper[[x]], x_b = dataframeclean$size_max[[x]], x_a = dataframeclean$size_min[[x]])
+  }
+  #mean_val(a = 1, x_b = 1000, x_a = 50)
   
   if("avg_width_um" %in% colnames(dataframeclean)){
     for(x in 1:nrow(dataframeclean)){
@@ -539,9 +554,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   }
   
   dataframeclean <- dataframeclean %>%
-    mutate(L_min = as.numeric(L_min) * as.numeric(avg_length_um),
-           L_mean = as.numeric(avg_length_um),
-           L_max = as.numeric(L_max) * as.numeric(avg_length_um))
+    rename(L_mean = avg_length_um)
   
   dataframeclean <- data.frame(dataframeclean) %>%
     mutate(volume_min_um_3 = L_min * W_min* H_min,
@@ -553,7 +566,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
                density_lower = as.numeric(dataframeclean$density_mg_um_3) - as.numeric(dataframeclean$density_min))
   
   dataframeclean <- dataframeclean %>%
-    select(-c(L_min, L_mean, L_max, W_min, W_mean, W_max, H_min, H_mean, H_max, density_max, density_min, avg_height_um, avg_width_um, avg_length_um, material, morphology))
+    select(-c(L_min, L_mean, L_max, W_min, W_mean, W_max, H_min, H_mean, H_max, density_max, density_min, avg_height_um, avg_width_um, material, morphology))
   
   dataframeclean <- dataframeclean %>%
     mutate(density_mg_um_3 = as.numeric(dataframeclean$density_mg_um_3) * as.numeric(dataframeclean$material_percent) * 0.01,
@@ -721,6 +734,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
   dataframe$size_min <- as.numeric(dataframe$size_min)
   dataframe$size_max <- as.numeric(dataframe$size_max)
+  dataframe$sample_ID <- as.character(dataframe$sample_ID)
   if("study_media" %in% colnames(dataframe) == TRUE){dataframe$study_media <- as.character(dataframe$study_media)}
   if("known_alpha" %in% colnames(dataframe) == TRUE){dataframe$known_alpha <- as.numeric(dataframe$known_alpha)}
   if("sample_ID"  %in% colnames(dataframe) == TRUE){dataframe$sample_ID <- as.character(dataframe$sample_ID)}
@@ -877,13 +891,14 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
         dataframeclean_$size_min[[row]] <- min(sample_bins$size_min)
         dataframeclean_$size_max[[row]] <- max(sample_bins$size_max)
         dataframeclean_$concentration_particle_vol[[row]] <- sum(sample_bins$concentration_particle_vol)
-        if("error_SD" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_SD[[x]]))){
-          sample_bins$error_SD <- as.numeric(sample_bins$error_SD)
-          dataframeclean_$concentration_upper[[row]] <- dataframeclean_$concentration_particle_vol[[row]] + (max(sample_bins$error_SD))
-          dataframeclean_$concentration_lower[[row]] <- dataframeclean_$concentration_particle_vol[[row]] - (max(sample_bins$error_SD))
+        if("error_SD" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_SD[[1]]))){
+            sample_bins$error_SD <- as.numeric(sample_bins$error_SD)
+            dataframeclean_$concentration_particle_vol <- as.numeric(dataframeclean_$concentration_particle_vol)
+            dataframeclean_$concentration_upper[[row]] <- dataframeclean_$concentration_particle_vol[[row]] + (max(sample_bins$error_SD))
+            dataframeclean_$concentration_lower[[row]] <- dataframeclean_$concentration_particle_vol[[row]] - (max(sample_bins$error_SD))
         }
         
-        if("error_lower" %in% colnames(dataframeclean) == TRUE && "error_upper" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_upper[[x]])) && !(is.na(sample_bins$error_lower[[x]]))){
+        if("error_lower" %in% colnames(dataframeclean) == TRUE && "error_upper" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_upper[[1]])) && !(is.na(sample_bins$error_lower[[1]]))){
           sample_bins$error_upper <- as.numeric(sample_bins$error_upper)
           sample_bins$error_lower <- as.numeric(sample_bins$error_lower)
           dataframeclean_$concentration_upper[[row]] <- sum(sample_bins$error_upper)
@@ -926,8 +941,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   
   # corrected_min <- 1
   # corrected_max <- 5000
-  #  x1D_set = 1
-  #  x2D_set = 5000
+  #x1D_set = 1
+  #x2D_set = 5000
   #Extrapolated parameters
   x1D_set = as.numeric(corrected_min) #lower limit default extrapolated range is 1 um
   x2D_set = as.numeric(corrected_max) #upper limit default extrapolated range is 5 mm
@@ -985,7 +1000,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     dataframeclean$corrected_concentration_upper[[x]] <- as.numeric(dataframeclean$correction_factor_upper[[x]]) * as.numeric(dataframeclean$concentration_upper[[x]])
   }
   dataframeclean <- dataframeclean %>% 
-    select(-c(size_min, size_max, concentration_lower, concentration_upper)) %>%
+    select(-c(concentration_lower, concentration_upper)) %>%
     mutate_if(is.numeric, signif, digits=3)
   
   return(dataframeclean)
@@ -1326,11 +1341,26 @@ sunburstplot <-function(df_join_boot){
 
 ###create function to derive correction factor (CF) from Koelmans et al (equation 2)
 CFfnx = function(a, #default alpha from Koelmans et al (2020)
-                 x2D, #set detault values to convert ranges to (1-5,000 um) #5mm is upper defuault 
+                 x2D, #set default values to convert ranges to (1-5,000 um) #5mm is upper default 
                  x1D, #1 um is lower default size
                  x2M, x1M){
   CF = (x2D^(1-a)-x1D^(1-a))/(x2M^(1-a)-x1M^(1-a)) 
   return(CF)}
+
+#create function to locate mean value across bounded inverse power function (mean value theorum for integrals)
+mean_val = function(a, #alpha, either solved for or default 1.6
+                 x_b, #upper lim provided
+                 x_a #lower lim provided
+                 ){
+  if(a = 1){
+    c = ((1/(x_b - x_a))*(log(x_b) - log(x_a)))^(-1)
+  }else{
+    f_b = ((x_b)^(-a+1))/(-a+1)
+    f_a = ((x_a)^(-a+1))/(-a+1)
+    f_c = (1/(x_b - x_a))*(f_b - f_a)
+    c = (abs(f_c))^(-(1/a)) 
+  }
+  return(c)}
 
 #Files for tool
 alias <- read.csv("data/PrimeMaterials.csv")

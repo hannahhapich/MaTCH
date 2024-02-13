@@ -532,23 +532,24 @@ server <- function(input,output,session) {
     
     if("morphology_match_1" %in% colnames(dataframe)){
       dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
-    print("Hi7")
     print(dataframe)
       }
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe3 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
+      dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
-    }else{dataframe3 <- dataframe}
+    }else{dataframe2 <- dataframe}
       
-    if("concentration_particle_vol" %in% colnames(dataframe) && "avg_length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
-       "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
-    }else{dataframe4 <- dataframe3} 
     
-    if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe)){
-      dataframe5 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
-    }else{dataframe5 <- dataframe4} 
+    if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+      dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+      dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3)
+    }else{dataframe4 <- dataframe2} 
+    
+    # if("concentration_particle_vol" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
+    #    "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+    #   dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
+    # }else{dataframe4 <- dataframe3} 
     
     if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
       dataframe6 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
