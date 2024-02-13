@@ -1097,19 +1097,19 @@ get_midpoints <- function(x, dp=2){
 }
 
 #Make df for alpha values
-study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota")
-length <- c(2.07, 2.64, 2.57, 3.25, 2.54, 2.59)
-length_sd <- c(0.03, 0.01, 0.20, 0.19, 0.01, 0.04)
-width <- c(1.96, 2.70, 2.51, 2.87, 2.55, 2.52)
-width_sd <- c(0.026, 0.008, 0.091, 0.167, 0.015, 0.07)
-mass <- c(1.32, 1.65, 1.50, 1.56, 1.40, 1.41)
-mass_sd <- c(0.009, 0.071, 0.026, 0.077, 0.002, 0.060)
-volume <- c(1.48, 1.68, 1.50, 1.53, 1.45, 1.40)
-volume_sd <- c(0.063, 0.081, 0.023, 0.013, 0.004, 0.004)
-surface_area <- c(1.50, 2.00, 1.75, 1.89, 1.73, 1.69)
-surface_area_sd <- c(0.009, 0.065, 0.050, 0.055, 0.005, 0.023)
-specific_surface_area <- c(1.98, 2.71, 2.54, 2.82, 2.58, 2.46)
-specific_surface_area_sd <- c(0.297, 0.009, 0.082, 0.096, 0.013, 0.092)
+study_media <- c("marinesurface","freshwatersurface","marinesediment","freshwatersediment","effluent", "biota", "drinkingwater")
+length <- c(2.07, 2.64, 2.57, 3.25, 2.54, 2.59, 1.64)
+length_sd <- c(0.03, 0.01, 0.20, 0.19, 0.01, 0.04, 0.55)
+width <- c(1.96, 2.70, 2.51, 2.87, 2.55, 2.52, NA)
+width_sd <- c(0.026, 0.008, 0.091, 0.167, 0.015, 0.07, NA)
+mass <- c(1.32, 1.65, 1.50, 1.56, 1.40, 1.41, NA)
+mass_sd <- c(0.009, 0.071, 0.026, 0.077, 0.002, 0.060, NA)
+volume <- c(1.48, 1.68, 1.50, 1.53, 1.45, 1.40, NA)
+volume_sd <- c(0.063, 0.081, 0.023, 0.013, 0.004, 0.004, NA)
+surface_area <- c(1.50, 2.00, 1.75, 1.89, 1.73, 1.69, NA)
+surface_area_sd <- c(0.009, 0.065, 0.050, 0.055, 0.005, 0.023, NA)
+specific_surface_area <- c(1.98, 2.71, 2.54, 2.82, 2.58, 2.46, NA)
+specific_surface_area_sd <- c(0.297, 0.009, 0.082, 0.096, 0.013, 0.092, NA)
 
 alpha_vals <- data.frame(study_media = study_media,
                          length = length,
