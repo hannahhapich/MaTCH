@@ -196,6 +196,24 @@ ui <- dashboardPage(dark = T,
                                         div(style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents5")
                                        ))
+                                  ),
+                                  box(title = HTML(paste0("Material Terms")), 
+                                      maximizable = T,
+                                      collapsed = T,
+                                      width = 6,
+                                      fluidRow(
+                                        div(style = "overflow-x: scroll",
+                                            DT::dataTableOutput("contents8")
+                                        ))
+                                  ),
+                                  box(title = HTML(paste0("Morphology Terms")), 
+                                      maximizable = T,
+                                      collapsed = T,
+                                      width = 6,
+                                      fluidRow(
+                                        div(style = "overflow-x: scroll",
+                                            DT::dataTableOutput("contents9")
+                                        ))
                                   )
                                 )
                                 

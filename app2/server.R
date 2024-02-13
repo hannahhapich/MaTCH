@@ -395,6 +395,8 @@ server <- function(input,output,session) {
   
   #MaTCH Tool
   
+  #dataframe_ex <- dataframe
+  
   convertedTerms <- reactive({
     req(input$particleData)
     infile <- input$particleData
@@ -403,23 +405,145 @@ server <- function(input,output,session) {
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
-      dataframe2 <- dataframe2 %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
-    }else{dataframe2 <- dataframe}
+    print("Hi")
+      }else{dataframe2 <- dataframe}
     
     return(dataframe2)
     
   })
   
+  aliasDisplay <- reactive({
+    req(input$particleData)
+    dataframe <- convertedTerms()
+    
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
+      dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
+      print("Hi2")
+    }
+    
+    return(dataframe2)
+    
+  })
+  
+  materialDisplay <- reactive({
+    req(input$particleData)
+    req(aliasDisplay())
+    dataframe_mat <- as.data.frame(aliasDisplay())
+    if("morphology" %in% colnames(dataframe_mat) && "material" %in% colnames(dataframe_mat) && "material_match_1" %in% colnames(dataframe_mat)){
+      dataframe_mat2 <- dataframe_mat %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)
+      dataframe_mat2 <- dataframe_mat2 %>% filter(!(is.na(material_match_1))) %>% add_column(Prime_Material = NA)
+      for (i in 1:nrow(dataframe_mat2)) {
+        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(paste0("sel", i), "", choices = c(dataframe_mat2[i, 3], dataframe_mat2[i, 4], dataframe_mat2[i, 5], dataframe_mat2[i, 6], dataframe_mat2[i, 7]), selected = dataframe_mat2[i, 3], width = "100px"))
+      }
+      dataframe_mat2 <- dataframe_mat2 %>% select(-c(material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
+        rename(alias = Prime_Material)
+      print("Hi3")
+      print(dataframe_mat2)
+    }else{dataframe_mat2 <- data.frame(NA)}
+    return(dataframe_mat2)
+    
+  })
+  
+  
+  #slct_ <- renderDataTable(materialDisplay())
+  #slct <- slct_ %>% select(material_raw)
+  
+  
+  materialSelect <- reactive({
+    req(input$particleData)
+    req(aliasDisplay())
+    req(materialDisplay())
+    dataframe_mat <- aliasDisplay()
+    data <- materialDisplay()
+    
+    selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
+    
+    
+    #slct <- slct %>% mutate(selection = as.character(selection))
+    slct <- data %>% add_column(selection = selection)
+    print(slct)
+    print("Hi4")
+    return(slct)
+    
+  })
+  
+  morphologyDisplay <- reactive({
+    req(input$particleData)
+    dataframe_morph <- aliasDisplay()
+    
+    if("morphology" %in% colnames(dataframe_morph) && "material" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
+      dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
+      dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1)))
+      print("Hi5")
+    }
+    
+    return(dataframe_morph2)
+    
+  })
+  
+  convertedTermsSelect <- eventReactive(convertedTerms(),  {
+    # req(input$particleData)
+    # req(convertedTerms())
+    req(materialSelect())
+    dataframe <- convertedTerms()
+    
+    if("material_match_1" %in% colnames(dataframe)){
+      key <- as.data.frame(materialSelect())
+      key <- key %>% left_join(Materials_Alias, by = c("selection" = "Alias"))
+      key <- key %>% select(material_raw, readable) %>% rename(material_select = readable)
+      dataframe <- dataframe %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
+        left_join(key, by = "material_raw")
+      for(x in 1:nrow(dataframe)){
+        if(!(is.na(dataframe$material_select[[x]]))){
+          dataframe$material[[x]] <- dataframe$material_select[[x]]
+        }
+      }
+      print("Hi6")
+      dataframe <- dataframe %>% select(-material_select)
+    }
+    
+    
+  })
+  
+  # convertedTermsSelect <- reactive({
+  #   req(input$particleData)
+  #   req(convertedTerms())
+  #   dataframe <- convertedTerms()
+  #   
+  #   if("material_match_1" %in% colnames(dataframe)){
+  #     key <- as.data.frame(materialSelect())
+  #     key <- key %>% left_join(Materials_Alias, by = c("selection" = "Alias"))
+  #     key <- key %>% select(material_raw, readable) %>% rename(material_select = readable)
+  #     dataframe <- dataframe %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
+  #       left_join(key, by = "material_raw")
+  #     for(x in 1:nrow(dataframe)){
+  #       if(!(is.na(dataframe$material_select[[x]]))){
+  #         dataframe$material[[x]] <- dataframe$material_select[[x]]
+  #       }
+  #     }
+  #     dataframe <- dataframe %>% select(-material_select)
+  #   }else{dataframe <- dataframe}
+  #   
+  #   return(dataframe)
+  # })
+  
+  
   convertedParticles <- reactive({
     req(input$particleData)
-    # infile <- input$particleData
-    # file <- fread(infile$datapath)
-    # dataframe <- as.data.frame(file)
+    #req(convertedTermsSelect())
+    dataframe <- convertedTermsSelect()
+    # material_raw <- c("polyimideee")
+    # selection <- c("polyglycolide")
+    # key <- data.table(NA)
+    # key <- key %>% add_column(material_raw = material_raw,
+    #                            selection = selection) %>% select(-V1)
     
-    #file_paths = test
-    #merge_data(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
-    
-    dataframe <- convertedTerms()
+    if("morphology_match_1" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
+    print("Hi7")
+    print(dataframe)
+      }
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe3 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
@@ -553,10 +677,6 @@ server <- function(input,output,session) {
        summary_table <- summary_table %>%
          select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
      }
-     
-     #summary_table <- as.data.frame(summary_table)
-     
-     #return(summary_table)
 
    })
   
@@ -800,6 +920,41 @@ server <- function(input,output,session) {
   output$contents7 <- renderDataTable(server = F,
                                       datatable({
                                         summaryResults()
+                                      }, 
+                                      extensions = 'Buttons',
+                                      options = list(
+                                        paging = TRUE,
+                                        searching = TRUE,
+                                        fixedColumns = TRUE,
+                                        autoWidth = TRUE,
+                                        ordering = TRUE,
+                                        dom = 'Bfrtip',
+                                        buttons = c('copy', 'csv', 'excel')
+                                      ),
+                                      class = "display",
+                                      style="bootstrap"))
+  
+  
+  output$contents8 <- renderDataTable(
+    datatable({materialDisplay()},
+              class = "display",
+              style="bootstrap",
+              escape = FALSE,
+              #server = FALSE,
+              options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
+              callback = JS("table.rows().every(function(row, tab, row) {
+                                              var $this = $(this.node());
+                                              $this.attr('id', this.data()[0]);
+                                              $this.addClass('shiny-input-container');
+                                            });
+                                            Shiny.unbindAll(table.table().node());
+                                            Shiny.bindAll(table.table().node());"))
+  )
+
+  
+  output$contents9 <- renderDataTable(server = F,
+                                      datatable({
+                                        morphologyDisplay()
                                       }, 
                                       extensions = 'Buttons',
                                       options = list(
