@@ -937,34 +937,50 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     x1M_set = as.numeric(dataframeclean$size_min[[x]])
     x2M_set = as.numeric(dataframeclean$size_max[[x]])
     alpha = as.numeric(dataframeclean$alpha[[x]])
-    CF <- CFfnx(x1M = x1M_set,#lower measured length
-                x2M = x2M_set, #upper measured length
-                x1D = x1D_set, #default lower size range
-                x2D = x2D_set,  #default upper size range
-                a = alpha #alpha
-    )
+    if(alpha == 1){
+      CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+      CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+      CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+    }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                      x2M = x2M_set, #upper measured length
+                      x1D = x1D_set, #default lower size range
+                      x2D = x2D_set,  #default upper size range
+                      a = alpha #alpha
+                      )
+    }
+    
     dataframeclean$correction_factor[[x]] <- as.numeric(CF)
     dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration_particle_vol[[x]])
     
     #min alpha
     alpha = as.numeric(dataframeclean$alpha_lower[[x]])
-    CF <- CFfnx(x1M = x1M_set,#lower measured length
-                x2M = x2M_set, #upper measured length
-                x1D = x1D_set, #default lower size range
-                x2D = x2D_set,  #default upper size range
-                a = alpha #alpha
+    if(alpha == 1){
+      CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+      CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+      CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+    }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                      x2M = x2M_set, #upper measured length
+                      x1D = x1D_set, #default lower size range
+                      x2D = x2D_set,  #default upper size range
+                      a = alpha #alpha
     )
+    }
     dataframeclean$correction_factor_lower[[x]] <- as.numeric(CF)
     dataframeclean$corrected_concentration_lower[[x]] <- as.numeric(dataframeclean$correction_factor_lower[[x]]) * as.numeric(dataframeclean$concentration_lower[[x]])
     
     #max alpha
     alpha = as.numeric(dataframeclean$alpha_upper[[x]])
-    CF <- CFfnx(x1M = x1M_set,#lower measured length
-                x2M = x2M_set, #upper measured length
-                x1D = x1D_set, #default lower size range
-                x2D = x2D_set,  #default upper size range
-                a = alpha #alpha
+    if(alpha == 1){
+      CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+      CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+      CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+    }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                      x2M = x2M_set, #upper measured length
+                      x1D = x1D_set, #default lower size range
+                      x2D = x2D_set,  #default upper size range
+                      a = alpha #alpha
     )
+    }
     dataframeclean$correction_factor_upper[[x]] <- as.numeric(CF)
     dataframeclean$corrected_concentration_upper[[x]] <- as.numeric(dataframeclean$correction_factor_upper[[x]]) * as.numeric(dataframeclean$concentration_upper[[x]])
   }
@@ -1047,35 +1063,50 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
       x1M_set = as.numeric(min(subset$length_um))
       x2M_set = as.numeric(max(subset$length_um))
       alpha = as.numeric(subset$alpha[1])
-      CF <- CFfnx(x1M = x1M_set,#lower measured length
-                  x2M = x2M_set, #upper measured length
-                  x1D = x1D_set, #default lower size range
-                  x2D = x2D_set,  #default upper size range
-                  a = alpha #alpha
+      if(alpha == 1){
+        CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+        CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+        CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+      }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                        x2M = x2M_set, #upper measured length
+                        x1D = x1D_set, #default lower size range
+                        x2D = x2D_set,  #default upper size range
+                        a = alpha #alpha
       )
+      }
       
       subset$correction_factor <- as.numeric(CF)
       subset$corrected_concentration <- as.numeric(subset$correction_factor) * as.numeric(subset$concentration)
       
       #min alpha
       alpha = as.numeric(subset$alpha_lower[1])
-      CF <- CFfnx(x1M = x1M_set,#lower measured length
-                  x2M = x2M_set, #upper measured length
-                  x1D = x1D_set, #default lower size range
-                  x2D = x2D_set,  #default upper size range
-                  a = alpha #alpha
+      if(alpha == 1){
+        CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+        CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+        CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+      }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                        x2M = x2M_set, #upper measured length
+                        x1D = x1D_set, #default lower size range
+                        x2D = x2D_set,  #default upper size range
+                        a = alpha #alpha
       )
+      }
       subset$correction_factor_lower <- as.numeric(CF)
       subset$corrected_concentration_lower <- as.numeric(subset$correction_factor_lower) * as.numeric(subset$concentration)
       
       #max alpha
       alpha = as.numeric(subset$alpha_upper[1])
-      CF <- CFfnx(x1M = x1M_set,#lower measured length
-                  x2M = x2M_set, #upper measured length
-                  x1D = x1D_set, #default lower size range
-                  x2D = x2D_set,  #default upper size range
-                  a = alpha #alpha
+      if(alpha == 1){
+        CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
+        CFU <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 1.001)
+        CF <- (as.numeric(CFL) + as.numeric(CFU))/2
+      }else{CF <- CFfnx(x1M = x1M_set,#lower measured length
+                        x2M = x2M_set, #upper measured length
+                        x1D = x1D_set, #default lower size range
+                        x2D = x2D_set,  #default upper size range
+                        a = alpha #alpha
       )
+      }
       subset$correction_factor_upper <- as.numeric(CF)
       subset$corrected_concentration_upper <- as.numeric(subset$correction_factor_upper) * as.numeric(subset$concentration)
       
