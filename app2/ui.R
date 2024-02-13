@@ -73,15 +73,14 @@ ui <- dashboardPage(dark = T,
                                                               title = "Rescaling Settings",
                                                               collapsed = T,
                                                               br(),
-                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")) %>%
-                                                                helper(type = "inline",
-                                                                       title = "Selection Help",
-                                                                       content = c("Select the measured characteristic of your particles over which to normalize"),
-                                                                       size = "m"),
+                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")),
                                                               br(),
                                                               numericInput('corrected_min', "Corrected Particle Range Minimum", 1, min = 1),
                                                               br(), 
-                                                              numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1)
+                                                              numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1),
+                                                              footer = tags$small("Select the measured characteristic of your particles over which to normalize. 
+                                                                                   Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', and 'effluent.' 
+                                                                                   If known particle characteristic is length, 'drinking water' is an additional option.")
                                                           )
                                                         ),
                                                     
@@ -94,11 +93,7 @@ ui <- dashboardPage(dark = T,
                                                                                   'sd' creates classes proportionate to the standard deviation of the data provided"),
                                                               title = "Alpha Value Calculation",
                                                               br(),
-                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","sd")) %>%
-                                                                helper(type = "inline",
-                                                                       title = "Selection Help",
-                                                                       content = c("Select the measured characteristic of your particles over which to normalize"),
-                                                                       size = "m"),
+                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","sd")),
                                                               br(),
                                                               numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
                                                           )
@@ -127,13 +122,6 @@ ui <- dashboardPage(dark = T,
                                                                            value = F,
                                                                            status = "success",
                                                                            fill = T)
-                                                            #   checkboxGroupInput(inputId = "weighted_choice",
-                                                            #                      label = "Weighted Average Method",
-                                                            #                      choices = c("Weight by Morphology" = "morph_weight",
-                                                            #                                  "Weight by Sample" = "sample_weight"),
-                                                            #                      selected = "morph_weight",
-                                                            #                      inline = T)
-                                                            # )
 
                                                         )
                                                         ),
@@ -156,28 +144,7 @@ ui <- dashboardPage(dark = T,
                                                         
                                                     )
                                                   )
-                                           ))),
-                                  column(2,
-                                         selectInput(inputId = "download_selection",
-                                                     label = downloadButton("download_data",
-                                                                            style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
-                                                     choices = c("Test Data",
-                                                                 "Test Map",
-                                                                 "Your Spectra",
-                                                                 "Library Spectra",
-                                                                 "Top Matches",
-                                                                 "Thresholded Particles")) %>%
-                                           popover(
-                                             title = "Options for downloading spectra and metadata from the analysis.
-                                          Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
-                                          Your Spectra will download your data with whatever processing options are active. Library Spectra
-                                          will download the current library selected. Top Matches downloads the top identifications in the
-                                          active analysis. Thresholded Particles will download a version of your spectra using the active
-                                          thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
-                                          to their medians and locations to their centroids.",
-                                             content = "Download Options", placement = "left"
-                                           )
-                                  )
+                                           )))
                                 ),
                                 ## Plot ----
                                 fluidRow(
@@ -241,8 +208,8 @@ ui <- dashboardPage(dark = T,
                                   column(6,
                                          shiny::HTML("<br><br><center> <h1>About the Relational Tables</h1> </center><br>"),
                                          align = "center",
-                                         img(width = "100%", src = "db_diagram.JPG"),
-                                         #HTML('<iframe width="560" height="315" src='https://dbdiagram.io/embed/5f3d9342cf48a141ff557dfe'> </iframe>'),
+                                         img(width = "700", src = "db_diagram.JPG", align = "center"),
+                                         #HTML('<iframe width="560" height="315" src='https://dbdiagram.io/e/64e7b4be02bd1c4a5e5d44fc/65cbb77fac844320ae118a92'> </iframe>'>),
                                          shiny::HTML("<h5>These relational tables describe alias relationships (words that mean the same thing) and hierarchical relationships (words that are nested groups within one another). You can view or download these tables using the relational table tab above!</h5>")
                                   ),
                                   column(3)
