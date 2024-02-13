@@ -405,8 +405,7 @@ server <- function(input,output,session) {
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
-    print("Hi")
-      }else{dataframe2 <- dataframe}
+    }else{dataframe2 <- dataframe}
     
     return(dataframe2)
     
@@ -416,11 +415,16 @@ server <- function(input,output,session) {
     req(input$particleData)
     dataframe <- convertedTerms()
     
-    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
       dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
-      print("Hi2")
-    }
+    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)
+      dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
+    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
+      dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
+    }else{dataframe2 <- data.frame(NA)}
     
     return(dataframe2)
     
@@ -438,16 +442,10 @@ server <- function(input,output,session) {
       }
       dataframe_mat2 <- dataframe_mat2 %>% select(-c(material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
         rename(alias = Prime_Material)
-      print("Hi3")
-      print(dataframe_mat2)
     }else{dataframe_mat2 <- data.frame(NA)}
     return(dataframe_mat2)
     
   })
-  
-  
-  #slct_ <- renderDataTable(materialDisplay())
-  #slct <- slct_ %>% select(material_raw)
   
   
   materialSelect <- reactive({
@@ -457,13 +455,12 @@ server <- function(input,output,session) {
     dataframe_mat <- aliasDisplay()
     data <- materialDisplay()
     
-    selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
+    if("alias" %in% colnames(data)){
+      selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
+      #slct <- slct %>% mutate(selection = as.character(selection))
+      slct <- data %>% add_column(selection = selection)
+    }else{slct <- data.frame(NA)}
     
-    
-    #slct <- slct %>% mutate(selection = as.character(selection))
-    slct <- data %>% add_column(selection = selection)
-    print(slct)
-    print("Hi4")
     return(slct)
     
   })
@@ -475,18 +472,18 @@ server <- function(input,output,session) {
     if("morphology" %in% colnames(dataframe_morph) && "material" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
       dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1)))
-      print("Hi5")
-    }
+    }else{dataframe_morph2 <- data.frame(NA)}
     
     return(dataframe_morph2)
     
   })
   
   convertedTermsSelect <- eventReactive(convertedTerms(),  {
-    # req(input$particleData)
+    req(input$particleData)
     # req(convertedTerms())
     req(materialSelect())
     dataframe <- convertedTerms()
+    
     
     if("material_match_1" %in% colnames(dataframe)){
       key <- as.data.frame(materialSelect())
@@ -499,9 +496,8 @@ server <- function(input,output,session) {
           dataframe$material[[x]] <- dataframe$material_select[[x]]
         }
       }
-      print("Hi6")
       dataframe <- dataframe %>% select(-material_select)
-    }
+    }else{dataframe <- dataframe}
     
     
   })
@@ -533,11 +529,6 @@ server <- function(input,output,session) {
     req(input$particleData)
     #req(convertedTermsSelect())
     dataframe <- convertedTermsSelect()
-    # material_raw <- c("polyimideee")
-    # selection <- c("polyglycolide")
-    # key <- data.table(NA)
-    # key <- key %>% add_column(material_raw = material_raw,
-    #                            selection = selection) %>% select(-V1)
     
     if("morphology_match_1" %in% colnames(dataframe)){
       dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))

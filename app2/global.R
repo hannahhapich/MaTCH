@@ -177,9 +177,15 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
     rename(material = material_new,
            morphology = morphology_new)
   
-  dataframe <- dataframe %>%
-    left_join(material_embedding, by = "material_raw") %>%
-    left_join(items_embedding, by = "morphology_raw")
+  if(nrow(materials_left) > 0){
+    dataframe <- dataframe %>%
+      left_join(material_embedding, by = "material_raw")
+  }
+  if(nrow(items_left) > 0){
+    dataframe <- dataframe %>%
+      left_join(items_embedding, by = "morphology_raw")
+  }
+  
   
   dataframe <- dataframe %>% select(morphology_raw, everything()) 
   dataframe <- dataframe %>% select(material_raw, everything()) 
