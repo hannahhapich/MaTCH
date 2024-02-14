@@ -735,8 +735,8 @@ server <- function(input,output,session) {
       if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$characteristics)){size_min = c(50, 201, 1001)
         size_max = c(200, 1000, 5000)
         data <- add_column(data, size_min = size_min, size_max = size_max)}
-      if ("length" %in% as.vector(input$characteristics)){avg_length_um = c(100, 100, 100)
-        data <- add_column(data, avg_length_um = avg_length_um)}
+      # if ("length" %in% as.vector(input$characteristics)){avg_length_um = c(100, 100, 100)
+      #   data <- add_column(data, avg_length_um = avg_length_um)}
       if ("width" %in% as.vector(input$advanced)){avg_width_um = c(20, 20, 20)
         data <- add_column(data, avg_width_um = avg_width_um)}
       if ("height" %in% as.vector(input$advanced)){avg_height_um = c(80, 80, 80)
@@ -787,9 +787,9 @@ server <- function(input,output,session) {
     }
 
     if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics) ||
-       "material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) && "length" %in% as.vector(input$characteristics)){
+       "range" %in% as.vector(input$characteristics)){
       output$function2 <- renderText({paste("-Count to mass conversion")})
-    }else if(!("material" %in% as.vector(input$characteristics)) || !("morph" %in% as.vector(input$characteristics)) || !("length" %in% as.vector(input$characteristics))){
+    }else if(!("sample" %in% as.vector(input$characteristics)) || !("range" %in% as.vector(input$characteristics))){
       output$function2 <- renderText("")
     }else if(!("material_p" %in% as.vector(input$characteristics)) || !("morph_p" %in% as.vector(input$characteristics)) || !("length_p" %in% as.vector(input$characteristics))){
       output$function2 <- renderText("")
