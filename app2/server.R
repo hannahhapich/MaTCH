@@ -447,7 +447,6 @@ server <- function(input,output,session) {
     
   })
   
-  
   materialSelect <- reactive({
     req(input$particleData)
     req(aliasDisplay())
@@ -467,14 +466,37 @@ server <- function(input,output,session) {
   
   morphologyDisplay <- reactive({
     req(input$particleData)
-    dataframe_morph <- aliasDisplay()
+    req(aliasDisplay())
+    dataframe_morph <- as.data.frame(aliasDisplay())
     
     if("morphology" %in% colnames(dataframe_morph) && "material" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
       dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1)))
+      for (i in 1:nrow(dataframe_morph2)) {
+        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph[i, 10], dataframe_morph[i, 11], dataframe_morph[i, 12], dataframe_morph[i, 13], dataframe_morph[i, 14]), selected = dataframe_morph[i, 10], width = "100px"))
+      }
+      dataframe_morph2 <- dataframe_morph2 %>% select(-c(morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
+        rename(alias = Prime_Morphology)
     }else{dataframe_morph2 <- data.frame(NA)}
     
     return(dataframe_morph2)
+    
+  })
+  
+  morphologySelect <- reactive({
+    req(input$particleData)
+    req(aliasDisplay())
+    req(morphologyDisplay())
+    dataframe_mat <- aliasDisplay()
+    data <- morphologyDisplay()
+    
+    if("alias" %in% colnames(data)){
+      selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel2", i)]]))
+      #slct <- slct %>% mutate(selection = as.character(selection))
+      slct <- data %>% add_column(selection = selection)
+    }else{slct <- data.frame(NA)}
+    
+    return(slct)
     
   })
   
@@ -483,7 +505,6 @@ server <- function(input,output,session) {
     # req(convertedTerms())
     req(materialSelect())
     dataframe <- convertedTerms()
-    
     
     if("material_match_1" %in% colnames(dataframe)){
       key <- as.data.frame(materialSelect())
@@ -497,6 +518,20 @@ server <- function(input,output,session) {
         }
       }
       dataframe <- dataframe %>% select(-material_select)
+    }else{dataframe <- dataframe}
+    
+    if("morphology_match_1" %in% colnames(dataframe)){
+      key <- as.data.frame(morphologySelect())
+      key <- key %>% left_join(Items_Alias, by = c("selection" = "Alias"))
+      key <- key %>% select(morphology_raw, readable) %>% rename(morphology_select = readable)
+      dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
+        left_join(key, by = "morphology_raw")
+      for(x in 1:nrow(dataframe)){
+        if(!(is.na(dataframe$morphology_select[[x]]))){
+          dataframe$morphology[[x]] <- dataframe$morphology_select[[x]]
+        }
+      }
+      dataframe <- dataframe %>% select(-morphology_select)
     }else{dataframe <- dataframe}
     
     
@@ -530,10 +565,10 @@ server <- function(input,output,session) {
     #req(convertedTermsSelect())
     dataframe <- convertedTermsSelect()
     
-    if("morphology_match_1" %in% colnames(dataframe)){
-      dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
-       print(dataframe)
-      }
+    # if("morphology_match_1" %in% colnames(dataframe)){
+    #   dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
+    #   }
+    
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
@@ -543,7 +578,8 @@ server <- function(input,output,session) {
     # dataframe3 <- dataframe_CF
     # dataframe4 <- dataframeclean_particles
     if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+      #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+      dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 5000)
       dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3)
       dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
       dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
@@ -562,12 +598,6 @@ server <- function(input,output,session) {
     return(dataframe5)
     
     })
-  
-  #Summary Table
-  # observeEvent(input$particleData, {
-  #   
-  # })
-  
   
   #dataframe <- dataframe4
   #summaryResults <- eventReactive(input$particleData, {
@@ -952,23 +982,37 @@ server <- function(input,output,session) {
                                             Shiny.bindAll(table.table().node());"))
   )
 
-  
-  output$contents9 <- renderDataTable(server = F,
-                                      datatable({
-                                        morphologyDisplay()
-                                      }, 
-                                      extensions = 'Buttons',
-                                      options = list(
-                                        paging = TRUE,
-                                        searching = TRUE,
-                                        fixedColumns = TRUE,
-                                        autoWidth = TRUE,
-                                        ordering = TRUE,
-                                        dom = 'Bfrtip',
-                                        buttons = c('copy', 'csv', 'excel')
-                                      ),
-                                      class = "display",
-                                      style="bootstrap"))
+  output$contents9 <- renderDataTable(
+    datatable({morphologyDisplay()},
+              class = "display",
+              style="bootstrap",
+              escape = FALSE,
+              #server = FALSE,
+              options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
+              callback = JS("table.rows().every(function(row, tab, row) {
+                                              var $this = $(this.node());
+                                              $this.attr('id', this.data()[0]);
+                                              $this.addClass('shiny-input-container');
+                                            });
+                                            Shiny.unbindAll(table.table().node());
+                                            Shiny.bindAll(table.table().node());"))
+  )
+  # output$contents9 <- renderDataTable(server = F,
+  #                                     datatable({
+  #                                       morphologyDisplay()
+  #                                     }, 
+  #                                     extensions = 'Buttons',
+  #                                     options = list(
+  #                                       paging = TRUE,
+  #                                       searching = TRUE,
+  #                                       fixedColumns = TRUE,
+  #                                       autoWidth = TRUE,
+  #                                       ordering = TRUE,
+  #                                       dom = 'Bfrtip',
+  #                                       buttons = c('copy', 'csv', 'excel')
+  #                                     ),
+  #                                     class = "display",
+  #                                     style="bootstrap"))
   
   output$testDataDownload <- renderDataTable(server = F,
                                       datatable({
