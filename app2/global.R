@@ -1352,7 +1352,7 @@ mean_val = function(a, #alpha, either solved for or default 1.6
                  x_b, #upper lim provided
                  x_a #lower lim provided
                  ){
-  if(a = 1){
+  if(a == 1){
     c = ((1/(x_b - x_a))*(log(x_b) - log(x_a)))^(-1)
   }else{
     f_b = ((x_b)^(-a+1))/(-a+1)

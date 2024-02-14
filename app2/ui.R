@@ -124,23 +124,24 @@ ui <- dashboardPage(dark = T,
                                                                            fill = T)
 
                                                         )
-                                                        ),
-                                                              
-                                                        fluidRow(
-                                                          box(width = 12,
-                                                              footer = tags$small("All unknown terms for 'morphology' and 'material' will be matched via embedding similarity to existing terms in our database. The highest percent similarity
-                                                                                  match will display as default. However, if you wish to review the top five matches from the natural language processing model, you may do so here and override 
-                                                                                  the choice."),
-                                                              title = prettySwitch("embedding_match_choice",
-                                                                                   label = "View Embedding Matches",
-                                                                                   inline = T,
-                                                                                   value = F,
-                                                                                   status = "success",
-                                                                                   fill = T),
-                                                               collapsed = T
-                                                              
-                                                          )
                                                         )
+                                                        #,
+                                                              
+                                                        # fluidRow(
+                                                        #   box(width = 12,
+                                                        #       footer = tags$small("All unknown terms for 'morphology' and 'material' will be matched via embedding similarity to existing terms in our database. The highest percent similarity
+                                                        #                           match will display as default. However, if you wish to review the top five matches from the natural language processing model, you may do so here and override 
+                                                        #                           the choice."),
+                                                        #       title = prettySwitch("embedding_match_choice",
+                                                        #                            label = "View Embedding Matches",
+                                                        #                            inline = T,
+                                                        #                            value = F,
+                                                        #                            status = "success",
+                                                        #                            fill = T),
+                                                        #        collapsed = T
+                                                        #       
+                                                        #   )
+                                                        # )
                                                         
                                                     )
                                                   )
@@ -150,7 +151,7 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   box(title = HTML(paste0("Data Summary")), 
                                       maximizable = T,
-                                      width = 8,
+                                      width = 12,
                                       fluidRow(
                                         div(style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents7")
