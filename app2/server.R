@@ -762,7 +762,7 @@ server <- function(input,output,session) {
         data <- add_column(data, morphology = morphology, morphology_percent = morphology_percent)}
       if ("media" %in% as.vector(input$characteristics)){study_media = c("marine surface", "marine surface", "marine surface")
         data <- add_column(data, study_media = study_media)}
-      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$characteristics)){size_min = c(50, 201, 1001)
+      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$advanced)){size_min = c(50, 201, 1001)
         size_max = c(200, 1000, 5000)
         data <- add_column(data, size_min = size_min, size_max = size_max)}
       # if ("length" %in% as.vector(input$characteristics)){avg_length_um = c(100, 100, 100)

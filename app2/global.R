@@ -693,9 +693,11 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
       add_column(min_concentration_particle_vol_er = as.numeric(dataframeclean_summary$error_lower),
                  max_concentration_particle_vol_er = as.numeric(dataframeclean_summary$error_upper))
     for(x in 1:nrow(dataframeclean_summary)){
-      if(!(is.na(dataframeclean_summary[x, "error_SD"]))){
-        dataframeclean_summary[x, "min_concentration_particle_vol"] = dataframeclean_summary[x, "min_concentration_particle_vol_er"]
+      if(!(is.na(dataframeclean_summary[x, "error_upper"]))){
         dataframeclean_summary[x, "max_concentration_particle_vol"] = dataframeclean_summary[x, "max_concentration_particle_vol_er"]
+      }
+      if(!(is.na(dataframeclean_summary[x, "error_lower"]))){
+        dataframeclean_summary[x, "min_concentration_particle_vol"] = dataframeclean_summary[x, "min_concentration_particle_vol_er"]
       }
     }
   }
@@ -1050,8 +1052,8 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
    #x = 1
     subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
     sample_size <- as.numeric(nrow(subset))
-    #bin_number = 5
-    #binning_type = "sd"
+    #bin_number = 10
+    #binning_type = "equal"
     int <- classify_intervals(subset$length_um, n = bin_number, style = binning_type)
     #int <- classify_intervals(subset$length_um, n = 5, style = "quantile")
     midpoints <- get_midpoints(x = int)
@@ -1168,10 +1170,10 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
 }
 
 #create function to extract midpoints from binning outputs
-get_midpoints <- function(x, dp=2){
+get_midpoints <- function(x){
   lower <- as.numeric(gsub(",.*","",gsub("\\(|\\[|\\)|\\]","", x)))
   upper <- as.numeric(gsub(".*,","",gsub("\\(|\\[|\\)|\\]","", x)))
-  return(round(lower+(upper-lower)/2, dp))
+  return(round(lower+(upper-lower)/2, 2))
 }
 
 #Make df for alpha values
