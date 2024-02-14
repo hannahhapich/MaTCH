@@ -475,16 +475,14 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
 }
 
 #dataframe <- read.csv("tests/count_mass_concentration.csv")
+#dataframe <- read.csv("tests/count_mass_concentration_min.csv")
 #dataframe_CF <- dataframeclean
 
 concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF){
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
-  #dataframe$avg_length_um <- as.numeric(dataframe$avg_length_um)
   dataframe$sample_ID <- as.character(dataframe$sample_ID)
   if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)}
   if("material" %in% colnames(dataframe) == TRUE){dataframe$material <- as.character(dataframe$material)}
-  if("material_percent" %in% colnames(dataframe) == TRUE){dataframe$material_percent <- as.numeric(dataframe$material_percent)}
-  if("morphology_percent" %in% colnames(dataframe) == TRUE){dataframe$morphology_percent <- as.numeric(dataframe$morphology_percent)}
   if("avg_width_um" %in% colnames(dataframe) == TRUE){dataframe$avg_width_um <- as.numeric(dataframe$avg_width_um)}
   if("avg_height_um" %in% colnames(dataframe) == TRUE){dataframe$avg_height_um <- as.numeric(dataframe$avg_height_um)}
   if("avg_density" %in% colnames(dataframe) == TRUE){dataframe$avg_density <- as.numeric(dataframe$avg_density)}
@@ -492,11 +490,37 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   if("error_upper" %in% colnames(dataframe) == TRUE){dataframe$error_upper <- as.numeric(dataframe$error_upper)}
   if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
   dataframeclean <- mutate_all(dataframe, cleantext) 
-  if("morphology" %in% colnames(dataframe) == TRUE){dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
-                                                    dataframeclean_trash <- dataframeclean %>%
-                                                      left_join(trash_mass_clean, by = c("morphology" = "items",
-                                                                                          "material" = "material"))}
-  if("material" %in% colnames(dataframe) == TRUE){dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)}
+  if("morphology" %in% colnames(dataframe) == TRUE && "morphology_percent" %in% colnames(dataframe) == TRUE){
+    dataframe$morphology_percent <- as.numeric(dataframe$morphology_percent)
+    dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
+    dataframeclean_trash <- dataframeclean %>%
+            left_join(trash_mass_clean, by = c("morphology" = "items",
+            "material" = "material"))
+  }else{dataframeclean <- dataframeclean %>% add_column(L_min = 0.950,
+                                                        L_max = 1.050,
+                                                        W_min = 0.0836684211,
+                                                        W_max = 0.74473684,
+                                                        H_min = 0.02883158,
+                                                        H_max = 0.692631579,
+                                                        morphology = "average",
+                                                        morphology_percent = 100)}
+        
+  if("material" %in% colnames(dataframe) == TRUE && "material_percent" %in% colnames(dataframe) == TRUE){
+    dataframe$material_percent <- as.numeric(dataframe$material_percent)
+    dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)
+  }else{dataframeclean <- dataframeclean %>% add_column(density_mg_um_3 = 1.148166e-09,
+                                                        density_max = 1.523589e-09,
+                                                        density_min = 1.037747e-09,
+                                                        readable = "average",
+                                                        material = "average",
+                                                        material_percent = 100)}
+  
+  if(is.na("material" %in% colnames(dataframe)) || is.na("morphology" %in% colnames(dataframe))){
+    dataframeclean_trash <- dataframeclean %>%
+      left_join(trash_mass_clean, by = c("morphology" = "items",
+                                         "material" = "material"))
+  }
+  
   
   dataframeclean$size_min <- as.numeric(dataframeclean$size_min)
   dataframeclean$size_max <- as.numeric(dataframeclean$size_max)
@@ -526,6 +550,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
         dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "avg_width_um"]) * meas_max
       }
     }
+    dataframeclean <- dataframeclean %>% select(-avg_width_um)
   }else{
     for(x in 1:nrow(dataframeclean)){
       dataframeclean[x, "W_mean"] <- ((as.numeric(dataframeclean[x, "W_min"]) + as.numeric(dataframeclean[x, "W_max"]))/2) * as.numeric(dataframeclean[x, "avg_length_um"])
@@ -545,6 +570,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
         dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "avg_height_um"]) * meas_max
       }
     }
+    dataframeclean <- dataframeclean %>% select(-avg_height_um)
   }else{
     for(x in 1:nrow(dataframeclean)){
       dataframeclean[x, "H_mean"] <- ((as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2) * as.numeric(dataframeclean[x, "avg_length_um"])
@@ -566,7 +592,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
                density_lower = as.numeric(dataframeclean$density_mg_um_3) - as.numeric(dataframeclean$density_min))
   
   dataframeclean <- dataframeclean %>%
-    select(-c(L_min, L_mean, L_max, W_min, W_mean, W_max, H_min, H_mean, H_max, density_max, density_min, avg_height_um, avg_width_um, material, morphology))
+    select(-c(L_min, L_mean, L_max, W_min, W_mean, W_max, H_min, H_mean, H_max, density_max, density_min, material, morphology))
   
   dataframeclean <- dataframeclean %>%
     mutate(density_mg_um_3 = as.numeric(dataframeclean$density_mg_um_3) * as.numeric(dataframeclean$material_percent) * 0.01,
@@ -1546,5 +1572,47 @@ morphology <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "f
 morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
 morph_conversion <- data.frame(morphology = morphology,
                                morph_dimension = morph_dimension)
+
+#polymer abundance from Burns et al 2018, ref in Kooi Koelmans for continuous polymer distribution
+polymer <- c("PE", "PP", "PET", "PA", "PS", "PVC", "PVA")
+abundance <- c(0.25/0.845, 0.145/0.845, 0.165/0.845, 0.12/0.845, 0.085/0.845, 0.02/0.845, 0.06/0.845)
+polymer_abundance <- data.frame(polymer = polymer,
+                                abundance = abundance)
+polymer_abundance <- polymer_abundance %>% left_join(polymer_density, by = c("polymer" = "readable")) %>% select(-material)
+polymer_abundance <- polymer_abundance %>% mutate(density_mg_um_3 = density_mg_um_3 * abundance,
+                                                  density_max = density_max * abundance,
+                                                  density_min = density_min * abundance)
+
+polymer_abundance <- polymer_abundance %>% add_row(polymer = "average", 
+                                                   density_mg_um_3 = sum(polymer_abundance$density_mg_um_3), 
+                                                   density_max = sum(polymer_abundance$density_max), 
+                                                   density_min = sum(polymer_abundance$density_min))
+# c(1.148166e-09, 1.523589e-09, 1.037747e-09)
+
+
+
+#morphology abundance from Burns et al 2018, ref in Kooi Koelmans for continuous Corey Shape Factor distribution
+morphology <- c("fiber", "fragment", "sphere", "film", "foam")
+abundance <- c(0.485/0.95, 0.31/0.95, 0.065/0.95, 0.055/0.95, 0.035/0.95)
+morphology_abundance <- data.frame(morphology = morphology,
+                                   abundance = abundance)
+morphology_abundance <- morphology_abundance %>% left_join(morphology_shape, by = "morphology")
+morphology_abundance <- morphology_abundance %>% mutate(L_min = L_min * abundance, 
+                                                        L_max = L_max * abundance,
+                                                        W_min = W_min * abundance,
+                                                        W_max = W_max * abundance,
+                                                        H_min = H_min * abundance,
+                                                        H_max = H_max * abundance)
+morphology_abundance <- morphology_abundance %>% add_row(morphology = "average", 
+                                                         L_min = sum(morphology_abundance$L_min), 
+                                                         L_max = sum(morphology_abundance$L_max), 
+                                                         W_min = sum(morphology_abundance$W_min),
+                                                         W_max = sum(morphology_abundance$W_max),
+                                                         H_min = sum(morphology_abundance$H_min),
+                                                         H_max = sum(morphology_abundance$H_max))
+#c(0.950, 1.05000000, 0.0836684211, 0.74473684, 2.883158e-02, 0.692631579)
+
+
+
 
 
