@@ -439,7 +439,9 @@ server <- function(input,output,session) {
       dataframe_mat2 <- dataframe_mat2 %>% filter(!(is.na(material_match_1))) %>% add_column(Prime_Material = NA)
       for (i in 1:nrow(dataframe_mat2)) {
         dataframe_mat2$Prime_Material[i] <- as.character(selectInput(paste0("sel", i), "", choices = c(dataframe_mat2[i, 3], dataframe_mat2[i, 4], dataframe_mat2[i, 5], dataframe_mat2[i, 6], dataframe_mat2[i, 7]), selected = dataframe_mat2[i, 3], width = "100px"))
-      }
+        print(dataframe_mat2$Prime_Material[i])
+        }
+      print(paste0("sel", i))
       dataframe_mat2 <- dataframe_mat2 %>% select(-c(material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
         rename(alias = Prime_Material)
     }else{dataframe_mat2 <- data.frame(NA)}
@@ -449,15 +451,19 @@ server <- function(input,output,session) {
   
   materialSelect <- reactive({
     req(input$particleData)
-    req(aliasDisplay())
+    #req(aliasDisplay())
     req(materialDisplay())
-    dataframe_mat <- aliasDisplay()
+    #dataframe_mat <- aliasDisplay()
     data <- materialDisplay()
     
     if("alias" %in% colnames(data)){
+      #selection <- as.character(input$sel1)
       selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
+      print(selection)
+      print(paste0("sel", i))
       #slct <- slct %>% mutate(selection = as.character(selection))
       slct <- data %>% add_column(selection = selection)
+      #print(slct)
     }else{slct <- data.frame(NA)}
     
     return(slct)
@@ -492,6 +498,7 @@ server <- function(input,output,session) {
     
     if("alias" %in% colnames(data)){
       selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel2", i)]]))
+      print(selection)
       #slct <- slct %>% mutate(selection = as.character(selection))
       slct <- data %>% add_column(selection = selection)
     }else{slct <- data.frame(NA)}
@@ -499,11 +506,12 @@ server <- function(input,output,session) {
     return(slct)
     
   })
-  
-  convertedTermsSelect <- eventReactive(convertedTerms(),  {
+  #eventReactive(isTruthy(morphologySelect()) || isTruthy(materialSelect()),
+  convertedTermsSelect <- reactive({
     req(input$particleData)
+    req(isTruthy(morphologySelect()) || isTruthy(materialSelect()))
     # req(convertedTerms())
-    req(materialSelect())
+    #req(materialSelect())
     dataframe <- convertedTerms()
     
     if("material_match_1" %in% colnames(dataframe)){
@@ -534,35 +542,14 @@ server <- function(input,output,session) {
       dataframe <- dataframe %>% select(-morphology_select)
     }else{dataframe <- dataframe}
     
+    print(dataframe)
     
   })
-  
-  # convertedTermsSelect <- reactive({
-  #   req(input$particleData)
-  #   req(convertedTerms())
-  #   dataframe <- convertedTerms()
-  #   
-  #   if("material_match_1" %in% colnames(dataframe)){
-  #     key <- as.data.frame(materialSelect())
-  #     key <- key %>% left_join(Materials_Alias, by = c("selection" = "Alias"))
-  #     key <- key %>% select(material_raw, readable) %>% rename(material_select = readable)
-  #     dataframe <- dataframe %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
-  #       left_join(key, by = "material_raw")
-  #     for(x in 1:nrow(dataframe)){
-  #       if(!(is.na(dataframe$material_select[[x]]))){
-  #         dataframe$material[[x]] <- dataframe$material_select[[x]]
-  #       }
-  #     }
-  #     dataframe <- dataframe %>% select(-material_select)
-  #   }else{dataframe <- dataframe}
-  #   
-  #   return(dataframe)
-  # })
   
   
   convertedParticles <- reactive({
     req(input$particleData)
-    #req(convertedTermsSelect())
+    req(convertedTermsSelect())
     dataframe <- convertedTermsSelect()
     
     # if("morphology_match_1" %in% colnames(dataframe)){
@@ -966,20 +953,32 @@ server <- function(input,output,session) {
                                       style="bootstrap"))
   
   
-  output$contents8 <- renderDataTable(
-    datatable({materialDisplay()},
-              class = "display",
-              style="bootstrap",
-              escape = FALSE,
-              #server = FALSE,
-              options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
-              callback = JS("table.rows().every(function(row, tab, row) {
-                                              var $this = $(this.node());
-                                              $this.attr('id', this.data()[0]);
-                                              $this.addClass('shiny-input-container');
-                                            });
-                                            Shiny.unbindAll(table.table().node());
-                                            Shiny.bindAll(table.table().node());"))
+  # output$contents8 <- DT :: renderDataTable(
+  #           materialDisplay(),
+  #             class = "display",
+  #             style="bootstrap",
+  #             escape = FALSE,
+  #             server = FALSE,
+  #             options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
+  #             callback = JS("table.rows().every(function(row, tab, row) {
+  #                                             var $this = $(this.node());
+  #                                             $this.attr('id', this.data()[0]);
+  #                                             $this.addClass('shiny-input-container');
+  #                                           });
+  #                                           Shiny.unbindAll(table.table().node());
+  #                                           Shiny.bindAll(table.table().node());")
+  # )
+  
+  output$contents8 = DT::renderDataTable(
+    materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
+    options = list(dom = 't', paging = FALSE, ordering = FALSE),
+    callback = JS("table.rows().every(function(i, tab, row) {
+        var $this = $(this.node());
+        $this.attr('id', this.data()[0]);
+        $this.addClass('shiny-input-container');
+      });
+      Shiny.unbindAll(table.table().node());
+      Shiny.bindAll(table.table().node());")
   )
 
   output$contents9 <- renderDataTable(
