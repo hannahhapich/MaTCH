@@ -880,18 +880,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   for(x in 1:nrow(dataframeclean)){
     if(is.na(dataframeclean[x, "alpha"])){
       dataframeclean[x, "alpha"] <- 1.6
-      if(metric == "length (um)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * length_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * length_coef)}
-      if(metric == "width (um)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * width_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * width_coef)}
-      if(metric == "mass (ug)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * mass_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * mass_coef)}
-      if(metric == "volume (um3)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * volume_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * volume_coef)}
-      if(metric == "surface area (um2)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * surface_area_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * surface_area_coef)}
-      if(metric == "specific surface area (g/m2)"){dataframeclean[x, "alpha_lower"] <- 1.6 - (1.6 * specific_surface_area_coef)
-      dataframeclean[x, "alpha_upper"] <- 1.6 + (1.6 * specific_surface_area_coef)}
+      dataframeclean[x, "alpha_lower"] <- 1.1 #1.6 - 0.5
+      dataframeclean[x, "alpha_upper"] <- 2.1 #1.6 + 0.5
     }
   }
   
@@ -1206,7 +1196,7 @@ alpha_vals <- data.frame(study_media = study_media,
                          specific_surface_area_sd = specific_surface_area_sd
 )
 
-#Find average coefficient of variability to create upper and lower alpha vals from given values and for a = 1.6
+#Find average coefficient of variability to create upper and lower alpha vals from given values
 length_coef <- as.numeric(mean(length_sd/length)) #0.0289907
 width_coef <- as.numeric(mean(width_sd/width)) #0.02405526
 mass_coef <- as.numeric(mean(mass_sd/mass)) #0.02675376
@@ -1575,8 +1565,9 @@ morph_dimension <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "fi
 morph_conversion <- data.frame(morphology = morphology,
                                morph_dimension = morph_dimension)
 
-#polymer abundance from Burns et al 2018, ref in Kooi Koelmans for continuous polymer distribution
+#polymer abundance from Burns et al 2018/Bond et al 2018 (ref in Kooi Koelmans 2019 for continuous polymer distribution)
 polymer <- c("PE", "PP", "PET", "PA", "PS", "PVC", "PVA")
+#Abundance provided does not equal 100, so taken as a proportion
 abundance <- c(0.25/0.845, 0.145/0.845, 0.165/0.845, 0.12/0.845, 0.085/0.845, 0.02/0.845, 0.06/0.845)
 polymer_abundance <- data.frame(polymer = polymer,
                                 abundance = abundance)
@@ -1593,8 +1584,9 @@ polymer_abundance <- polymer_abundance %>% add_row(polymer = "average",
 
 
 
-#morphology abundance from Burns et al 2018, ref in Kooi Koelmans for continuous Corey Shape Factor distribution
+#morphology abundance from Burns et al 2018/Bond et al 2018 (ref in Kooi Koelmans 2019 for continuous Corey Shape Factor distribution)
 morphology <- c("fiber", "fragment", "sphere", "film", "foam")
+#Abundance provided does not equal 100, so taken as a proportion
 abundance <- c(0.485/0.95, 0.31/0.95, 0.065/0.95, 0.055/0.95, 0.035/0.95)
 morphology_abundance <- data.frame(morphology = morphology,
                                    abundance = abundance)
