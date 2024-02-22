@@ -58,44 +58,19 @@ write.csv(simulated_track_2_20, "data/simulated_data/simulated_track_2_20.csv")
 write.csv(simulated_curb_20_125, "data/simulated_data/simulated_curb_20_125.csv")
 write.csv(simulated_track_20_125, "data/simulated_data/simulated_track_20_125.csv")
 
+#Retrieve correction factors for upper and lower bins
 
-
-
-
-
-
-
-
-CFfnx = function(a, #default alpha from Koelmans et al (2020)
-                 x2D, #set detault values to convert ranges to (1-5,000 um) #5mm is upper defuault 
-                 x1D, #1 um is lower default size
-                 x2M, x1M){
+CFfnx = function(a, x2D, x1D,x2M, x1M){
   CF = (x2D^(1-a)-x1D^(1-a))/(x2M^(1-a)-x1M^(1-a)) 
   return(CF)}
 
-CF <- CFfnx(x1M = 2,#lower measured length
-            x2M = 20, #upper measured length
-            x1D = 1, #default lower size range
-            x2D = 20,  #default upper size range
-            a = 1.6 #alpha for count 
-            
-)
+CF <- CFfnx(x1M = 2, x2M = 20, x1D = 1, x2D = 20, a = 1.6)
 print(CF)
 #3.166285
 
-CF <- CFfnx(x1M = 20,#lower measured length
-            x2M = 125, #upper measured length
-            x1D = 20, #default lower size range
-            x2D = 5000,  #default upper size range
-            a = 1.6 #alpha for count 
-            
-)
+CF <- CFfnx(x1M = 20, x2M = 125, x1D = 20, x2D = 5000, a = 1.6)
 print(CF)
 #1.051974
-
-
-
-
 
 
 
