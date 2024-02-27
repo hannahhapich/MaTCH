@@ -599,11 +599,12 @@ server <- function(input,output,session) {
     req(convertedTermsSelect())
     dataframe <- convertedTermsSelect()
     
-    
+    #dataframe <- dataframe2
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
-      
+      # dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean,
+      #                                   polymer_avg_decision = T, morph_weight = T, sample_weight = F)
       dataframe2 <- dataframe2 %>% select(morphology_raw, everything()) 
       dataframe2 <- dataframe2 %>% select(material_raw, everything()) 
       dataframe2 <- dataframe2 %>% select(morphology, everything()) 
@@ -622,7 +623,12 @@ server <- function(input,output,session) {
     
     
     if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+      #dataframe5 <- correctionFactor_particle(dataframe = dataframe, corrected_min = 1, corrected_max = 5000, binning_type = "jenks", bin_number = 5)
       dataframe5 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
+      if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+        dataframe2 <- dataframe2 %>% select(volume_min_um_3, volume_mean_um_3, volume_max_um_3, min_mass_mg, mean_mass_mg, max_mass_mg)
+        dataframe5 <- cbind(dataframe5, dataframe2)
+      }
     }else{dataframe5 <- dataframe4}
     
     return(dataframe5)
@@ -634,8 +640,8 @@ server <- function(input,output,session) {
   summaryResults <- reactive({
     req(input$particleData)
     dataframe <- convertedParticles()
-    #dataframe <- dataframe4
-     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+    #dataframe <- dataframe5
+     if("volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
        summary_table <- summary_table %>%
@@ -650,9 +656,11 @@ server <- function(input,output,session) {
          select(-c(volume_upper, volume_lower, mass_upper, mass_lower))
        summary_table <- summary_table %>%
          unite(average_mass_mg, c(mean_mass_mg, mass_error), sep = "+/-") %>%
-         unite(average_volume_um_3, c(volume_mean_um_3, volume_error), sep = "+/-") %>%
-         select(-c(mean_mass_mg, mass_error, volume_mean_um_3, volume_error))
-     }else if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && !("sample_ID" %in% colnames(dataframe))){
+         unite(average_volume_um_3, c(volume_mean_um_3, volume_error), sep = "+/-") #%>%
+         #select(-c(mass_error, volume_error))
+       summary_table1 <- summary_table
+     }
+    if("morphology" %in% colnames(dataframe) && "volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) == FALSE){
        summary_table <- dataframe %>% group_by(morphology) %>%
          summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
        summary_table <- summary_table %>%
@@ -673,7 +681,7 @@ server <- function(input,output,session) {
        summary_table$average_volume_um_3 <- paste(summary_table$volume_mean_um_3, summary_table$volume_error, sep="+/-")
        summary_table <- summary_table %>%
          select(-c(mean_mass_mg, mass_error, volume_mean_um_3, volume_error))
-     }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe)){
+     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe)){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower", "corrected_concentration", "corrected_concentration_upper", "corrected_concentration_lower"), mean)
        summary_table <- summary_table %>%
@@ -689,7 +697,7 @@ server <- function(input,output,session) {
        summary_table$corrected_concentration <- paste(summary_table$corrected_concentration_, summary_table$concentration_error, sep="+/-")
        summary_table <- summary_table %>%
          select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
-     }else if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && !("sample_volume" %in% colnames(dataframe))){
+     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && !("sample_volume" %in% colnames(dataframe))){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower"), mean)
        summary_table <- summary_table %>%
@@ -722,6 +730,10 @@ server <- function(input,output,session) {
        summary_table <- summary_table %>%
          select(-c(volume_mean_um_3, volume_error, mean_concentration_mg_vol, corrected_concentration_error, alpha_error, mass_error, corrected_concentration_error))
      }
+    
+    if("volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe)){
+      summary_table <- summary_table %>% left_join(summary_table1, by = "sample_ID")
+    }
 
    })
   

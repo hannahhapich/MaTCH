@@ -325,6 +325,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 }
 
 #dataframe <- read.csv("tests/count_mass_particle.csv")
+#dataframe <- read.csv("tests/rescaling_particle.csv")
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$morphology <- as.character(dataframe$morphology)
@@ -352,6 +353,12 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
         dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "width_um"]) * meas_max
       }
     }
+  }else{
+    for(x in 1:nrow(dataframeclean)){
+        dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "W_min"]) * as.numeric(dataframeclean[x, "length_um"])
+        dataframeclean[x, "W_mean"] <- (as.numeric(dataframeclean[x, "W_min"]) + as.numeric(dataframeclean[x, "W_max"]))/2
+        dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "W_max"]) * as.numeric(dataframeclean[x, "length_um"])
+    }
   }
   if("height_um" %in% colnames(dataframeclean)){
     for(x in 1:nrow(dataframeclean)){
@@ -364,6 +371,12 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
         dataframeclean[x, "H_mean"] <- as.numeric(dataframeclean[x, "height_um"])
         dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "height_um"]) * meas_max
       }
+    }
+  }else{
+    for(x in 1:nrow(dataframeclean)){
+      dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "H_min"]) * as.numeric(dataframeclean[x, "length_um"])
+      dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
+      dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "H_max"]) * as.numeric(dataframeclean[x, "length_um"])
     }
   }
   

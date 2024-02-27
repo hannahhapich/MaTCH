@@ -145,7 +145,28 @@ ui <- dashboardPage(dark = T,
                                                         
                                                     )
                                                   )
-                                           )))
+                                           ))) #,
+                                  # column(2,
+                                  #        selectInput(inputId = "download_selection",
+                                  #                    label = downloadButton("download_data",
+                                  #                                           style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
+                                  #                    choices = c("Test Data",
+                                  #                                "Test Map",
+                                  #                                "Your Spectra",
+                                  #                                "Library Spectra",
+                                  #                                "Top Matches",
+                                  #                                "Thresholded Particles")) %>%
+                                  #          popover(
+                                  #            title = "Options for downloading spectra and metadata from the analysis.
+                                  #         Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
+                                  #         Your Spectra will download your data with whatever processing options are active. Library Spectra
+                                  #         will download the current library selected. Top Matches downloads the top identifications in the
+                                  #         active analysis. Thresholded Particles will download a version of your spectra using the active
+                                  #         thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
+                                  #         to their medians and locations to their centroids.",
+                                  #            content = "Download Options", placement = "left"
+                                  #          )
+                                  # )
                                 ),
                                 ## Plot ----
                                 fluidRow(
