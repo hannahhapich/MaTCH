@@ -441,7 +441,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show1 == true",
-                                                          DT::dataTableOutput('table1')
+                                                          box(width = 9,
+                                                            DT::dataTableOutput('table1'))
                                          )
                                   ), 
                                   column(1)
@@ -490,7 +491,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show2 == true",
-                                                          DT::dataTableOutput('table2')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table2'))
                                          )
                                   ), 
                                   column(1)
@@ -533,7 +535,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show3 == true",
-                                                          DT::dataTableOutput('table3')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table3'))
                                          )
                                   ), 
                                   column(1)
@@ -583,7 +586,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show4 == true",
-                                                          DT::dataTableOutput('table4')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table4'))
                                          )
                                   ), 
                                   column(1)
@@ -627,7 +631,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show5 == true",
-                                                          DT::dataTableOutput('table5')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table5'))
                                          )
                                   ), 
                                   column(1)
@@ -671,7 +676,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show9 == true",
-                                                          DT::dataTableOutput('table9')
+                                                          box(width = 11,
+                                                              DT::dataTableOutput('table9'))
                                          )
                                   ), 
                                   column(1)
@@ -715,7 +721,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show6 == true",
-                                                          DT::dataTableOutput('table6')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table6'))
                                          )
                                   ), 
                                   column(1)
@@ -759,7 +766,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show7 == true",
-                                                          DT::dataTableOutput('table7')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table7'))
                                          )
                                   ), 
                                   column(1)
@@ -802,7 +810,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show8 == true",
-                                                          DT::dataTableOutput('table8')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table8'))
                                          )
                                   ), 
                                   column(1)
@@ -814,8 +823,8 @@ ui <- dashboardPage(dark = T,
                                   column(3
                                   ),
                                   column(6,
-                                         shiny::HTML("<br><br><center> <h1>Microplastic Color Alias</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes the aliases that can be used to describe microplastic colors. Each row represents a unique color and each column is an alias for that color.</h5>"),
+                                         shiny::HTML("<br><br><center> <h1>Color Alias</h1> </center><br>"),
+                                         shiny::HTML("<h5>This table describes the aliases that can be used to describe particle colors. Each row represents a unique color and each column is an alias for that color.</h5>"),
                                          checkboxInput("show12", "Show Table", width = '100%')
                                          
                                   ),
@@ -843,7 +852,8 @@ ui <- dashboardPage(dark = T,
                                   column(10,
                                          
                                          conditionalPanel(condition = "input.show12 == true",
-                                                          DT::dataTableOutput('table12')
+                                                          box(width = 9,
+                                                              DT::dataTableOutput('table12'))
                                          )
                                   ), 
                                   column(1)

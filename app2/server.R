@@ -1238,6 +1238,11 @@ server <- function(input,output,session) {
     polymer_db
   }, style="bootstrap")
   
+  color <- read.csv("data/Microplastics_Color.csv")
+  output$table12 = DT::renderDataTable({
+    color
+  }, style="bootstrap")
+  
   #embeddings <- mongo(url = readLines("data/embeddings_mdb.rtf", warn = FALSE))
   
   
