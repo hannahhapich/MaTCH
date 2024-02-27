@@ -503,7 +503,9 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
                                                         H_min = 0.02883158,
                                                         H_max = 0.692631579,
                                                         morphology = "average",
-                                                        morphology_percent = 100)}
+                                                        morphology_percent = 100)
+  dataframeclean_trash <- data.frame()
+  }
         
   if("material" %in% colnames(dataframe) == TRUE && "material_percent" %in% colnames(dataframe) == TRUE){
     dataframe$material_percent <- as.numeric(dataframe$material_percent)
@@ -718,47 +720,49 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   
   dataframe <- left_join(dataframe, dataframeclean_summary, by = "sample_ID")
   
-  
-  dataframeclean_trash$weight_estimate_g <- as.numeric(dataframeclean_trash$weight_estimate_g)
-  for(x in 1:nrow(dataframeclean_trash)){
-    if(! is.na(dataframeclean_trash[x, "weight_estimate_g"])){
-      dataframeclean_trash[x, "mean_mass_mg"] <- (dataframeclean_trash[x, "weight_estimate_g"]*1000)
+  if("weight_estimate_g" %in% colnames(dataframeclean_trash)){
+    dataframeclean_trash$weight_estimate_g <- as.numeric(dataframeclean_trash$weight_estimate_g)
+    for(x in 1:nrow(dataframeclean_trash)){
+      if(! is.na(dataframeclean_trash[x, "weight_estimate_g"])){
+        dataframeclean_trash[x, "mean_mass_mg"] <- (dataframeclean_trash[x, "weight_estimate_g"]*1000)
+      }
     }
-  }
-  dataframeclean_trash <- dataframeclean_trash %>% drop_na(mean_mass_mg) %>%
-    select(sample_ID, concentration_particle_vol, material, morphology, morphology_percent, mean_mass_mg)
-  
-  dataframeclean_trash$mean_mass_mg <- as.numeric(dataframeclean_trash$mean_mass_mg)
-  dataframeclean_trash$morphology_percent <- as.numeric(dataframeclean_trash$morphology_percent)
-  dataframeclean_trash$concentration_particle_vol <- as.numeric(dataframeclean_trash$concentration_particle_vol)
-  dataframeclean_trash$mean_concentration_mg <- (dataframeclean_trash$mean_mass_mg * dataframeclean_trash$morphology_percent * 0.01 * dataframeclean_trash$concentration_particle_vol)
-  
-  summary_table_trash <- dataframeclean_trash %>%
-    group_by(sample_ID) %>%
-    summarise_at(c("mean_concentration_mg"), mean) 
-  
-  dataframeclean_particles <- left_join(dataframe, summary_table_trash, by = "sample_ID", copy = F)
-  
-  for(x in 1:nrow(dataframeclean_particles)){
-    if(! is.na(dataframeclean_particles[x, "mean_concentration_mg"])){
-      dataframeclean_particles[x, "mean_concentration_mg_vol"] <- (dataframeclean_particles[x, "mean_concentration_mg"])
-    }
-  }
-  
-  dataframeclean_particles <- dataframeclean_particles %>% select(-mean_concentration_mg)
+    dataframeclean_trash <- dataframeclean_trash %>% drop_na(mean_mass_mg) %>%
+      select(sample_ID, concentration_particle_vol, material, morphology, morphology_percent, mean_mass_mg)
     
+    dataframeclean_trash$mean_mass_mg <- as.numeric(dataframeclean_trash$mean_mass_mg)
+    dataframeclean_trash$morphology_percent <- as.numeric(dataframeclean_trash$morphology_percent)
+    dataframeclean_trash$concentration_particle_vol <- as.numeric(dataframeclean_trash$concentration_particle_vol)
+    dataframeclean_trash$mean_concentration_mg <- (dataframeclean_trash$mean_mass_mg * dataframeclean_trash$morphology_percent * 0.01 * dataframeclean_trash$concentration_particle_vol)
+    
+    summary_table_trash <- dataframeclean_trash %>%
+      group_by(sample_ID) %>%
+      summarise_at(c("mean_concentration_mg"), mean) 
+    
+    dataframeclean_particles <- left_join(dataframe, summary_table_trash, by = "sample_ID", copy = F)
+    
+    for(x in 1:nrow(dataframeclean_particles)){
+      if(! is.na(dataframeclean_particles[x, "mean_concentration_mg"])){
+        dataframeclean_particles[x, "mean_concentration_mg_vol"] <- (dataframeclean_particles[x, "mean_concentration_mg"])
+      }
+    }
+    
+    dataframeclean_particles <- dataframeclean_particles %>% select(-mean_concentration_mg)
+    
+  }else{dataframeclean_particles <- dataframe}
+  
   dataframeclean_particles <- data.frame(dataframeclean_particles)
   
   dataframeclean_particles <- dataframeclean_particles %>%
     mutate_if(is.numeric, signif, digits=3)
   
   return(dataframeclean_particles)
+  #dataframe4 <- dataframeclean_particles
 }
 
 #dataframe <- read.csv("tests/rescaling_concentration.csv")
 #dataframe <- read.csv("tests/rescaling_binned.csv")
 correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
-  
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
   dataframe$size_min <- as.numeric(dataframe$size_min)
   dataframe$size_max <- as.numeric(dataframe$size_max)
@@ -1020,7 +1024,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   dataframeclean <- dataframeclean %>% 
     select(-c(concentration_lower, concentration_upper)) %>%
     mutate_if(is.numeric, signif, digits=3)
-  
+  #dataframeclean3 <- dataframeclean
   return(dataframeclean)
 }
 

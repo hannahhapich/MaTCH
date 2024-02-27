@@ -451,19 +451,12 @@ server <- function(input,output,session) {
   
   materialSelect <- reactive({
     req(input$particleData)
-    #req(aliasDisplay())
     req(materialDisplay())
-    #dataframe_mat <- aliasDisplay()
     data <- materialDisplay()
     
     if("alias" %in% colnames(data)){
-      #selection <- as.character(input$sel1)
       selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
-      print(selection)
-      print(paste0("sel", i))
-      #slct <- slct %>% mutate(selection = as.character(selection))
       slct <- data %>% add_column(selection = selection)
-      #print(slct)
     }else{slct <- data.frame(NA)}
     
     return(slct)
@@ -491,27 +484,22 @@ server <- function(input,output,session) {
   
   morphologySelect <- reactive({
     req(input$particleData)
-    req(aliasDisplay())
     req(morphologyDisplay())
-    dataframe_mat <- aliasDisplay()
     data <- morphologyDisplay()
     
     if("alias" %in% colnames(data)){
       selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel2", i)]]))
-      print(selection)
-      #slct <- slct %>% mutate(selection = as.character(selection))
       slct <- data %>% add_column(selection = selection)
     }else{slct <- data.frame(NA)}
     
     return(slct)
     
   })
-  #eventReactive(isTruthy(morphologySelect()) || isTruthy(materialSelect()),
   convertedTermsSelect <- reactive({
     req(input$particleData)
     req(isTruthy(morphologySelect()) || isTruthy(materialSelect()))
-    # req(convertedTerms())
-    #req(materialSelect())
+    req(input$bin_number)
+    req(input$binning_type)
     dataframe <- convertedTerms()
     
     if("material_match_1" %in% colnames(dataframe)){
@@ -552,31 +540,27 @@ server <- function(input,output,session) {
     req(convertedTermsSelect())
     dataframe <- convertedTermsSelect()
     
-    # if("morphology_match_1" %in% colnames(dataframe)){
-    #   dataframe <- dataframe %>% select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
-    #   }
-    
     
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
+      
+      dataframe2 <- dataframe2 %>% select(morphology_raw, everything()) 
+      dataframe2 <- dataframe2 %>% select(material_raw, everything()) 
+      dataframe2 <- dataframe2 %>% select(morphology, everything()) 
+      dataframe2 <- dataframe2 %>% select(material, everything())
     }else{dataframe2 <- dataframe}
       
-    # dataframe3 <- dataframe_CF
-    # dataframe4 <- dataframeclean_particles
     if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
       dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 5000)
       dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3)
+      #dataframe4 <- dataframeclean_particles
+      #dataframe3 <- dataframeclean
       dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
       dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
       dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_ID")
     }else{dataframe4 <- dataframe2} 
     
-    # if("concentration_particle_vol" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe) &&
-    #    "material_percent" %in% colnames(dataframe) && "morphology_percent" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-    #   dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density)
-    # }else{dataframe4 <- dataframe3} 
     
     if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
       dataframe5 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
@@ -591,7 +575,7 @@ server <- function(input,output,session) {
   summaryResults <- reactive({
     req(input$particleData)
     dataframe <- convertedParticles()
-     
+    #dataframe <- dataframe4
      if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
@@ -679,22 +663,6 @@ server <- function(input,output,session) {
        summary_table <- summary_table %>%
          select(-c(volume_mean_um_3, volume_error, mean_concentration_mg_vol, corrected_concentration_error, alpha_error, mass_error, corrected_concentration_error))
      }
-    # else if("concentration_particle_vol" %in% colnames(dataframe) && "alpha" %in% colnames(dataframe)){
-    #    summary_table <- dataframe %>% select(concentration_particle_vol, alpha, alpha_upper, alpha_lower, corrected_concentration_particle_vol, corrected_concentration_upper, corrected_concentration_lower)
-    #    summary_table <- summary_table %>%
-    #      add_column(alpha_error = ((as.numeric(summary_table$alpha_upper) - as.numeric(summary_table$alpha)) + (as.numeric(summary_table$alpha) - as.numeric(summary_table$alpha_lower)))/2,
-    #                 concentration_error = ((as.numeric(summary_table$corrected_concentration_upper) - as.numeric(summary_table$corrected_concentration_particle_vol)) + (as.numeric(summary_table$corrected_concentration_particle_vol) - as.numeric(summary_table$corrected_concentration_lower)))/2) %>%
-    #      select(-c(alpha_upper, alpha_lower, corrected_concentration_upper, corrected_concentration_lower)) %>%
-    #      rename(alpha_ = alpha,
-    #             corrected_concentration_ = corrected_concentration_particle_vol)
-    #    summary_table <- summary_table %>%
-    #      mutate_if(is.numeric, signif, digits=3) %>%
-    #      mutate_if(is.numeric, formatC, format = "e",  digits=3)
-    #    summary_table$alpha <- paste(summary_table$alpha_, summary_table$alpha_error, sep="+/-")
-    #    summary_table$corrected_concentration <- paste(summary_table$corrected_concentration_, summary_table$concentration_error, sep="+/-")
-    #    summary_table <- summary_table %>%
-    #      select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
-    #  }
 
    })
   
@@ -971,7 +939,7 @@ server <- function(input,output,session) {
   
   output$contents8 = DT::renderDataTable(
     materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
-    options = list(dom = 't', paging = FALSE, ordering = FALSE),
+    options = list(dom = 'f', paging = FALSE, ordering = FALSE),
     callback = JS("table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
@@ -987,7 +955,7 @@ server <- function(input,output,session) {
               style="bootstrap",
               escape = FALSE,
               #server = FALSE,
-              options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
+              options = list(dom="f", paging=TRUE, ordering=TRUE),
               callback = JS("table.rows().every(function(row, tab, row) {
                                               var $this = $(this.node());
                                               $this.attr('id', this.data()[0]);
