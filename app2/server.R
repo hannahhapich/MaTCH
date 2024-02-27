@@ -612,7 +612,8 @@ server <- function(input,output,session) {
     }else{dataframe2 <- dataframe}
       
     if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 5000)
+      #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 5000)
+      dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
       dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3)
       #dataframe4 <- dataframeclean_particles
       #dataframe3 <- dataframeclean
@@ -655,12 +656,14 @@ server <- function(input,output,session) {
                     mass_error = (as.numeric(summary_table$mass_upper) + as.numeric(summary_table$mass_lower))/2) %>%
          select(-c(volume_upper, volume_lower, mass_upper, mass_lower))
        summary_table <- summary_table %>%
+         mutate_if(is.numeric, signif, digits=3) %>%
+         mutate_if(is.numeric, formatC, format = "e",  digits=3)
+       summary_table <- summary_table %>%
          unite(average_mass_mg, c(mean_mass_mg, mass_error), sep = "+/-") %>%
-         unite(average_volume_um_3, c(volume_mean_um_3, volume_error), sep = "+/-") #%>%
-         #select(-c(mass_error, volume_error))
+         unite(average_volume_um_3, c(volume_mean_um_3, volume_error), sep = "+/-") 
        summary_table1 <- summary_table
      }
-    if("morphology" %in% colnames(dataframe) && "volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) == FALSE){
+    if("volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) == FALSE){
        summary_table <- dataframe %>% group_by(morphology) %>%
          summarise_at(c("volume_min_um_3", "volume_mean_um_3", "volume_max_um_3", "min_mass_mg", "mean_mass_mg", "max_mass_mg"), mean)
        summary_table <- summary_table %>%
@@ -681,7 +684,7 @@ server <- function(input,output,session) {
        summary_table$average_volume_um_3 <- paste(summary_table$volume_mean_um_3, summary_table$volume_error, sep="+/-")
        summary_table <- summary_table %>%
          select(-c(mean_mass_mg, mass_error, volume_mean_um_3, volume_error))
-     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe)){
+     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe) && "mean_concentration_mg_vol" %in% colnames(dataframe) == FALSE){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower", "corrected_concentration", "corrected_concentration_upper", "corrected_concentration_lower"), mean)
        summary_table <- summary_table %>%
@@ -697,9 +700,9 @@ server <- function(input,output,session) {
        summary_table$corrected_concentration <- paste(summary_table$corrected_concentration_, summary_table$concentration_error, sep="+/-")
        summary_table <- summary_table %>%
          select(-c(alpha_, alpha_error, corrected_concentration_, concentration_error))
-     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && !("sample_volume" %in% colnames(dataframe))){
+     }else if("alpha" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "sample_volume" %in% colnames(dataframe) == FALSE && "mean_concentration_mg_vol" %in% colnames(dataframe) == FALSE){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
-         summarise_at(c("concentration", "alpha", "alpha_upper", "alpha_lower"), mean)
+         summarise_at(c("concentration_particle_vol", "alpha", "alpha_upper", "alpha_lower"), mean)
        summary_table <- summary_table %>%
          add_column(alpha_error = ((as.numeric(summary_table$alpha_upper) - as.numeric(summary_table$alpha)) + (as.numeric(summary_table$alpha) - as.numeric(summary_table$alpha_lower)))/2) %>%
          select(-c(alpha_upper, alpha_lower)) %>%
@@ -710,7 +713,7 @@ server <- function(input,output,session) {
        summary_table$alpha <- paste(summary_table$alpha_, summary_table$alpha_error, sep="+/-")
        summary_table <- summary_table %>%
          select(-c(alpha_, alpha_error))
-     }else if("concentration_particle_vol" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+     }else if("concentration_particle_vol" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe) && "mean_concentration_mg_vol" %in% colnames(dataframe)){
        summary_table <- dataframe %>% group_by(sample_ID) %>%
          summarise_at(c("concentration_particle_vol", "min_concentration_mg_vol", "mean_concentration_mg_vol", "max_concentration_mg_vol", "volume_min_um_3", "volume_max_um_3", "volume_mean_um_3",
                         "alpha", "alpha_upper", "alpha_lower", "corrected_concentration_particle_vol", "corrected_concentration_upper", "corrected_concentration_lower"), mean)
@@ -731,9 +734,13 @@ server <- function(input,output,session) {
          select(-c(volume_mean_um_3, volume_error, mean_concentration_mg_vol, corrected_concentration_error, alpha_error, mass_error, corrected_concentration_error))
      }
     
-    if("volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe)){
+    if("volume_mean_um_3" %in% colnames(dataframe) && "mean_mass_mg" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
       summary_table <- summary_table %>% left_join(summary_table1, by = "sample_ID")
-    }
+    }else{summary_table <- summary_table}
+    
+    
+    
+    return(summary_table)
 
    })
   
@@ -1086,109 +1093,13 @@ server <- function(input,output,session) {
                                       class = "display",
                                       style="bootstrap"))
   
-
+  output$download_data <- downloadHandler(
+    filename = "test_data.csv",
+    content = function(file) {
+      if(input$download_selection == "Particle Test Data") {fwrite(particle_testData, file)}
+      if(input$download_selection == "Sample Test Data") {fwrite(sample_testData, file)}
+    })
   
-  # output$plot3 <- renderPlot({
-  #   req(convertedParticles())
-  #   ggplot(convertedParticles(), aes(x = morphology, y = volume_mean_um_3, fill = factor(morphology))) +
-  #     geom_flat_violin(
-  #       position = position_nudge(x = 0.1),
-  #       alpha = 0.5,
-  #       scale = "width",
-  #       trim = FALSE,
-  #       width = 0.8,
-  #       lwd = 1,
-  #     ) +
-  #     geom_boxplot(
-  #       width = 0.12,
-  #       outlier.shape = 8,
-  #       outlier.color = "navy",
-  #       alpha = 1
-  #     ) +
-  #     stat_dots(
-  #       position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
-  #       dotsize = 15,
-  #       side = "left",
-  #       justification = 1.1,
-  #       binwidth = 0.08,
-  #       alpha = 1.0
-  #     ) +
-  #     scale_fill_brewer(palette = "Spectral") +
-  #     labs(
-  #       title = "Particle Volume by Morphology Type",
-  #       x = "Morphology",
-  #       y = "Volume (um3)",
-  #       fill = "Morphology"
-  #     ) +
-  #     coord_flip() +
-  #     dark_theme_gray() +
-  #     theme(
-  #       axis.text = element_text(size = 15),
-  #       axis.title = element_text(size = 18),
-  #       plot.title = element_text(size = 18)
-  #     )
-  # })
-  # 
-  # output$plot4 <- renderPlot({
-  #   req(convertedParticles())
-  #   ggplot(convertedParticles(), aes(x = polymer, y = mean_mass_mg, fill = factor(polymer))) +
-  #     geom_flat_violin(
-  #       position = position_nudge(x = 0.1),
-  #       alpha = 0.5,
-  #       scale = "width",
-  #       trim = FALSE,
-  #       width = 0.8,
-  #       lwd = 1,
-  #     ) +
-  #     geom_boxplot(
-  #       width = 0.12,
-  #       outlier.shape = 8,
-  #       outlier.color = "navy",
-  #       alpha = 1
-  #     ) +
-  #     stat_dots(
-  #       position = position_jitterdodge(jitter.width = 1, dodge.width = 0.4, jitter.height = 10),
-  #       dotsize = 15,
-  #       side = "left",
-  #       justification = 1.1,
-  #       binwidth = 0.08,
-  #       alpha = 1.0
-  #     ) +
-  #     scale_fill_brewer(palette = "Spectral") +
-  #     labs(
-  #       title = "Particle Mass by Polymer Type",
-  #       x = "Polymer",
-  #       y = "Mass (mg)",
-  #       fill = "Polymer"
-  #     ) +
-  #     coord_flip() +
-  #     dark_theme_gray() +
-  #     theme(
-  #       axis.text = element_text(size = 15),
-  #       axis.title = element_text(size = 18),
-  #       plot.title = element_text(size = 18)
-  #     )
-  # })
-  # 
-  # 
-  # 
-  # output$downloadPlot3 <- downloadHandler(
-  #   filename = function() { "particle_volume_plot.pdf" },
-  #   content = function(file) {
-  #     pdf(file, paper = "default")
-  #     plot(plot3())
-  #     dev.off()
-  #   }
-  # )
-  # 
-  # output$downloadPlot4 <- downloadHandler(
-  #   filename = function() { "particle_mass_plot.pdf" },
-  #   content = function(file) {
-  #     pdf(file, paper = "default")
-  #     plot(plot4())
-  #     dev.off()
-  #   }
-  # )
   
   output$downloadData1 <- downloadHandler(    
     filename = function() {

@@ -325,6 +325,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 }
 
 #dataframe <- read.csv("tests/count_mass_particle.csv")
+#dataframe <- read.csv("tests/count_mass_concentration_min.csv")
 #dataframe <- read.csv("tests/rescaling_particle.csv")
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   dataframe$length_um <- as.numeric(dataframe$length_um)
@@ -1523,6 +1524,10 @@ MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
   rename(Key = Material) %>%
   select(-readable)
 
+#Test data
+particle_testData <- read.csv("tests/rescaling_particle.csv")
+sample_testData <- read.csv("tests/count_mass_concentration.csv")
+
 #data tables for count to mass conversion
 #Make polymer-density dataframe
 #Output correct survey sheet
@@ -1554,18 +1559,8 @@ L_max <- c(1.05, 1.05, 1.05, 1.05, 1.05)
 #Min and max values given in Kooi Koelmans
 W_min <- c(0.1,0.60,0.001,0.1,0.1)
 W_max <- c(1,1,0.5,1,1)
-#W_mean <- (as.numeric(W_min) + as.numeric(W_max))/2
-#W_sd <- (as.numeric(W_max) - as.numeric(W_min))/6
 H_min <- c(0.01,0.36,0.001,0.001,0.01)
 H_max <- c(1,1,0.5,0.1,1)
-#H_mean <- (as.numeric(H_min) + as.numeric(H_max))/2
-#H_sd <- (as.numeric(H_max) - as.numeric(H_min))/6
-
-#Assuming min and max encompass 99.7% of normal distribution, calculate 95% confidence interval
-#W_min <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.025)))
-#W_max <- as.numeric(quantile(rnorm(n = 100000, mean = W_mean, sd = W_sd), probs = c(0.975)))
-#H_min <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.025)))
-#H_max <- as.numeric(quantile(rnorm(n = 100000, mean = H_mean, sd = H_sd), probs = c(0.975)))
 
 morphology_shape <- data.frame(morphology=morphology,
                                L_min=L_min,
