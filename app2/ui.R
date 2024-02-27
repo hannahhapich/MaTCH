@@ -13,7 +13,7 @@ ui <- dashboardPage(dark = T,
                         menuItem("About", 
                                  tabName = "About", 
                                  icon = icon("question")),
-                        menuItem("Download Test Data", 
+                        menuItem("Data Template", 
                                  tabName = "test", 
                                  icon = icon("download")),
                         menuItem("Relational Tables", 
@@ -151,17 +151,7 @@ ui <- dashboardPage(dark = T,
                                                      label = downloadButton("download_data",
                                                                             style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
                                                      choices = c("Particle Test Data",
-                                                                 "Sample Test Data")) #%>%
-                                          #  popover(
-                                          #    title = "Options for downloading spectra and metadata from the analysis.
-                                          # Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
-                                          # Your Spectra will download your data with whatever processing options are active. Library Spectra
-                                          # will download the current library selected. Top Matches downloads the top identifications in the
-                                          # active analysis. Thresholded Particles will download a version of your spectra using the active
-                                          # thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
-                                          # to their medians and locations to their centroids.",
-                                          #    content = "Download Options", placement = "left"
-                                          #  )
+                                                                 "Sample Test Data")) 
                                   )
                                 ),
                                 ## Plot ----
@@ -332,7 +322,7 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(12,
 
-                                         shiny::HTML("<br><br><center> <h1>Download Test Data</h1> </center><br>"),
+                                         shiny::HTML("<br><br><center> <h1>Format Your Data</h1> </center><br>"),
                                          shiny::HTML("<h5>      Describe your data to download a template, and view what data cleaning can be perfomed by MaTCH! </h5>")
 
                                   )
@@ -378,7 +368,7 @@ ui <- dashboardPage(dark = T,
                                                   #)
                                                 ),
                                          column(8,
-                                                box(title = HTML(paste0("Test Data")), 
+                                                box(title = HTML(paste0("Data Template")), 
                                                     maximizable = T,
                                                     width = 12,
                                                     div(style = "overflow-x: scroll",
