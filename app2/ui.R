@@ -182,6 +182,18 @@ ui <- dashboardPage(dark = T,
                                         div(style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents9")
                                         ))
+                                  ),
+                                  box(title = HTML(paste0("Material Plot")),
+                                      maximizable = T,
+                                      collapsed = T,
+                                      width = 6,
+                                      plotlyOutput("plot1")
+                                   ),
+                                  box(title = HTML(paste0("Morphology Plot")),
+                                      maximizable = T,
+                                      collapsed = T,
+                                      width = 6,
+                                      plotlyOutput("plot2")
                                   )
                                 )
                                 
