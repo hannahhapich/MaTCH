@@ -1,8 +1,0 @@
-﻿particle_ID,length_um,morphology,material,width_um,height_um,density
-1,1000,filmz,cellophane,500,,
-2,500,foamz,polystyrene,,,9.80E-10
-3,1200,fiber,polyimideee,100,,
-4,80,fragment,polyethylene high-density,80,80,
-5,700,fragment,nitrile rubber,,,
-test,333,sphere,,,,
-,,other,glass,,,
