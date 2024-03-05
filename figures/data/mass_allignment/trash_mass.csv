@@ -1,0 +1,205 @@
+weight_estimate_g,items,material
+6.46,bag (grocery),plastic
+6.46,bag (grocery),paper
+8.52,"bag (zip-lock, produce, other)",paper
+8.52,"bag (zip-lock, produce, other)",plastic
+25.39,bags,paper
+8.52,bags,plastic
+82.5,balloons,rubber
+82.5,balls,rubber
+82.5,balls,plastic
+82.5,bandages,plastic
+82.5,bandages,cloth
+29.2,"bar, pipe, or wire",metal
+20,"bar, pipe, or wire",plastic
+82.5,batteries,metal
+22.97,beverage bottles,plastic
+16.94,beverage cans,metal
+22.3,beverage containers,paper
+22.3,beverage containers,plastic
+82.5,"bolts, nails, and screws",metal
+82.5,"bolts, nails, and screws",plastic
+82.5,"bolts, nails, and screws",foam
+100,books,paper
+1.9,bottle caps,plastic
+1.9,bottle caps,metal
+1.9,bottle caps,glass
+1.9,"bottle caps, lids & pull tabs",plastic
+29.8,bottles & jars,plastic
+300,bottles & jars,glass
+82.5,bottles & jars,other
+15.05,cans,metal
+15.05,cardboard,paper OR cardboard
+15.05,cardboard,paper
+22.3,cardboard cartons,paper OR cardboard
+82.5,car parts,metal
+82.5,car parts,plastic
+82.5,"cd, cd-box",plastic
+0.29,cigarette butts,plastic
+0.29,cigarette butts,paper
+0.29,cigarette filters,plastic
+0.29,cigarette filters,organic
+82.5,cigarette lighters,plastic
+10.4,cigarette packets,paper
+10.4,cigarette packets,plastic
+0.29,cigarettes OR cigar tips,plastic
+0.29,cigarettes OR cigar tips,paper
+0.29,cigarettes OR cigar tips,organic
+0.29,cigar tips,plastic
+82.5,cloth fragments,cloth
+82.5,clothing,cloth
+82.5,clothing,plastic
+82.5,"clothing, hats, gloves & towels",plastic
+82.5,"clothing, hats, gloves & towels",organic
+5.05,coffee cup,paper
+15.05,coffee cup,metal
+3.64,coffee cup lid,plastic
+29.8,containers OR tubes,plastic
+29.8,containers OR tubes,paper
+29.8,containers OR tubes,metal
+29.8,"cosmetics(bottles&containerse.g.sunlotion,shampoo,showergel,deodorant)",plastic
+82.5,cotton bud sticks,paper
+82.5,cotton bud sticks,plastic
+6,cups,plastic
+5.05,cups,paper
+3.75,cups,foam
+10.05,"cups, food trays, food wrappers, drink containers",plastic
+10.05,"cups, food trays, food wrappers, drink containers",paper
+82.5,dental flossers,plastic
+82.5,diapers,cloth
+15.42,disposable food & beverage ware,paper
+15.42,disposable food & beverage ware,plastic
+82.5,drugs,plastic
+82.5,ear plugs,plastic
+82.5,ear plugs,rubber
+14.61,film (thin OR flexible e.g. straw wrapper),plastic
+5.05,foil,metal
+29,food,food
+29,food,plastic
+29,food,paper
+29,food,organic
+14.61,food wrappers,metal
+14.61,food wrappers,plastic
+14.61,food wrappers,paper
+15.42,food wrappers or containers,paper
+15.42,food wrappers or containers,paper OR cardboard
+15.42,food wrappers or containers,plastic
+15.42,food wrappers or containers,metal
+1.05,fragments(trash),glass
+1.05,fragments(trash),plastic
+1.05,fragments(trash),metal
+1.05,fragments(trash),paper
+1.05,fragments(trash),rubber
+1.05,fragments(trash),cloth
+1.05,fragments(trash),foam
+1.05,fragments(trash),paper OR cardboard
+1.05,fragments(trash),wood
+1.05,fragments(trash),other
+82.5,gloves,rubber
+82.5,gloves,plastic
+82.5,gloves,cloth
+82.5,hair tie,plastic
+82.5,hair tie,rubber
+82.5,hair tie,cloth
+82.5,"ice-cream sticks, chip forks, chopsticks, toothpicks",wood
+82.5,industrialpackaging OR crates OR sheeting,plastic
+82.5,industrialpackaging OR crates OR sheeting,metal
+22.3,juice carton,plastic
+22.3,juice carton,paper OR cardboard
+22.3,juice packet,plastic
+1104.2,large debris items,metal
+1104.2,large debris items,cloth
+3.64,lids,plastic
+1.81,lids,paper
+1.81,lids,foam
+2,lids,metal
+82.5,light bulbs,plastic
+1.3,lolly sticks,paper
+1.3,lolly sticks,plastic
+82.5,lumber OR building material,wood
+11.9,napkins,paper
+11.9,napkins,plastic
+11.9,napkins,cloth
+100,newspapers & magazines,paper
+29,Other,food
+82.5,Other,plastic
+82.5,Other,paper
+82.5,Other,hard plastics
+82.5,Other,cloth
+82.5,Other,foam
+82.5,Other,metal
+82.5,Other,paper OR cardboard
+82.5,Other,rubber
+82.5,Other,other
+82.5,Other,glass
+82.5,Other,concrete OR asphalt
+82.5,Other,wood
+29.8,"other bottles, containers and drums",plastic
+29.8,"other bottles, containers and drums",paper
+82.5,packaging,foam
+82.5,packaging,paper
+82.5,packaging,plastic
+82.5,packaging,paper OR cardboard
+6.1,paper,paper
+82.5,paper,plastic
+82.5,paper,cloth
+82.5,paper,other
+11.9,paper OR napkins OR tissues,paper
+5,parking tickets & reciepts,paper
+82.5,pens OR pencils,wood
+82.5,pens OR pencils,plastic
+82.5,personal care products,plastic
+82.5,personal care products,metal
+82.5,personal care products,organic
+82.5,personal care products,paper
+82.5,personal care products,cloth
+82.5,piping,rubber
+82.5,piping,metal
+82.5,piping,plastic
+10.05,plates,plastic
+3.75,plates,foam
+13.94,plates,paper
+1.3,popsicle stick,wood
+2,pull tabs: beverages,metal
+5,receipts,paper
+5,receipts,plastic
+8,rope,cloth
+8,rope,organic
+8,rubber bands,rubber
+82.5,sanitary product,plastic
+14.61,sauce packet,plastic
+31.64,singlue use food container,paper
+9.35,"small plastic bags, e.g., freezer bags",plastic
+8,strapping bands OR zip-ties,plastic
+0.78,straws,plastic
+0.78,straws,paper
+0.78,straws,foam
+0.78,"straws, stirrers",plastic
+8,string,cloth
+8,string,plastic
+14.61,tape,plastic
+82.5,telephone,metal
+82.5,telephone,plastic
+10.4,tobacco packaging & wrappers,plastic
+10.4,tobacco packaging & wrappers,paper
+25.6,toilet paper,paper
+82.5,toothbrushes,plastic
+1.3,tooth pick,wood
+82.5,towels OR rags,cloth
+11.9,towels OR rags,paper
+82.5,toys,plastic
+82.5,toys,rubber
+82.5,toys,paper
+82.5,toys,foam
+82.5,toys & party poppers,paper
+82.5,"toys, balls",glass
+82.5,"toys, balls, party poppers",plastic
+82.5,traffic cones,plastic
+4.26,utensil,plastic
+4.26,utensil,metal
+22.97,water bottles,plastic
+11.9,wet wipes,cloth
+11.9,wet wipes,paper
+14.61,wrappers,paper
+14.61,wrappers,plastic
+14.61,wrappers,metal
