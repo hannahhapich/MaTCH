@@ -6,7 +6,7 @@ library(stringr)
 library(tibble)
 library(chRoma)
 
-
+#Set working directory
 
 #Data cleaning function
 cleantext <- function(x) {
@@ -144,7 +144,7 @@ print(item_relation_extra)
 Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
 
 #Retrieve embeddings for prime items
-item_alias_clean <- similarity_update %>% mutate(Alias = removeslashclean(Alias)) %>%
+item_alias_clean <- item_alias %>% mutate(Alias = removeslashclean(Alias)) %>%
   distinct(Alias, .keep_all = TRUE)
 words_to_retrieve <- item_alias_clean %>%
   distinct(Item) %>%
@@ -287,26 +287,5 @@ saveRDS(material_DB_full, file = "data/materials_vectorDB.rda")
 #predictions <- predict(fine_tuned_model, new_data)
 
 # Further iterations, adjustments, or improvements as necessary
-
-ourclean <- read.csv("tests/our_clean_community_particle.csv")
-ourclean_clean <- mutate_all(ourclean, cleantext)
-ourclean_clean <- ourclean_clean %>% left_join(Items_Alias, by = c("items" = "Alias"))
-dataframeclean <- ourclean_clean %>% filter(is.na(Item)) %>% distinct()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
