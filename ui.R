@@ -1,5 +1,3 @@
-
-
 ui <- dashboardPage(dark = T, 
                     help = T, 
                     fullscreen = T,
