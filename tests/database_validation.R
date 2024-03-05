@@ -141,7 +141,7 @@ print(item_relation_extra)
 
 ##Test openAI matching against actual
 #Read in API key
-Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
+Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt", warn = FALSE))
 
 #Retrieve embeddings for prime items
 item_alias_clean <- item_alias %>% mutate(Alias = removeslashclean(Alias)) %>%
@@ -255,7 +255,8 @@ for(x in 1:nrow(similarity_rank)){
 
 rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(rank_total_count$rank_total)/nrow(words_to_match))*100)
 
-#Save material vector DB
+
+#Save item vector DB
 words_to_match <- material_alias %>%
   distinct(Alias) %>%
   rename("text" = "Alias") %>%
@@ -263,6 +264,13 @@ words_to_match <- material_alias %>%
 material_DB_full <- add_collection(metadata = words_to_match)
 #save to rda file
 saveRDS(material_DB_full, file = "data/materials_vectorDB.rda")
+
+
+# words_to_match <- material_alias %>%
+#   distinct(Alias) %>%
+#   rename("text" = "Alias") %>%
+#   as.data.table(.)
+# material_DB_full <- add_collection(metadata = words_to_match)
 
 
 

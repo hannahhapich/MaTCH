@@ -21,7 +21,7 @@ library(bs4Dash)
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
 materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
-Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt"))
+Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt", warn = FALSE))
 creds <- read.csv("data/s3_cred.csv")
 Sys.setenv(
   "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
