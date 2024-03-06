@@ -306,39 +306,6 @@ server <- function(input,output,session) {
   
   #Item Sunburst Plot ----
   output$plot2 <- renderPlotly({
-    # req(input$df_)
-    # 
-    # dataframe <- as.data.frame(df_() %>% 
-    #                              rename(material = Material, 
-    #                                     items = Item) %>%
-    #                              select(material, items, count))
-    # 
-    # Item_DF_group <- dataframe %>%
-    #   rename(Count = count) %>%
-    #   rename(Class = items)
-    # 
-    # item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
-    # 
-    # primeItems_SB <- primeItems %>%
-    #   add_row(Item = "items", Alias = "items", readable = "items") %>%
-    #   add_row(Item = "trash", Alias = "trash", readable = "trash")
-    # item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
-    # item_grouped_readable <- item_grouped_readable %>% 
-    #   ungroup() %>%
-    #   select(-c("Item", "from")) 
-    # item_grouped_readable <- item_grouped_readable %>%
-    #   rename(from = readable) %>%
-    #   left_join(primeItems_SB, by = c("to" = "Alias"))
-    # item_grouped_readable <- item_grouped_readable %>% 
-    #   ungroup() %>%
-    #   select(-c("Item", "to")) 
-    # item_grouped_readable <- item_grouped_readable %>%
-    #   rename(to = readable) %>%
-    #   group_by(from, to)
-    # 
-    # Items_Plot <- sunburstplot(df_join_boot = item_grouped_readable)
-    # print(Items_Plot)
-    
     
     req(input$particleData)
     req(convertedTermsSelect())
@@ -532,11 +499,11 @@ server <- function(input,output,session) {
       dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1)))
       for (i in 1:nrow(dataframe_morph2)) {
         dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph[i, 10], dataframe_morph[i, 11], dataframe_morph[i, 12], dataframe_morph[i, 13], dataframe_morph[i, 14]), selected = dataframe_morph[i, 10], width = "100px"))
-      }
+        print(dataframe_morph2$Prime_Morphology[i])
+        }
       dataframe_morph2 <- dataframe_morph2 %>% select(-c(morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
         rename(alias = Prime_Morphology)
     }else{dataframe_morph2 <- data.frame(NA)}
-    
     return(dataframe_morph2)
     
   })
@@ -998,23 +965,6 @@ server <- function(input,output,session) {
                                       class = "display",
                                       style="bootstrap"))
   
-  
-  # output$contents8 <- DT :: renderDataTable(
-  #           materialDisplay(),
-  #             class = "display",
-  #             style="bootstrap",
-  #             escape = FALSE,
-  #             server = FALSE,
-  #             options = list(dom="Bfrtip", paging=TRUE, ordering=TRUE),
-  #             callback = JS("table.rows().every(function(row, tab, row) {
-  #                                             var $this = $(this.node());
-  #                                             $this.attr('id', this.data()[0]);
-  #                                             $this.addClass('shiny-input-container');
-  #                                           });
-  #                                           Shiny.unbindAll(table.table().node());
-  #                                           Shiny.bindAll(table.table().node());")
-  # )
-  
   output$contents8 = DT::renderDataTable(
     materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
     options = list(dom = 'f', paging = FALSE, ordering = FALSE),
@@ -1026,22 +976,34 @@ server <- function(input,output,session) {
       Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
-
-  output$contents9 <- renderDataTable(
-    datatable({morphologyDisplay()},
-              class = "display",
-              style="bootstrap",
-              escape = FALSE,
-              #server = FALSE,
-              options = list(dom="f", paging=TRUE, ordering=TRUE),
-              callback = JS("table.rows().every(function(row, tab, row) {
-                                              var $this = $(this.node());
-                                              $this.attr('id', this.data()[0]);
-                                              $this.addClass('shiny-input-container');
-                                            });
-                                            Shiny.unbindAll(table.table().node());
-                                            Shiny.bindAll(table.table().node());"))
+  
+  output$contents9 = DT::renderDataTable(
+    morphologyDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
+    options = list(dom = 'f', paging = FALSE, ordering = FALSE),
+    callback = JS("table.rows().every(function(i, tab, row) {
+        var $this = $(this.node());
+        $this.attr('id', this.data()[0]);
+        $this.addClass('shiny-input-container');
+      });
+      Shiny.unbindAll(table.table().node());
+      Shiny.bindAll(table.table().node());")
   )
+
+  # output$contents9 <- renderDataTable(
+  #   datatable({morphologyDisplay()},
+  #             class = "display",
+  #             style="bootstrap",
+  #             escape = FALSE,
+  #             #server = FALSE,
+  #             options = list(dom="f", paging=TRUE, ordering=TRUE),
+  #             callback = JS("table.rows().every(function(row, tab, row) {
+  #                                             var $this = $(this.node());
+  #                                             $this.attr('id', this.data()[0]);
+  #                                             $this.addClass('shiny-input-container');
+  #                                           });
+  #                                           Shiny.unbindAll(table.table().node());
+  #                                           Shiny.bindAll(table.table().node());"))
+  #)
   # output$contents9 <- renderDataTable(server = F,
   #                                     datatable({
   #                                       morphologyDisplay()
