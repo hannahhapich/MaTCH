@@ -438,7 +438,7 @@ server <- function(input,output,session) {
   
   aliasDisplay <- reactive({
     req(input$particleData)
-    #dataframe <- dataframe2
+    req(convertedTerms())
     dataframe <- convertedTerms()
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
@@ -498,7 +498,8 @@ server <- function(input,output,session) {
       dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1)))
       for (i in 1:nrow(dataframe_morph2)) {
-        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph[i, 10], dataframe_morph[i, 11], dataframe_morph[i, 12], dataframe_morph[i, 13], dataframe_morph[i, 14]), selected = dataframe_morph[i, 10], width = "100px"))
+        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph2[i, 3], dataframe_morph2[i, 4], dataframe_morph2[i, 5], dataframe_morph2[i, 6], dataframe_morph2[i, 7]), selected = dataframe_morph2[i, 3], width = "100px"))
+        #dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph[i, 10], dataframe_morph[i, 11], dataframe_morph[i, 12], dataframe_morph[i, 13], dataframe_morph[i, 14]), selected = dataframe_morph[i, 10], width = "100px"))
         print(dataframe_morph2$Prime_Morphology[i])
         }
       dataframe_morph2 <- dataframe_morph2 %>% select(-c(morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
@@ -989,37 +990,6 @@ server <- function(input,output,session) {
       Shiny.bindAll(table.table().node());")
   )
 
-  # output$contents9 <- renderDataTable(
-  #   datatable({morphologyDisplay()},
-  #             class = "display",
-  #             style="bootstrap",
-  #             escape = FALSE,
-  #             #server = FALSE,
-  #             options = list(dom="f", paging=TRUE, ordering=TRUE),
-  #             callback = JS("table.rows().every(function(row, tab, row) {
-  #                                             var $this = $(this.node());
-  #                                             $this.attr('id', this.data()[0]);
-  #                                             $this.addClass('shiny-input-container');
-  #                                           });
-  #                                           Shiny.unbindAll(table.table().node());
-  #                                           Shiny.bindAll(table.table().node());"))
-  #)
-  # output$contents9 <- renderDataTable(server = F,
-  #                                     datatable({
-  #                                       morphologyDisplay()
-  #                                     }, 
-  #                                     extensions = 'Buttons',
-  #                                     options = list(
-  #                                       paging = TRUE,
-  #                                       searching = TRUE,
-  #                                       fixedColumns = TRUE,
-  #                                       autoWidth = TRUE,
-  #                                       ordering = TRUE,
-  #                                       dom = 'Bfrtip',
-  #                                       buttons = c('copy', 'csv', 'excel')
-  #                                     ),
-  #                                     class = "display",
-  #                                     style="bootstrap"))
   
   output$testDataDownload <- renderDataTable(server = F,
                                       datatable({
