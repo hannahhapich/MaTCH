@@ -1,22 +1,16 @@
 # MaTCH
 
 ## [data](data)
-all trash taxonomy relational tables.
+all trash taxonomy relational tables
 
 ## [figures](figures)
-figures in the publication created using analysis codes.
+figures in the publication and figure code
 
 ## [www](www)
-figures in the shiny application.
+figures in the shiny application
 
-## [server.R](server.R) and [ui.R](ui.R)
-code for the shiny application hosted at https://wincowger.shinyapps.io/TrashTaxonomy/
+## [server.R](server.R), [ui.R](ui.R), and [global.R](global.R)
+code for the shiny application
 
-## [ValidationOfTrashTaxonomy.R](ValidationOfTrashTaxonomy.R)
-code for validating the relationships between the relational tables in the trash taxonomy.
-
-## [ComparabilityAndCluster.R](ComparabilityAndCluster.R)
-code for using the trash taxonomy to run statistical analyses between the survey lists in the trash taxonomy.
-
-## [AggregateTrees.R](AggregateTrees.R)
-code for lumping trash survey values of two or more surveys. 
+## [tests](tests)
+code for validating relational tables and test data for MaTCH
