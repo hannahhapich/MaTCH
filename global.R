@@ -16,8 +16,6 @@ library(shinyhelper)
 library(shinyWidgets)
 library(bs4Dash)
 
-#setwd("/Users/hannahhapich/Documents/R_Scripts/TTT2.0")
-
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
 materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
