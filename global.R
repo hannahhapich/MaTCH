@@ -307,6 +307,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 #dataframe <- read.csv("tests/count_mass_particle.csv")
 #dataframe <- read.csv("tests/count_mass_concentration_min.csv")
 #dataframe <- read.csv("tests/rescaling_particle.csv")
+
 #dataframe <- dataframe2
 #dataframe <- dataframe %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
@@ -437,6 +438,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
         }else if(morph_weight == T || morph_weight == T && sample_weight == T && !("sample_ID" %in% colnames(dataframeclean_particles))){
           dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
           density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
+          dataframeclean_particles$density_mg_um_3[[x]] <- density
           dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
           upper_diff <- (dataframeclean_particles_avg$density_max) - (dataframeclean_particles_avg$density_mg_um_3)
           lower_diff <- (dataframeclean_particles_avg$density_mg_um_3) - (dataframeclean_particles_avg$density_min)
