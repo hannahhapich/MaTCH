@@ -440,7 +440,7 @@ server <- function(input,output,session) {
     req(input$particleData)
     req(convertedTerms())
     dataframe <- convertedTerms()
-    
+   
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
       dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
@@ -571,7 +571,7 @@ server <- function(input,output,session) {
     if("morphology" %in% colnames(dataframe) && "length_um" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
-      # dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean,
+      #dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean,
       #                                   polymer_avg_decision = T, morph_weight = T, sample_weight = F)
       dataframe2 <- dataframe2 %>% select(morphology_raw, everything()) 
       dataframe2 <- dataframe2 %>% select(material_raw, everything()) 
@@ -967,7 +967,7 @@ server <- function(input,output,session) {
                                       style="bootstrap"))
   
   output$contents8 = DT::renderDataTable(
-    materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
+    materialDisplay(), escape = FALSE, selection = 'none', server = TRUE, style="bootstrap",
     options = list(dom = 'f', paging = FALSE, ordering = FALSE),
     callback = JS("table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
@@ -979,7 +979,7 @@ server <- function(input,output,session) {
   )
   
   output$contents9 = DT::renderDataTable(
-    morphologyDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap",
+    morphologyDisplay(), escape = FALSE, selection = 'none', server = TRUE, style="bootstrap",
     options = list(dom = 'f', paging = FALSE, ordering = FALSE),
     callback = JS("table.rows().every(function(i, tab, row) {
         var $this = $(this.node());

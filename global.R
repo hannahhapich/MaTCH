@@ -307,6 +307,8 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 #dataframe <- read.csv("tests/count_mass_particle.csv")
 #dataframe <- read.csv("tests/count_mass_concentration_min.csv")
 #dataframe <- read.csv("tests/rescaling_particle.csv")
+#dataframe <- dataframe2
+#dataframe <- dataframe %>% select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5))
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$morphology <- as.character(dataframe$morphology)
@@ -414,7 +416,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     }
   }
   # polymer_avg_decision = T
-  # morph_weight = F
+  # morph_weight = T
   # sample_weight = F
   if(polymer_avg_decision == T){
     dataframeclean_particles$density_mg_um_3 <- as.numeric(dataframeclean_particles$density_mg_um_3)
@@ -1528,6 +1530,23 @@ polymer_db_ <- polymer_db_ %>%
   select(-c("Material"))
 polymer_density <- polymer_db_ %>%
   select(material, density_mg_um_3, density_max, density_min, readable)
+
+#Average densities for parent polymer classes
+polymer_parents <- polymer_db_ %>% left_join(MaterialsHierarchy_sunburst, by = c("material" = "to")) %>%
+  rename("parent" = "from") %>%
+  drop_na(parent)
+polymer_parents <- polymer_parents %>%
+  group_by(parent) %>%
+  summarize(density_mg_um_3 = mean(density_mg_um_3, na.rm=TRUE), density_max = mean(density_max, na.rm=TRUE), density_min = mean(density_min, na.rm=TRUE)) %>%
+  rename(Material = parent)
+polymer_parents <- polymer_parents %>%
+  left_join(primeMaterials, by = "Material") %>%
+  select(-Alias) %>%
+  rename(material = Material)
+  
+#Join density dbs
+polymer_density <- rbind(polymer_density, polymer_parents)
+polymer_density <- polymer_density %>% distinct(material, .keep_all = TRUE)
 
 #Add +/- 5% error for measured particle dimensions
 morphology <- c("fragment","sphere","fiber","film","foam")
