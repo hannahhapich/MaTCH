@@ -1,0 +1,1187 @@
+Concentration (particles/volume),Sample ID,Study Media,Min Length (microns),Max Length (microns)
+1.49,doi.org/10.1007/s11356-021-12898-7|1,effluent,0.7,5000
+1.47,doi.org/10.1007/s11356-021-12898-7|2,effluent,0.7,5000
+0.4,doi.org/10.1007/s11356-021-12898-7|4,effluent,0.7,5000
+0.35,doi.org/10.1007/s11356-021-12898-7|5,effluent,0.7,5000
+0.22,doi.org/10.1007/s11356-021-12898-7|6,effluent,0.7,5000
+1.36,doi.org/10.1007/s11356-021-12898-7|3,effluent,0.7,5000
+240,Dam5SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+145,Dam6SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+55,Dam1SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+60,Dam2SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+15,Dam3SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+10,Dam4SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+110,Dam5SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+85,Dam6SUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+25,Dam6SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+20,Dam1SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+135,Dam4SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+165,Dam3SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+125,Dam2SReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+63,Average|doi.org/10.1016/j.jwpe.2020.101640,freshwatersediment,500,5000
+36,James|doi.org/10.1016/j.jwpe.2020.101640,freshwatersediment,500,5000
+180,Roanoke|doi.org/10.1016/j.jwpe.2020.101640,freshwatersediment,500,5000
+17,Stroubles|doi.org/10.1016/j.jwpe.2020.101640,freshwatersediment,500,5000
+25,Dam1SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+45,Dam4SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+40,Dam2SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+35,Dam3SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+45,Dam5SDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersediment,0.45,5000
+0.98,average|doi.org/10.1016/j.marpolbul.2017.07.028,freshwatersurface,0.45,5000
+0.022,doi.org/10.5894/rgci194 | 3.6,freshwatersurface,4750,5000
+0,doi.org/10.5894/rgci194 | 1.6,freshwatersurface,4750,5000
+0,doi.org/10.5894/rgci194 | 2.6,freshwatersurface,4750,5000
+0.819,doi.org/10.5894/rgci194 | 3.2,freshwatersurface,4750,5000
+0.115,doi.org/10.5894/rgci194 | 2.2,freshwatersurface,4750,5000
+0.01,doi.org/10.5894/rgci194 | 1.2,freshwatersurface,4750,5000
+0.004,doi.org/10.5894/rgci194 | 2.4,freshwatersurface,4750,5000
+0.004,doi.org/10.5894/rgci194 | 3.4,freshwatersurface,4750,5000
+0.002,doi.org/10.5894/rgci194 | 1.4,freshwatersurface,4750,5000
+2.65483871,doi.org/10.1002/eap.2429|1.benthic,freshwatersurface,1130,1810
+1.086046512,doi.org/10.1002/eap.2429|2.benthic,freshwatersurface,1130,1810
+2.178947368,doi.org/10.1002/eap.2429|3.benthic,freshwatersurface,1130,1810
+0.997058824,doi.org/10.1002/eap.2429|4.benthic,freshwatersurface,1130,1810
+1.075510204,doi.org/10.1002/eap.2429|5.benthic,freshwatersurface,1130,1810
+2.968421053,doi.org/10.1002/eap.2429|6.benthic,freshwatersurface,1130,1810
+0.878947368,doi.org/10.1002/eap.2429|7.benthic,freshwatersurface,1130,1810
+0.374545455,doi.org/10.1002/eap.2429|8.benthic,freshwatersurface,1130,1810
+2.792857143,doi.org/10.1002/eap.2429|9.benthic,freshwatersurface,1130,1810
+0.001,doi.org/10.1021/acs.est.9b03850 | 21.4,freshwatersurface,355,5000
+9.00E-04,doi.org/10.1021/acs.est.9b03850 | 2.1,freshwatersurface,355,5000
+9.00E-04,doi.org/10.1021/acs.est.9b03850 | 2.2,freshwatersurface,355,5000
+9.00E-04,doi.org/10.1021/acs.est.9b03850 | 2.3,freshwatersurface,355,5000
+9.00E-04,doi.org/10.1021/acs.est.9b03850 | 2.4,freshwatersurface,355,5000
+8.00E-04,doi.org/10.1021/acs.est.9b03850 | 1.1 ,freshwatersurface,355,5000
+NA,doi.org/10.1021/es5036317|1,freshwatersurface,300,5000
+NA,doi.org/10.1021/es5036317|2.1,freshwatersurface,300,5000
+NA,doi.org/10.1021/es5036317|4.1,freshwatersurface,300,5000
+NA,doi.org/10.1021/es5036317|3.1,freshwatersurface,300,5000
+0.00066086,doi.org/10.1021/es5036317|2.2,freshwatersurface,300,5000
+0.000617447,doi.org/10.1021/es5036317|4.2,freshwatersurface,300,5000
+0.000546067,doi.org/10.1021/es5036317|3.4,freshwatersurface,300,5000
+0.000398547,doi.org/10.1021/es5036317|1.4,freshwatersurface,300,5000
+0.00036944,doi.org/10.1021/es5036317|2.4,freshwatersurface,300,5000
+3.69E-05,doi.org/10.1021/es5036317|4.5,freshwatersurface,300,5000
+0.000363593,doi.org/10.1021/es5036317|4.3,freshwatersurface,300,5000
+0.000249433,doi.org/10.1021/es5036317|3.2,freshwatersurface,300,5000
+0.000240087,doi.org/10.1021/es5036317|2.5,freshwatersurface,300,5000
+0.00198618,doi.org/10.1021/es5036317|1.3,freshwatersurface,300,5000
+0.00173202,doi.org/10.1021/es5036317|2.3,freshwatersurface,300,5000
+0.000123827,doi.org/10.1021/es5036317|3.5,freshwatersurface,300,5000
+0.00088612,doi.org/10.1021/es5036317|1.5,freshwatersurface,300,5000
+0.000879853,doi.org/10.1021/es5036317|3.3,freshwatersurface,300,5000
+0.000872447,doi.org/10.1021/es5036317|1.2,freshwatersurface,300,5000
+7.14E-05,doi.org/10.1021/es5036317|4.4,freshwatersurface,300,5000
+12.932,doi.org/10.5894/rgci194 | 3.1,freshwatersurface,1000,4750
+0.337,doi.org/10.5894/rgci194 | 2.1,freshwatersurface,1000,4750
+0.074,doi.org/10.5894/rgci194 | 1.1,freshwatersurface,1000,4750
+0.036,doi.org/10.5894/rgci194 | 3.3,freshwatersurface,1000,4750
+0.03,doi.org/10.5894/rgci194 | 2.3,freshwatersurface,1000,4750
+0.022,doi.org/10.5894/rgci194 | 3.5,freshwatersurface,1000,4750
+0.018,doi.org/10.5894/rgci194 | 1.3,freshwatersurface,1000,4750
+0.007,doi.org/10.5894/rgci194 | 1.5,freshwatersurface,1000,4750
+0,doi.org/10.5894/rgci194 | 2.5,freshwatersurface,1000,4750
+8.00E-04,doi.org/10.1021/acs.est.9b03851 | 1.2 ,freshwatersurface,335,5000
+8.00E-04,doi.org/10.1021/acs.est.9b03852 | 1.3 ,freshwatersurface,335,5000
+8.00E-04,doi.org/10.1021/acs.est.9b03853 | 1.4,freshwatersurface,335,5000
+0.0122,doi.org/10.1021/acs.est.9b03850 | 14.1,freshwatersurface,355,5000
+0.0122,doi.org/10.1021/acs.est.9b03850 | 14.2,freshwatersurface,355,5000
+0.0122,doi.org/10.1021/acs.est.9b03850 | 14.3,freshwatersurface,355,5000
+0.0122,doi.org/10.1021/acs.est.9b03850 | 14.4,freshwatersurface,355,5000
+0.0103,doi.org/10.1021/acs.est.9b03850 | 23.1.1,freshwatersurface,355,5000
+0.0103,doi.org/10.1021/acs.est.9b03850 | 26.2,freshwatersurface,355,5000
+0.0103,doi.org/10.1021/acs.est.9b03850 | 26.3,freshwatersurface,355,5000
+0.0102,doi.org/10.1021/acs.est.9b03850 | 15.1,freshwatersurface,355,5000
+0.0102,doi.org/10.1021/acs.est.9b03850 | 15.2,freshwatersurface,355,5000
+0.0102,doi.org/10.1021/acs.est.9b03850 | 15.3,freshwatersurface,355,5000
+0.0071,doi.org/10.1021/acs.est.9b03850 | 7.1,freshwatersurface,355,5000
+0.0071,doi.org/10.1021/acs.est.9b03850 | 7.2,freshwatersurface,355,5000
+0.0071,doi.org/10.1021/acs.est.9b03850 | 7.3,freshwatersurface,355,5000
+0.0071,doi.org/10.1021/acs.est.9b03850 | 7.4,freshwatersurface,355,5000
+0.007,doi.org/10.1021/acs.est.9b03850 | 10.1,freshwatersurface,355,5000
+0.007,doi.org/10.1021/acs.est.9b03850 |10.2,freshwatersurface,355,5000
+0.007,doi.org/10.1021/acs.est.9b03850 | 10.3,freshwatersurface,355,5000
+0.0055,doi.org/10.1021/acs.est.9b03850 | 6.1,freshwatersurface,355,5000
+0.0055,doi.org/10.1021/acs.est.9b03850 | 6.2,freshwatersurface,355,5000
+0.0055,doi.org/10.1021/acs.est.9b03850 | 6.3,freshwatersurface,355,5000
+0.0055,doi.org/10.1021/acs.est.9b03850 | 6.4,freshwatersurface,355,5000
+0.0041,doi.org/10.1021/acs.est.9b03850 | 27.1,freshwatersurface,355,5000
+0.0041,doi.org/10.1021/acs.est.9b03850 | 27.2,freshwatersurface,355,5000
+0.0041,doi.org/10.1021/acs.est.9b03850 | 27.3,freshwatersurface,355,5000
+0.004,doi.org/10.1021/acs.est.9b03850 | 13.1,freshwatersurface,355,5000
+0.004,doi.org/10.1021/acs.est.9b03850 | 13.2,freshwatersurface,355,5000
+0.004,doi.org/10.1021/acs.est.9b03850 |13.3,freshwatersurface,355,5000
+0.004,doi.org/10.1021/acs.est.9b03850 | 13.4,freshwatersurface,355,5000
+0.0037,doi.org/10.1021/acs.est.9b03850 | 3.1,freshwatersurface,355,5000
+0.0037,doi.org/10.1021/acs.est.9b03850 | 3.2,freshwatersurface,355,5000
+0.0037,doi.org/10.1021/acs.est.9b03850 | 3.3,freshwatersurface,355,5000
+0.0037,doi.org/10.1021/acs.est.9b03850 | 3.4,freshwatersurface,355,5000
+0.0034,doi.org/10.1021/acs.est.9b03850 | 12.1,freshwatersurface,355,5000
+0.0034,doi.org/10.1021/acs.est.9b03850 | 12.2,freshwatersurface,355,5000
+0.0034,doi.org/10.1021/acs.est.9b03850 | 12.3,freshwatersurface,355,5000
+0.0034,doi.org/10.1021/acs.est.9b03850 | 12.4,freshwatersurface,355,5000
+0.0033,doi.org/10.1021/acs.est.9b03850 | 28.1,freshwatersurface,355,5000
+0.0033,doi.org/10.1021/acs.est.9b03850 | 28.2,freshwatersurface,355,5000
+0.0033,doi.org/10.1021/acs.est.9b03850 | 28.3,freshwatersurface,355,5000
+0.0033,doi.org/10.1021/acs.est.9b03850 | 28.4,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 18.1,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 18.2,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 18.3,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 18.4,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 23.1,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 23.2,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 23.3,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 23.4,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 24.1,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 24.2,freshwatersurface,355,5000
+0.0026,doi.org/10.1021/acs.est.9b03850 | 24.3,freshwatersurface,355,5000
+0.0021,doi.org/10.1021/acs.est.9b03850 | 20.1,freshwatersurface,355,5000
+0.0021,doi.org/10.1021/acs.est.9b03850 | 20.2,freshwatersurface,355,5000
+0.0021,doi.org/10.1021/acs.est.9b03850 | 20.3,freshwatersurface,355,5000
+0.0021,doi.org/10.1021/acs.est.9b03850 | 20.4,freshwatersurface,355,5000
+0.002,doi.org/10.1021/acs.est.9b03850 | 29.1,freshwatersurface,355,5000
+0.002,doi.org/10.1021/acs.est.9b03850 | 29.2,freshwatersurface,355,5000
+0.002,doi.org/10.1021/acs.est.9b03850 | 29.3,freshwatersurface,355,5000
+0.002,doi.org/10.1021/acs.est.9b03850 | 29.4,freshwatersurface,355,5000
+0.0018,doi.org/10.1021/acs.est.9b03850 | 9.1,freshwatersurface,355,5000
+0.0018,doi.org/10.1021/acs.est.9b03850 | 9.2,freshwatersurface,355,5000
+0.0018,doi.org/10.1021/acs.est.9b03850 | 9.3,freshwatersurface,355,5000
+0.0017,doi.org/10.1021/acs.est.9b03850 | 19.1,freshwatersurface,355,5000
+0.0017,doi.org/10.1021/acs.est.9b03850 | 19.2,freshwatersurface,355,5000
+0.0017,doi.org/10.1021/acs.est.9b03850 | 19.3,freshwatersurface,355,5000
+0.0017,doi.org/10.1021/acs.est.9b03850 | 19.4,freshwatersurface,355,5000
+0.0015,doi.org/10.1021/acs.est.9b03850 | 11.1,freshwatersurface,355,5000
+0.0015,doi.org/10.1021/acs.est.9b03850 | 11.2,freshwatersurface,355,5000
+0.0015,doi.org/10.1021/acs.est.9b03850 | 11.3,freshwatersurface,355,5000
+0.0015,doi.org/10.1021/acs.est.9b03850 | 11.4,freshwatersurface,355,5000
+0.0013,doi.org/10.1021/acs.est.9b03850 | 16.1,freshwatersurface,355,5000
+0.0013,doi.org/10.1021/acs.est.9b03850 | 16.2,freshwatersurface,355,5000
+0.0013,doi.org/10.1021/acs.est.9b03850 | 16.3,freshwatersurface,355,5000
+0.0013,doi.org/10.1021/acs.est.9b03850 | 16.4,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 22.1,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 22.2,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 22.3,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 25.1,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 25.2,freshwatersurface,355,5000
+0.0012,doi.org/10.1021/acs.est.9b03850 | 25.3,freshwatersurface,355,5000
+0.001,doi.org/10.1021/acs.est.9b03850 | 21.1,freshwatersurface,355,5000
+0.001,doi.org/10.1021/acs.est.9b03850 | 21.2,freshwatersurface,355,5000
+0.001,doi.org/10.1021/acs.est.9b03850 | 21.3,freshwatersurface,355,5000
+8.00E-05,doi.org/10.1021/acsestwater.1c00072 | 14,freshwatersurface,500,5000
+1.00E-04,doi.org/10.1021/acsestwater.1c00072 | 15,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 16,freshwatersurface,500,5000
+5.00E-05,doi.org/10.1021/acsestwater.1c00072 | 17,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 18,freshwatersurface,500,5000
+0.00053,doi.org/10.1021/acsestwater.1c00072 | 19,freshwatersurface,500,5000
+7.00E-04,doi.org/10.1021/acs.est.9b03850 | 4.1,freshwatersurface,355,5000
+7.00E-04,doi.org/10.1021/acs.est.9b03850 | 4.2,freshwatersurface,355,5000
+7.00E-04,doi.org/10.1021/acs.est.9b03850 | 4.3,freshwatersurface,355,5000
+7.00E-04,doi.org/10.1021/acs.est.9b03850 | 4.4,freshwatersurface,355,5000
+6.00E-04,doi.org/10.1021/acs.est.9b03850 | 5.1,freshwatersurface,355,5000
+6.00E-04,doi.org/10.1021/acs.est.9b03850 | 5.2,freshwatersurface,355,5000
+6.00E-04,doi.org/10.1021/acs.est.9b03850 | 5.3,freshwatersurface,355,5000
+6.00E-04,doi.org/10.1021/acs.est.9b03850 | 5.4,freshwatersurface,355,5000
+5.00E-04,doi.org/10.1021/acs.est.9b03850 | 17.1,freshwatersurface,355,5000
+5.00E-04,doi.org/10.1021/acs.est.9b03850 | 17.2,freshwatersurface,355,5000
+5.00E-04,doi.org/10.1021/acs.est.9b03850 | 17.3,freshwatersurface,355,5000
+5.00E-04,doi.org/10.1021/acs.est.9b03850 | 17.4,freshwatersurface,355,5000
+3.00E-04,doi.org/10.1021/acs.est.9b03850 | 8.1,freshwatersurface,355,5000
+3.00E-04,doi.org/10.1021/acs.est.9b03850 | 8.2,freshwatersurface,355,5000
+3.00E-04,doi.org/10.1021/acs.est.9b03850 | 8.3,freshwatersurface,355,5000
+226,doi.org/10.1021/acs.est.1c03019 | fc_0927a,freshwatersurface,335,5000
+196,doi.org/10.1021/acs.est.1c03019 | sm_0928a,freshwatersurface,335,5000
+196,doi.org/10.1021/acs.est.1c03019 | sm_1012a,freshwatersurface,335,5000
+185,doi.org/10.1021/acs.est.1c03019 | ec_1117a,freshwatersurface,335,5000
+119,doi.org/10.1021/acs.est.1c03019 | fc_1012a,freshwatersurface,335,5000
+62.5,doi.org/10.1021/acs.est.1c03019 | cc_1025a,freshwatersurface,335,5000
+40.5,doi.org/10.1021/acs.est.1c03019 | fc_1108a,freshwatersurface,335,5000
+23.2,doi.org/10.1021/acs.est.1c03019 | ec_1108a,freshwatersurface,335,5000
+0.0197,doi.org/10.1021/acs.est.1c03019 | ec_1108b,freshwatersurface,335,5000
+0.0162,doi.org/10.1021/acs.est.1c03019 | ec_1117b,freshwatersurface,335,5000
+0.0153,doi.org/10.1021/acs.est.1c03019 | fc_1012b,freshwatersurface,335,5000
+0.0148,doi.org/10.1021/acs.est.1c03019 | fc_0927b,freshwatersurface,335,5000
+0.0117,doi.org/10.1021/acs.est.1c03019 | sm_0928b,freshwatersurface,335,5000
+0.0098,doi.org/10.1021/acs.est.1c03019 | sm_1012b,freshwatersurface,335,5000
+0.0032,doi.org/10.1021/acs.est.1c03019 | cc_1025b,freshwatersurface,335,5000
+0.0032,doi.org/10.1021/acs.est.1c03019 | fc_1108b,freshwatersurface,335,5000
+0.00065,doi.org/10.1021/acsestwater.1c00072 | 51,freshwatersurface,500,5000
+0.00232,doi.org/10.1021/acsestwater.1c00072 | 52,freshwatersurface,500,5000
+0.00175,doi.org/10.1021/acsestwater.1c00072 | 53,freshwatersurface,500,5000
+0.00058,doi.org/10.1021/acsestwater.1c00072 | 54,freshwatersurface,500,5000
+0.01793,downstream|doi.org/10.1021/es503610r,freshwatersurface,330,5000
+0.00194,upstream|doi.org/10.1021/es503610r,freshwatersurface,330,5000
+NA,https://digitalcommons.usf.edu/etd/8785|June_Bottom_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|July_Bottom_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|August_Bottom_Thalweg,freshwatersurface,500,5000
+5.405,Grab7A|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+3.198,Grab22|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+2.137,Grab21|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.714,Grab23|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.709,Grab19|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.117,Grab26|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.1116,Grab1|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.108,Grab24|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.09,Grab25|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.075,Grab17|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+1.046,Grab9|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.632,Grab10|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.563,Grab7B|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+258,doi.org/10.1021/acs.est.9b04896 | 426,freshwatersurface,63,5000
+106,doi.org/10.1021/acs.est.9b04896 | 415,freshwatersurface,63,5000
+80,doi.org/10.1021/acs.est.9b04896 | 428,freshwatersurface,63,5000
+54,doi.org/10.1021/acs.est.9b04896 | 427,freshwatersurface,63,5000
+50,doi.org/10.1021/acs.est.9b04896 | 421,freshwatersurface,63,5000
+38,doi.org/10.1021/acs.est.9b04896 | 396,freshwatersurface,63,5000
+36,doi.org/10.1021/acs.est.9b04896 | 413,freshwatersurface,63,5000
+24,doi.org/10.1021/acs.est.9b04896 | 417,freshwatersurface,63,5000
+24,doi.org/10.1021/acs.est.9b04896 | 412,freshwatersurface,63,5000
+24,doi.org/10.1021/acs.est.9b04896 | 422,freshwatersurface,63,5000
+22,doi.org/10.1021/acs.est.9b04896 | 393,freshwatersurface,63,5000
+22,doi.org/10.1021/acs.est.9b04896 | 418,freshwatersurface,63,5000
+20,doi.org/10.1021/acs.est.9b04896 | 391,freshwatersurface,63,5000
+16,doi.org/10.1021/acs.est.9b04896 | 409,freshwatersurface,63,5000
+16,doi.org/10.1021/acs.est.9b04896 | 419,freshwatersurface,63,5000
+16,doi.org/10.1021/acs.est.9b04896 | 390,freshwatersurface,63,5000
+14,doi.org/10.1021/acs.est.9b04896 | 395,freshwatersurface,63,5000
+14,doi.org/10.1021/acs.est.9b04896 | 404,freshwatersurface,63,5000
+14,doi.org/10.1021/acs.est.9b04896 | 425,freshwatersurface,63,5000
+12,doi.org/10.1021/acs.est.9b04896 | 407,freshwatersurface,63,5000
+12,doi.org/10.1021/acs.est.9b04896 | 399,freshwatersurface,63,5000
+12,doi.org/10.1021/acs.est.9b04896 | 402,freshwatersurface,63,5000
+10,doi.org/10.1021/acs.est.9b04896 | 388,freshwatersurface,63,5000
+8,doi.org/10.1021/acs.est.9b04896 | 420,freshwatersurface,63,5000
+6,doi.org/10.1021/acs.est.9b04896 | 386,freshwatersurface,63,5000
+6,doi.org/10.1021/acs.est.9b04896 | 389,freshwatersurface,63,5000
+6,doi.org/10.1021/acs.est.9b04896 | 406,freshwatersurface,63,5000
+6,doi.org/10.1021/acs.est.9b04896 | 411,freshwatersurface,63,5000
+6,doi.org/10.1021/acs.est.9b04896 | 400,freshwatersurface,63,5000
+4,doi.org/10.1021/acs.est.9b04896 | 410,freshwatersurface,63,5000
+4,doi.org/10.1021/acs.est.9b04896 | 424,freshwatersurface,63,5000
+4,doi.org/10.1021/acs.est.9b04896 | 423,freshwatersurface,63,5000
+2,doi.org/10.1021/acs.est.9b04896 | 401,freshwatersurface,63,5000
+0,doi.org/10.1021/acs.est.9b04896 | 408,freshwatersurface,63,5000
+0.00095,Nelson|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00864,RMYC3|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00862,Redboine1|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00803,Redboine3|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00713,Redboine2|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+7.00E-04,Emerson|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00675,RMYC1|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.01769,Forks1|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00169,Forks2|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00153,Courchaine|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00094,RMYC2|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+0.00131,Forks3|doi.org/10.5203/pmuser.201730578,freshwatersurface,335,5000
+1.00E-04,doi.org/10.1021/acsestwater.1c00072 | 1,freshwatersurface,500,5000
+7.00E-05,doi.org/10.1021/acsestwater.1c00072 | 2,freshwatersurface,500,5000
+2.00E-05,doi.org/10.1021/acsestwater.1c00072 | 3,freshwatersurface,500,5000
+2.00E-05,doi.org/10.1021/acsestwater.1c00072 | 4,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 5,freshwatersurface,500,5000
+2.00E-05,doi.org/10.1021/acsestwater.1c00072 | 6,freshwatersurface,500,5000
+2.00E-05,doi.org/10.1021/acsestwater.1c00072 | 7,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 8,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 9,freshwatersurface,500,5000
+0,doi.org/10.1021/acsestwater.1c00072 | 10,freshwatersurface,500,5000
+1.00E-05,doi.org/10.1021/acsestwater.1c00072 | 11,freshwatersurface,500,5000
+3.00E-05,doi.org/10.1021/acsestwater.1c00072 | 12,freshwatersurface,500,5000
+0.00018,doi.org/10.1021/acsestwater.1c00072 | 13,freshwatersurface,500,5000
+0.00886,doi.org/10.1002/ecs2.1556|20,freshwatersurface,0.7,5000
+0.00057,doi.org/10.1002/ecs2.1556|1,freshwatersurface,0.7,5000
+0.00117,doi.org/10.1002/ecs2.1556|3,freshwatersurface,0.7,5000
+0.00124,doi.org/10.1002/ecs2.1556|5,freshwatersurface,0.7,5000
+0,doi.org/10.1002/ecs2.1556|6,freshwatersurface,0.7,5000
+0.00336,doi.org/10.1002/ecs2.1556|9,freshwatersurface,0.7,5000
+0.00128,doi.org/10.1021/acsestwater.1c00072 | 20,freshwatersurface,500,5000
+0.00096,doi.org/10.1021/acsestwater.1c00072 | 21,freshwatersurface,500,5000
+0.00066,doi.org/10.1021/acsestwater.1c00072 | 22,freshwatersurface,500,5000
+0.00082,doi.org/10.1021/acsestwater.1c00072 | 23,freshwatersurface,500,5000
+0.00038,doi.org/10.1021/acsestwater.1c00072 | 24,freshwatersurface,500,5000
+0.00213,doi.org/10.1021/acsestwater.1c00072 | 25,freshwatersurface,500,5000
+0.0044,doi.org/10.1021/acsestwater.1c00072 | 26,freshwatersurface,500,5000
+0.00149,doi.org/10.1021/acsestwater.1c00072 | 27,freshwatersurface,500,5000
+6.00E-04,doi.org/10.1021/acsestwater.1c00072 | 28,freshwatersurface,500,5000
+0.0012,doi.org/10.1021/acsestwater.1c00072 | 29,freshwatersurface,500,5000
+0.0011,doi.org/10.1021/acsestwater.1c00072 | 30,freshwatersurface,500,5000
+0.00428,doi.org/10.1021/acsestwater.1c00072 | 31,freshwatersurface,500,5000
+0.00682,doi.org/10.1021/acsestwater.1c00072 | 32,freshwatersurface,500,5000
+0.00045,doi.org/10.1021/acsestwater.1c00072 | 33,freshwatersurface,500,5000
+0.00094,doi.org/10.1021/acsestwater.1c00072 | 34,freshwatersurface,500,5000
+0.00033,doi.org/10.1021/acsestwater.1c00072 | 35,freshwatersurface,500,5000
+0.00068,doi.org/10.1021/acsestwater.1c00072 | 36,freshwatersurface,500,5000
+0.00124,doi.org/10.1021/acsestwater.1c00072 | 37,freshwatersurface,500,5000
+0.00148,doi.org/10.1021/acsestwater.1c00072 | 38,freshwatersurface,500,5000
+0.00306,doi.org/10.1021/acsestwater.1c00072 | 39,freshwatersurface,500,5000
+0.00186,doi.org/10.1021/acsestwater.1c00072 | 40,freshwatersurface,500,5000
+0.00865,doi.org/10.1021/acsestwater.1c00072 | 41,freshwatersurface,500,5000
+0.00101,doi.org/10.1021/acsestwater.1c00072 | 42,freshwatersurface,500,5000
+0.00283,doi.org/10.1021/acsestwater.1c00072 | 43,freshwatersurface,500,5000
+0.0027,doi.org/10.1021/acsestwater.1c00072 | 44,freshwatersurface,500,5000
+0.00108,doi.org/10.1021/acsestwater.1c00072 | 45,freshwatersurface,500,5000
+0.00044,doi.org/10.1021/acsestwater.1c00072 | 46,freshwatersurface,500,5000
+0.00137,doi.org/10.1021/acsestwater.1c00072 | 47,freshwatersurface,500,5000
+0.00494,doi.org/10.1021/acsestwater.1c00072 | 48,freshwatersurface,500,5000
+0.00331,doi.org/10.1021/acsestwater.1c00072 | 49,freshwatersurface,500,5000
+0.00266,doi.org/10.1021/acsestwater.1c00072 | 50,freshwatersurface,500,5000
+0.00029,doi.org/10.1002/eap.2429|9.surface,freshwatersurface,1130,1810
+11.5,GR_Cinnamon_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+5.1,Flathead_Pass_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+4.9,North_Cottonwood_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+4.8,GR_Canyon_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+4.2,GR_Gallatin_Gateway_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+4,Taylor_Fork_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.9,GR_Canyon_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.8,GR_Bighorn_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.8,GR_Black_Butte_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.8,Hellroaring_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.6,GR_Cinnamon_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.1,Deer_Creek_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.1,GR_Logan_5B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+3.1,Portal_Creek_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.7,GR_Manhattan_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.7,Portal_Creek_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.5,Deer_Creek_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.5,GR_Daily_Creek_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,GR_Bighorn_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,GR_Cinnamon_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,GR_Cinnamon_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.559,Grab4|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.552,Grab3|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.538,Grab18|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.536,Grab13|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.526,Grab14|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.518,Grab5|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.518,Grab11|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.517,Grab6|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.493,Grab12|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0,Grab2|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0,Grab8|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0,Grab15|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0,Grab16|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0,Grab20|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+NA,https://digitalcommons.usf.edu/etd/8785|June_MidColumn_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|July_MidColumn_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|August_MidColumn_Thalweg,freshwatersurface,500,5000
+0.013701,Net14|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.009492,Net12|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.004844,Net17|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.00479,Net9|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.0047,Net23|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.00443,Net25|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.003654,Net26|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.0035,Net7B|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.002925,Net24|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.002531,Net22|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.002278,Net2|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.002132,Net16|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001934,Net18|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001444,Net19|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001442,Net8|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001434,Net21|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001386,Net13|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001294,Net11|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001271,Net15|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.001094,Net20|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.00098,Net3|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.000832,Net4|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.000611,Net10|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.000556,Net5|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.00054,Net7A|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.000525,Net6|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+0.000246,Net1|doi.org/10.1016/j.envpol.2018.06.033,freshwatersurface,0.45,5000
+NA,https://digitalcommons.usf.edu/etd/8785|June_Surface_LeftBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|July_Surface_LeftBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|August_Surface_LeftBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|June_Surface_RightBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|July_Surface_RightBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|August_Surface_RightBank,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|June_Surface_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|July_Surface_Thalweg,freshwatersurface,500,5000
+NA,https://digitalcommons.usf.edu/etd/8785|August_Surface_Thalweg,freshwatersurface,500,5000
+0.01122,doi.org/10.1002/ecs2.1556|2,freshwatersurface,0.7,5000
+0.00539,doi.org/10.1002/ecs2.1556|4,freshwatersurface,0.7,5000
+8.00E-04,doi.org/10.1002/ecs2.1556|7,freshwatersurface,0.7,5000
+0,doi.org/10.1002/ecs2.1556|8,freshwatersurface,0.7,5000
+0.0066,doi.org/10.1002/ecs2.1556|10,freshwatersurface,0.7,5000
+0.00253,doi.org/10.1002/ecs2.1556|13,freshwatersurface,0.7,5000
+0.01028,doi.org/10.1002/ecs2.1556|14,freshwatersurface,0.7,5000
+0.00296,doi.org/10.1002/ecs2.1556|16,freshwatersurface,0.7,5000
+0.00373,doi.org/10.1002/ecs2.1556|18,freshwatersurface,0.7,5000
+0.6,GR_Daily_Creek_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Logan_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Logan_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Logan_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,Middle_Cottonwood_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,Middle_Cottonwood_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.00437,doi.org/10.1002/ecs2.1556|11,freshwatersurface,0.7,5000
+0.00592,doi.org/10.1002/ecs2.1556|12,freshwatersurface,0.7,5000
+0.00093,doi.org/10.1002/ecs2.1556|15,freshwatersurface,0.7,5000
+0.00048,doi.org/10.1002/ecs2.1556|17,freshwatersurface,0.7,5000
+0.00314,doi.org/10.1002/ecs2.1556|19,freshwatersurface,0.7,5000
+6.5,Dam2WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+7,Dam1WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+2,Dam3WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+2,Dam2WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+12,Dam5WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+22,Dam6WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+8,Dam2WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+1.5,Dam4WDownstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+1,Dam3WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+3,Dam4WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+8,Dam5WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+13,Dam6WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+24,Dam5WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+6,Dam1WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+8,Dam1WReservoir|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+10,Dam3WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+4,Dam4WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+16,Dam6WUpstream|doi.org/10.1016/j.scitotenv.2019.02.028,freshwatersurface,0.45,5000
+0.00053,doi.org/10.1002/eap.2429|1.surface,freshwatersurface,1130,1810
+0.00201,doi.org/10.1002/eap.2429|2.surface,freshwatersurface,1130,1810
+5.00E-04,doi.org/10.1002/eap.2429|3.surface,freshwatersurface,1130,1810
+0.00026,doi.org/10.1002/eap.2429|4.surface,freshwatersurface,1130,1810
+0.00013,doi.org/10.1002/eap.2429|5.surface,freshwatersurface,1130,1810
+0.00066,doi.org/10.1002/eap.2429|6.surface,freshwatersurface,1130,1810
+0.00049,doi.org/10.1002/eap.2429|7.surface,freshwatersurface,1130,1810
+0.00047,doi.org/10.1002/eap.2429|8.surface,freshwatersurface,1130,1810
+0,GR_Bighorn_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Bighorn_5A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Bighorn_5B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Black_Butte_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Canyon_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Cinnamon_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Cinnamon_5A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Daily_Creek_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Daily_Creek_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Daily_Creek_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Daily_Creek_6A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Daily_Creek_6B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Logan_5A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Logan_6B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Manhattan_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Manhattan_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Manhattan_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Hellroaring_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Hellroaring_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Hellroaring_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Middle_Cottonwood_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Middle_Cottonwood_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,GR_Daily_Creek_5A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,GR_Logan_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.4,North_Cottonwood_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.3,Flathead_Pass_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.3,GR_Gallatin_Gateway_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.3,Porcupine_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2.1,Porcupine_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.8,Storm_Castle_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.6,Big_Sky_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.6,GR_Bighorn_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.6,GR_Cinnamon_5B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.6,GR_Daily_Creek_5B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,Buffalo_Horn_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,Flathead_Pass_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,GR_Canyon_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,GR_Manhattan_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,North_Cottonwood_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,North_Cottonwood_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.5,Portal_Creek_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.3,GR_Bighorn_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.2,GR_Cinnamon_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.2,GR_Daily_Creek_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.2,GR_Daily_Creek_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.2,GR_Logan_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+1.2,GR_Logan_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.9,Black_Butte_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Axtell_SC_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Axtell_SC_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Axtell_SC_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Bacon_Rind_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Bear_Creek_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Black_Butte_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Buffalo_Horn_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Buffalo_Horn_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Deer_Creek_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Flathead_Pass_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Flathead_Pass_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Flathead_Pass_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Bacon_Rind_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Daily_Creek_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Logan_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Logan_6A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Manhattan_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Manhattan_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,GR_Manhattan_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Middle_Cottonwood_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Middle_Cottonwood_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,North_Cottonwood_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,North_Cottonwood_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Porcupine_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Porcupine_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Portal_Creek_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Portal_Creek_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.8,Taylor_Fork_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.7,GR_Bighorn_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.7,GR_Logan_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,Big_Sky_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,Buffalo_Horn_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Bighorn_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Bighorn_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Cinnamon_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,GR_Cinnamon_4B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.773,doi.org/10.1002/eap.2429|4.midwater,freshwatersurface,1130,1810
+0.556,doi.org/10.1002/eap.2429|5.midwater,freshwatersurface,1130,1810
+1.825,doi.org/10.1002/eap.2429|6.midwater,freshwatersurface,1130,1810
+0.626,doi.org/10.1002/eap.2429|7.midwater,freshwatersurface,1130,1810
+1.067,doi.org/10.1002/eap.2429|8.midwater,freshwatersurface,1130,1810
+0.992,doi.org/10.1002/eap.2429|9.midwater,freshwatersurface,1130,1810
+0.6,Spanish_Creek_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.6,Storm_Castle_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.1,Bear_Creek_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Axtell_SC_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Axtell_SC_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Axtell_SC_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Axtell_SC_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Axtell_SC_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Bacon_Rind_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Big_Sky_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Big_Sky_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Black_Butte_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Black_Butte_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Black_Butte_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Black_Butte_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Buffalo_Horn_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Buffalo_Horn_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Deer_Creek_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Deer_Creek_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Deer_Creek_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Flathead_Pass_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Flathead_Pass_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Axtell_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Bacon_Rind_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Bacon_Rind_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,GR_Bacon_Rind_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0.789,doi.org/10.1002/eap.2429|1.midwater,freshwatersurface,1130,1810
+1.028,doi.org/10.1002/eap.2429|2.midwater,freshwatersurface,1130,1810
+0.108,doi.org/10.1002/eap.2429|3.midwater,freshwatersurface,1130,1810
+0,Portal_Creek_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Portal_Creek_4A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Sourdough_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Sourdough_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Spanish_Creek_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Storm_Castle_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,North_Cottonwood_1A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,North_Cottonwood_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Porcupine_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Porcupine_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Porcupine_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Porcupine_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Portal_Creek_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Storm_Castle_3B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Taylor_Fork_1B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Storm_Castle_2B|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Storm_Castle_3A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+0,Taylor_Fork_2A|doi.org/10.1016/j.watres.2018.10.013,freshwatersurface,1500,9600
+2649,Mineral Water.1|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+4889,Mineral Water.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+6292,Mineral Water.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+443,WTP1_Treated|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+338,WTP2_Treated|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+628,WTP3_Treated|10.1016/j.sciotenv.2018.08.178,drinkingwater,0.2,5000
+7.00E-04,Mintenig|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+18,Shruti|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+0.59,Strand|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+0.7,Zhang|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+315,Mason.1|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+10.4,Mason.2|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+3074,Ossmann|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+0.33,Weisheu|10.1371/journal.pone.0236838,drinkingwater,0.2,5000
+2649,MineralWater_SingleUsePET|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+4889,MineralWater_ReusablePET|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+6292,MineralWater_Glass|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+1473,RawDrinkingWater.1|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+1812,RawDrinkingWater.2|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+3605,RawDrinkingWater.3|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+440,TapWater|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+6614,RawWater|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+930,TreatedDrinkingWater2|10.1016/j.impact.2021.100302,drinkingwater,0.2,5000
+2.8,Milence_Fibers.10.1016/j.scitotenv.2020.140236,drinkingwater,0.2,5000
+17,Milence_Fragments.10.1016/j.scitotenv.2020.140236,drinkingwater,0.2,5000
+12,Plzen_Fibers.10.1016/j.scitotenv.2020.140236,drinkingwater,0.2,5000
+180,Plzen_Fragments.10.1016/j.scitotenv.2020.140236,drinkingwater,0.2,5000
+125,1|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+0,2|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,3|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+872,4|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,5|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,6|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,7|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,8|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,9|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,10|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,11|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,12|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,13|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,14|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+748,15|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,16|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+1247,17|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+623,18|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,19|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,20|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+125,21|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,22|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,23|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,24|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,25|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+0,26|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+1247,27|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,28|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+623,29|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,30|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+499,31|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,32|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+748,33|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+623,34|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,35|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+374,36|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+249,37|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+748,38|10.1016/j.chemosphere.2020.126493,drinkingwater,0.2,5000
+282,April_DWTP|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+267,April_Tap|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+338,May_DWTP|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+321,May_Tap|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+388,June_DWTP|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+381,June_Tap|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+400,July_DWTP|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+405,July_Tap|10.1007/s11356-021-13769-x,drinkingwater,0.2,5000
+0.2,1|10.1016/j.scitotenv.2022.154015,drinkingwater,0.2,5000
+20,1|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+13,2|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+17,3|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+14,4|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+60,5|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+13,6|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+15,7|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+18,8|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+37,9|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+34,10|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+38,11|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+60,12|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,13|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+25,14|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+22,15|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+15,16|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,17|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+37,18|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+9,19|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+6,20|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,21|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+8,22|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+14,23|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+8,24|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+8,25|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,26|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+13,27|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+8,28|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+6,29|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+10,30|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+23,31|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+15,32|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+13,33|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+9,34|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+10,35|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+28,36|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+5,37|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+8,38|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+10,39|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,40|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+7,41|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+91,42|10.1016/j.envpol.2020.114227,drinkingwater,0.22,5000
+930,Finished|10.1016/j.scitotenv.2019.134520,drinkingwater,0.22,5000
+10,Lao Shann|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+34,VOSS|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+36,Master_kong|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+44,Kun_Lun_Shan|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+28,Wahaha|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+10,C'estbon|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+14,Run_Tian_Cui|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+8,Ever_Grande|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+4,Ocean_AQUA|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+12,Ganten_Mineral_Water|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+18,Nong_Fu|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+10,Tibet_Ge_Sang|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+24,ALKAO.UA|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+28,Ban_Ma|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+14,Shi_Lin|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+14,LAVA|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+32,Watsons|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+6,Hui_Shan_Gu|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+6,Nong_Shi|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+10,Jin_Mai_lang|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+4,Ganten_Purified_Water|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+44,Nestle_Pure_Life|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+16,Tian_Di_Jing_Hua|10.1016/j.jwpe.2020.101884,drinkingwater,0.4,5000
+30.57,1|10.1039/c6ay01184e,drinkingwater,0.45,5000
+3,2|10.1039/c6ay01184e,drinkingwater,0.45,5000
+6,C|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+5,B1|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+5,B2|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+5,B3|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+5,B4|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+2,B5|10.18520/cs/v117/i11/1874-1879,drinkingwater,0.45,5000
+610,A_BioTreatment_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1042.6,A_BioTreatment_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+560,A_BioTreatment_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1186,A_Sedimentation_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1489,A_Sedimentation_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+100.4,A_Sedimentation_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+353.2,A_Ozonation_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1721.2,A_Ozonation_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+650,A_Ozonation_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+271.2,A_BAC_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+200.5,A_BAC_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+200.5,A_BAC_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+62.7,A_Flocc_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+774.1,A_Flocc_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+200.8,A_Flocc_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+280.6,A_Sand_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+260.4,A_Sand_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+200,A_Sand_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+180.1,A_Treated_PE|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+200.1,A_Treated_PP|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+90,A_Treated_PVC|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+394.1,B_BioTreatment_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1092.3,B_BioTreatment_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+2030,B_BioTreatment_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+451.3,B_Sedimentation_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+1042,B_Sedimentation_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+504.1,B_Sedimentation_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+300,B_Ozonation_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+252,B_Ozonation_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+552.4,B_Ozonation_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+413.2,B_BAC_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+230,B_BAC_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+232,B_BAC_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+276.4,B_Flocc_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+140,B_Flocc_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+161.5,B_Flocc_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+150.3,B_Sand_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+130.1,B_Sand_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+55,B_Sand_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+160,B_Treated_PA|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.1,B_Treated_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+30,B_Treated_VINYON|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.15,C_BioTreatment_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.2,C_BioTreatment_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.25,C_BioTreatment_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.05,C_Sedimentation_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.07,C_Sedimentation_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.26,C_Sedimentation_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Ozonation_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.14,C_Ozonation_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.19,C_Ozonation_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_BAC_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+2.68,C_BAC_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.13,C_BAC_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Flocc_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.1,C_Flocc_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.17,C_Flocc_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Sand_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Sand_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0.09,C_Sand_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Treated_PET|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Treated_VINYL|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+0,C_Treated_OTHERS|10.1016/j.scitotenv.2021.150545,drinkingwater,0.45,5000
+4.703,29|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+1.1917,30|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+2.2825,20a|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+4.1373,7|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+5.2925,123|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+0.0146,11|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+2.594,20b|10.1016/j.etap.2018.12.009,drinkingwater,0.45,5000
+2.71,27.11.2019|10.1016/j.jhazmat.2021.125347,drinkingwater,0.7,5000
+2.56,21.12.2019|10.1016/j.jhazmat.2021.125347,drinkingwater,0.7,5000
+2.4,22.01.2020|10.1016/j.jhazmat.2021.125347,drinkingwater,0.7,5000
+2.85,19.02.2020|10.1016/j.jhazmat.2021.125347,drinkingwater,0.7,5000
+3.23,16.03.2020|10.1016/j.jhazmat.2021.125347,drinkingwater,0.7,5000
+NA,S2|10.1016/j.hazmat.2021.125708,drinkingwater,0.7,5000
+NA,S3|10.1016/j.hazmat.2021.125708,drinkingwater,0.7,5000
+NA,S4|10.1016/j.hazmat.2021.125708,drinkingwater,0.7,5000
+0.5,1|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+0.4,2|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+54.5,3|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+97.5,4|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+0.5,6|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+0.5,7|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+3793.5,8|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+7.1,9|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+1.65,10|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+14.6,11|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+5.34,12|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+1.8,13|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+2.1,14|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+3,15|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+5.3,16|10.1016/j.chemosphere.2020.126612,drinkingwater,1,5000
+1,Raw|10.1007/s11356-021-13220-1,drinkingwater,1,5000
+0.2,Sand|10.1007/s11356-021-13220-1,drinkingwater,1,5000
+0.2,GAC|10.1007/s11356-021-13220-1,drinkingwater,1,5000
+0.1,Reverse_Osmosis|10.1007/s11356-021-13220-1,drinkingwater,1,5000
+0.1,Finished|10.1007/s11356-021-13220-1,drinkingwater,1,5000
+0,1|10.1016/j.sciotenv.2020.143421,drinkingwater,1.2,5000
+37.1,IB|101119.10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+705,BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+404,BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+252,Oct0719|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+174,BN7141A04117|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+826,HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+213,MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+3.72,SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+165,Oct 0118NHBRB|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+74.6,P18NOV17CG3|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+686,17.11.18|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+20,14.10.18|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+37.3,09.08.18|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+197,PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+58.2,PRD 05 24 17 11:29|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+1410,07.142018 2|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+204,NV No. AC-51-07269|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+40.1,FAB: 211017 09:06SP|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+12.5,FAB: 160817 15:05SP|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+150,FAB: 091217 16:53SP|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+2277,100517 278WF246|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+49.3,P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+468,730805210A 23:28|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+30.3,BBE 11.2018 10|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+156,20171102 1214JN|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+66.7,20171021 3214GH|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+67.1,20171103 2106WF|10.3389/fchem.2018.00407,drinkingwater,1.5,5000
+3000,B_Well|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+2000,C_Well|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+2000,G_Well|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,D_Reserve_Tank|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+2000,I_Reserve_Tank|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,K_Reserve_Tank|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,N_Reserve_Tank|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,F_Distribution_Network|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,N_Distribution_Network|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,C_Hydrant|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,D_Hydrant|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+1000,I_Hydrant|10.22630/PNIKS.2019.28.4.59,drinkingwater,2,5000
+7.17,Tap Water_Cuba|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+4.02,Tap Water_Ecuador|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+7.73,Tap Water_England|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+1.82,Tap Water_France|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+0.91,Tap Water_Germany|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+6.24,Tap Water_India|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3.23,Tap Water_Indonesia|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+1.83,Tap Water_Ireland|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+0,Tap Water_Italy|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+6.64,Tap Water_Lebanon|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3.83,Tap Water_Slovakia|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+2.74,Tap Water_Switzerland|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3.92,Tap Water_Uganda|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+9.24,Tap Water_USA|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3.57,Bottled Water|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+0.67,Lake Superior 1|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+4.33,Lake Superior 2|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3.33,Lake Superior 3|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+1.33,Lake Michigan 1|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+0,Lake Michigan 2|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+14.3,Lake Michigan 3|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+2.33,Lake Michigan 4|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+1.33,Lake Huron 1|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+2,Lake Erie 1|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+3,Lake Erie 2|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+8,Lake Ontario 1|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+8,Lake Ontario 2|10.1371/journal.pone.0194970,drinkingwater,2.5,5000
+14,1|10.1016/j.watres.2017.11.011,drinkingwater,3,5000
+118,2|10.1016/j.watres.2017.11.011,drinkingwater,3,5000
+50,3|10.1016/j.watres.2017.11.011,drinkingwater,3,5000
+11,4|10.1016/j.watres.2017.11.011,drinkingwater,3,5000
+0.003,Nethen.1|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Nethen.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Nethen.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Nethen.4|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.007,Holdorf.1a|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Holdorf.1b|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Holdorf.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.003,Holdorf.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Holdorf.4|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Grossenkneten.1|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Grossenkneten.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Grossenkneten.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Grossenkneten.4|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Sandelermoens.1|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Sandelermoens.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Sandelermoens.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Sandelermoens.4|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Thuelsfelde.1|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Thuelsfelde.2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.001,Thuelsfelde.3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Thuelsfelde.4|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0.002,Holdorf.Well 1|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Holdorf.Well 2|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+0,Holdorf.Well 3|10.1016/j.sciotenv.2018.08.178,drinkingwater,3,5000
+29,AverageAll|10.1016/j.envres.2022.112855,drinkingwater,5,5000
+0.066,1|10.1007/s11356-021-12467-y,drinkingwater,5,5000
+105.8,drinking_water|10.3390/w12113115,drinkingwater,7,5000
+11,settled|10.1016/j.chemosphere.2021.132587,drinkingwater,10,5000
+0.117,PE|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0.034,PP|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0.045,PS|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0,PET|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0,PVC|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0,others|10.1016/j.envpol.2021.117524,drinkingwater,10,5000
+0.58,1a|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.36,1b|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.32,2|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.24,3|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.26,4|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.14,5|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.22,6|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.2,7|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.6,8|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.24,9|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.26,10|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.22,11|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.54,12|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.18,13|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.08,14|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.38,15|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.34,16|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+0.26,17|http://dce2.au.dk/pub/SR291.pdf ,drinkingwater,20,5000
+1401,DWTP1|10.21203/rs.3.rs-242504/v1,drinkingwater,20,5000
+1042,DWTP2|10.21203/rs.3.rs-242504/v1,drinkingwater,20,5000
+971,DWTP3|10.21203/rs.3.rs-242504/v1,drinkingwater,20,5000
+14,Czech_Milence_DWTP|10.11001/jksww.2020.34.5.357,drinkingwater,1,5000
+151,Czech_Plzen_DWTP|10.11001/jksww.2020.34.5.357,drinkingwater,1,5000
+1,Nethen|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+1,Holdorf|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+382,Aqua|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+213,Auqafina|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+347,Bisleri|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+119,Dasani|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+248,E-Pura|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+128,Evian|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+1411,PlasticGerosteiner|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+168,GlassGerosteiner|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+67,Minalba|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+932,NestlePureLife|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+29,SanPellegrino|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+96,Wahaha|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+2649,SingleUsePET|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+4889,ResuablePET|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+6298,GlassBottles|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+15,SingleUsePlastic|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+117,ReturnablePlastic|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+56,GlassBottles2|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+11,BeverageCartons|10.1016/j.scitotenv.2019.02.431,drinkingwater,1,5000
+32,France|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+1,Finland.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.4,Finland.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.14,China.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.06,China.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.4,Korea.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.1,Korea.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.3,Korea.3|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+1.3,Scotland|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+2.5,Finland2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.4,HongKong.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.27,HongKong.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+8.00E-04,United States.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+2.43E-06,United States.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+3.8,Germany|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+233,Denmark|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.0995,China2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.009,UnitedStates2.1|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.019,UnitedStates2.2|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.047,UnitedStates2.3|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.064,UnitedStates2.4|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.092,UnitedStates2.5|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+0.127,UnitedStates2.6|10.1016/j.cej.2020.128381,drinkingwater,1,5000
+2.75,Sarkar|10.1007/s11783-021-1492-5,drinkingwater,1,5000
+0.0014,Johnson|10.1007/s11783-021-1492-5,drinkingwater,1,5000
+0.07,Dalmau-Soler|10.1007/s11783-021-1492-5,drinkingwater,1,5000
+94.37,Bottled_Water|10.1021/acs.est.9b01517,drinkingwater,1,5000
+4.23,Tap_Water|10.1021/acs.est.9b01517,drinkingwater,1,5000
+6292,Ossmann1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+4889,Ossmann2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+2649,Ossmann3|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+980,Winkler|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+325,Mason1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+317,Weisser|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+242,Giese1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+140,Kankanige1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+131,Giese2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+118,Schymanski1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+52,Kankanige2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+50,Schymanski2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+26,Almaiman1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+14,Schymanski3|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+11,Schymanski4|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+8.5,Makhdoumi|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+1.8,Almaiman2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+1.41,Mason2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+338,Pivokonsky1|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+151,Pivokonsky2|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+61,Kosuth|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+56,Kankanige3.1.10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+14,Kankanige3.2.10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+13,Kankanige3.3.10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+6,Kankanige3.4.10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+14,Pivokonsky3.10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+2.75,Sarkar|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+2.181,Lam|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0.174,Kirstein|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0.06,Dalmau-Soler|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0.066,Pittroff|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0.00011,Johnson|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0,Almaiman3|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+0,Weber|10.1016/j.cotox.2021.09.003,drinkingwater,1,5000
+2649,Single_PET2|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+4889,Returnable_PET2|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+6292,Glass2|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+315,Single_PET3|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+195.7,Glass3|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+54200000,Single_PET4|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+140,Single_PET5|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+52,Glass4|10.1016/j.cofs.2021.02.011,drinkingwater,1,5000
+1.5,Australia1|10.3390/app112110109,drinkingwater,1,5000
+0.48,Australia2|10.3390/app112110109,drinkingwater,1,5000
+0.28,Australia3|10.3390/app112110109,drinkingwater,1,5000
+0.18,Australia4|10.3390/app112110109,drinkingwater,1,5000
+0.96,Australia5|10.3390/app112110109,drinkingwater,1,5000
+0.91,Australia6|10.3390/app112110109,drinkingwater,1,5000
+2.76,Australia7|10.3390/app112110109,drinkingwater,1,5000
+0.5,Canada1|10.3390/app112110109,drinkingwater,1,5000
+1.76,Canada2|10.3390/app112110109,drinkingwater,1,5000
+28.4,China1|10.3390/app112110109,drinkingwater,1,5000
+0.13,China2|10.3390/app112110109,drinkingwater,1,5000
+0.05,China3|10.3390/app112110109,drinkingwater,1,5000
+2.7,China4|10.3390/app112110109,drinkingwater,1,5000
+0.3,China5|10.3390/app112110109,drinkingwater,1,5000
+0.6,China6|10.3390/app112110109,drinkingwater,1,5000
+0.59,China7|10.3390/app112110109,drinkingwater,1,5000
+0.59,China8|10.3390/app112110109,drinkingwater,1,5000
+30.6,China9|10.3390/app112110109,drinkingwater,1,5000
+1.72,China10|10.3390/app112110109,drinkingwater,1,5000
+22.9,China11|10.3390/app112110109,drinkingwater,1,5000
+2.9,China12|10.3390/app112110109,drinkingwater,1,5000
+7.9,China13|10.3390/app112110109,drinkingwater,1,5000
+30.3,China14|10.3390/app112110109,drinkingwater,1,5000
+14.3,China15|10.3390/app112110109,drinkingwater,1,5000
+8.25,China16|10.3390/app112110109,drinkingwater,1,5000
+0.24,China17|10.3390/app112110109,drinkingwater,1,5000
+0.34,China18|10.3390/app112110109,drinkingwater,1,5000
+20.96,China19|10.3390/app112110109,drinkingwater,1,5000
+31.85,China20|10.3390/app112110109,drinkingwater,1,5000
+40.67,China21|10.3390/app112110109,drinkingwater,1,5000
+20.44,China22|10.3390/app112110109,drinkingwater,1,5000
+0.78,China23|10.3390/app112110109,drinkingwater,1,5000
+0.62,China24|10.3390/app112110109,drinkingwater,1,5000
+0.1,China25|10.3390/app112110109,drinkingwater,1,5000
+0.07,China26|10.3390/app112110109,drinkingwater,1,5000
+0,China27|10.3390/app112110109,drinkingwater,1,5000
+0,China28|10.3390/app112110109,drinkingwater,1,5000
+400,China29|10.3390/app112110109,drinkingwater,1,5000
+750,China30|10.3390/app112110109,drinkingwater,1,5000
+300,China31|10.3390/app112110109,drinkingwater,1,5000
+120.3,Denmark1|10.3390/app112110109,drinkingwater,1,5000
+1.05,Finland1|10.3390/app112110109,drinkingwater,1,5000
+13.5,Finland2|10.3390/app112110109,drinkingwater,1,5000
+0.03,Finland3|10.3390/app112110109,drinkingwater,1,5000
+0.005,Finland4|10.3390/app112110109,drinkingwater,1,5000
+0.1,Finland5|10.3390/app112110109,drinkingwater,1,5000
+0.02,Finland6|10.3390/app112110109,drinkingwater,1,5000
+6.84,Finland7|10.3390/app112110109,drinkingwater,1,5000
+35,France1|10.3390/app112110109,drinkingwater,1,5000
+2.84,France2|10.3390/app112110109,drinkingwater,1,5000
+1.82,Germany1|10.3390/app112110109,drinkingwater,1,5000
+5.9,Germany2|10.3390/app112110109,drinkingwater,1,5000
+3,Germany3|10.3390/app112110109,drinkingwater,1,5000
+7,Germany4|10.3390/app112110109,drinkingwater,1,5000
+14,Germany5|10.3390/app112110109,drinkingwater,1,5000
+0.27,HingKong1|10.3390/app112110109,drinkingwater,1,5000
+0.4,HingKong2|10.3390/app112110109,drinkingwater,1,5000
+0.42,Iran1|10.3390/app112110109,drinkingwater,1,5000
+1.91,Iran2|10.3390/app112110109,drinkingwater,1,5000
+2.11,Iran3|10.3390/app112110109,drinkingwater,1,5000
+0.58,Iran4|10.3390/app112110109,drinkingwater,1,5000
+1.97,Israel1|10.3390/app112110109,drinkingwater,1,5000
+7.3,Israel2|10.3390/app112110109,drinkingwater,1,5000
+0.4,Italy1|10.3390/app112110109,drinkingwater,1,5000
+0.52,Italy2|10.3390/app112110109,drinkingwater,1,5000
+0.2,Italy3|10.3390/app112110109,drinkingwater,1,5000
+0.44,Korea1|10.3390/app112110109,drinkingwater,1,5000
+0.14,Korea2|10.3390/app112110109,drinkingwater,1,5000
+0.28,Korea3|10.3390/app112110109,drinkingwater,1,5000
+0.11,Korea4|10.3390/app112110109,drinkingwater,1,5000
+39,Netherlands1|10.3390/app112110109,drinkingwater,1,5000
+61,Netherlands2|10.3390/app112110109,drinkingwater,1,5000
+65,Netherlands3|10.3390/app112110109,drinkingwater,1,5000
+81,Netherlands4|10.3390/app112110109,drinkingwater,1,5000
+56,Netherlands5|10.3390/app112110109,drinkingwater,1,5000
+55,Netherlands6|10.3390/app112110109,drinkingwater,1,5000
+55,Netherlands7|10.3390/app112110109,drinkingwater,1,5000
+0.34,Poland1|10.3390/app112110109,drinkingwater,1,5000
+148,Russia1|10.3390/app112110109,drinkingwater,1,5000
+0.25,Scotland1|10.3390/app112110109,drinkingwater,1,5000
+1,Scotland2|10.3390/app112110109,drinkingwater,1,5000
+49,SouthKorea1|10.3390/app112110109,drinkingwater,1,5000
+33,SouthKorea2|10.3390/app112110109,drinkingwater,1,5000
+297,SouthKorea3|10.3390/app112110109,drinkingwater,1,5000
+66,SouthKorea4|10.3390/app112110109,drinkingwater,1,5000
+0.31,Spain1|10.3390/app112110109,drinkingwater,1,5000
+0.44,Spain2|10.3390/app112110109,drinkingwater,1,5000
+0.92,Spain3|10.3390/app112110109,drinkingwater,1,5000
+1.08,Spain4|10.3390/app112110109,drinkingwater,1,5000
+12.8,Spain5|10.3390/app112110109,drinkingwater,1,5000
+41.77,Spain6|10.3390/app112110109,drinkingwater,1,5000
+16.4,Spain7|10.3390/app112110109,drinkingwater,1,5000
+131.36,Spain8|10.3390/app112110109,drinkingwater,1,5000
+0.98,Spain9|10.3390/app112110109,drinkingwater,1,5000
+4,Sweden1|10.3390/app112110109,drinkingwater,1,5000
+0.008,Sweden2|10.3390/app112110109,drinkingwater,1,5000
+2,Thailand1|10.3390/app112110109,drinkingwater,1,5000
+7,Turkey1|10.3390/app112110109,drinkingwater,1,5000
+4.11,Turkey2|10.3390/app112110109,drinkingwater,1,5000
+1.6,Turkey3|10.3390/app112110109,drinkingwater,1,5000
+0.7,Turkey4|10.3390/app112110109,drinkingwater,1,5000
+0.6,Turkey5|10.3390/app112110109,drinkingwater,1,5000
+15.7,UK1|10.3390/app112110109,drinkingwater,1,5000
+3.7,USA1|10.3390/app112110109,drinkingwater,1,5000
+17.6,USA2|10.3390/app112110109,drinkingwater,1,5000
+17.2,USA3|10.3390/app112110109,drinkingwater,1,5000
+0.09,USA4|10.3390/app112110109,drinkingwater,1,5000
+0.05,USA5|10.3390/app112110109,drinkingwater,1,5000
+5.9,USA6|10.3390/app112110109,drinkingwater,1,5000
+2.6,USA7|10.3390/app112110109,drinkingwater,1,5000
+0.098,USA8|10.3390/app112110109,drinkingwater,1,5000
+0.00088,USA9|10.3390/app112110109,drinkingwater,1,5000
+0.00035,Mintenig|10.1007/s11783-021-1492-5,drinkingwater,1,5000
+0.4,TCQS|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.51,SHN|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.51,CHQ|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.55,CHH|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.6,ZHB|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.605,DAS|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.63,XHS|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.75,HNZ|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.56,TCH|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.6,WHH|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.39,Spr|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.36,Sum|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.75,Aut|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+0.54,Win|10.1016/j.scitotenv.2021.148001,drinkingwater,1,5000
+NA,gallon_brand1|10.3390/environments8120138,drinkingwater,1,5000
+0,gallon_brand 2|10.3390/environments8120138,drinkingwater,1,5000
+0,gallon_refill1|10.3390/environments8120138,drinkingwater,1,5000
+0,gallon_refill2|10.3390/environments8120138,drinkingwater,1,5000
+NA,gallon_refill3|10.3390/environments8120138,drinkingwater,1,5000
+11,filtered|10.1016/j.chemosphere.2021.132587,drinkingwater,1,5000
+31,clearwell|10.1016/j.chemosphere.2021.132587,drinkingwater,1,5000
+20,distribution|10.1016/j.chemosphere.2021.132587,drinkingwater,1,5000

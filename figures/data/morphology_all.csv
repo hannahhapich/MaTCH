@@ -1,0 +1,449 @@
+sample_ID,morphology,morphology_raw,morph_ratio
+1a|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.1
+1b|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.28
+2|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.06
+4|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.07
+5|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.14
+6|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.1
+8|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.23
+9|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.08
+12|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.26
+15|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.26
+16|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.3
+17|http://dce2.au.dk/pub/SR291.pdf,Fragment,Fragment,0.08
+IB|101119.10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+Oct0719|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+BN7141A04117|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+Oct 0118NHBRB|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+P18NOV17CG3|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+17.11.18|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+14.10.18|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+09.08.18|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+PRD 05 24 17 11:29|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+07.142018 2|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+NV No. AC-51-07269|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+FAB: 211017 09:06SP|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+FAB: 160817 15:05SP|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+FAB: 091217 16:53SP|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+100517 278WF246|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+730805210A 23:28|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+BBE 11.2018 10|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+20171102 1214JN|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+20171021 3214GH|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+20171103 2106WF|10.3389/fchem.2018.00407,Fragment,Fragment,0.65
+Finished|10.1016/j.scitotenv.2019.134520,Fragment,Fragment,0.24516129
+TCQS|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+SHN|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+CHQ|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+CHH|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+ZHB|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+DAS|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+XHS|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+HNZ|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+TCH|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+WHH|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+Spr|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+Sum|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+Aut|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+Win|10.1016/j.scitotenv.2021.148001,Fragment,Fragment,0.0772
+1a|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.86
+1b|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.72
+2|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.78
+3|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+4|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.62
+5|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.86
+6|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.9
+7|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+8|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.67
+9|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.84
+10|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+11|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+12|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.74
+13|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+14|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,1
+15|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.74
+16|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.7
+17|http://dce2.au.dk/pub/SR291.pdf,Fiber,Fiber,0.92
+IB|101119.10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+Oct0719|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+BN7141A04117|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+Oct 0118NHBRB|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+P18NOV17CG3|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+17.11.18|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+14.10.18|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+09.08.18|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+PRD 05 24 17 11:29|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+07.142018 2|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+NV No. AC-51-07269|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+FAB: 211017 09:06SP|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+FAB: 160817 15:05SP|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+FAB: 091217 16:53SP|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+100517 278WF246|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+730805210A 23:28|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+BBE 11.2018 10|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+20171102 1214JN|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+20171021 3214GH|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+20171103 2106WF|10.3389/fchem.2018.00407,Fiber,Fiber,0.13
+drinking_water|10.3390/w12113115,Fiber,Fiber,0.802
+Finished|10.1016/j.scitotenv.2019.134520,Fiber,Fiber,0.666666667
+TCQS|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+SHN|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+CHQ|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+CHH|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+ZHB|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+DAS|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+XHS|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+HNZ|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+TCH|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+WHH|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+Spr|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+Sum|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+Aut|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+Win|10.1016/j.scitotenv.2021.148001,Fiber,Fiber,0.9071
+IB|101119.10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+Oct0719|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+BN7141A04117|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+Oct 0118NHBRB|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+P18NOV17CG3|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+17.11.18|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+14.10.18|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+09.08.18|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+PRD 05 24 17 11:29|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+07.142018 2|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+NV No. AC-51-07269|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+FAB: 211017 09:06SP|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+FAB: 160817 15:05SP|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+FAB: 091217 16:53SP|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+100517 278WF246|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+730805210A 23:28|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+BBE 11.2018 10|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+20171102 1214JN|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+20171021 3214GH|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+20171103 2106WF|10.3389/fchem.2018.00407,Nurdle,Nurdle,0.03
+drinking_water|10.3390/w12113115,Nurdle,Nurdle,0.191
+TCQS|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+SHN|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+CHQ|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+CHH|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+ZHB|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+DAS|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+XHS|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+HNZ|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+TCH|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+WHH|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+Spr|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+Sum|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+Aut|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+Win|10.1016/j.scitotenv.2021.148001,Nurdle,Nurdle,0.0036
+1a|http://dce2.au.dk/pub/SR291.pdf,Film,Film,0.03
+2|http://dce2.au.dk/pub/SR291.pdf,Film,Film,0.06
+4|http://dce2.au.dk/pub/SR291.pdf,Film,Film,0.31
+8|http://dce2.au.dk/pub/SR291.pdf,Film,Film,0.1
+9|http://dce2.au.dk/pub/SR291.pdf,Film,Film,0.08
+IB|101119.10.3389/fchem.2018.00407,Film,Film,0.14
+BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,Film,Film,0.14
+BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,Film,Film,0.14
+Oct0719|10.3389/fchem.2018.00407,Film,Film,0.14
+BN7141A04117|10.3389/fchem.2018.00407,Film,Film,0.14
+HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,Film,Film,0.14
+MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,Film,Film,0.14
+SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,Film,Film,0.14
+Oct 0118NHBRB|10.3389/fchem.2018.00407,Film,Film,0.14
+P18NOV17CG3|10.3389/fchem.2018.00407,Film,Film,0.14
+17.11.18|10.3389/fchem.2018.00407,Film,Film,0.14
+14.10.18|10.3389/fchem.2018.00407,Film,Film,0.14
+09.08.18|10.3389/fchem.2018.00407,Film,Film,0.14
+PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,Film,Film,0.14
+PRD 05 24 17 11:29|10.3389/fchem.2018.00407,Film,Film,0.14
+07.142018 2|10.3389/fchem.2018.00407,Film,Film,0.14
+NV No. AC-51-07269|10.3389/fchem.2018.00407,Film,Film,0.14
+FAB: 211017 09:06SP|10.3389/fchem.2018.00407,Film,Film,0.14
+FAB: 160817 15:05SP|10.3389/fchem.2018.00407,Film,Film,0.14
+FAB: 091217 16:53SP|10.3389/fchem.2018.00407,Film,Film,0.14
+100517 278WF246|10.3389/fchem.2018.00407,Film,Film,0.14
+P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,Film,Film,0.14
+730805210A 23:28|10.3389/fchem.2018.00407,Film,Film,0.14
+BBE 11.2018 10|10.3389/fchem.2018.00407,Film,Film,0.14
+20171102 1214JN|10.3389/fchem.2018.00407,Film,Film,0.14
+20171021 3214GH|10.3389/fchem.2018.00407,Film,Film,0.14
+20171103 2106WF|10.3389/fchem.2018.00407,Film,Film,0.14
+drinking_water|10.3390/w12113115,Film,Film,0.007
+IB|101119.10.3389/fchem.2018.00407,Foam,Foam,0.05
+BB 311019 08: 11 PSRL6|10.3389/fchem.2018.00407,Foam,Foam,0.05
+BB 311019 09: 50 STB1|10.3389/fchem.2018.00407,Foam,Foam,0.05
+Oct0719|10.3389/fchem.2018.00407,Foam,Foam,0.05
+BN7141A04117|10.3389/fchem.2018.00407,Foam,Foam,0.05
+HE.B.No 229 (BM/AS)|10.3389/fchem.2018.00407,Foam,Foam,0.05
+MU.N.No.298 (MA/AD)|10.3389/fchem.2018.00407,Foam,Foam,0.05
+SO.B No.087 (AS/LB)|10.3389/fchem.2018.00407,Foam,Foam,0.05
+Oct 0118NHBRB|10.3389/fchem.2018.00407,Foam,Foam,0.05
+P18NOV17CG3|10.3389/fchem.2018.00407,Foam,Foam,0.05
+17.11.18|10.3389/fchem.2018.00407,Foam,Foam,0.05
+14.10.18|10.3389/fchem.2018.00407,Foam,Foam,0.05
+09.08.18|10.3389/fchem.2018.00407,Foam,Foam,0.05
+PRD 03 21 2017 14:02|10.3389/fchem.2018.00407,Foam,Foam,0.05
+PRD 05 24 17 11:29|10.3389/fchem.2018.00407,Foam,Foam,0.05
+07.142018 2|10.3389/fchem.2018.00407,Foam,Foam,0.05
+NV No. AC-51-07269|10.3389/fchem.2018.00407,Foam,Foam,0.05
+FAB: 211017 09:06SP|10.3389/fchem.2018.00407,Foam,Foam,0.05
+FAB: 160817 15:05SP|10.3389/fchem.2018.00407,Foam,Foam,0.05
+FAB: 091217 16:53SP|10.3389/fchem.2018.00407,Foam,Foam,0.05
+100517 278WF246|10.3389/fchem.2018.00407,Foam,Foam,0.05
+P: 4/11/17 03:34 AZ|10.3389/fchem.2018.00407,Foam,Foam,0.05
+730805210A 23:28|10.3389/fchem.2018.00407,Foam,Foam,0.05
+BBE 11.2018 10|10.3389/fchem.2018.00407,Foam,Foam,0.05
+20171102 1214JN|10.3389/fchem.2018.00407,Foam,Foam,0.05
+20171021 3214GH|10.3389/fchem.2018.00407,Foam,Foam,0.05
+20171103 2106WF|10.3389/fchem.2018.00407,Foam,Foam,0.05
+TCQS|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+SHN|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+CHQ|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+CHH|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+ZHB|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+DAS|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+XHS|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+HNZ|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+TCH|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+WHH|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+Spr|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+Sum|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+Aut|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+Win|10.1016/j.scitotenv.2021.148001,Foam,Foam,8.00E-04
+Finished|10.1016/j.scitotenv.2019.134520,Sphere,Sphere,0.088172043
+TCQS|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+SHN|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+CHQ|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+CHH|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+ZHB|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+DAS|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+XHS|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+HNZ|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+TCH|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+WHH|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+Spr|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+Sum|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+Aut|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+Win|10.1016/j.scitotenv.2021.148001,Film,Sheet,0.0113
+Grab24|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.5
+Grab1|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.5
+Net12|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.166666667
+Net2|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.749890303
+Net9|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.500736618
+Net10|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.25019305
+Net15|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.679579149
+Net18|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.665973666
+Net19|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.5
+Net20|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.200279135
+Net3|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.11122449
+Net16|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.333402147
+Net13|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.862116788
+Net14|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.199842644
+Net24|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.076957797
+Net11|doi.org/10.1016/j.envpol.2018.06.033,Film,films,0.791885115
+doi.org/10.3389/frans.2022.857694|SanMarcos,Fragment,fragments,0.005347594
+doi.org/10.3389/frans.2022.857694|Waco,Fragment,fragments,0.049773756
+doi.org/10.3389/frans.2022.857694|Wilsons,Fragment,fragments,0.066666667
+doi.org/10.1021/acs.est.9b04896 | 401,Fragment,fragments,0.04
+doi.org/10.1021/acs.est.9b04896 | 391,Fragment,fragments,0.90909
+doi.org/10.1021/acs.est.9b04896 | 393,Fragment,fragments,0.392857143
+doi.org/10.1021/acs.est.9b04896 | 418,Fragment,fragments,0.16
+doi.org/10.1021/acs.est.9b04896 | 417,Fragment,fragments,0.545454545
+doi.org/10.1021/acs.est.9b04896 | 412,Fragment,fragments,0.24
+doi.org/10.1021/acs.est.9b04896 | 422,Fragment,fragments,0.196721311
+doi.org/10.1021/acs.est.9b04896 | 426,Fragment,fragments,0.565789474
+doi.org/10.1021/acs.est.9b04896 | 413,Fragment,fragments,0.5625
+doi.org/10.1021/acs.est.9b04896 | 396,Fragment,fragments,0.387755102
+doi.org/10.1021/acs.est.9b04896 | 410,Fragment,fragments,0.333333333
+doi.org/10.1021/acs.est.9b04896 | 423,Fragment,fragments,0.028571429
+doi.org/10.1021/acs.est.9b04896 | 424,Fragment,fragments,0.181818182
+doi.org/10.1021/acs.est.9b04896 | 421,Fragment,fragments,0.84375
+doi.org/10.1021/acs.est.9b04896 | 427,Fragment,fragments,0.613636364
+doi.org/10.1021/acs.est.9b04896 | 386,Fragment,fragments,0.214285714
+doi.org/10.1021/acs.est.9b04896 | 389,Fragment,fragments,0.2
+doi.org/10.1021/acs.est.9b04896 | 406,Fragment,fragments,0.078947368
+doi.org/10.1021/acs.est.9b04896 | 411,Fragment,fragments,0.078947368
+doi.org/10.1021/acs.est.9b04896 | 400,Fragment,fragments,0.048387097
+doi.org/10.1021/acs.est.9b04896 | 420,Fragment,fragments,0.222222222
+doi.org/10.1021/acs.est.9b04896 | 428,Fragment,fragments,0.373831776
+doi.org/10.1021/acs.est.9b04896 | 388,Fragment,fragments,0.3125
+doi.org/10.1021/acs.est.9b04896 | 415,Fragment,fragments,2.208333333
+doi.org/10.1021/acs.est.9b04896 | 407,Fragment,fragments,0.285714286
+doi.org/10.1021/acs.est.9b04896 | 402,Fragment,fragments,0.113207547
+doi.org/10.1021/acs.est.9b04896 | 399,Fragment,fragments,0.111111111
+doi.org/10.1021/acs.est.9b04896 | 404,Fragment,fragments,0.318181818
+doi.org/10.1021/acs.est.9b04896 | 425,Fragment,fragments,0.259259259
+doi.org/10.1021/acs.est.9b04896 | 395,Fragment,fragments,0.076086957
+doi.org/10.1021/acs.est.9b04896 | 409,Fragment,fragments,0.285714286
+doi.org/10.1021/acs.est.9b04896 | 390,Fragment,fragments,0.242424242
+doi.org/10.1021/acs.est.9b04896 | 419,Fragment,fragments,0.470588235
+Average|doi.org/10.1016/j.jwpe.2020.101640,Fragment,fragments,0.8
+James|doi.org/10.1016/j.jwpe.2020.101640,Fragment,fragments,0.8
+Roanoke|doi.org/10.1016/j.jwpe.2020.101640,Fragment,fragments,0.8
+Stroubles|doi.org/10.1016/j.jwpe.2020.101640,Fragment,fragments,0.8
+Grab10|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,1
+Grab13|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,1
+Grab18|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.500463392
+Grab8|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.490774908
+Grab25|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.5
+Grab20|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.333333333
+Grab22|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.333138856
+Grab7A|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.5
+Net6|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.24952381
+Net12|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.166666667
+Net2|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.125054849
+Net10|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.25019305
+Net5|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.400359066
+Net15|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.160210426
+Net4|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.5
+Net7B|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.665973666
+Net18|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.333333333
+Net7A|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,1
+Net3|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.22244898
+Net16|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.5
+Net13|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.034452555
+Net8|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.7
+Net17|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.249870667
+Net21|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.124851837
+Net26|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.166666667
+Net24|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.076957797
+Net22|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.181914894
+Net11|doi.org/10.1016/j.envpol.2018.06.033,Fragment,fragments,0.016032216
+upstream|doi.org/10.1021/es503610r,Fragment,fragments,0.37628866
+downstream|doi.org/10.1021/es503610r,Fragment,fragments,0.37109375
+downstream|doi.org/10.1021/es503610r,Nurdle,pellets,0.025111607
+doi.org/10.3389/frans.2022.857694|SanMarcos,Fiber,fibers,0.994652406
+doi.org/10.3389/frans.2022.857694|Waco,Fiber,fibers,0.950226244
+doi.org/10.3389/frans.2022.857694|Wilsons,Fiber,fibers,0.933333333
+doi.org/10.1021/acs.est.9b04896 | 401,Fiber,fibers,0.96
+doi.org/10.1021/acs.est.9b04896 | 391,Fiber,fibers,0.09091
+doi.org/10.1021/acs.est.9b04896 | 393,Fiber,fibers,0.607142857
+doi.org/10.1021/acs.est.9b04896 | 418,Fiber,fibers,0.842857143
+doi.org/10.1021/acs.est.9b04896 | 417,Fiber,fibers,0.454545455
+doi.org/10.1021/acs.est.9b04896 | 412,Fiber,fibers,0.76
+doi.org/10.1021/acs.est.9b04896 | 422,Fiber,fibers,0.803278689
+doi.org/10.1021/acs.est.9b04896 | 426,Fiber,fibers,0.434210526
+doi.org/10.1021/acs.est.9b04896 | 413,Fiber,fibers,0.4375
+doi.org/10.1021/acs.est.9b04896 | 396,Fiber,fibers,0.612244898
+doi.org/10.1021/acs.est.9b04896 | 410,Fiber,fibers,0.666666667
+doi.org/10.1021/acs.est.9b04896 | 423,Fiber,fibers,0.971428571
+doi.org/10.1021/acs.est.9b04896 | 424,Fiber,fibers,0.818181818
+doi.org/10.1021/acs.est.9b04896 | 421,Fiber,fibers,0.21875
+doi.org/10.1021/acs.est.9b04896 | 427,Fiber,fibers,0.386363636
+doi.org/10.1021/acs.est.9b04896 | 386,Fiber,fibers,0.785714286
+doi.org/10.1021/acs.est.9b04896 | 389,Fiber,fibers,0.8
+doi.org/10.1021/acs.est.9b04896 | 406,Fiber,fibers,0.921052632
+doi.org/10.1021/acs.est.9b04896 | 411,Fiber,fibers,0.921052632
+doi.org/10.1021/acs.est.9b04896 | 400,Fiber,fibers,0.951612903
+doi.org/10.1021/acs.est.9b04896 | 420,Fiber,fibers,0.777777778
+doi.org/10.1021/acs.est.9b04896 | 428,Fiber,fibers,0.626168224
+doi.org/10.1021/acs.est.9b04896 | 388,Fiber,fibers,0.733333333
+doi.org/10.1021/acs.est.9b04896 | 415,Fiber,fibers,0.311688312
+doi.org/10.1021/acs.est.9b04896 | 407,Fiber,fibers,0.714285714
+doi.org/10.1021/acs.est.9b04896 | 402,Fiber,fibers,0.886792453
+doi.org/10.1021/acs.est.9b04896 | 399,Fiber,fibers,0.888888889
+doi.org/10.1021/acs.est.9b04896 | 404,Fiber,fibers,0.681818182
+doi.org/10.1021/acs.est.9b04896 | 425,Fiber,fibers,0.740740741
+doi.org/10.1021/acs.est.9b04896 | 395,Fiber,fibers,0.923913043
+doi.org/10.1021/acs.est.9b04896 | 409,Fiber,fibers,0.714285714
+doi.org/10.1021/acs.est.9b04896 | 390,Fiber,fibers,0.757575758
+doi.org/10.1021/acs.est.9b04896 | 419,Fiber,fibers,0.529411765
+Average|doi.org/10.1016/j.jwpe.2020.101640,Fiber,fibers,0.05
+James|doi.org/10.1016/j.jwpe.2020.101640,Fiber,fibers,0.05
+Roanoke|doi.org/10.1016/j.jwpe.2020.101640,Fiber,fibers,0.05
+Stroubles|doi.org/10.1016/j.jwpe.2020.101640,Fiber,fibers,0.05
+Nelson|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+RMYC3|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Redboine1|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Redboine3|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Redboine2|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Emerson|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+RMYC1|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Forks1|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Forks2|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Courchaine|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+RMYC2|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Forks3|doi.org/10.5203/pmuser.201730578,Fiber,fibers,0.89
+Grab6|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab5|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab12|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab17|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab18|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.499536608
+Grab24|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Grab8|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.509225092
+Grab3|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab1|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Grab4|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab26|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab25|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Grab20|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.666666667
+Grab16|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab23|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Grab22|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.666861144
+Grab7A|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Grab21|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+average|doi.org/10.1016/j.marpolbul.2017.07.028,Fiber,fibers,1
+doi.org/10.1007/s11356-021-12898-7|1,Fiber,fibers,1
+doi.org/10.1007/s11356-021-12898-7|2,Fiber,fibers,1
+doi.org/10.1007/s11356-021-12898-7|3,Fiber,fibers,1
+Net12|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.166666667
+Net1|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Net2|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.125054849
+Net10|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.249420849
+Net5|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.599640934
+Net15|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.160210426
+Net4|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Net7B|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.333333333
+Net19|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.5
+Net20|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.399860433
+Net3|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.666326531
+Net16|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.166597853
+Net13|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.068978102
+Net14|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.800157356
+Net8|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.3
+Net17|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.750129333
+Net23|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.749914471
+Net21|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.875148163
+Net26|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.666666667
+Net24|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.769126608
+Net25|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,1
+Net22|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.818085106
+Net11|doi.org/10.1016/j.envpol.2018.06.033,Fiber,fibers,0.192335942
+upstream|doi.org/10.1021/es503610r,Fiber,fibers,0.62371134
+downstream|doi.org/10.1021/es503610r,Fiber,fibers,0.58984375
+Grab11|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,1
+Grab9|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,1
+Net6|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.75047619
+Net12|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.5
+Net9|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.499263382
+Net10|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.25019305
+Net20|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.399860433
+Net23|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.250085529
+Net26|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.166666667
+Net24|doi.org/10.1016/j.envpol.2018.06.033,Nurdle,beads,0.076957797
+Net13|doi.org/10.1016/j.envpol.2018.06.033,Sphere,spheres,0.034452555
+Average|doi.org/10.1016/j.jwpe.2020.101640,Sphere,spherical,0.15
+James|doi.org/10.1016/j.jwpe.2020.101640,Sphere,spherical,0.15
+Roanoke|doi.org/10.1016/j.jwpe.2020.101640,Sphere,spherical,0.15
+Stroubles|doi.org/10.1016/j.jwpe.2020.101640,Sphere,spherical,0.15
+downstream|doi.org/10.1021/es503610r,Foam,styrofoam,0.013950893

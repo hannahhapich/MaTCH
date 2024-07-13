@@ -6,6 +6,7 @@ weight_estimate_g,items,material
 25.39,bags,paper
 8.52,bags,plastic
 82.5,balloons,rubber
+82.5,balloons,plastic
 82.5,balls,rubber
 82.5,balls,plastic
 82.5,bandages,plastic
@@ -14,7 +15,9 @@ weight_estimate_g,items,material
 20,"bar, pipe, or wire",plastic
 82.5,batteries,metal
 22.97,beverage bottles,plastic
+300,beverage bottles,glass
 16.94,beverage cans,metal
+16.94,beverage containers,metal
 22.3,beverage containers,paper
 22.3,beverage containers,plastic
 82.5,"bolts, nails, and screws",metal
@@ -39,6 +42,7 @@ weight_estimate_g,items,material
 0.29,cigarette butts,paper
 0.29,cigarette filters,plastic
 0.29,cigarette filters,organic
+0.29,cigarette filters,cloth
 82.5,cigarette lighters,plastic
 10.4,cigarette packets,paper
 10.4,cigarette packets,plastic
@@ -49,6 +53,7 @@ weight_estimate_g,items,material
 82.5,cloth fragments,cloth
 82.5,clothing,cloth
 82.5,clothing,plastic
+82.5,"clothing, hats, gloves & towels",cloth
 82.5,"clothing, hats, gloves & towels",plastic
 82.5,"clothing, hats, gloves & towels",organic
 5.05,coffee cup,paper
@@ -106,6 +111,7 @@ weight_estimate_g,items,material
 82.5,industrialpackaging OR crates OR sheeting,metal
 22.3,juice carton,plastic
 22.3,juice carton,paper OR cardboard
+22.3,juice carton,paper
 22.3,juice packet,plastic
 1104.2,large debris items,metal
 1104.2,large debris items,cloth
@@ -167,6 +173,7 @@ weight_estimate_g,items,material
 8,rope,organic
 8,rubber bands,rubber
 82.5,sanitary product,plastic
+14.61,sauce packet,metal
 14.61,sauce packet,plastic
 31.64,singlue use food container,paper
 9.35,"small plastic bags, e.g., freezer bags",plastic
@@ -199,6 +206,7 @@ weight_estimate_g,items,material
 4.26,utensil,metal
 22.97,water bottles,plastic
 11.9,wet wipes,cloth
+11.9,wet wipes,plastic
 11.9,wet wipes,paper
 14.61,wrappers,paper
 14.61,wrappers,plastic

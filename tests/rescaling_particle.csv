@@ -1,4 +1,4 @@
-﻿sample_ID,length_um,sample_volume,morphology,material
+﻿Sample ID,Length (microns),Sample Volume,Morphology,Material
 1,27,5,film,cellophane
 1,27,5,foam,polystyrene
 1,27,5,fiber,polyimide

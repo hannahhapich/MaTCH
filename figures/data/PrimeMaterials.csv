@@ -429,7 +429,6 @@ poly(vinylpropylsulfide),poly(vinylpropylsulfide),Poly(vinyl propyl sulfide)
 poly(vinylpyrrolidone),poly(vinylpyrrolidone),Poly(vinyl pyrrolidone)
 poly(vinylstearate),poly(vinylstearate),Poly(vinyl stearate)
 poly(vinylvalerate),poly(vinylvalerate),Poly(vinyl valerate)
-poly(vinylidenechloride),poly(vinylidenechloride),Poly(vinylidene chloride)
 "poly[(1,4-butanediol)-alt-(4,4'-diphenylmethanediisocyanate)]","poly[(1,4-butanediol)-alt-(4,4'-diphenylmethanediisocyanate)]","Poly[(1,4-butanediol)-alt-(4,4'-diphenylmethane diisocyanate)]"
 "poly[(diethyleneglycol)-alt-(1,6-hexamethylenediisocyanate)]","poly[(diethyleneglycol)-alt-(1,6-hexamethylenediisocyanate)]","Poly[(diethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]"
 "poly[(ethyleneglycol)-alt-(4,4'-diphenylmethanediisocyanate)]","poly[(ethyleneglycol)-alt-(4,4'-diphenylmethanediisocyanate)]","Poly[(ethylene glycol)-alt-(4,4'-diphenylmethane diisocyanate)]"
@@ -507,6 +506,8 @@ pvc,pvc,PVC
 pvc,polyvinylchloride,PVC
 pvc,poly(vinylchloride),PVC
 pvc,vinyl(pvc),PVC
+pvdc,poly(vinylidenechloride),PVDC
+pvdc,pvdc,PVDC
 pvdf,pvdf,PVDF
 pvdf,poly(vinylidenefluoride),PVDF
 pvdf,polyvinylidenefluoride,PVDF

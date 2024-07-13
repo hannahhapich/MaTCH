@@ -3,7 +3,7 @@ win_DB,PP,8898,1,0.997838811,1.002161189
 win_DB,Thermoplastic Elastomers,7409,1.02,1.017612301,1.022387699
 win_DB,PC,5979,1.2,1.197321614,1.202678386
 win_DB,Nylon 66,5649,1.33,1.32723966,1.33276034
-win_DB,Vinyl (PVC),5527,1.33,1.327207558,1.332792442
+win_DB,PVC,5527,1.33,1.327207558,1.332792442
 win_DB,Nylon 6,5288,1.3,1.297141542,1.302858458
 win_DB,ABS,3579,1.1105,1.106994257,1.114005743
 win_DB,Silicone,3006,1.15,1.146163343,1.153836657
@@ -22,7 +22,7 @@ win_DB,Thermoset Polyester,880,1.783,1.77583173,1.79016827
 win_DB,PMMA,849,1.18,1.172700893,1.187299107
 win_DB,Polyphenylene Sulfide (PPS),846,1.61,1.602687852,1.617312148
 win_DB,Ethylene Vinyl Acetate,779,0.939,0.931377312,0.946622688
-win_DB,Polyethylene Terephthalate,737,1.45,1.442161463,1.457838537
+win_DB,PET,737,1.45,1.442161463,1.457838537
 win_DB,PTFE,724,2.16,2.152090885,2.167909115
 win_DB,Polyetheretherketone,681,1.4165,1.40834324,1.42465676
 win_DB,Polyetherimide ,630,1.36,1.351517333,1.368482667
@@ -302,7 +302,7 @@ Kooi_2021,rubbertype2,N/A,1.03,0.9968068,1.0631932
 Kooi_2021,rubbertype3,N/A,1.1,1.0668068,1.1331932
 Kooi_2021,urea-formaldehyde,N/A,1.5,1.4668068,1.5331932
 https://www.omnicalculator.com/construction/glass-weight,glass,19,2.5,2.344,2.656
-https://www.theworldmaterial.com/density-of-metals/,metallic,9,6.89,5.3,8.48
+https://www.theworldmaterial.com/density-of-metals/,metal,9,6.89,5.3,8.48
 https://hal.science/hal-00615443/document,organic,N/A,0.38,0.26,0.5
 "https://www.ncbi.nlm.nih.gov/books/NBK563048/#:~:text=Composition,-General%20composition%20of&text=The%20density%20of%20waterborne%20wall,6%2D10%2D2006).",paint,N/A,1.25,1.2,1.3
 "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8912506/#:~:text=TRWPs%20were%20found%20in%20the,density%20slightly%20tended%20to%20increase.",tire wear,N/A,1.45,1.2,1.7

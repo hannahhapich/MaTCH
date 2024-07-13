@@ -984,8 +984,7 @@ paperornapkinsortissues,paper/napkins/tissues,paper OR napkins OR tissues
 paperornapkinsortissues,paperornapkinsortissues,paper OR napkins OR tissues
 paraffinorwax,paraffinorwax,paraffin OR wax
 paraffinorwax,paraffin/wax,paraffin OR wax
-parkingtickets&reciepts,parkingtickets&receipts,parking tickets & reciepts
-parkingtickets&reciepts,parkingtickets&reciepts,parking tickets & reciepts
+parkingtickets&receipts,parkingtickets&receipts,parking tickets & receipts
 pegsandchips,pegsandclips,pegs and chips
 pegsandchips,pegsandchips,pegs and chips
 pellet,pellets,pellet
@@ -1023,11 +1022,11 @@ potteryorceramic,anypotteryorceramic,pottery or ceramic
 pulltabs:beverages,pulltabs,pull tabs: beverages
 pulltabs:beverages,pulltabs:beverages,pull tabs: beverages
 rags,rags,rags
-reciepts,receipts,reciepts
-reciepts,receipt,reciepts
-reciepts,paperreceipt,reciepts
-reciepts,plastic-coatedreceipt,reciepts
-reciepts,reciepts,reciepts
+receipts,receipts,receipts
+receipts,receipt,receipts
+receipts,paperreceipt,receipts
+receipts,plastic-coatedreceipt,receipts
+receipts,reciept,receipts
 resinpellets,resinpellets,resin pellets
 rigidplasticdisposablefoodandbegerageware,rigidplasticdisposablefoodandbeverageware,rigid plastic disposable food and begerage ware
 rigidplasticdisposablefoodandbegerageware,rigidplasticdisposablefoodandbegerageware,rigid plastic disposable food and begerage ware
@@ -1071,6 +1070,10 @@ paperclip,paperclip,paperclip
 paperclip,paper-clip,paperclip
 paperclip,paperclips,paperclip
 paperclip,paper-clips,paperclip
+rubberyfragment,trwp,rubbery fragment
+rubberyfragment,tw,rubbery fragment
+rubberyfragment,tirewear,rubbery fragment
+rubberyfragment,tirewears,rubbery fragment
 rubberyfragment,rubberfragments,rubbery fragment
 rubberyfragment,rubberyfragment,rubbery fragment
 sacking,sacking(hessian),sacking

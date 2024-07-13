@@ -1,0 +1,12 @@
+Concentration (particles/volume),Sample ID,Material,Material %,Morphology,Morphology %,Min Length (microns),Max Length (microns),Known Alpha Value
+2.35E+08,curb_2-20um_glass,glass,100,fragment,100,2,20,1.6
+1.21E+10,curb_2-20um_metallic,metallic,100,fragment,100,2,20,1.6
+1.29E+10,curb_2-20um_organic,organic,100,fragment,100,2,20,1.6
+9.71E+09,curb_2-20um_paint,paint,100,film,100,2,20,1.6
+1.94E+11,curb_2-20um_TRW,tire wear & asphalt,100,fragment,100,2,20,1.6
+0.00E+00,curb_20-125um_glass,glass,100,fragment,100,20,125,1.6
+4.22E+07,curb_20-125um_metallic,metallic,100,fragment,100,20,125,1.6
+5.24E+08,curb_20-125um_organic,organic,100,fragment,100,20,125,1.6
+6.40E+07,curb_20-125um_paint,paint,100,film,100,20,125,1.6
+1.67E+09,curb_20-125um_asphalt,asphalt,100,fragment,100,20,125,1.6
+2.61E+09,curb_20-125um_TW,tire wear,100,fragment,100,20,125,1.6
