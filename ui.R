@@ -148,6 +148,7 @@ ui <- dashboardPage(dark = T,
                                   box(title = HTML(paste0("Cleaned Data")), 
                                       maximizable = T,
                                       width = 12,
+                                      downloadButton("downloadData", "Download Full Dataset"),
                                       fluidRow(
                                         div(style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents5")
