@@ -1070,46 +1070,35 @@ server <- function(input,output,session) {
     }
   )
   
-  output$table1 = DT::renderDataTable({
-    Materials_Alias
-  }, style="bootstrap")
   
-  output$table2 = DT::renderDataTable({
-    Materials_Hierarchy
-  }, style="bootstrap")
+
   
-  output$table3 = DT::renderDataTable({
-    Items_Alias
-  }, style="bootstrap")
   
-  output$table4 = DT::renderDataTable({
-    Items_Hierarchy
-  }, style="bootstrap")
-  
-  output$table5 = DT::renderDataTable({
-    Material_Item_Relation
-  }, style="bootstrap")
-  
-  output$table6 = DT::renderDataTable({
-    Brand_Manufacturer_Relation
-  }, style="bootstrap")
-  
-  output$table7 = DT::renderDataTable({
-    Brand_Item_Relation
-  }, style="bootstrap")
-  
-  output$table8 = DT::renderDataTable({
-    PrimeUnclassifiable
-  }, style="bootstrap")
-  
-  output$table9 = DT::renderDataTable({
-    polymer_db
-  }, style="bootstrap")
-  
-  color <- read.csv("data/Microplastics_Color.csv")
-  output$table12 = DT::renderDataTable({
-    color
-  }, style="bootstrap")
+  lapply(1:length(titles), function(j) {
+    output[[view_code[j]]] <- DT::renderDataTable({
+      files[[j]]
+    }, rownames = FALSE,
+    escape = FALSE,
+    filter = "top", 
+    extensions = 'Buttons',
+    options = list(
+      searchHighlight = TRUE,
+      scrollX = TRUE,
+      sScrollY = '25vh', 
+      scrollCollapse = TRUE,
+      lengthChange = FALSE, 
+      #pageLength = 5,
+      paging = FALSE,
+      searching = TRUE,
+      fixedColumns = TRUE,
+      autoWidth = FALSE,
+      ordering = TRUE,
+      dom = 'Bfrtip',
+      buttons = c('copy', 'csv', 'excel', 'pdf')),
+    #style = "bootstrap",
+    class = "display", style="bootstrap")
+
+  })
   
   
   
