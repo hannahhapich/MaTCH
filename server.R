@@ -1070,10 +1070,6 @@ server <- function(input,output,session) {
     }
   )
   
-  
-
-  
-  
   lapply(1:length(titles), function(j) {
     output[[view_code[j]]] <- DT::renderDataTable({
       files[[j]]

@@ -434,10 +434,9 @@ ui <- dashboardPage(dark = T,
                                                       status = "success",
                                                       fill = T),
                                          fileInput('df', "Choose CSV File", multiple = FALSE, accept = c(".csv"))%>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Upload Help",
-                                                  content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row."),
-                                                  size = "m"),
+                                                  content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row.")),
                                          
                                          downloadButton('downloadtest', 'Download Test Data'),
                                          
@@ -490,25 +489,21 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(2, 
                                          selectInput('sizeRange', "Choose size range", c("", "Micro","Macro","All")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select if your study will include microplastics, macro-debris, or both."),
-                                                  size = "m"),
+                                                  content = c("Select if your study will include microplastics, macro-debris, or both.")),
                                          selectInput('environments', "Choose environment", c("", "Marine/Estuarine", "Riverine", "Terrestrial", "All")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select the environment your study will be conducted in, or include all."),
-                                                  size = "m"),
+                                                  content = c("Select the environment your study will be conducted in, or include all.")),
                                          selectInput('media', "Choose media", c("", "Surface Water","Sediment")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select the media your study will be conducted in."),
-                                                  size = "m"),
+                                                  content = c("Select the media your study will be conducted in.")),
                                          selectInput('specificity', "Choose specificity", c("", "More Specific","Less Specific")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying."),
-                                                  size = "m"),
+                                                  content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying.")),
                                          
                                   ),
                                   
