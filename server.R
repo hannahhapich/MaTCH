@@ -788,7 +788,7 @@ server <- function(input,output,session) {
                                      }, 
                                      rownames = FALSE,
                                      escape = FALSE,
-                                     filter = "top", 
+                                     #filter = "top", 
                                      extensions = 'Buttons',
                                      options = list(
                                        searchHighlight = TRUE,
@@ -812,7 +812,7 @@ server <- function(input,output,session) {
                                       datatable({df()[, c("material","PrimeMaterial")] %>% distinct()},
                                                 rownames = FALSE,
                                                 escape = FALSE,
-                                                filter = "top", 
+                                                #filter = "top", 
                                                 extensions = 'Buttons',
                                                 options = list(
                                                   searchHighlight = TRUE,
@@ -846,7 +846,7 @@ server <- function(input,output,session) {
   output$contents2 <- renderDataTable(datatable({df()[, c("items","PrimeItem")] %>% distinct()},
                                                 rownames = FALSE,
                                                 escape = FALSE,
-                                                filter = "top", 
+                                                #filter = "top", 
                                                 extensions = 'Buttons',
                                                 options = list(
                                                   searchHighlight = TRUE,

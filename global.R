@@ -17,10 +17,8 @@ library(bs4Dash)
 library(purrr)
 library(shinyFeedback)
 
-
-
-
 color <- read.csv("data/Microplastics_Color.csv")
+
 
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
