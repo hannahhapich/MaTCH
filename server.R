@@ -1081,6 +1081,7 @@ server <- function(input,output,session) {
     escape = FALSE,
     filter = "top", 
     extensions = 'Buttons',
+    selection = "none",
     options = list(
       searchHighlight = TRUE,
       scrollX = TRUE,
@@ -1097,7 +1098,6 @@ server <- function(input,output,session) {
       buttons = c('copy', 'csv', 'excel', 'pdf')),
     #style = "bootstrap",
     class = "display", style="bootstrap")
-
   })
   
   

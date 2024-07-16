@@ -379,6 +379,7 @@ ui <- dashboardPage(dark = T,
                                         box(
                                           title = titles[j], 
                                           width = 12,
+                                          collapsed = T,
                                           style = 'overflow-x: scroll',
                                           footer = tags$div(align = "center", captions[j]), 
                                                    DT::dataTableOutput(outputId = view_code[j])
@@ -386,11 +387,13 @@ ui <- dashboardPage(dark = T,
                                       }), 
                                       box(
                                         width = 12,
+                                        collapsed = T,
                                         title = "Items Hierarchy Tree",
                                         shinyTree::shinyTree(outputId = "itemshierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
                                       ),
                                       box(
                                         width = 12, 
+                                        collapsed = T,
                                         title = "Materials Hierarchy Tree",
                                         shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)   
                                       )
