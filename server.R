@@ -786,26 +786,52 @@ server <- function(input,output,session) {
   output$contents <- renderDataTable(datatable({
                                        df()[, c("material","items",  input$variable)]
                                      }, 
+                                     rownames = FALSE,
+                                     escape = FALSE,
+                                     filter = "top", 
                                      extensions = 'Buttons',
                                      options = list(
-                                       paging = TRUE,
+                                       searchHighlight = TRUE,
+                                       scrollX = TRUE,
+                                       sScrollY = '25vh', 
+                                       scrollCollapse = TRUE,
+                                       lengthChange = FALSE, 
+                                       #pageLength = 5,
+                                       paging = FALSE,
                                        searching = TRUE,
                                        fixedColumns = TRUE,
-                                       autoWidth = TRUE,
+                                       autoWidth = FALSE,
                                        ordering = TRUE,
                                        dom = 'Bfrtip',
                                        buttons = c('copy', 'csv', 'excel', 'pdf')
                                      ),
-                                     class = "display",
-                                     style="bootstrap"))
+                                     selection = 'none',  # Disable row selection
+                                     class = "display", style="bootstrap"))
   
   output$contents1 <- DT :: renderDataTable(
                                       datatable({df()[, c("material","PrimeMaterial")] %>% distinct()},
+                                                rownames = FALSE,
+                                                escape = FALSE,
+                                                filter = "top", 
                                                 extensions = 'Buttons',
+                                                options = list(
+                                                  searchHighlight = TRUE,
+                                                  scrollX = TRUE,
+                                                  sScrollY = '25vh', 
+                                                  scrollCollapse = TRUE,
+                                                  lengthChange = FALSE, 
+                                                  #pageLength = 5,
+                                                  paging = FALSE,
+                                                  searching = TRUE,
+                                                  fixedColumns = TRUE,
+                                                  autoWidth = FALSE,
+                                                  ordering = TRUE,
+                                                  dom = 'Bfrtip',
+                                                  buttons = c('copy', 'csv', 'excel', 'pdf')
+                                                ),
+                                                selection = 'none',  # Disable row selection
                                                 class = "display",
                                                 style="bootstrap",
-                                                escape = FALSE,
-                                                options = list(server = FALSE, dom="Bfrtip", paging=TRUE, ordering=TRUE, buttons=c('copy', 'csv', 'excel', 'pdf')),
                                                 callback = JS("table.rows().every(function(row, tab, row) {
                                               var $this = $(this.node());
                                               $this.attr('id', this.data()[0]);
@@ -818,11 +844,28 @@ server <- function(input,output,session) {
                                       
   
   output$contents2 <- renderDataTable(datatable({df()[, c("items","PrimeItem")] %>% distinct()},
+                                                rownames = FALSE,
+                                                escape = FALSE,
+                                                filter = "top", 
                                                 extensions = 'Buttons',
+                                                options = list(
+                                                  searchHighlight = TRUE,
+                                                  scrollX = TRUE,
+                                                  sScrollY = '25vh', 
+                                                  scrollCollapse = TRUE,
+                                                  lengthChange = FALSE, 
+                                                  #pageLength = 5,
+                                                  paging = FALSE,
+                                                  searching = TRUE,
+                                                  fixedColumns = TRUE,
+                                                  autoWidth = FALSE,
+                                                  ordering = TRUE,
+                                                  dom = 'Bfrtip',
+                                                  buttons = c('copy', 'csv', 'excel', 'pdf')
+                                                ),
+                                                selection = 'none',  # Disable row selection
                                                 class = "display",
                                                 style="bootstrap",
-                                                escape = FALSE,
-                                                options = list(server = FALSE, dom="Bfrtip", paging=TRUE, ordering=TRUE, buttons=c('copy', 'csv', 'excel', 'pdf')),
                                                 callback = JS("table.rows().every(function(row, tab, row) {
                                               var $this = $(this.node());
                                               $this.attr('id', this.data()[0]);
@@ -838,7 +881,7 @@ server <- function(input,output,session) {
                                       extensions = 'Buttons',
                                       options = list(
                                         paging = TRUE,
-                                        searching = TRUE,
+                                        #searching = TRUE,
                                         fixedColumns = TRUE,
                                         autoWidth = TRUE,
                                         ordering = TRUE,
@@ -856,7 +899,7 @@ server <- function(input,output,session) {
                                       extensions = 'Buttons',
                                       options = list(
                                         paging = TRUE,
-                                        searching = TRUE,
+                                        #searching = TRUE,
                                         fixedColumns = TRUE,
                                         autoWidth = TRUE,
                                         ordering = TRUE,

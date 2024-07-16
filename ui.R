@@ -255,6 +255,7 @@ ui <- dashboardPage(dark = T,
                                   column(6,
                                          shiny::HTML("<br><br><center> <h1>Funded By</h1> </center><br>"),
                                          align = "center",
+                                         img(src="https://www.ctc-n.org/sites/default/files/logo_nrel_c.jpg", width = "50%"),
                                          img(src="NOAA.png", width = "50%"),
                                          img(src="NMSF.png", width = "50%"),
                                          img(src="boi.png", width = "50%")
@@ -446,28 +447,33 @@ ui <- dashboardPage(dark = T,
                                                               "More Specific Items"="MoreSpecificItem",
                                                               "Less Specific Items"="LessSpecificItem"))),
                                   column(10, 
-                                         dataTableOutput('contents')
+                                         fluidRow(
+                                           box(
+                                             width = 4,
+                                             title = "Relational Results",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents')  
+                                           ),
+                                           box(
+                                             width = 4, 
+                                             title = "Material Keys",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents1')
+                                           ),
+                                           box(
+                                             width = 4, 
+                                             title = "Morphology Keys",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents2')
+                                           )  
+                                         )
                                   )
                                   
                                 ),
                                 hr(),
-                                fluidRow(
-                                  column(3), 
-                                  column(6,shiny::HTML("<br><br><center> <h4>View Key Alias Matches</h4> </center><br>")
-                                  ),
-                                  column(3)
-                                  
-                                ),
-                                fluidRow(
-                                  column(1),
-                                  column(5, 
-                                         dataTableOutput('contents1')
-                                  ),
-                                  column(5, 
-                                         dataTableOutput('contents2')
-                                  ), 
-                                  column(1)
-                                ),
                                 fluidRow(
                                   align="center",
                                   hr(),
