@@ -12,11 +12,13 @@ library(digest)
 library(shiny)
 library(DT)
 library(shinyTree)
-library(shinyhelper)
 library(shinyWidgets)
 library(bs4Dash)
 library(purrr)
 library(shinyFeedback)
+
+color <- read.csv("data/Microplastics_Color.csv")
+
 
 #Data for embeddings generation via chRoma
 items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
@@ -1542,6 +1544,56 @@ morphology_abundance <- morphology_abundance %>% add_row(morphology = "average",
 #c(0.950, 1.05000000, 0.0836684211, 0.74473684, 2.883158e-02, 0.692631579)
 
 
+#UI Elements ----
+titles <- c(
+  "Materials Alias Table",
+  "Materials Hierarchy Table",
+  "Items Alias Table",
+  "Items Hierarchy Table",
+  "Material-Item Relational Table",
+  "Material-Density Relational Table",
+  "Manufacturer Brand Relational Table",
+  "Item-Brand Relational Table",
+  "Misaligned Categories Table",
+  "Color Alias"
+)
 
+captions <- c(
+  "This table describes the aliases that can be used to describe material types and links them to a key term. Each row represents a unique material and each column is an alias for that material.",
+  "This table describes how the unique material types relate to one another in a hierarchical structure (ex: foam and rubber are a subset of plastic).",
+  "This table describes the aliases that can be used to describe item types and links them to a key term. Each row represents a unique item and each column is an alias for that item.",
+  "This table describes how the unique items relate to one another in a hierarchical structure (ex: forks, knives, and spoons all fall under utensils).",
+  "This table relates the items, materials, and survey sheets used to make the other relational tables.",
+  "This table relates materials to all known material densities. Sources also displayed.",
+  "This table relates brand types to their respective manufacturer.",
+  "This table relates brands to items.",
+  "This table displays all categories that did not fit our item-material framework.",
+  "This table describes the aliases that can be used to describe particle colors. Each row represents a unique color and each column is an alias for that color."
+)
+
+view_code <- c(
+  "table1",
+  "table2",
+  "table3",
+  "table4",
+  "table5",
+  "table9",
+  "table6",
+  "table7",
+  "table8",
+  "table12"
+)
+
+files <- list(Materials_Alias, 
+              Materials_Hierarchy,
+              Items_Alias,
+              Items_Hierarchy,
+              Material_Item_Relation, 
+              polymer_db, 
+              Brand_Manufacturer_Relation,
+              Brand_Item_Relation,
+              PrimeUnclassifiable,
+              color
+)
 
 

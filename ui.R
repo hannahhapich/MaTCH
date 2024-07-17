@@ -3,6 +3,7 @@ ui <- dashboardPage(dark = T,
                     fullscreen = T,
                     dashboardHeader(title = "MaTCH"),
                     dashboardSidebar(
+                      skin = "dark",
                       sidebarMenu(
                         id = "sidebarmenu",
                         menuItem("MaTCH Tool", 
@@ -255,6 +256,7 @@ ui <- dashboardPage(dark = T,
                                   column(6,
                                          shiny::HTML("<br><br><center> <h1>Funded By</h1> </center><br>"),
                                          align = "center",
+                                         img(src="https://www.ctc-n.org/sites/default/files/logo_nrel_c.jpg", width = "50%"),
                                          img(src="NOAA.png", width = "50%"),
                                          img(src="NMSF.png", width = "50%"),
                                          img(src="boi.png", width = "50%")
@@ -372,451 +374,33 @@ ui <- dashboardPage(dark = T,
                                 tags$hr(),
                                 
                                 fluidRow(
-                                  column(3
-                                  ),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Materials Alias Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes the aliases that can be used to describe material types and links them to a key term. Each row represents a unique material and each column is an alias for that material.</h5>"),
-                                         checkboxInput("show1", "Show Table", width = '100%')
-                                         
-                                  ),
-                                  column(3
-                                  )
+                                    sortable(
+                                      width = 12,
+                                      #p(class = "text-center", paste("Column", i)),
+                                      lapply(1:length(titles), FUN = function(j) {
+                                        box(
+                                          title = titles[j], 
+                                          width = 12,
+                                          collapsed = T,
+                                          style = 'overflow-x: scroll',
+                                          footer = tags$div(align = "center", captions[j]), 
+                                                   DT::dataTableOutput(outputId = view_code[j])
+                                        )
+                                      }), 
+                                      box(
+                                        width = 12,
+                                        collapsed = T,
+                                        title = "Items Hierarchy Tree",
+                                        shinyTree::shinyTree(outputId = "itemshierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
+                                      ),
+                                      box(
+                                        width = 12, 
+                                        collapsed = T,
+                                        title = "Materials Hierarchy Tree",
+                                        shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)   
+                                      )
+                                    )
                                 ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData1', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)),
-                                
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show1 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table1'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         shiny::HTML("<br><br><center> <h1>Materials Hierarchy Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes how the unique material types relate to one another in a hierarchical structure (ex: foam and rubber are a subset of plastic).</h5>"),
-                                        
-                                         checkboxInput("show2", "Show Table", width = '50%'),
-                                         shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
-                                         
-                                  ),
-                                  column(1)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData2', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show2 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table2'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Items Alias Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes the aliases that can be used to describe item types and links them to a key term. Each row represents a unique item and each column is an alias for that item.</h5>"),
-                                         checkboxInput("show3", "Show Table", width = '50%')
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData3', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show3 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table3'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         shiny::HTML("<br><br><center> <h1>Items Hierarchy Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes how the unique items relate to one another in a hierarchical structure (ex: forks, knives, and spoons all fall under utensils).</h5>"),
-                                       
-                                         checkboxInput("show4", "Show Table", width = '50%'),
-                                         shinyTree::shinyTree(outputId = "itemshierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
-                                         
-                                         
-                                  ),
-                                  column(1)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData4', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show4 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table4'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Material-Item Relational Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table relates the items, materials, and survey sheets used to make the other relational tables.</h5>"),
-                                         checkboxInput("show5", "Show Table", width = '50%')
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData5', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show5 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table5'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Material-Density Relational Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table relates materials to all known material densities. Sources also displayed.</h5>"),
-                                         checkboxInput("show9", "Show Table", width = '50%')
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData9', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show9 == true",
-                                                          box(width = 11,
-                                                              DT::dataTableOutput('table9'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Manufacturer Brand Relational Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table relates brand types to their respective manufacturer.</h5>"),
-                                         checkboxInput("show6", "Show Table", width = '50%')
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData6', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show6 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table6'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Item-Brand Relational Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table relates brands to items.</h5>"),
-                                         checkboxInput("show7", "Show Table", width = '50%')
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData7', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show7 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table7'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Misaligned Categories Table</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table displays all categories that did not fit our item-material framework.</h5>"),
-                                         checkboxInput("show8", "Show Table", width = '50%')
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('downloadData8', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)
-                                ),
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show8 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table8'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3
-                                  ),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Color Alias</h1> </center><br>"),
-                                         shiny::HTML("<h5>This table describes the aliases that can be used to describe particle colors. Each row represents a unique color and each column is an alias for that color.</h5>"),
-                                         checkboxInput("show12", "Show Table", width = '100%')
-                                         
-                                  ),
-                                  column(3
-                                  )
-                                ),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         
-                                         tags$div(align = "center", 
-                                                  downloadButton('download12', 'Download')
-                                         )
-                                         
-                                  ),
-                                  column(3)),
-                                
-                                
-                                fluidRow(
-                                  column(1),
-                                  column(10,
-                                         
-                                         conditionalPanel(condition = "input.show12 == true",
-                                                          box(width = 9,
-                                                              DT::dataTableOutput('table12'))
-                                         )
-                                  ), 
-                                  column(1)
-                                ),
-                                
                                 
                                 fluidRow(
                                   
@@ -852,10 +436,9 @@ ui <- dashboardPage(dark = T,
                                                       status = "success",
                                                       fill = T),
                                          fileInput('df', "Choose CSV File", multiple = FALSE, accept = c(".csv"))%>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Upload Help",
-                                                  content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row."),
-                                                  size = "m"),
+                                                  content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row.")),
                                          
                                          downloadButton('downloadtest', 'Download Test Data'),
                                          
@@ -865,28 +448,33 @@ ui <- dashboardPage(dark = T,
                                                               "More Specific Items"="MoreSpecificItem",
                                                               "Less Specific Items"="LessSpecificItem"))),
                                   column(10, 
-                                         dataTableOutput('contents')
+                                         fluidRow(
+                                           box(
+                                             width = 4,
+                                             title = "Relational Results",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents')  
+                                           ),
+                                           box(
+                                             width = 4, 
+                                             title = "Material Keys",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents1')
+                                           ),
+                                           box(
+                                             width = 4, 
+                                             title = "Morphology Keys",
+                                             style = 'overflow-x: scroll; height: 50vh;',
+                                             maximizable = T,
+                                             dataTableOutput('contents2')
+                                           )  
+                                         )
                                   )
                                   
                                 ),
                                 hr(),
-                                fluidRow(
-                                  column(3), 
-                                  column(6,shiny::HTML("<br><br><center> <h4>View Key Alias Matches</h4> </center><br>")
-                                  ),
-                                  column(3)
-                                  
-                                ),
-                                fluidRow(
-                                  column(1),
-                                  column(5, 
-                                         dataTableOutput('contents1')
-                                  ),
-                                  column(5, 
-                                         dataTableOutput('contents2')
-                                  ), 
-                                  column(1)
-                                ),
                                 fluidRow(
                                   align="center",
                                   hr(),
@@ -908,25 +496,21 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(2, 
                                          selectInput('sizeRange', "Choose size range", c("", "Micro","Macro","All")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select if your study will include microplastics, macro-debris, or both."),
-                                                  size = "m"),
+                                                  content = c("Select if your study will include microplastics, macro-debris, or both.")),
                                          selectInput('environments', "Choose environment", c("", "Marine/Estuarine", "Riverine", "Terrestrial", "All")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select the environment your study will be conducted in, or include all."),
-                                                  size = "m"),
+                                                  content = c("Select the environment your study will be conducted in, or include all.")),
                                          selectInput('media', "Choose media", c("", "Surface Water","Sediment")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select the media your study will be conducted in."),
-                                                  size = "m"),
+                                                  content = c("Select the media your study will be conducted in.")),
                                          selectInput('specificity', "Choose specificity", c("", "More Specific","Less Specific")) %>%
-                                           helper(type = "inline",
+                                           popover(placement = "right",
                                                   title = "Selection Help",
-                                                  content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying."),
-                                                  size = "m"),
+                                                  content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying.")),
                                          
                                   ),
                                   
