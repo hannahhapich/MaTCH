@@ -875,23 +875,6 @@ server <- function(input,output,session) {
                                             Shiny.bindAll(table.table().node());"))
   )
   
-  output$contents3 <- renderDataTable(datatable({
-                                        df_()[, c("Use", "Material", "Item", "count", "proportion", "min_proportion", "max_proportion")]
-                                      }, 
-                                      extensions = 'Buttons',
-                                      options = list(
-                                        paging = TRUE,
-                                        #searching = TRUE,
-                                        fixedColumns = TRUE,
-                                        autoWidth = TRUE,
-                                        ordering = TRUE,
-                                        server = F, 
-                                        dom = 'Bfrtip',
-                                        buttons = c('copy', 'csv', 'excel', 'pdf')
-                                      ),
-                                      class = "display",
-                                      style="bootstrap")
-  )
   
   output$contents4 <- renderDataTable(datatable({
                                         selectSurvey()
@@ -911,21 +894,29 @@ server <- function(input,output,session) {
                                       style="bootstrap"))
   
   output$contents5 <- DT :: renderDataTable(server = T,
-                                      datatable({
-                                        convertedParticles()
-                                      }, 
-                                      options = list(
-                                        paging = TRUE,
-                                        searching = TRUE,
-                                        fixedColumns = TRUE,
-                                        autoWidth = TRUE,
-                                        ordering = TRUE,
-                                        dom = 'Bfrtip',
-                                        check.names = FALSE
-                                      ),
-                                      class = "display",
-                                      style="bootstrap",
-                                      rownames = F))
+                                        convertedParticles(), 
+                                        rownames = FALSE,
+                                        escape = FALSE,
+                                        #filter = "top", 
+                                        extensions = 'Buttons',
+                                        options = list(
+                                          searchHighlight = TRUE,
+                                          scrollX = TRUE,
+                                          sScrollY = '25vh', 
+                                          scrollCollapse = TRUE,
+                                          lengthChange = FALSE, 
+                                          #pageLength = 5,
+                                          paging = FALSE,
+                                          searching = TRUE,
+                                          fixedColumns = TRUE,
+                                          autoWidth = FALSE,
+                                          ordering = TRUE,
+                                          dom = 'Bfrtip',
+                                          buttons = c('copy', 'csv', 'excel', 'pdf')
+                                        ),
+                                        selection = 'none',  # Disable row selection
+                                        class = "display",
+                                        style="bootstrap")
   
   output$downloadData <- downloadHandler(
     filename = function() {
