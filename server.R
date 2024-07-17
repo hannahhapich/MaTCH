@@ -897,8 +897,7 @@ server <- function(input,output,session) {
                                         convertedParticles(), 
                                         rownames = FALSE,
                                         escape = FALSE,
-                                        #filter = "top", 
-                                        extensions = 'Buttons',
+                                        #filter = "top",
                                         options = list(
                                           searchHighlight = TRUE,
                                           scrollX = TRUE,
@@ -911,8 +910,7 @@ server <- function(input,output,session) {
                                           fixedColumns = TRUE,
                                           autoWidth = FALSE,
                                           ordering = TRUE,
-                                          dom = 'Bfrtip',
-                                          buttons = c('copy', 'csv', 'excel', 'pdf')
+                                          dom = 'Bfrtip'
                                         ),
                                         selection = 'none',  # Disable row selection
                                         class = "display",

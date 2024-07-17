@@ -264,22 +264,12 @@ ui <- dashboardPage(dark = T,
                                   column(3)
                                 ),
                                 
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
                                 tags$hr(),
                                 
-                                # INSTRUCTIONAL SECTION
                                 fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Citation</h1> </center>
-                                  <br>"),
-                                         shiny::HTML("<h5> H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/ </h5>")
-                                  ),
-                                  column(3)
+                                  align="center",
+                                  hr(),
+                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
                                 )
                                 
                                 
@@ -398,22 +388,13 @@ ui <- dashboardPage(dark = T,
                                         collapsed = T,
                                         title = "Materials Hierarchy Tree",
                                         shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)   
+                                      ),
+                                      fluidRow(
+                                        align="center",
+                                        hr(),
+                                        tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
                                       )
                                     )
-                                ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>Citation</h1> </center>
-                                  <br>"),
-                                         shiny::HTML("<h5> H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/</h5>")
-                                  ),
-                                  column(3)
                                 )
                         ),
                         #end of about tab

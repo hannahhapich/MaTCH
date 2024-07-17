@@ -155,8 +155,8 @@ AverageForOrganizationsTotal <- AverageForOrganizations %>%
   group_by(Organization) %>%
   summarize_all(mean)
 
-AverageForOrganizationsTotal <- rbind(AverageForOrganizationsTotal, list('embedding_match_1', 0.7050, 0.7050, 0.7414, 0.7414))
-AverageForOrganizationsTotal <- rbind(AverageForOrganizationsTotal, list('embedding_match_5', 0.8780, 0.8780, 0.9432, 0.9432))
+AverageForOrganizationsTotal <- rbind(AverageForOrganizationsTotal, list('embedding_match_1', 0.7062, 0.7062, 0.7614, 0.7614))
+AverageForOrganizationsTotal <- rbind(AverageForOrganizationsTotal, list('embedding_match_5', 0.8791, 0.8791, 0.9432, 0.9432))
 
 write.csv( AverageForOrganizationsTotal, "figures/data/comparability_cluster.csv")
 
