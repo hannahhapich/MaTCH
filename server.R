@@ -440,6 +440,11 @@ server <- function(input,output,session) {
     if("Sample.Volume" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_volume' = 'Sample.Volume')}
     if("Density..mg.microns3." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('density' = 'Density..mg.microns3.')}
     
+    if("polymer" %in% colnames(dataframe) && "polymer_class" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% add_column(material = NA)
+      dataframe <- polymer_class_rename(dataframe)
+      dataframe$material[dataframe$material == 0] <- NA
+    }
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
@@ -893,28 +898,46 @@ server <- function(input,output,session) {
                                       class = "display",
                                       style="bootstrap"))
   
+  # output$contents5 <- DT :: renderDataTable(server = T,
+  #                                       convertedParticles(), 
+  #                                       rownames = FALSE,
+  #                                       escape = FALSE,
+  #                                       #filter = "top",
+  #                                       options = list(
+  #                                         searchHighlight = TRUE,
+  #                                         scrollX = TRUE,
+  #                                         sScrollY = '25vh', 
+  #                                         scrollCollapse = TRUE,
+  #                                         lengthChange = FALSE, 
+  #                                         #pageLength = 5,
+  #                                         paging = FALSE,
+  #                                         searching = TRUE,
+  #                                         fixedColumns = TRUE,
+  #                                         autoWidth = FALSE,
+  #                                         ordering = TRUE,
+  #                                         dom = 'Bfrtip'
+  #                                       ),
+  #                                       selection = 'none',  # Disable row selection
+  #                                       class = "display",
+  #                                       style="bootstrap")
+  
   output$contents5 <- DT :: renderDataTable(server = T,
-                                        convertedParticles(), 
-                                        rownames = FALSE,
-                                        escape = FALSE,
-                                        #filter = "top",
-                                        options = list(
-                                          searchHighlight = TRUE,
-                                          scrollX = TRUE,
-                                          sScrollY = '25vh', 
-                                          scrollCollapse = TRUE,
-                                          lengthChange = FALSE, 
-                                          #pageLength = 5,
-                                          paging = FALSE,
-                                          searching = TRUE,
-                                          fixedColumns = TRUE,
-                                          autoWidth = FALSE,
-                                          ordering = TRUE,
-                                          dom = 'Bfrtip'
-                                        ),
-                                        selection = 'none',  # Disable row selection
-                                        class = "display",
-                                        style="bootstrap")
+                                            datatable({
+                                              convertedParticles()
+                                            }, 
+                                            options = list(
+                                              paging = TRUE,
+                                              searching = TRUE,
+                                              fixedColumns = TRUE,
+                                              autoWidth = TRUE,
+                                              ordering = TRUE,
+                                              dom = 'Bfrtip',
+                                              check.names = FALSE
+                                            ),
+                                            selection = 'none',  # Disable row selection
+                                            class = "display",
+                                            style="bootstrap",
+                                            rownames = F))
   
   output$downloadData <- downloadHandler(
     filename = function() {
