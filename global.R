@@ -341,17 +341,18 @@ calculate_volume_and_mass <- function(df, morphology_shape, polymer_density) {
   return(df)
 }
 
-#dataframe <- read.csv("sad_master.csv")
+#dataframe <- read.csv("sad_master_clean.csv")
 #Update polymer
 polymer_class_rename <- function(df) {
   df <- df %>%
     mutate(material = ifelse(polymer == 0 & polymer_class != 0, polymer_class, polymer))
   return(df)
 }
-
+#dataframe <- dataframe2
 # Main function to convert particle count to mass
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   if("length_um" %in% colnames(dataframe) == TRUE){dataframe$length_um <- as.numeric(dataframe$length_um)
+  dataframe$length_um[is.na(dataframe$length_um)] <- 0
   }else{
     dataframe <- dataframe %>% add_column(length_um = NA)
   }
@@ -418,6 +419,16 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     for(x in 1:nrow(dataframeclean)){
       dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
     }
+    
+    for(x in 1:nrow(dataframeclean)){
+      print(x)
+      if(dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"]){
+        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_mean"])
+        dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
+      }
+      
+    }
+    
   }
   
   dataframeclean <- dataframeclean %>%
@@ -1504,8 +1515,8 @@ morphology_base <- data.frame(morphology=morphology,
 )
 
 #convert morphologies in TT to morphologies with defined dimensions
-morphology_unique <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "sheet", "film", "fragment", "rubberyfragment", "fiberbundle")
-morphology <- c("fiber", "sphere", "foam", "sphere", "fiber", "sphere", "film", "film", "fragment", "fragment", "film")
+morphology_unique <- c("fiber", "nurdle", "foam", "sphere", "line", "bead", "pellet", "sheet", "film", "fragment", "rubberyfragment", "fiberbundle")
+morphology <- c("fiber", "sphere", "foam", "sphere",  "fiber", "sphere", "sphere", "film", "film", "fragment", "fragment", "film")
 morph_conversion <- data.frame(morphology = morphology,
                                morphology_unique = morphology_unique)
 morphology_shape <- morph_conversion %>% left_join(morphology_base, by = "morphology") %>% select(-morphology) %>% rename(morphology = morphology_unique)
