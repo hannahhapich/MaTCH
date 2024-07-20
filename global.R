@@ -341,6 +341,14 @@ calculate_volume_and_mass <- function(df, morphology_shape, polymer_density) {
   return(df)
 }
 
+#dataframe <- read.csv("sad_master.csv")
+#Update polymer
+polymer_class_rename <- function(df) {
+  df <- df %>%
+    mutate(material = ifelse(polymer == 0 & polymer_class != 0, polymer_class, polymer))
+  return(df)
+}
+
 # Main function to convert particle count to mass
 particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
   if("length_um" %in% colnames(dataframe) == TRUE){dataframe$length_um <- as.numeric(dataframe$length_um)
