@@ -341,9 +341,17 @@ calculate_volume_and_mass <- function(df, morphology_shape, polymer_density) {
   return(df)
 }
 
-#dataframe <- read.csv("sad_master_clean.csv")
+#dataframe <- read.csv("River_Database_Match_July2024_clean.csv")
 #Update polymer
+# polymer_class_rename <- function(df) {
+#   df <- df %>%
+#     mutate(material = ifelse(polymer == 0 & polymer_class != 0, polymer_class, polymer))
+#   return(df)
+# }
+# df <- dataframe
 polymer_class_rename <- function(df) {
+  df$polymer[df$polymer == ""] <- 0
+  df$polymer_class[df$polymer_class == ""] <- 0
   df <- df %>%
     mutate(material = ifelse(polymer == 0 & polymer_class != 0, polymer_class, polymer))
   return(df)
@@ -362,12 +370,17 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
   if("height_um" %in% colnames(dataframe) == TRUE){dataframe$height_um <- as.numeric(dataframe$height_um)}
   if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)}
   if("sample_ID" %in% colnames(dataframe) == TRUE){dataframe$sample_ID <- as.character(dataframe$sample_ID)}
+  dataframe <- dataframe %>%
+    mutate(material = ifelse(material == "polystyrene" & morphology == "foam", "EPS", material))
+  
+  dataframe <- left_join(dataframe, polymer_density, by = c("material" = "readable"), copy = F)
+  dataframe <- select(dataframe, -material.y)
+  
   dataframeclean <- dataframe %>% mutate(material = cleantext(material),
                                          morphology = cleantext(morphology)) 
   
   dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
-  dataframeclean <- left_join(dataframeclean, polymer_density, by = "material", copy = F)
-  dataframeclean <- select(dataframeclean, -readable)
+  
   
   if("width_um" %in% colnames(dataframeclean)){
     for(x in 1:nrow(dataframeclean)){
@@ -422,7 +435,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     
     for(x in 1:nrow(dataframeclean)){
       print(x)
-      if(dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"]){
+      if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"]){
         dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_mean"])
         dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
       }
@@ -450,6 +463,8 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
         morphology == "fiber" ~ pi * ((W_max + H_max) / 4)^2 * L_max,
         morphology == "sphere" ~ 4/3 * pi * ((W_max + H_max + L_max) / 6)^3,
         TRUE ~ L_max * W_max * H_max))
+  
+  
   
   if("density" %in% colnames(dataframeclean)){
     for(x in 1:nrow(dataframeclean)){
