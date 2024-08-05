@@ -245,7 +245,7 @@ for(x in 1:nrow(similarity_rank)){
 
 rank_total_count <- rank_total_count %>% add_column(percentage = (as.numeric(rank_total_count$rank_total)/nrow(words_to_match))*100)
 
-
+material_alias <- read.csv("data/PrimeMaterialsEmbeddings.csv")
 #Save item vector DB
 words_to_match <- material_alias %>%
   distinct(Alias) %>%

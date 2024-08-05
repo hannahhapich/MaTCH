@@ -2,6 +2,7 @@ source,material,n,density,lower_conf,upper_conf
 win_DB,PP,8898,1,0.997838811,1.002161189
 win_DB,Thermoplastic Elastomers,7409,1.02,1.017612301,1.022387699
 win_DB,PC,5979,1.2,1.197321614,1.202678386
+Parent,Polycarbonates,NA,1.2,1.197321614,1.202678386
 win_DB,Nylon 66,5649,1.33,1.32723966,1.33276034
 win_DB,PVC,5527,1.33,1.327207558,1.332792442
 win_DB,Nylon 6,5288,1.3,1.297141542,1.302858458
@@ -11,8 +12,11 @@ win_DB,Polybutylene Terephthalate,2448,1.45,1.445736292,1.454263708
 win_DB,HDPE,2392,0.953,0.948685433,0.957314567
 win_DB,Rubber or Thermoset Elastomer,2365,1.18,1.175660275,1.184339725
 win_DB,Polystyrene,2114,1.05,1.04540397,1.05459603
+Parent,"POLYSTYRENES (POLYPHENYLETHYLENES, _-Methylstyrene)",N/A,1.05,1.04540397,1.05459603
+Parent,Polystyrenes (POLYPHENYLETHYLENES),N/A,1.05,1.04540397,1.05459603
 win_DB,Epoxy,1982,1.34,1.335250191,1.344749809
 win_DB,Thermoplastic Polyurethane,1927,1.19,1.185181533,1.194818467
+Parent,Polyurethanes (isocyanates),NA,1.19,1.185181533,1.194818467
 win_DB,Acetal,1668,1.42,1.414814096,1.425185904
 win_DB,LDPE,1489,0.922,0.916506235,0.927493765
 win_DB,LLDPE,1308,0.92,0.914133053,0.925866947
@@ -23,6 +27,7 @@ win_DB,PMMA,849,1.18,1.172700893,1.187299107
 win_DB,Polyphenylene Sulfide (PPS),846,1.61,1.602687852,1.617312148
 win_DB,Ethylene Vinyl Acetate,779,0.939,0.931377312,0.946622688
 win_DB,PET,737,1.45,1.442161463,1.457838537
+Parent,Polyterephthalates,NA,1.45,1.442161463,1.457838537
 win_DB,PTFE,724,2.16,2.152090885,2.167909115
 win_DB,Polyetheretherketone,681,1.4165,1.40834324,1.42465676
 win_DB,Polyetherimide ,630,1.36,1.351517333,1.368482667
@@ -53,9 +58,12 @@ win_DB,Ethylene Methyl Acrylate,114,0.942,0.922007139,0.961992861
 win_DB,PFA,82,2.1475,2.123922921,2.171077079
 win_DB,Siloxane,34,1.15,1.113376339,1.186623661
 kooi_2019,PE,N/A,1.01,0.908172448,1.698874489
+Parent,Polyesters,N/A,1.01,0.908172448,1.698874489
 kooi_2019,PA,N/A,1.145,0.908172448,1.698874489
+Parent,Polyamides (POLYLACTAMS),N/A,1.145,0.908172448,1.698874489
 kooi_2019,PS,N/A,1.09,0.908172448,1.698874489
 kooi_2019,PVA,N/A,1.28,0.908172448,1.698874489
+Parent,Polyvinylalcohols,N/A,1.28,0.908172448,1.698874489
 polymerdatabase.com,Poly(acrylamide),N/A,1.3,1.2668068,1.3331932
 polymerdatabase.com,Poly(N-isopropyl acrylamide),N/A,1.05,1.0168068,1.0831932
 polymerdatabase.com,Poly(N-octyl acrylamide),N/A,1,0.9668068,1.0331932
@@ -309,4 +317,5 @@ https://hal.science/hal-00615443/document,organic,N/A,0.38,0.26,0.5
 https://www.omnicalculator.com/construction/asphalt,asphalt,N/A,2.3,2.2,2.4
 https://www.omnicalculator.com/construction/asphalt,tire wear & asphalt,N/A,1.875,1.7,2.05
 "https://www.eoas.ubc.ca/courses/eosc350/content/foundations/properties/density.htm#:~:text=Most%20of%20the%20rocks%20comprising,2.6%20and%202.7g%2Fcc.",mineral,N/A,2.65,2.6,2.7
-"https://www.bpf.co.uk/plastipedia/polymers/expanded-and-extruded-polystyrene-eps-xps.aspx#:~:text=EPS%20can%20be%20moulded%20in,give%20very%20high%20impact%20resistance.",EPS,N/A,0.012,0.031,0.05
+"https://www.bpf.co.uk/plastipedia/polymers/expanded-and-extruded-polystyrene-eps-xps.aspx#:~:text=EPS%20can%20be%20moulded%20in,give%20very%20high%20impact%20resistance.",eps,N/A,0.031,0.012,0.05
+https://powerrubber.com/en/rubber-compounds/rubber-sbr/,sbr,N/A,1.5,1.4,1.6
