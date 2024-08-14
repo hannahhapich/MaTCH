@@ -395,7 +395,7 @@ server <- function(input,output,session) {
   })
   
   #MaTCH Tool
-  
+  #dataframe <- read.csv("data_template.csv")
   convertedTerms <- reactive({
     req(input$particleData)
     infile <- input$particleData
@@ -578,7 +578,8 @@ server <- function(input,output,session) {
     return(dataframe)
     
   })
-  
+  #cleaneddataframe <- dataframe2
+  #dataframe <- cleaneddataframe
   convertedParticles <- reactive({
     req(input$particleData)
     req(convertedTermsSelect())
@@ -606,6 +607,7 @@ server <- function(input,output,session) {
     if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
       dataframe <- dataframe %>% mutate(concentration_particle_vol = replace_na(concentration_particle_vol, 0))
       dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
+      #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 100)
       incProgress(0.3, detail = "Completed concentration size rescaling")
       dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean)
       dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
