@@ -1,0 +1,321 @@
+source,material,n,density,lower_conf,upper_conf
+win_DB,PP,8898,1,0.998586874,1.001413126
+win_DB,Thermoplastic Elastomers,7409,1.02,1.018438768,1.021561232
+win_DB,PC,5979,1.2,1.198248698,1.201751302
+Parent,Polycarbonates,NA,1.2,1.198248698,1.201751302
+win_DB,Nylon 66,5649,1.33,1.328195111,1.331804889
+win_DB,PVC,5527,1.33,1.32817412,1.33182588
+win_DB,Nylon 6,5288,1.3,1.298130955,1.301869045
+win_DB,ABS,3579,1.1105,1.108207718,1.112792282
+win_DB,Silicone,3006,1.15,1.147491345,1.152508655
+win_DB,Polybutylene Terephthalate,2448,1.45,1.447212111,1.452787889
+win_DB,HDPE,2392,0.953,0.950178856,0.955821144
+win_DB,Rubber or Thermoset Elastomer,2365,1.18,1.177162406,1.182837594
+win_DB,Polystyrene,2114,1.05,1.046994818,1.053005182
+Parent,"POLYSTYRENES (POLYPHENYLETHYLENES, _-Methylstyrene)",N/A,1.05,1.046994818,1.053005182
+Parent,Polystyrenes (POLYPHENYLETHYLENES),N/A,1.05,1.046994818,1.053005182
+win_DB,Epoxy,1982,1.34,1.336894267,1.343105733
+win_DB,Thermoplastic Polyurethane,1927,1.19,1.186849374,1.193150626
+Parent,Polyurethanes (isocyanates),NA,1.19,1.186849374,1.193150626
+win_DB,Acetal,1668,1.42,1.41660912,1.42339088
+win_DB,LDPE,1489,0.922,0.91840782,0.92559218
+win_DB,LLDPE,1308,0.92,0.91616381,0.92383619
+win_DB,Polyphenylene EtherPPO,948,1.12,1.115485699,1.124514301
+win_DB,Phenolic,893,1.43,1.425347466,1.434652534
+win_DB,Thermoset Polyester,880,1.783,1.77831292,1.78768708
+win_DB,PMMA,849,1.18,1.17522737,1.18477263
+win_DB,Polyphenylene Sulfide (PPS),846,1.61,1.605218843,1.614781157
+win_DB,Ethylene Vinyl Acetate,779,0.939,0.934015792,0.943984208
+win_DB,PET,737,1.45,1.444874656,1.455125344
+Parent,Polyterephthalates,NA,1.45,1.444874656,1.455125344
+win_DB,PTFE,724,2.16,2.154828508,2.165171492
+win_DB,Polyetheretherketone,681,1.4165,1.411166581,1.421833419
+win_DB,Polyetherimide ,630,1.36,1.354453482,1.365546518
+win_DB,AcrylicCyanoacrylate Adhesive,534,1.06,1.053972604,1.066027396
+win_DB,Polyphthalamide (PPA),530,1.49,1.48394978,1.49605022
+win_DB,Nylon 12,525,1.03,1.023920885,1.036079115
+win_DB,Thermoset Fluoropolymer,499,1.82,1.813763707,1.826236293
+win_DB,Nylon 6-66,339,1.32,1.312427735,1.327572265
+win_DB,Nylon 46,331,1.41,1.402336466,1.417663534
+win_DB,Acrylonitrile-Styrene-Acrylate ,329,1.08,1.072313131,1.087686869
+win_DB,Nylon 612,322,1.248,1.240229754,1.255770246
+win_DB,Styrene-Butadiene Thermoplastics,298,1.01,1.001921944,1.018078056
+win_DB,Liquid Crystal Polymer,260,1.65,1.641350101,1.658649899
+win_DB,Cellulosic,244,1.19,1.181070284,1.198929716
+win_DB,Polyethersulfone,234,1.49,1.480881017,1.499118983
+win_DB,Styrene Acrylonitrile (SAN),207,1.08,1.070303212,1.089696788
+win_DB,Polysulfone,195,1.32,1.310008702,1.329991298
+win_DB,Nylon 610,184,1.25,1.239713818,1.260286182
+win_DB,PVDF,176,1.78,1.769482217,1.790517783
+win_DB,"Polyimide, Thermoplastic",160,1.42,1.408967973,1.431032027
+win_DB,Polylactic Acid (PLA),134,1.24,1.227943549,1.252056451
+win_DB,ETFE-ECTFE,131,1.72,1.707806097,1.732193903
+win_DB,Nylon 11,131,1.1,1.087806097,1.112193903
+win_DB,Thermoset Polyimide,126,1.42,1.407566197,1.432433803
+win_DB,Aramid,121,0.31,0.297311582,0.322688418
+win_DB,Ionomer,118,0.9505,0.937651108,0.963348892
+win_DB,Ethylene Methyl Acrylate,114,0.942,0.928927371,0.955072629
+win_DB,PFA,82,2.1475,2.132083777,2.162916223
+win_DB,Siloxane,34,1.15,1.126053075,1.173946925
+kooi_2019,PE,N/A,1.01,0.751493863,1.268506137
+Parent,Polyesters,N/A,1.01,0.751493863,1.268506137
+kooi_2019,PA,N/A,1.145,0.886493863,1.403506137
+Parent,Polyamides (POLYLACTAMS),N/A,1.145,0.886493863,1.403506137
+kooi_2019,PS,N/A,1.09,0.831493863,1.348506137
+kooi_2019,PVA,N/A,1.28,1.021493863,1.538506137
+Parent,Polyvinylalcohols,N/A,1.28,1.021493863,1.538506137
+polymerdatabase.com,Poly(acrylamide),N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,Poly(N-isopropyl acrylamide),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(N-octyl acrylamide),N/A,1,0.978296133,1.021703867
+polymerdatabase.com,Poly(N-tert-butyl acrylamide),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(N-phenyl acrylamide),N/A,1.15,1.128296133,1.171703867
+polymerdatabase.com,Poly(N-sec-butyl acrylamide),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(acrylic acid),N/A,1.41,1.388296133,1.431703867
+polymerdatabase.com,Poly(benzyl acrylate),N/A,1.15,1.128296133,1.171703867
+polymerdatabase.com,Poly(butyl acrylate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(4-chlorophenyl acrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(2-cyanoethyl acrylate),N/A,1.4,1.378296133,1.421703867
+polymerdatabase.com,Poly(cyanomethyl acrylate),N/A,1.35,1.328296133,1.371703867
+polymerdatabase.com,Poly(cyclohexyl acrylate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(ethyl acrylate),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(2-ethylhexyl acrylate),N/A,0.96,0.938296133,0.981703867
+polymerdatabase.com,Poly(hexyl acrylate),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(isobutyl acrylate),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Poly(isopropyl acrylate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(methyl acrylate),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Poly(octyl acrylate),N/A,0.98,0.958296133,1.001703867
+polymerdatabase.com,Poly(propyl acrylate),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(sec-butyl acrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(stearyl acrylate),N/A,0.94,0.918296133,0.961703867
+polymerdatabase.com,Poly(tert-butyl acrylate),N/A,1,0.978296133,1.021703867
+polymerdatabase.com,"Poly(2,2,3,3-Tetrafluoropropyl acrylate)",N/A,1.52,1.498296133,1.541703867
+polymerdatabase.com,Poly(acrylonitrile),N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Poly(methacrylonitrile),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(butylene adipate),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(ethylene adipate),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Poly(propylene adipate),N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Poly(butylene),N/A,0.859,0.837296133,0.880703867
+polymerdatabase.com,Poly(butyl ethylene),N/A,0.86,0.838296133,0.881703867
+polymerdatabase.com,Poly(cyclohexylethylene),N/A,0.94,0.918296133,0.961703867
+polymerdatabase.com,Poly(heptylethylene),N/A,0.87,0.848296133,0.891703867
+polymerdatabase.com,Poly(hexylethylene),N/A,0.87,0.848296133,0.891703867
+polymerdatabase.com,Poly(isobutene),N/A,0.88,0.858296133,0.901703867
+polymerdatabase.com,Poly(isobutylethylene),N/A,0.84,0.818296133,0.861703867
+polymerdatabase.com,Poly(isopropylethylene),N/A,0.9,0.878296133,0.921703867
+polymerdatabase.com,Poly(2-methylbutene),N/A,0.9,0.878296133,0.921703867
+polymerdatabase.com,Poly(octylethylene),N/A,0.865,0.843296133,0.886703867
+polymerdatabase.com,Poly(pentylethylene),N/A,0.87,0.848296133,0.891703867
+polymerdatabase.com,Poly(propylethylene),N/A,0.85,0.828296133,0.871703867
+polymerdatabase.com,Poly(tert-butylethylene),N/A,0.86,0.838296133,0.881703867
+polymerdatabase.com,Nylon 3 - Poly(propiolactam),N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,Nylon 8 - Polycapryllactam,N/A,1.04,1.018296133,1.061703867
+polymerdatabase.com,Nylon 10 - Poly(decano-10-lactam),N/A,1.02,0.998296133,1.041703867
+polymerdatabase.com,"Nylon 6,9 - Poly(hexamethylene azelamide)",N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,"Nylon 10,10 - Poly(decamethylene sebacamide)",N/A,0.99,0.968296133,1.011703867
+polymerdatabase.com,"Poly(hexamethylene isophthalamide), PA 6I",N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,"Poly(hexamethylene teraphthalamide), PA 6T",N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Kevlar - Polyaramide,N/A,1.44,1.418296133,1.461703867
+polymerdatabase.com,Nomex - Poly(m-phenylene terephthalamide),N/A,1.36,1.338296133,1.381703867
+polymerdatabase.com,"Poly(nonanmethylene teraphthalamide), PA 9T",N/A,1.1,1.078296133,1.121703867
+polymerdatabase.com,Poly(p-pentamethylenedibenzoic anhydride),N/A,1.17,1.148296133,1.191703867
+polymerdatabase.com,Poly(p-tetramethylenedibenzoic anhydride),N/A,1.19,1.168296133,1.211703867
+polymerdatabase.com,Poly(sebacic anhydride),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(azelaic anhydride),N/A,1.13,1.108296133,1.151703867
+polymerdatabase.com,"Poly(1,2-butadiene)",N/A,0.91,0.888296133,0.931703867
+polymerdatabase.com,"Poly(1,4-butadiene)",N/A,0.89,0.868296133,0.911703867
+polymerdatabase.com,"Poly(1-ethyl-1,4-butadiene)",N/A,0.89,0.868296133,0.911703867
+polymerdatabase.com,"1,4-Polyisoprene (cis and trans)(Latex)",N/A,0.905,0.883296133,0.926703867
+polymerdatabase.com,"Poly(1,4-pentadiene)",N/A,0.89,0.868296133,0.911703867
+polymerdatabase.com,Poly(1-pentenylene),N/A,0.9,0.878296133,0.921703867
+polymerdatabase.com,Poly(dimethyl fumarate),N/A,1.25,1.228296133,1.271703867
+polymerdatabase.com,Poly(dibutyl fumarate),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(diethyl fumarate),N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Poly(dipropyl fumarate),N/A,1.21,1.188296133,1.231703867
+polymerdatabase.com,Poly(bisphenol A carbonate),N/A,1.21,1.188296133,1.231703867
+polymerdatabase.com,"Poly(4,4'-thiodiphenylene carbonate)",N/A,1.36,1.338296133,1.381703867
+polymerdatabase.com,Poly(bisphenol B carbonate),N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Poly(bisphenol F carbonate),N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,Poly(ethylene carbonate),N/A,1.42,1.398296133,1.441703867
+polymerdatabase.com,Poly(propylene carbonate),N/A,1.26,1.238296133,1.281703867
+polymerdatabase.com,"Poly(2,6,3',5'-tetrachloro bisphenol A carbonate)",N/A,0.92,0.898296133,0.941703867
+polymerdatabase.com,Poly(tetramethyl bisphenol A carbonate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Cellulose Acetate,N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,Methyl Cellulose,N/A,1.33,1.308296133,1.351703867
+polymerdatabase.com,Ethyl Cellulose,N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(chlorotrifluoroethylene),N/A,2,1.978296133,2.021703867
+polymerdatabase.com,Poly(vinyl bromide),N/A,2.13,2.108296133,2.151703867
+polymerdatabase.com,Poly(vinyl fluoride),N/A,1.34,1.318296133,1.361703867
+polymerdatabase.com,Poly(vinylidene chloride),N/A,1.71,1.688296133,1.731703867
+polymerdatabase.com,Poly(methyl cyanoacrylate),N/A,1.33,1.308296133,1.351703867
+polymerdatabase.com,Poly(ethyl cyanoacrylate),N/A,1.27,1.248296133,1.291703867
+polymerdatabase.com,Poly(butyl cyanoacrylate),N/A,1.17,1.148296133,1.191703867
+polymerdatabase.com,Poly(hexyl cyanoacrylate),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(octyl cyanoacrylate),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Bisphenol-A diglycidyl ether epoxy resin,N/A,1.18,1.158296133,1.201703867
+polymerdatabase.com,Bisphenol-F diglycidyl ether epoxy resin,N/A,1.17,1.148296133,1.191703867
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - ethylenediamine),N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - hexamethylenediamine),N/A,1.1,1.078296133,1.121703867
+polymerdatabase.com,Poly(bis-A diglycidyl ether- alt - octamethylenediamine),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(caprolactone),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(ethylene naphthalate),N/A,1.35,1.328296133,1.371703867
+polymerdatabase.com,Poly(ethylene phthalate),N/A,1.34,1.318296133,1.361703867
+polymerdatabase.com,Polyglycolide,N/A,1.52,1.498296133,1.541703867
+polymerdatabase.com,Poly(3-hydroxybutyrate),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Poly(4-hydroxybutyrate),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Polylactic acid,N/A,1.26,1.238296133,1.281703867
+polymerdatabase.com,Polyacetal - Polyoxymethylene,N/A,1.23,1.208296133,1.251703867
+polymerdatabase.com,Poly(3-butoxypropylene oxide),N/A,0.98,0.958296133,1.001703867
+polymerdatabase.com,Poly(epichlorohydrin),N/A,1.34,1.318296133,1.361703867
+polymerdatabase.com,Poly(ethylene glycol),N/A,1.13,1.108296133,1.151703867
+polymerdatabase.com,Poly(hexamethylene oxide),N/A,0.96,0.938296133,0.981703867
+polymerdatabase.com,Poly(3-methoxypropylene oxide),N/A,1.1,1.078296133,1.121703867
+polymerdatabase.com,Poly[oxy(hexyloxymethyl)ethylene],N/A,0.97,0.948296133,0.991703867
+polymerdatabase.com,Poly(oxymethylene-oxyethylene),N/A,1.17,1.148296133,1.191703867
+polymerdatabase.com,Poly(oxymethylene-oxytetramethylene),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(propylene glycol),N/A,1,0.978296133,1.021703867
+polymerdatabase.com,Poly(tetrahydrofuran),N/A,0.98,0.958296133,1.001703867
+polymerdatabase.com,Poly(trimethylene glycol),N/A,1.06,1.038296133,1.081703867
+polymerdatabase.com,"Poly[1,1-bis(chloromethyl)trimethylene oxide]",N/A,1.39,1.368296133,1.411703867
+polymerdatabase.com,PEK - Poly(ether ketone),N/A,1.27,1.248296133,1.291703867
+polymerdatabase.com,PEKK - Poly(ether ketone ketone),N/A,1.28,1.258296133,1.301703867
+polymerdatabase.com,Poly(ethyleneketone),N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,Poly(propyleneketone),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(ether ether sulfone),N/A,1.33,1.308296133,1.351703867
+polymerdatabase.com,Poly(ethersulfone),N/A,1.37,1.348296133,1.391703867
+polymerdatabase.com,Poly(phenylsulfone),N/A,1.29,1.268296133,1.311703867
+polymerdatabase.com,Bisphenol A Polysulfone,N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,PoIy(1-chloro-1-butenylene) (Polychloroprene),N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,Poly(1-bromo-1-butenylene) (Polybromoprene),N/A,1.7,1.678296133,1.721703867
+polymerdatabase.com,Poly(4-bromostyrene),N/A,0.87,0.848296133,0.891703867
+polymerdatabase.com,Poly(2-chlorostyrene),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Poly(3-chlorostyrene),N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,Poly(4-chlorostyrene),N/A,1.23,1.208296133,1.251703867
+polymerdatabase.com,"Poly(2,5-difluorostyrene)",N/A,0.96,0.938296133,0.981703867
+polymerdatabase.com,Poly(4-fluorostyrene),N/A,1.2,1.178296133,1.221703867
+polymerdatabase.com,Poly(2-hydroxyethyl acrylate),N/A,1.31,1.288296133,1.331703867
+polymerdatabase.com,Poly(2-hydroxyethyl methacrylate),N/A,1.25,1.228296133,1.271703867
+polymerdatabase.com,Poly(2-hydroxypropyl methacrylate),N/A,1.33,1.308296133,1.351703867
+polymerdatabase.com,"Poly[(diethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]",N/A,1.26,1.238296133,1.281703867
+polymerdatabase.com,"Poly[(tetraethylene glycol)-alt-(1,6-hexamethylene diisocyanate)]",N/A,1.22,1.198296133,1.241703867
+polymerdatabase.com,"Poly[(1,4-butanediol)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.23,1.208296133,1.251703867
+polymerdatabase.com,"Poly[(ethylene glycol)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.28,1.258296133,1.301703867
+polymerdatabase.com,"Poly[(polytetrahydrofuran 1000)-alt-(4,4'-diphenylmethane diisocyanate)]",N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(Bisphenol A isophthalate),N/A,1.21,1.188296133,1.231703867
+polymerdatabase.com,Poly(butylene isophthalate),N/A,1.27,1.248296133,1.291703867
+polymerdatabase.com,Poly(ethylene isophthalate),N/A,1.335,1.313296133,1.356703867
+polymerdatabase.com,Poly[dimethyl itaconate],N/A,1.29,1.268296133,1.311703867
+polymerdatabase.com,Poly[di(n-propyl) itaconate],N/A,1.15,1.128296133,1.171703867
+polymerdatabase.com,Poly[di(n-butyl) itaconate],N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly[di(n-hexyl) itaconate],N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(N-acetylmethacrylamide),N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(N-benzyl methacrylamide),N/A,1.13,1.108296133,1.151703867
+polymerdatabase.com,Poly(methacrylamide),N/A,1.13,1.108296133,1.151703867
+polymerdatabase.com,Poly(N-tert-butylmethacrylamide),N/A,1.02,0.998296133,1.041703867
+polymerdatabase.com,Poly(methacrylic acid),N/A,1.29,1.268296133,1.311703867
+polymerdatabase.com,Poly(benzyl methacrylate),N/A,1.17,1.148296133,1.191703867
+polymerdatabase.com,Poly(butyl methacrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(cyclohexyl methacrylate),N/A,1.1,1.078296133,1.121703867
+polymerdatabase.com,Poly(decylmethacrylate),N/A,0.95,0.928296133,0.971703867
+polymerdatabase.com,Poly(dodecylmethacrylate),N/A,0.93,0.908296133,0.951703867
+polymerdatabase.com,Poly(2-ethoxyethyl methacrylate),N/A,1.09,1.068296133,1.111703867
+polymerdatabase.com,Poly(ethyl methacrylate),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(hexyl methacrylate),N/A,1.01,0.988296133,1.031703867
+polymerdatabase.com,Poly(isobutyl methacrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(isopropyl methacrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(octadecyl methacrylate),N/A,0.9,0.878296133,0.921703867
+polymerdatabase.com,Poly(octyl methacrylate),N/A,0.97,0.948296133,0.991703867
+polymerdatabase.com,Poly(2-phenylethyl methacrylate),N/A,1.13,1.108296133,1.151703867
+polymerdatabase.com,Poly(phenyl methacrylate),N/A,1.21,1.188296133,1.231703867
+polymerdatabase.com,Poly(propyl methacrylate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(2-chloroethyl methacrylate),N/A,1.32,1.298296133,1.341703867
+polymerdatabase.com,Poly(sec-butyl methacrylate),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(4-tert-butylcyclohexyl methacrylate),N/A,0.99,0.968296133,1.011703867
+polymerdatabase.com,Poly(tert-butyl methacrylate),N/A,1.02,0.998296133,1.041703867
+polymerdatabase.com,"Poly(2,2,3,3-tetrafluoropropyl methacrylate)",N/A,1.52,1.498296133,1.541703867
+polymerdatabase.com,Poly(2-methoxystyrene),N/A,1.1,1.078296133,1.121703867
+polymerdatabase.com,Poly(_-methylstyrene),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Poly(2-methylstyrene),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(3-methylstyrene),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(4-methylstyrene),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(4-tert-butylstyrene),N/A,0.95,0.928296133,0.971703867
+polymerdatabase.com,Poly(p-phenylene),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(p-phenylene vinylene),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Poly(p-xylene),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(2-chloro-p-xylylene),N/A,1.2,1.178296133,1.221703867
+polymerdatabase.com,"Poly(2,6-dimethyl-p-phenylene oxide)",N/A,1.06,1.038296133,1.081703867
+polymerdatabase.com,"Poly(2,6-diphenyl-p-phenylene oxide)",N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(p-phenylene oxide),N/A,1.36,1.338296133,1.381703867
+polymerdatabase.com,Poly(butylene sebacate),N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(ethylene sebacate),N/A,1.09,1.068296133,1.111703867
+polymerdatabase.com,Poly(hexylene sebacate),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(diethylsiloxane) (PDES),N/A,0.99,0.968296133,1.011703867
+polymerdatabase.com,Poly(dimethylsiloxane) (PDMS),N/A,0.965,0.943296133,0.986703867
+polymerdatabase.com,Poly(methylphenylsiloxane) (PMPS),N/A,1.09,1.068296133,1.111703867
+polymerdatabase.com,"Poly(1,4-butylene succinate)",N/A,1.26,1.238296133,1.281703867
+polymerdatabase.com,Poly(ethylene succinate),N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,"Poly(1,6-hexylene succinate)",N/A,1.15,1.128296133,1.171703867
+polymerdatabase.com,Poly(trimethylene succinate),N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,Poly(Bisphenol A terephthalate),N/A,1.21,1.188296133,1.231703867
+polymerdatabase.com,Poly(cyclohexylenedimethylene terephthalate),N/A,1.2,1.178296133,1.221703867
+polymerdatabase.com,Poly(trimethylene terephthalate),N/A,1.34,1.318296133,1.361703867
+polymerdatabase.com,"Poly(thio-1,4-phenylene)",N/A,1.33,1.308296133,1.351703867
+polymerdatabase.com,Poly(ethylene sulfide),N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,Poly(propylene sulfide),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(4-vinyl phenol),N/A,1.16,1.138296133,1.181703867
+polymerdatabase.com,Poly(vinyl butyral),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(vinyl formal),N/A,1.24,1.218296133,1.261703867
+polymerdatabase.com,Poly(vinyl acetate),N/A,1.19,1.168296133,1.211703867
+polymerdatabase.com,Poly(vinyl benzoate),N/A,1.2,1.178296133,1.221703867
+polymerdatabase.com,Poly(vinyl butyrate),N/A,1.09,1.068296133,1.111703867
+polymerdatabase.com,Poly(vinyl caproate),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Poly(vinyl formate),N/A,1.3,1.278296133,1.321703867
+polymerdatabase.com,Poly(vinyl propionate),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(vinyl stearate),N/A,0.95,0.928296133,0.971703867
+polymerdatabase.com,Poly(vinyl valerate),N/A,1.08,1.058296133,1.101703867
+polymerdatabase.com,Poly(butyl vinyl ether),N/A,0.92,0.898296133,0.941703867
+polymerdatabase.com,Poly(ethyl vinyl ether),N/A,0.97,0.948296133,0.991703867
+polymerdatabase.com,Poly(hexyl vinyl ether),N/A,0.93,0.908296133,0.951703867
+polymerdatabase.com,Poly(isobutyl vinyl ether),N/A,0.92,0.898296133,0.941703867
+polymerdatabase.com,Poly(isopropyl vinyl ether),N/A,0.92,0.898296133,0.941703867
+polymerdatabase.com,Poly(methyl vinyl ether),N/A,1.05,1.028296133,1.071703867
+polymerdatabase.com,Poly(octyl vinyl ether),N/A,0.91,0.888296133,0.931703867
+polymerdatabase.com,Poly(propyl vinyl ether),N/A,0.94,0.918296133,0.961703867
+polymerdatabase.com,Poly(sec-butyl vinyl ether),N/A,0.92,0.898296133,0.941703867
+polymerdatabase.com,Poly(vinyl ethyl ketone),N/A,1.03,1.008296133,1.051703867
+polymerdatabase.com,Poly(vinyl methyl ketone),N/A,1.12,1.098296133,1.141703867
+polymerdatabase.com,Poly(methyl isopropenyl ketone),N/A,1.14,1.118296133,1.161703867
+polymerdatabase.com,Poly(vinyl phenyl ketone),N/A,1.19,1.168296133,1.211703867
+polymerdatabase.com,Poly(vinyl pyrrolidone),N/A,1.25,1.228296133,1.271703867
+polymerdatabase.com,Poly(vinyl butyl sulfide),N/A,0.98,0.958296133,1.001703867
+polymerdatabase.com,Poly(vinyl ethyl sulfide),N/A,1.07,1.048296133,1.091703867
+polymerdatabase.com,Poly(vinyl methyl sulfide),N/A,1.11,1.088296133,1.131703867
+polymerdatabase.com,Poly(vinyl phenyl sulfide),N/A,1.15,1.128296133,1.171703867
+polymerdatabase.com,Poly(vinyl propyl sulfide),N/A,1.02,0.998296133,1.041703867
+Kooi_2021,polyethylene-oxidized,N/A,0.91,0.888296133,0.931703867
+Kooi_2021,polyethylene-chlorinated,N/A,0.91,0.888296133,0.931703867
+Kooi_2021,cellophane,N/A,1.2,1.178296133,1.221703867
+Kooi_2021,cellulosechemicalmodified,N/A,1.2,1.178296133,1.221703867
+Kooi_2021,nitrilerubber,N/A,1,0.978296133,1.021703867
+Kooi_2021,polyester,N/A,1.35,1.328296133,1.371703867
+Kooi_2021,acrylates/polyurethanes/varnish,N/A,1.2,1.178296133,1.221703867
+Kooi_2021,ethylenemethacrylicacid,N/A,1.2,1.178296133,1.221703867
+Kooi_2021,polychloroprene,N/A,1.23,1.208296133,1.251703867
+Kooi_2021,polyisoprene-chlorinated,N/A,0.91,0.888296133,0.931703867
+Kooi_2021,polycaprolactone,N/A,1.15,1.128296133,1.171703867
+Kooi_2021,pi,N/A,1.6,1.578296133,1.621703867
+Kooi_2021,polyoxymethylene,N/A,1.41,1.388296133,1.431703867
+Kooi_2021,acrylonitrile-butadiene,N/A,1.2,1.178296133,1.221703867
+Kooi_2021,rubbertype1,N/A,1.03,1.008296133,1.051703867
+Kooi_2021,rubbertype2,N/A,1.03,1.008296133,1.051703867
+Kooi_2021,rubbertype3,N/A,1.1,1.078296133,1.121703867
+Kooi_2021,urea-formaldehyde,N/A,1.5,1.478296133,1.521703867
+https://www.omnicalculator.com/construction/glass-weight,glass,19,2.5,2.397997083,2.602002917
+https://www.theworldmaterial.com/density-of-metals/,metal,9,6.89,5.850354881,7.929645119
+https://hal.science/hal-00615443/document,organic,N/A,0.38,0.301536217,0.458463783
+"https://www.ncbi.nlm.nih.gov/books/NBK563048/#:~:text=Composition,-General%20composition%20of&text=The%20density%20of%20waterborne%20wall,6%2D10%2D2006).",paint,N/A,1.25,1.217306757,1.282693243
+"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8912506/#:~:text=TRWPs%20were%20found%20in%20the,density%20slightly%20tended%20to%20increase.",tire wear,N/A,1.45,1.286533786,1.613466214
+https://www.omnicalculator.com/construction/asphalt,asphalt,N/A,2.3,2.234613515,2.365386485
+https://www.omnicalculator.com/construction/asphalt,tire wear & asphalt,N/A,1.875,1.76057365,1.98942635
+"https://www.eoas.ubc.ca/courses/eosc350/content/foundations/properties/density.htm#:~:text=Most%20of%20the%20rocks%20comprising,2.6%20and%202.7g%2Fcc.",mineral,N/A,2.65,2.617306757,2.682693243
+"https://www.bpf.co.uk/plastipedia/polymers/expanded-and-extruded-polystyrene-eps-xps.aspx#:~:text=EPS%20can%20be%20moulded%20in,give%20very%20high%20impact%20resistance.",eps,N/A,0.031,0.018576568,0.043423432
+https://powerrubber.com/en/rubber-compounds/rubber-sbr/,sbr,N/A,1.5,1.434613515,1.565386485
