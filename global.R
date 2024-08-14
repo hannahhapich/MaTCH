@@ -581,19 +581,13 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
 concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF, trash_mass_clean){
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
   dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)}
+  if("material" %in% colnames(dataframe) == TRUE){dataframe$material <- as.character(dataframe$material)}
+  if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)}
+  if("error_SD" %in% colnames(dataframe) == TRUE){dataframe$error_SD <- as.numeric(dataframe$error_SD)}
+  if("error_upper" %in% colnames(dataframe) == TRUE){dataframe$error_upper <- as.numeric(dataframe$error_upper)}
+  if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
   dataframeclean <- dataframe
-  if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)
-  dataframeclean$morphology <- cleantext(dataframe$morphology)}
-  if("material" %in% colnames(dataframe) == TRUE){dataframe$material <- as.character(dataframe$material)
-  dataframeclean$material <- cleantext(dataframe$material)}
-  if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)
-  dataframeclean$density <- as.numeric(dataframeclean$density)}
-  if("error_SD" %in% colnames(dataframe) == TRUE){dataframe$error_SD <- as.numeric(dataframe$error_SD)
-  dataframeclean$error_SD <- as.numeric(dataframeclean$error_SD)}
-  if("error_upper" %in% colnames(dataframe) == TRUE){dataframe$error_upper <- as.numeric(dataframe$error_upper)
-  dataframeclean$error_upper <- as.numeric(dataframeclean$error_upper)}
-  if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)
-  dataframeclean$error_lower <- as.numeric(dataframeclean$error_lower)}
   
   corrected_DF <- corrected_DF %>% select(sample_ID, alpha, alpha_upper, alpha_lower)
   corrected_DF$alpha <- as.numeric(corrected_DF$alpha)
@@ -608,6 +602,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   concentration_mass <- data.frame()
   concentration_mass_trash <- data.frame()
   for(x in 1:nrow(unique_IDs)){
+    #x = 1
     print(x)
     ID <- unique_IDs[x, "sample_ID"]
     data_ID <- dataframeclean %>% filter(sample_ID == ID)
@@ -645,7 +640,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
     }
     
     concentration_ID <- concentration_ID %>% add_column(min_concentration_um3_vol = NA, mean_concentration_um3_vol = NA, max_concentration_um3_vol = NA, min_concentration_mg_vol = NA, mean_concentration_mg_vol = NA, max_concentration_mg_vol = NA)
-    
+    #y = 1
     for(y in 1:nrow(concentration_ID)){
       if("size_min" %in% colnames(data_ID) == TRUE && "size_max" %in% colnames(data_ID) == TRUE){
         # Parameters
