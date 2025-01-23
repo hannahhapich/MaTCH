@@ -645,9 +645,9 @@ server <- function(input,output,session) {
     if("error_upper" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Upper (particles/volume)' = 'error_upper')}
     if("error_lower" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Lower (particles/volume)' = 'error_lower')}
     if("error_SD" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Standard Deviation' = 'error_SD')}
-    if("length_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Length (microns)' = 'length_um')}
-    if("width_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um')}
-    if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
+    if("length_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Length (microns)' = 'length_um') %>% select(-c(L_min, L_max))}
+    if("width_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um') %>% select(-c(W_min, W_mean, W_max))}
+    if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um') %>% select(-c(H_min, H_mean, H_max))}
     if("sample_volume" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample Volume' = 'sample_volume')}
     if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
     if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
