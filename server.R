@@ -647,12 +647,14 @@ server <- function(input,output,session) {
     if("error_SD" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Standard Deviation' = 'error_SD')}
     if("length_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Length (microns)' = 'length_um')}
     if("L_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(L_min, L_max))}
+    if("width_um" %in% colnames(dataframe5) && "W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um', 'Projected Width (microns)' = 'W_mean')}
     if("width_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um')}
-    #if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(W_min, W_max))}
-    #if("W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(W_mean))}
+    if("W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'W_mean')}
     if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
-    #if("H_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(H_min, H_max))}
-    #if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(H_mean))}
+    if("height_um" %in% colnames(dataframe5) && "H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um', 'Projected Height (microns)' = 'H_mean')}
+    if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
+    if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'H_mean')}
+    
     if("sample_volume" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample Volume' = 'sample_volume')}
     if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
     if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
@@ -661,8 +663,8 @@ server <- function(input,output,session) {
     if("correction_factor" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Correction Factor' = 'correction_factor') %>% select(-c(correction_factor_upper, correction_factor_lower))}
     if("mean_mass_mg" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Mass (mg)' = 'mean_mass_mg')}
     if("volume_min_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Volume (microns3)' = 'volume_min_um_3', 'Volume (microns3)' = 'volume_mean_um_3', 'Max Volume (microns3)' = 'volume_max_um_3', 'Min Mass (mg)' = 'min_mass_mg', 'Max Mass (mg)' = 'max_mass_mg')}
-    if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Width (microns)' = 'W_min', 'Width (microns)' = 'W_mean', 'Max Width (microns)' = 'W_max')}
-    if("H_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Height (microns)' = 'H_min', 'Height (microns)' = 'H_mean', 'Max Height (microns)' = 'H_max')}
+    if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Width (microns)' = 'W_min', 'Max Width (microns)' = 'W_max')}
+    if("H_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Height (microns)' = 'H_min', 'Max Height (microns)' = 'H_max')}
     if("density_mg_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Density (mg/microns3)' = 'density_min', 'Density (mg/microns3)' = 'density_mg_um_3', 'Max Density (mg/microns3)' = 'density_max')}
     if("concentration" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration (particles/volume)' = 'concentration', 'Corrected Concentration (particles/volume)' = 'corrected_concentration', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
     if("corrected_concentration_particle_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration_particle_vol', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
