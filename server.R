@@ -654,6 +654,7 @@ server <- function(input,output,session) {
     if("height_um" %in% colnames(dataframe5) && "H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um', 'Projected Height (microns)' = 'H_mean')}
     if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
     if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'H_mean')}
+    if("L_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c("L_mean"))}
     
     if("sample_volume" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample Volume' = 'sample_volume')}
     if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
