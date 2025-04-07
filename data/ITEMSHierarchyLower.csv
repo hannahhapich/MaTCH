@@ -40,21 +40,21 @@ computer equiptment & other electronic devices,"cd, cd-box",,,,
 computer equiptment & other electronic devices,small electronic items,e-waste fragments,,,
 computer equiptment & other electronic devices,small electronic items,telephone,,,
 corks,,,,,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,drink bottles>0.5l,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,water bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,sport drink bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,wine bottle,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,soft drink bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,juice bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,"bottles, etc. >2L",
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,bottles <2L,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,liquor bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,fizzy drink bottle,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,ice tea bottles,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,beer bottle,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,degraded bottle,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,drink bottles<=0.5l,
-"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,beverage bottles,milk bottle,
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,drink bottles>0.5l
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,water bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,sport drink bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,wine bottle
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,soft drink bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,juice bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,"bottles, etc. >2L"
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,bottles <2L
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,liquor bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,fizzy drink bottle
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,ice tea bottles
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,beer bottle
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,degraded bottle
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,drink bottles<=0.5l
+"cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,bottles,beverage bottles,milk bottle
 "cups, food trays, food wrappers, drink containers",beverage containers,bottles & jars,jars,foodjars,
 "cups, food trays, food wrappers, drink containers",beverage containers,cans OR tins,cans,beverage cans,beer cans
 "cups, food trays, food wrappers, drink containers",beverage containers,cans OR tins,cans,beverage cans,juices cans
@@ -207,7 +207,8 @@ industrialpackaging OR crates OR sheeting,shipping OR packaging,packaging,,,
 paint brushes,,,,,
 paint tins,,,,,
 paperclip,,,,,
-cardboard and paper,paper,cardboard,,,
+cardboard and paper,paper,,,,
+cardboard and paper,cardboard,,,,
 cardboard and paper,paper,"newspaper, books",books,,
 cardboard and paper,paper,newspapers & magazines,magazines,,
 cardboard and paper,paper,paper OR napkins OR tissues,,,

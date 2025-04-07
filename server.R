@@ -890,23 +890,7 @@ server <- function(input,output,session) {
                                             Shiny.bindAll(table.table().node());"))
   )
   
-  
-  # output$contents4 <- renderDataTable(datatable({
-  #                                       selectSurvey()
-  #                                     }, 
-  #                                     extensions = 'Buttons',
-  #                                     options = list(
-  #                                       paging = TRUE,
-  #                                       #searching = TRUE,
-  #                                       fixedColumns = TRUE,
-  #                                       autoWidth = TRUE,
-  #                                       ordering = TRUE,
-  #                                       server = F, 
-  #                                       dom = 'Bfrtip',
-  #                                       buttons = c('copy', 'csv')
-  #                                     ),
-  #                                     class = "display",
-  #                                     style="bootstrap"))
+
   output$contents4 <- renderDataTable(datatable({
     selectSurvey()
   }, 

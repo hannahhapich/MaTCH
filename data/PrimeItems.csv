@@ -102,7 +102,8 @@ beerbottle,beerbottle,beer bottle
 beercans,beercan,beer cans
 beercans,beercans,beer cans
 beveragebottles,beveragebottles(plastic)2litersorless,beverage bottles
-beveragebottles,bottle,beverage bottles
+bottles,bottles,bottles
+bottles,bottle,bottles
 beveragebottles,glassbeveragebottle,beverage bottles
 beveragebottles,beveragebottles,beverage bottles
 beveragebottles,otherplasticbottles,beverage bottles
@@ -175,9 +176,8 @@ bottles:oilorlube,oilorlubebottles,bottles: oil OR lube
 bottles:oilorlube,bottles:oil/lube,bottles: oil OR lube
 bottles:oilorlube,oil/lubebottles,bottles: oil OR lube
 bottles:oilorlube,bottles:oilorlube,bottles: oil OR lube
-bottles&jars,glassbottles,bottles & jars
-bottles&jars,bottles,bottles & jars
-bottles&jars,bottlesincl.pieces,bottles & jars
+bottles,glassbottles,bottles
+bottles,bottlesincl.pieces,bottles
 bottles&jars,bottle/jars(glass),bottles & jars
 bottles&jars,bottles&jars,bottles & jars
 bottles&jars,glassbottle/jar-other,bottles & jars
