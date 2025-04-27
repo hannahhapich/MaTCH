@@ -366,8 +366,11 @@ median_concentration <- concentration_all %>%
   group_by(Source) %>%
   summarize(median_concentration = median(concentration, na.rm = TRUE))
 
+concentration_all$Source <- factor(concentration_all$Source, 
+                                   levels = c("Drinking Water Corrected", "Drinking Water Reported", 
+                                              "River Corrected", "River Reported"))
 
-concentration_correction_boxplot <- ggplot(concentration_all, aes(fill = Source, x = reorder( Source, -concentration), y = concentration)) +
+concentration_correction_boxplot <- ggplot(concentration_all, aes(fill = Source, x = Source, y = concentration)) +
   geom_boxplot()+
   scale_y_continuous(trans='log10')+
   scale_fill_manual(values = c("#009999","#8DD3C7", "#FB8072","#FF9999")) +
