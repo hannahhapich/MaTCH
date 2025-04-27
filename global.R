@@ -749,6 +749,11 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
   dataframeclean <- dataframe
   if("study_media" %in% colnames(dataframe) == TRUE){
+    dataframeclean <- dataframeclean %>% 
+      rename("study_media_clean" = "study_media") 
+    study_media <- cleantext(dataframeclean$study_media_clean)
+    dataframeclean <- dataframeclean %>% 
+      add_column(study_media = study_media)
     if(metric == "length (um)"){dataframeclean <- merge(x = dataframeclean, y = alpha_vals[ , c("study_media", "length", "length_sd")], by = "study_media", all.x=TRUE)
     dataframeclean <- dataframeclean %>%
       rename("alpha" = "length",
@@ -778,7 +783,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     dataframeclean <- dataframeclean %>% 
       add_column(alpha_lower = alpha_lower,
                  alpha_upper = alpha_upper) %>%
-      select(-study_media, -sd)
+      select(-study_media, -sd) %>%
+      rename("study_media" = "study_media_clean")
   }else{
     dataframeclean <- dataframeclean %>% 
       add_column(alpha = NA,
@@ -1276,9 +1282,8 @@ grouped_uncertainty <- function(DF_group, Group_Alias, Group_Hierarchy, type){
   
   df_join_boot <- df_join %>%
     group_by(from, to) %>%
-    summarise(mean_prop = mean(totalsum, na.rm = T), 
-              min_prop = mean(totalsum, na.rm = T) - confidence_interval_width(totalsum), 
-              max_prop = mean(totalsum, na.rm = T) + confidence_interval_width(totalsum))
+    summarise(mean_prop = mean(totalsum, na.rm = T)
+              )
   
 }
 
@@ -1287,11 +1292,7 @@ sunburstplot <-function(df_join_boot){
   values <- paste(df_join_boot$to, 
                   "<br>", 
                   round(df_join_boot$mean_prop, 2) * 100, 
-                  " (", 
-                  round(df_join_boot$min_prop, 2) * 100, 
-                  "-", 
-                  round(df_join_boot$max_prop, 2) * 100, 
-                  ")%", 
+                  "%", 
                   sep = "")
   
   values[df_join_boot$mean_prop < 0.07] <- NA
