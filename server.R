@@ -39,7 +39,7 @@ server <- function(input,output,session) {
           match4 <- top_five[[4]]
           match5 <- top_five[[5]]
           
-          dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "100px"))
+          dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "200px"))
       }
       
       else{
@@ -127,7 +127,7 @@ server <- function(input,output,session) {
         match4 <- top_five[[4]]
         match5 <- top_five[[5]]
        
-        dataframe[row, "PrimeItem"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "100px"))
+        dataframe[row, "PrimeItem"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "200px"))
         
       }
       
@@ -337,7 +337,7 @@ server <- function(input,output,session) {
     if(input$sizeRange == "Micro"){data = MicroOnly
     data = as.data.frame(data)
     survey_columns <- c("material","items","color","size")
-    colnames(data) = c("material","items","color","size")
+    colnames(data) = c("Material","Morphology","Color","Size")
     return(data)}
     if(input$specificity == "More Specific"){data = AllMore
     data = as.data.frame(data)
@@ -387,8 +387,10 @@ server <- function(input,output,session) {
                               !use == "shorelineandrecreationalactivites",
                               !use == "ocean/waterwayactivities")
     }
-    
-    
+    if("use" %in% colnames(data)){data <- data %>% rename('Use' = 'use')}
+    if("material" %in% colnames(data)){data <- data %>% rename('Material' = 'material')}
+    if("items" %in% colnames(data)){data <- data %>% rename('Morphology' = 'items')}
+    if("count" %in% colnames(data)){data <- data %>% select(-count)}
 
     
     return(data)
@@ -481,7 +483,7 @@ server <- function(input,output,session) {
       dataframe_mat2 <- dataframe_mat %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)
       dataframe_mat2 <- dataframe_mat2 %>% filter(!(is.na(material_match_1))) %>% add_column(Prime_Material = NA) %>% unique()
       for (i in 1:nrow(dataframe_mat2)) {
-        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(paste0("sel", i), "", choices = c(dataframe_mat2[i, 3], dataframe_mat2[i, 4], dataframe_mat2[i, 5], dataframe_mat2[i, 6], dataframe_mat2[i, 7]), selected = dataframe_mat2[i, 3], width = "100px"))
+        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(paste0("sel", i), "", choices = c(dataframe_mat2[i, 3], dataframe_mat2[i, 4], dataframe_mat2[i, 5], dataframe_mat2[i, 6], dataframe_mat2[i, 7]), selected = dataframe_mat2[i, 3], width = "200px"))
       }
       dataframe_mat2 <- dataframe_mat2 %>% select(-c(material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
         rename(alias = Prime_Material)
@@ -500,7 +502,7 @@ server <- function(input,output,session) {
       dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
       dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1))) %>% unique()
       for (i in 1:nrow(dataframe_morph2)) {
-        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph2[i, 3], dataframe_morph2[i, 4], dataframe_morph2[i, 5], dataframe_morph2[i, 6], dataframe_morph2[i, 7]), selected = dataframe_morph2[i, 3], width = "100px"))
+        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph2[i, 3], dataframe_morph2[i, 4], dataframe_morph2[i, 5], dataframe_morph2[i, 6], dataframe_morph2[i, 7]), selected = dataframe_morph2[i, 3], width = "200px"))
 
       }
       dataframe_morph2 <- dataframe_morph2 %>% select(-c(morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
@@ -609,12 +611,17 @@ server <- function(input,output,session) {
       dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
       #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 100)
       incProgress(0.3, detail = "Completed concentration size rescaling")
-      dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean)
-      dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
-      dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
-      dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_ID")
+      if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+        dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean)
+        dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
+        dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
+        dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_ID")
+        
+        incProgress(0.6, detail = "Completed concentration mass calculation")
+      }else{
+        dataframe4 <- dataframe3
+      }
       
-      incProgress(0.6, detail = "Completed concentration mass calculation")
     }else{dataframe4 <- dataframe2} 
     
     if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
@@ -656,6 +663,7 @@ server <- function(input,output,session) {
     if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'H_mean')}
     if("L_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c("L_mean"))}
     
+    if("study_media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('Study Media' = 'study_media')}
     if("sample_volume" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample Volume' = 'sample_volume')}
     if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
     if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
@@ -667,7 +675,7 @@ server <- function(input,output,session) {
     if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Width (microns)' = 'W_min', 'Max Width (microns)' = 'W_max')}
     if("H_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Height (microns)' = 'H_min', 'Max Height (microns)' = 'H_max')}
     if("density_mg_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Density (mg/microns3)' = 'density_min', 'Density (mg/microns3)' = 'density_mg_um_3', 'Max Density (mg/microns3)' = 'density_max')}
-    if("concentration" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration (particles/volume)' = 'concentration', 'Corrected Concentration (particles/volume)' = 'corrected_concentration', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
+    if("corrected_concentration" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
     if("corrected_concentration_particle_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration_particle_vol', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
     if("min_concentration_um3_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (microns3/volume)' = 'min_concentration_um3_vol', 'Concentration (microns3/volume)' = 'mean_concentration_um3_vol', 'Max Concentration (microns3/volume)' = 'max_concentration_um3_vol')}
     if("min_concentration_mg_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (mg/volume)' = 'min_concentration_mg_vol', 'Concentration (mg/volume)' = 'mean_concentration_mg_vol', 'Max Concentration (mg/volume)' = 'max_concentration_mg_vol')}
@@ -916,29 +924,6 @@ server <- function(input,output,session) {
   selection = 'none',  # Disable row selection
   class = "display", style="bootstrap"))
   
-  # output$contents5 <- DT :: renderDataTable(server = T,
-  #                                       convertedParticles(), 
-  #                                       rownames = FALSE,
-  #                                       escape = FALSE,
-  #                                       #filter = "top",
-  #                                       options = list(
-  #                                         searchHighlight = TRUE,
-  #                                         scrollX = TRUE,
-  #                                         sScrollY = '25vh', 
-  #                                         scrollCollapse = TRUE,
-  #                                         lengthChange = FALSE, 
-  #                                         #pageLength = 5,
-  #                                         paging = FALSE,
-  #                                         searching = TRUE,
-  #                                         fixedColumns = TRUE,
-  #                                         autoWidth = FALSE,
-  #                                         ordering = TRUE,
-  #                                         dom = 'Bfrtip'
-  #                                       ),
-  #                                       selection = 'none',  # Disable row selection
-  #                                       class = "display",
-  #                                       style="bootstrap")
-  
   output$contents5 <- DT :: renderDataTable(server = T,
                                             datatable({
                                               convertedParticles()
@@ -968,7 +953,16 @@ server <- function(input,output,session) {
   
   output$contents8 = DT::renderDataTable(
     materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap", rownames = F,
-    options = list(dom = 't', paging = FALSE, searching = F, ordering = FALSE),
+    options = list(dom = 'f', 
+                   paging = FALSE, 
+                   columnDefs = list(
+                     list(
+                       targets = '_all',  
+                       width = '200px'  
+                        )
+                    ), 
+                  searching = F, 
+                  ordering = FALSE),
     callback = JS("table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
@@ -980,7 +974,16 @@ server <- function(input,output,session) {
 
   output$contents9 = DT::renderDataTable(
     morphologyDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap", rownames = F,
-    options = list(dom = 'f', paging = FALSE, searching = F, ordering = FALSE),
+    options = list(dom = 'f', 
+                   paging = FALSE, 
+                   columnDefs = list(
+                     list(
+                       targets = '_all',  
+                       width = '200px'  
+                     )
+                   ),
+                   searching = F, 
+                   ordering = FALSE),
     callback = JS("table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
