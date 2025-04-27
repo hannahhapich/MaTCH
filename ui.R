@@ -9,12 +9,12 @@ ui <- dashboardPage(dark = T,
                         menuItem("MaTCH Tool", 
                                  tabName = "match", 
                                  icon = icon("wand-magic-sparkles")),
-                        menuItem("About", 
-                                 tabName = "About", 
-                                 icon = icon("question")),
                         menuItem("Data Template", 
                                  tabName = "test", 
                                  icon = icon("download")),
+                        menuItem("About", 
+                                 tabName = "About", 
+                                 icon = icon("question")),
                         menuItem("Relational Tables", 
                                  tabName = "RelationalTables", 
                                  icon = icon("table")),
@@ -34,7 +34,7 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(2,
                                          fluidRow(style = "display: flex; align-items: flex-end;",
-                                                  column(9, 
+                                                  column(12, 
                                                          fileInput('particleData', "Choose CSV File", multiple = FALSE,
                                                                    placeholder = ".csv",
                                                                    accept=c("text/csv",
@@ -59,7 +59,7 @@ ui <- dashboardPage(dark = T,
                                   ),
                                   column(8,
                                          fluidRow( 
-                                           column(7, 
+                                           column(10, 
                                                   ## Preprocessing ----
                                                   fluidRow(
                                                     box(width = 12,
@@ -79,6 +79,7 @@ ui <- dashboardPage(dark = T,
                                                               numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1),
                                                               footer = tags$small("Select the measured characteristic of your particles over which to normalize. 
                                                                                    Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', and 'effluent.' 
+                                                                                   (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values).
                                                                                    If known particle characteristic is length, 'drinking water' is an additional option.")
                                                           )
                                                         ),
@@ -87,12 +88,11 @@ ui <- dashboardPage(dark = T,
                                                           box(width = 12,
                                                               collapsed = T,
                                                               footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
-                                                                                  'quantile' provides quantile breaks.
                                                                                   'equal' divides the range into 'n' parts.
                                                                                   'sd' creates classes proportionate to the standard deviation of the data provided"),
                                                               title = "Alpha Value Calculation",
                                                               br(),
-                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","quantile","equal","sd")),
+                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","equal","sd")),
                                                               br(),
                                                               numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
                                                           )
@@ -129,12 +129,17 @@ ui <- dashboardPage(dark = T,
                                                   )
                                            ))),
                                   column(2,
+                                         # fluidRow( 
+                                         #   column(5, 
                                          selectInput(inputId = "download_selection",
                                                      label = downloadButton("download_data",
-                                                                            style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
+                                                                            style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:140%;"),
                                                      choices = c("Particle Test Data",
                                                                  "Sample Test Data")) 
+                                         #   )
+                                         # )
                                   )
+                                
                                 ),
                                 ## Plot ----
                                 fluidRow(
@@ -160,7 +165,7 @@ ui <- dashboardPage(dark = T,
                                       collapsed = T,
                                       width = 6,
                                       fluidRow(
-                                        div(style = "overflow-x: scroll",
+                                        div(#style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents8")
                                         ))
                                   ),
@@ -169,7 +174,7 @@ ui <- dashboardPage(dark = T,
                                       collapsed = T,
                                       width = 6,
                                       fluidRow(
-                                        div(style = "overflow-x: scroll",
+                                        div(#style = "overflow-x: scroll",
                                             DT::dataTableOutput("contents9")
                                         ))
                                   ),
@@ -185,8 +190,17 @@ ui <- dashboardPage(dark = T,
                                       width = 6,
                                       plotlyOutput("plot2")
                                   )
-                                )
+                                ),
                                 
+                                tags$hr(),
+                                
+                                fluidRow(
+                                  column(12,
+                                         align="center",
+                                         hr(),
+                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                  )
+                                )
                         ),
                         #About tab
                         tabItem(tabName = "About",
@@ -210,7 +224,7 @@ ui <- dashboardPage(dark = T,
                                   column(6,
                                          shiny::HTML("<br><br><center> <h1>About the Relational Tables</h1> </center><br>"),
                                          align = "center",
-                                         img(width = "700", src = "db_diagram.JPG", align = "center"),
+                                         img(width = "600", src = "db_diagram.JPG", style = 'display: block; margin-left: auto; margin-right: auto;'),
                                          shiny::HTML("<h5>These relational tables describe alias relationships (words that mean the same thing) and hierarchical relationships (words that are nested groups within one another). You can view or download these tables using the relational table tab above!</h5>")
                                   ),
                                   column(3)
@@ -267,10 +281,13 @@ ui <- dashboardPage(dark = T,
                                 tags$hr(),
                                 
                                 fluidRow(
+                                  column(12,
                                   align="center",
                                   hr(),
-                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
-                                )
+                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                  )
+                                  )
+                                
                                 
                                 
                                 #end of about panel
@@ -345,9 +362,11 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 
                                 fluidRow(
-                                  align="center",
-                                  hr(),
-                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
+                                  column(12,
+                                         align="center",
+                                         hr(),
+                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                  )
                                 )
                         ),
                         
@@ -390,9 +409,11 @@ ui <- dashboardPage(dark = T,
                                         shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)   
                                       ),
                                       fluidRow(
-                                        align="center",
-                                        hr(),
-                                        tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
+                                        column(12,
+                                               align="center",
+                                               hr(),
+                                               tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                        )
                                       )
                                     )
                                 )
@@ -457,9 +478,11 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 hr(),
                                 fluidRow(
-                                  align="center",
-                                  hr(),
-                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
+                                  column(12,
+                                         align="center",
+                                         hr(),
+                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                  )
                                 )
                                 #end of about panel
                         ),
@@ -502,9 +525,11 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 
                                 fluidRow(
-                                  align="center",
-                                  hr(),
-                                  tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://hannahhapich.shinyapps.io/match/")
+                                  column(12,
+                                         align="center",
+                                         hr(),
+                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                  )
                                 )
                                 #end of panel
                         )
