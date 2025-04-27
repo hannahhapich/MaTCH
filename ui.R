@@ -219,6 +219,25 @@ ui <- dashboardPage(dark = T,
                                 
                                 # PAGE BREAK
                                 tags$hr(),
+                                
+                                fluidRow(
+                                  column(12,
+                                         
+                                         shiny::HTML("<br><br><center> <h1>Detailed Instructions</h1> </center><br>"),
+                                         shiny::HTML("<h5>Find here a detailed demonstration of the tool, including data formatting, multiple use cases, and information about advanced settings.</h5>"),
+                                         tags$hr(),
+                                         align = "center",
+                                         shiny::HTML("<iframe width='70%' height='150%' src='https://www.youtube-nocookie.com/embed/Nze8bnf-lqA' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                                         
+                                  )
+                                ),
+                                fluidRow(
+                                  
+                                  style = "height:300px;"),
+                                
+                                # PAGE BREAK
+                                tags$hr(),
+                                
                                 fluidRow(
                                   column(3),
                                   column(6,
