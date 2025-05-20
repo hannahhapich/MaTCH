@@ -233,7 +233,7 @@ ui <- dashboardPage(dark = T,
                                 ),
                                 fluidRow(
                                   
-                                  style = "height:300px;"),
+                                  style = "height:400px;"),
                                 
                                 # PAGE BREAK
                                 tags$hr(),
