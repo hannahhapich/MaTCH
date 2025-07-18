@@ -669,7 +669,7 @@ server <- function(input,output,session) {
     if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
     if("morphology_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Morphology (Raw Data)' = 'morphology_raw')}
     if("alpha" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Alpha' = 'alpha') %>% select(-c(alpha_upper, alpha_lower))}
-    if("correction_factor" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Correction Factor' = 'correction_factor') %>% select(-c(correction_factor_upper, correction_factor_lower))}
+    if("correction_factor" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Correction Factor' = 'correction_factor', 'Max Correction Factor' = 'correction_factor_upper', 'Min Correction Factor' = 'correction_factor_lower')}
     if("mean_mass_mg" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Mass (mg)' = 'mean_mass_mg')}
     if("volume_min_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Volume (microns3)' = 'volume_min_um_3', 'Volume (microns3)' = 'volume_mean_um_3', 'Max Volume (microns3)' = 'volume_max_um_3', 'Min Mass (mg)' = 'min_mass_mg', 'Max Mass (mg)' = 'max_mass_mg')}
     if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Width (microns)' = 'W_min', 'Max Width (microns)' = 'W_max')}
@@ -679,6 +679,9 @@ server <- function(input,output,session) {
     if("corrected_concentration_particle_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration_particle_vol', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
     if("min_concentration_um3_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (microns3/volume)' = 'min_concentration_um3_vol', 'Concentration (microns3/volume)' = 'mean_concentration_um3_vol', 'Max Concentration (microns3/volume)' = 'max_concentration_um3_vol')}
     if("min_concentration_mg_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (mg/volume)' = 'min_concentration_mg_vol', 'Concentration (mg/volume)' = 'mean_concentration_mg_vol', 'Max Concentration (mg/volume)' = 'max_concentration_mg_vol')}
+    
+    dataframe5 <- dataframe5 %>%
+      select_if(~ !all(is.na(.)))
     
     return(dataframe5)
     })
