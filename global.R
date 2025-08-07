@@ -435,10 +435,17 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     }
     
     for(x in 1:nrow(dataframeclean)){
-      print(x)
-      if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"]){
+      if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"] && dataframeclean[x, "H_min"] < dataframeclean[x, "W_min"]){
         dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_mean"])
         dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
+      }else if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_max"] > dataframeclean[x, "W_max"] && dataframeclean[x, "H_mean"] < dataframeclean[x, "W_mean"]){
+        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_max"])
+      }else if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] < dataframeclean[x, "W_mean"] && dataframeclean[x, "H_min"] > dataframeclean[x, "W_min"]){
+        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "W_min"])
+      }else if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"] && dataframeclean[x, "H_min"] > dataframeclean[x, "W_min"]){
+        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "W_min"])
+        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_max"])
+        dataframeclean[x, "H_mean"] <- as.numeric(dataframeclean[x, "W_mean"])
       }
       
     }
@@ -527,13 +534,6 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
           dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
           dataframeclean_particles$max_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_max[[x]])
           dataframeclean_particles$min_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_min[[x]])
-          
-          # upper_diff <- (dataframeclean_particles_avg$density_max) - (dataframeclean_particles_avg$density_mg_um_3)
-          # lower_diff <- (dataframeclean_particles_avg$density_mg_um_3) - (dataframeclean_particles_avg$density_min)
-          # upper_conf <- mean(upper_diff, na.rm = T) 
-          # lower_conf <- mean(lower_diff, na.rm = T)
-          # dataframeclean_particles$max_mass_mg[[x]] <- dataframeclean_particles$mean_mass_mg[[x]] + upper_conf
-          # dataframeclean_particles$min_mass_mg[[x]] <- dataframeclean_particles$mean_mass_mg[[x]] + lower_conf
         }else if(morph_weight == T && sample_weight == F || morph_weight == T && sample_weight == T && !("sample_ID" %in% colnames(dataframeclean_particles))){
           dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
           density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
