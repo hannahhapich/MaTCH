@@ -50,7 +50,7 @@ ui <- dashboardPage(dark = T,
                                                                       value = T,
                                                                       status = "success",
                                                                       fill = T) %>%
-                                                           popover(
+                                                           bs4Dash::popover(
                                                              title = "If you like, we share your uploaded data table and settings with the plastic community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded data tables will appear here: https://osf.io/rjg3c. If you have particles of known density, volume, or mass that you can share, please upload a .csv file.",
                                                              content = "Share Decision", placement = "right"
                                                            )
@@ -95,6 +95,19 @@ ui <- dashboardPage(dark = T,
                                                               selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","equal","sd")),
                                                               br(),
                                                               numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
+                                                          )
+                                                        ),
+                                                        fluidRow(
+                                                          box(width = 12,
+                                                              collapsed = T,
+                                                              footer = tags$small("For fibers with unknown width and height, the following values will be used. Default values are from Suaria et al. (2020) and represent Q1, Q2, and Q3 of their measured microfiber diameters."),
+                                                              title = "Fiber Width Settings",
+                                                              br(),
+                                                              numericInput('fiber_min', "Fiber Minimum Diameter", 15, min = 1),
+                                                              br(),
+                                                              numericInput('fiber_med', "Fiber Median Diameter", 16.7, min = 1),
+                                                              br(),
+                                                              numericInput('fiber_max', "Fiber Max Diameter", 20.4, min = 1)
                                                           )
                                                         ),
                                                         fluidRow(
@@ -331,7 +344,7 @@ ui <- dashboardPage(dark = T,
                                              style = "height: 70vh, overflow-y: auto",
                                              title = "Choose Data Type",
                                              selectInput('reporting_level', "Data Reporting Level", c("", "Sample (particles/volume)","Particle")) %>%
-                                               popover(title = "Data Reporting Level",
+                                               bs4Dash::popover(title = "Data Reporting Level",
                                                        content = "Choose the level at which your data was reported. Sample data is in the format of plastics concentrations as a particle count per volume.
                                                            Particle data contains individual rows for each particle found detailing its characteristics.",
                                                        placement = "right"),
@@ -340,7 +353,7 @@ ui <- dashboardPage(dark = T,
                                                                 "", 
                                                                 br(),
                                                                 choices = NULL) %>%
-                                               popover(title = "Data Characteristics",
+                                               bs4Dash::popover(title = "Data Characteristics",
                                                        content = "Choose the commonly associated metadata you have available to describe your particles.",
                                                        placement = "right"),
                                              
@@ -350,7 +363,7 @@ ui <- dashboardPage(dark = T,
                                                  checkboxGroupInput('advanced', 
                                                                     "", 
                                                                     choices = NULL) %>%
-                                                   popover(
+                                                   bs4Dash::popover(
                                                      title = "Choose from advanced, less commonly associated metadata you may have to describe your particles.",
                                                      content = "Share Decision", placement = "right"
                                                    )
@@ -457,7 +470,7 @@ ui <- dashboardPage(dark = T,
                                                       status = "success",
                                                       fill = T),
                                          fileInput('df', "Choose CSV File", multiple = FALSE, accept = c(".csv"))%>%
-                                           popover(placement = "right",
+                                           bs4Dash::popover(placement = "right",
                                                   title = "Upload Help",
                                                   content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row.")),
                                          
@@ -519,19 +532,19 @@ ui <- dashboardPage(dark = T,
                                 fluidRow(
                                   column(2, 
                                          selectInput('sizeRange', "Choose size range", c("", "Micro","Macro","All")) %>%
-                                           popover(placement = "right",
+                                           bs4Dash::popover(placement = "right",
                                                   title = "Selection Help",
                                                   content = c("Select if your study will include microplastics, macro-debris, or both.")),
                                          selectInput('environments', "Choose environment", c("", "Marine/Estuarine", "Riverine", "Terrestrial", "All")) %>%
-                                           popover(placement = "right",
+                                           bs4Dash::popover(placement = "right",
                                                   title = "Selection Help",
                                                   content = c("Select the environment your study will be conducted in, or include all.")),
                                          selectInput('media', "Choose media", c("", "Surface Water","Sediment")) %>%
-                                           popover(placement = "right",
+                                           bs4Dash::popover(placement = "right",
                                                   title = "Selection Help",
                                                   content = c("Select the media your study will be conducted in.")),
                                          selectInput('specificity', "Choose specificity", c("", "More Specific","Less Specific")) %>%
-                                           popover(placement = "right",
+                                           bs4Dash::popover(placement = "right",
                                                   title = "Selection Help",
                                                   content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying.")),
                                          

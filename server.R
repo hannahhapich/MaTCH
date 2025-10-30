@@ -591,7 +591,8 @@ server <- function(input,output,session) {
     
     if("morphology" %in% colnames(dataframe) && ("concentration_particle_vol" %in% colnames(dataframe)) == F && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
-                                        polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight)
+                                        polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight,
+                                        fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
       dataframe2 <- dataframe2 %>% select(morphology_raw, everything()) 
       dataframe2 <- dataframe2 %>% select(material_raw, everything()) 
       dataframe2 <- dataframe2 %>% select(morphology, everything()) 
@@ -612,7 +613,8 @@ server <- function(input,output,session) {
       #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 100)
       incProgress(0.3, detail = "Completed concentration size rescaling")
       if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-        dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean)
+        dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean,
+                                               fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
         dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
         dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
         dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_ID")
@@ -657,10 +659,11 @@ server <- function(input,output,session) {
     if("width_um" %in% colnames(dataframe5) && "W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um', 'Projected Width (microns)' = 'W_mean')}
     if("width_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um')}
     if("W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'W_mean')}
-    if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
+    #if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
     if("height_um" %in% colnames(dataframe5) && "H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um', 'Projected Height (microns)' = 'H_mean')}
     if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
     if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'H_mean')}
+    
     if("L_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c("L_mean"))}
     
     if("study_media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('Study Media' = 'study_media')}
@@ -668,7 +671,7 @@ server <- function(input,output,session) {
     if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
     if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
     if("morphology_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Morphology (Raw Data)' = 'morphology_raw')}
-    if("alpha" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Alpha' = 'alpha') %>% select(-c(alpha_upper, alpha_lower))}
+    if("alpha" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Alpha' = 'alpha', 'Alpha Min' = 'alpha_lower', 'Alpha Max' = 'alpha_upper' )}
     if("correction_factor" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Correction Factor' = 'correction_factor', 'Max Correction Factor' = 'correction_factor_upper', 'Min Correction Factor' = 'correction_factor_lower')}
     if("mean_mass_mg" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Mass (mg)' = 'mean_mass_mg')}
     if("volume_min_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Volume (microns3)' = 'volume_min_um_3', 'Volume (microns3)' = 'volume_mean_um_3', 'Max Volume (microns3)' = 'volume_max_um_3', 'Min Mass (mg)' = 'min_mass_mg', 'Max Mass (mg)' = 'max_mass_mg')}

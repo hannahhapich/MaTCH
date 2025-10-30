@@ -275,7 +275,7 @@ merge_data <- function(file_paths, materials_vectorDB, items_vectorDB, alias, al
 }
 
 # Function to calculate volume and mass
-calculate_volume_and_mass <- function(df, morphology_shape, polymer_density) {
+calculate_volume_and_mass <- function(df, morphology_shape, polymer_density, fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max) {
   meas_min <- 0.95
   meas_max <- 1.05
   # Join morphology and density data
@@ -290,32 +290,96 @@ calculate_volume_and_mass <- function(df, morphology_shape, polymer_density) {
     add_column(L_min = length_um * meas_min,
                L_max = length_um * meas_max)
   
-  # Calculate width and height if not provided
-  if ("width_um" %in% colnames(df)) {
-    width_um <- df$width_um
-    df <- df %>%
-      mutate(W_mean = ifelse(is.na(width_um), (W_min * length_um + W_max * length_um) / 2, width_um),
-             W_min = ifelse(is.na(width_um), W_min * length_um, width_um * meas_min),
-             W_max = ifelse(is.na(width_um), W_max * length_um, width_um * meas_max))
-  } else {
-    df <- df %>%
-      mutate(W_mean = (W_min * length_um + W_max * length_um) / 2,
-             W_min = W_min * length_um,
-             W_max = W_max * length_um)
-  }
+  fiber_min <- as.numeric(fiber_min)
+  fiber_med <- as.numeric(fiber_med)
+  fiber_max <- as.numeric(fiber_max)
   
-  if ("height_um" %in% colnames(df)) {
-    height_um <- df$height_um
-    df <- df %>%
-      mutate(H_mean = ifelse(is.na(height_um), (H_min * length_um + H_max * length_um) / 2, height_um),
-             H_min = ifelse(is.na(height_um), H_min * length_um, height_um * meas_min),
-             H_max = ifelse(is.na(height_um), H_max * length_um, height_um * meas_max))
-  } else {
-    df <- df %>%
-      mutate(H_mean = (H_min * length_um + H_max * length_um) / 2,
-             H_min = H_min * length_um,
-             H_max = H_max * length_um)
-  }
+  df <- df %>% mutate(row_id = row_number())
+ 
+  #Fiber diameter calculation
+  df_fibers <- df %>% filter(morphology == "fiber")
+  
+  df_fibers <- df_fibers %>%
+    mutate(
+      #Create safe placeholders if a column doesn't exist
+      width_um_safe  = if ("width_um" %in% names(.))  width_um  else NA_real_,
+      height_um_safe = if ("height_um" %in% names(.)) height_um else NA_real_,
+
+      W_mean = coalesce(width_um_safe,  height_um_safe), #W_mean prefers width, falls back to height
+      H_mean = coalesce(height_um_safe, width_um_safe) #H_mean prefers height, falls back to width
+    ) %>%
+    select(-width_um_safe, -height_um_safe) %>%
+    mutate(
+      W_min = W_mean * meas_min,
+      W_max = W_mean * meas_max,
+      H_min = H_mean * meas_min,
+      H_max = H_mean * meas_max
+    ) %>% 
+  mutate( #Input values from toggle box if neither width_um nor height_um exist
+      W_min = ifelse(is.na(W_min) | W_min == 0, fiber_min, W_min),
+      W_max = ifelse(is.na(W_max) | W_max == 0, fiber_max, W_max),
+      W_mean = ifelse(is.na(W_mean) | W_mean == 0, fiber_med, W_mean),
+      H_min = ifelse(is.na(H_min) | H_min == 0, fiber_min, H_min),
+      H_max = ifelse(is.na(H_max) | H_max == 0, fiber_max, H_max),
+      H_mean = ifelse(is.na(H_mean) | H_mean == 0, fiber_med, H_mean)
+    )
+  
+  
+  # df_nonfibers <- df %>% filter(morphology != "fiber")
+  # 
+  # # Calculate width and height if not provided
+  # if ("width_um" %in% colnames(df_nonfibers)) {
+  #   width_um <- df_nonfibers$width_um
+  #   df_nonfibers <- df_nonfibers %>%
+  #     mutate(W_mean = ifelse(is.na(width_um), ((W_min * length_um) + (W_max * length_um)) / 2, width_um),
+  #            W_min = ifelse(is.na(width_um), W_min * length_um, width_um * meas_min),
+  #            W_max = ifelse(is.na(width_um), W_max * length_um, width_um * meas_max))
+  # } else {
+  #   df_nonfibers <- df_nonfibers %>%
+  #     mutate(W_mean = ((W_min * length_um) + (W_max * length_um)) / 2,
+  #            W_min = W_min * length_um,
+  #            W_max = W_max * length_um)
+  # }
+  # 
+  # if ("height_um" %in% colnames(df_nonfibers)) {
+  #   height_um <- df_nonfibers$height_um
+  #   df_nonfibers <- df_nonfibers %>%
+  #     mutate(H_mean = ifelse(is.na(height_um), ((H_min * length_um) + (H_max * length_um)) / 2, height_um),
+  #            H_min = ifelse(is.na(height_um), H_min * length_um, height_um * meas_min),
+  #            H_max = ifelse(is.na(height_um), H_max * length_um, height_um * meas_max))
+  # } else {
+  #   df_nonfibers <- df_nonfibers %>%
+  #     mutate(H_mean = ((H_min * length_um) + (H_max * length_um)) / 2,
+  #            H_min = H_min * length_um,
+  #            H_max = H_max * length_um)
+  # }
+  
+  df_nonfibers <- df %>%
+    filter(morphology != "fiber") %>%
+    mutate(
+      width_num  = if ("width_um"  %in% names(.)) as.numeric(na_if(width_um,  "")) else NA_real_,
+      height_num = if ("height_um" %in% names(.)) as.numeric(na_if(height_um, "")) else NA_real_
+    ) %>%
+    mutate(
+      W_mean = if_else(is.na(width_num),
+                       ((W_min * length_um) + (W_max * length_um)) / 2,
+                       width_num),
+      W_min  = if_else(is.na(width_num), W_min * length_um,  width_num * meas_min),
+      W_max  = if_else(is.na(width_num), W_max * length_um,  width_num * meas_max),
+      
+      H_mean = if_else(is.na(height_num),
+                       ((H_min * length_um) + (H_max * length_um)) / 2,
+                       height_num),
+      H_min  = if_else(is.na(height_num), H_min * length_um,  height_num * meas_min),
+      H_max  = if_else(is.na(height_num), H_max * length_um,  height_num * meas_max)
+    ) %>%
+    select(-width_num, -height_num)
+  
+  #Re-join fiber and non-fiber tables
+  df <- bind_rows(df_fibers, df_nonfibers) %>%
+    arrange(row_id) %>%
+    select(-row_id)
+  
   
   # Calculate volume based on morphology
   df <- df %>%
@@ -356,9 +420,12 @@ polymer_class_rename <- function(df) {
     mutate(material = ifelse(polymer == 0 & polymer_class != 0, polymer_class, polymer))
   return(df)
 }
+
+
+
 #dataframe <- dataframe2
 # Main function to convert particle count to mass
-particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight){
+particle_count_mass <- function(dataframe, morphology_shape, polymer_density, trash_mass_clean, polymer_avg_decision, morph_weight, sample_weight, fiber_min, fiber_med, fiber_max){
   if("length_um" %in% colnames(dataframe) == TRUE){dataframe$length_um <- as.numeric(dataframe$length_um)
   dataframe$length_um[is.na(dataframe$length_um)] <- 0
   }else{
@@ -382,58 +449,100 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
   dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
   
   
-  if("width_um" %in% colnames(dataframeclean)){
-    dataframeclean$width_um[dataframeclean$width_um == ""] <- NA
-    for(x in 1:nrow(dataframeclean)){
-      if(is.na(dataframeclean[x, "width_um"])) {
-        dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "W_min"]) * as.numeric(dataframeclean[x, "length_um"])
-        dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "W_max"]) * as.numeric(dataframeclean[x, "length_um"])
-      }else{
-        dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "width_um"]) * meas_min
-        dataframeclean[x, "W_mean"] <- as.numeric(dataframeclean[x, "width_um"])
-        dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "width_um"]) * meas_max
-      }
-    }
-    for(x in 1:nrow(dataframeclean)){
-      if(is.na(dataframeclean[x, "width_um"])) {
-        dataframeclean[x, "W_mean"] <- (as.numeric(dataframeclean[x, "W_min"]) + as.numeric(dataframeclean[x, "W_max"]))/2
-      }
-    }
-  }else{
-    for(x in 1:nrow(dataframeclean)){
-      dataframeclean[x, "W_min"] <- as.numeric(dataframeclean[x, "W_min"]) * as.numeric(dataframeclean[x, "length_um"])
-      dataframeclean[x, "W_max"] <- as.numeric(dataframeclean[x, "W_max"]) * as.numeric(dataframeclean[x, "length_um"])
-    }
-    for(x in 1:nrow(dataframeclean)){
-      dataframeclean[x, "W_mean"] <- (as.numeric(dataframeclean[x, "W_min"]) + as.numeric(dataframeclean[x, "W_max"]))/2
-    }
-  }
+  fiber_min <- as.numeric(fiber_min)
+  fiber_med <- as.numeric(fiber_med)
+  fiber_max <- as.numeric(fiber_max)
   
-  if("height_um" %in% colnames(dataframeclean)){
-    for(x in 1:nrow(dataframeclean)){
-      if(is.na(dataframeclean[x, "height_um"])) {
-        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "H_min"]) * as.numeric(dataframeclean[x, "length_um"])
-        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "H_max"]) * as.numeric(dataframeclean[x, "length_um"])
-      }else{
-        dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "height_um"]) * meas_min
-        dataframeclean[x, "H_mean"] <- as.numeric(dataframeclean[x, "height_um"])
-        dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "height_um"]) * meas_max
-      }
-    }
-    for(x in 1:nrow(dataframeclean)){
-      if(is.na(dataframeclean[x, "height_um"])) {
-        dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
-      }
-    }
-  }else{
-    for(x in 1:nrow(dataframeclean)){
-      dataframeclean[x, "H_min"] <- as.numeric(dataframeclean[x, "H_min"]) * as.numeric(dataframeclean[x, "length_um"])
-      dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "H_max"]) * as.numeric(dataframeclean[x, "length_um"])
-    }
-    for(x in 1:nrow(dataframeclean)){
-      dataframeclean[x, "H_mean"] <- (as.numeric(dataframeclean[x, "H_min"]) + as.numeric(dataframeclean[x,"H_max"]))/2
-    }
+  dataframeclean <- dataframeclean %>% mutate(row_id = row_number())
+  
+  #Fiber diameter calculation
+  df_fibers <- dataframeclean %>% filter(morphology == "fiber") 
+  
+  df_fibers <- df_fibers %>%
+    mutate(
+      #Create safe placeholders if a column doesn't exist
+      width_um_safe = if ("width_um" %in% names(df_fibers)) {
+        x <- df_fibers[["width_um"]]
+        # Convert to numeric safely: if it's character, turn "" to NA first
+        if (is.character(x)) x <- na_if(x, "")
+        as.numeric(x)
+      } else NA_real_,
+      
+      height_um_safe = if ("height_um" %in% names(df_fibers)) {
+        x <- df_fibers[["height_um"]]
+        if (is.character(x)) x <- na_if(x, "")
+        as.numeric(x)
+      } else NA_real_,
+      
+      W_mean = coalesce(width_um_safe,  height_um_safe), #W_mean prefers width, falls back to height
+      H_mean = coalesce(height_um_safe, width_um_safe) #H_mean prefers height, falls back to width
+    ) %>%
+    select(-width_um_safe, -height_um_safe) %>%
+    mutate(
+      W_min = W_mean * meas_min,
+      W_max = W_mean * meas_max,
+      H_min = H_mean * meas_min,
+      H_max = H_mean * meas_max
+    ) %>% 
+    mutate( #Input values from toggle box if neither width_um nor height_um exist
+      W_min = ifelse(is.na(W_min) | W_min == 0, fiber_min, W_min),
+      W_max = ifelse(is.na(W_max) | W_max == 0, fiber_max, W_max),
+      W_mean = ifelse(is.na(W_mean) | W_mean == 0, fiber_med, W_mean),
+      H_min = ifelse(is.na(H_min) | H_min == 0, fiber_min, H_min),
+      H_max = ifelse(is.na(H_max) | H_max == 0, fiber_max, H_max),
+      H_mean = ifelse(is.na(H_mean) | H_mean == 0, fiber_med, H_mean)
+    )
+  
+    #Calculate for non-fibers
+    df_nonfibers <- dataframeclean %>%
+      filter(morphology != "fiber")
     
+    df_nonfibers <- df_nonfibers %>%
+      mutate(
+        width_num = {
+          if ("width_um" %in% names(.)) {
+            x <- .[["width_um"]]
+            if (is.character(x)) x <- na_if(x, "")   # only for character columns
+            suppressWarnings(as.numeric(x))          # coerce cleanly
+          } else {
+            rep(NA_real_, n())                       # correct length if missing
+          }
+        },
+        
+        # SAFE optional height
+        height_num = {
+          if ("height_um" %in% names(.)) {
+            x <- .[["height_um"]]
+            if (is.character(x)) x <- na_if(x, "")
+            suppressWarnings(as.numeric(x))
+          } else {
+            rep(NA_real_, n())
+          }
+        }
+      ) %>%
+      mutate(
+        W_mean = if_else(is.na(width_num),
+                         ((W_min * length_um) + (W_max * length_um)) / 2,
+                         width_num),
+        W_min  = if_else(is.na(width_num), W_min * length_um,  width_num * meas_min),
+        W_max  = if_else(is.na(width_num), W_max * length_um,  width_num * meas_max),
+        
+        H_mean = if_else(is.na(height_num),
+                         ((H_min * length_um) + (H_max * length_um)) / 2,
+                         height_num),
+        H_min  = if_else(is.na(height_num), H_min * length_um,  height_num * meas_min),
+        H_max  = if_else(is.na(height_num), H_max * length_um,  height_num * meas_max)
+      ) %>%
+      select(-width_num, -height_num)
+    
+    #Re-join fiber and non-fiber tables
+    dataframeclean <- bind_rows(df_fibers, df_nonfibers) %>%
+      arrange(row_id) %>%
+      select(-row_id)
+  
+   if("width_um" %in% colnames(dataframeclean)){
+    
+    #For conflicting scenarios where projected height is greater than measured width
     for(x in 1:nrow(dataframeclean)){
       if(!is.na(dataframeclean[x, "H_mean"]) && dataframeclean[x, "H_mean"] > dataframeclean[x, "W_mean"] && dataframeclean[x, "H_min"] < dataframeclean[x, "W_min"]){
         dataframeclean[x, "H_max"] <- as.numeric(dataframeclean[x, "W_mean"])
@@ -450,13 +559,29 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
       
     }
     
-  }
+   }
+    
+    
+    dataframeclean <- dataframeclean %>%
+      mutate(
+        # safe numeric length
+        length_num = {
+          x <- .[["length_um"]]
+          if (is.character(x)) x <- na_if(x, "")
+          suppressWarnings(as.numeric(x))
+        },
+        meas_min_num = suppressWarnings(as.numeric(meas_min)),
+        meas_max_num = suppressWarnings(as.numeric(meas_max)),
+        
+        # define L_* from length + multipliers (not from prior L_min/L_max)
+        L_mean = length_num,
+        L_min  = length_num * coalesce(meas_min_num, 1),
+        L_max  = length_num * coalesce(meas_max_num, 1)
+      ) %>%
+      select(-length_num, -meas_min_num, -meas_max_num)
   
-  dataframeclean <- dataframeclean %>%
-    mutate(L_min = as.numeric(L_min) * as.numeric(length_um),
-           L_mean = as.numeric(length_um),
-           L_max = as.numeric(L_max) * as.numeric(length_um))
-  
+    #print(dataframeclean)
+    
   # Calculate volume based on morphology
   dataframeclean <- dataframeclean %>%
     mutate(volume_min_um_3 = case_when(
@@ -585,7 +710,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
 }
 
 
-concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF, trash_mass_clean){
+concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF, trash_mass_clean, fiber_min, fiber_med, fiber_max){
   dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
   dataframe$sample_ID <- as.character(dataframe$sample_ID)
   if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)}
@@ -705,7 +830,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
       }
       
       particle_mass <- particle_count_mass(dataframe = particle_data, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
-                          polymer_avg_decision = F, morph_weight = F, sample_weight = F)
+                          polymer_avg_decision = F, morph_weight = F, sample_weight = F, fiber_min = fiber_min, fiber_med = fiber_med, fiber_max = fiber_max)
       particle_mass <- particle_mass %>% filter(!is.na(mean_mass_mg))
       
       concentration_ID[y, "min_concentration_um3_vol"] <- sum(particle_mass$volume_min_um_3)
@@ -1017,6 +1142,95 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
     rename(sample_ID = unique_sample_ID)
   unique_alpha <- data.frame()
   
+  # for (x in 1:nrow(unique_sample_ID)) {
+  #   subset <- dplyr::filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
+  #   subset <- dplyr::filter(subset, !is.na(length_um))
+  #   sample_size <- nrow(subset)
+  #   
+  #   if (sample_size == 0) next
+  #   
+  #   # ---- deterministic breaks & fit ----
+  #   get_breaks <- function(x, n, style) {
+  #     x <- sort(x[is.finite(x)])
+  #     stopifnot(length(x) > 1)
+  #     
+  #     # If any of your styles are kmeans-like, fix the RNG so breaks don't drift
+  #     if (style %in% c("kmeans", "kmeans++")) set.seed(42)
+  #     
+  #     if (style %in% c("equal", "quantile", "fisher", "jenks", "kmeans")) {
+  #       ci <- classInt::classIntervals(
+  #         x, n = n,
+  #         style = switch(style,
+  #                        equal = "equal",
+  #                        quantile = "quantile",
+  #                        fisher = "fisher",
+  #                        jenks = "jenks",
+  #                        kmeans = "kmeans"
+  #         )
+  #       )
+  #       return(unname(ci$brks))
+  #     }
+  #     
+  #     # Optional deterministic log-equal bins
+  #     if (style == "log_equal") {
+  #       rng <- range(x, finite = TRUE)
+  #       return(10^(seq(log10(rng[1]), log10(rng[2]), length.out = n + 1)))
+  #     }
+  #     
+  #     # Fallback: equal width
+  #     rng <- range(x, finite = TRUE)
+  #     seq(rng[1], rng[2], length.out = n + 1)
+  #   }
+  #   
+  #   brks <- get_breaks(subset$length_um, n = bin_number, style = binning_type)
+  #   brks <- unique(brks)                       # guard against duplicate edges
+  #   if (length(brks) <= 2L) {
+  #     subset_ <- tibble::tibble(
+  #       sample_ID   = unique_sample_ID$sample_ID[[x]],
+  #       alpha       = NA_real_,
+  #       alpha_lower = NA_real_,
+  #       alpha_upper = NA_real_
+  #     )
+  #     unique_alpha <- dplyr::bind_rows(unique_alpha, subset_)
+  #     next
+  #   }
+  #   
+  #   bins <- cut(subset$length_um, breaks = brks, include.lowest = TRUE, right = TRUE)
+  #   
+  #   counts <- as.integer(table(bins))          # aligned to factor levels
+  #   mids   <- (brks[-1] + brks[-length(brks)]) / 2
+  #   
+  #   freq <- data.frame(
+  #     length_um = mids,
+  #     abundance = counts
+  #   )
+  #   freq <- freq[freq$abundance > 0, , drop = FALSE]  # drop empty bins
+  #   
+  #   freq$log_size      <- log10(freq$length_um)
+  #   freq$log_abundance <- log10(freq$abundance)
+  #   
+  #   r1model <- lm(log_abundance ~ log_size, data = freq)
+  #   alpha   <- -coef(r1model)[["log_size"]]
+  #   
+  #   rsum <- summary(r1model)
+  #   se   <- coef(rsum)[ "log_size", "Std. Error" ]     # name-safe, not [4]
+  #   alpha_lower <- alpha - se
+  #   alpha_upper <- alpha + se
+  #   
+  #   subset_ <- tibble::tibble(
+  #     sample_ID   = unique_sample_ID$sample_ID[[x]],
+  #     alpha       = as.numeric(alpha),
+  #     alpha_lower = as.numeric(alpha_lower),
+  #     alpha_upper = as.numeric(alpha_upper)
+  #   )
+  #   
+  #   unique_alpha <- dplyr::bind_rows(unique_alpha, subset_)
+  #   # ---- end deterministic fit ----
+  # }
+  # 
+  # unique_alpha <- dplyr::distinct(unique_alpha)
+  # 
+  
   for(x in 1:nrow(unique_sample_ID)){
     subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
     subset <- subset %>% filter(!is.na(length_um))
@@ -1038,14 +1252,19 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
       alpha_upper <- alpha + error
       subset_ <- subset %>% add_column(alpha = alpha,
                                        alpha_lower = alpha_lower,
-                                       alpha_upper = alpha_upper) %>% 
+                                       alpha_upper = alpha_upper) %>%
         select(sample_ID, alpha, alpha_lower, alpha_upper)
       subset_ <- unique(subset_)
       unique_alpha <- rbind(unique_alpha, subset_)
     }
-    
+
   }
   unique_alpha <- unique_alpha %>% unique()
+
+
+  
+  
+  
   dataframe <- left_join(dataframe, unique_alpha, by = "sample_ID")
   
   if("sample_volume" %in% colnames(dataframe) == TRUE){
@@ -1511,17 +1730,17 @@ polymer_density <- rbind(polymer_density, polymer_parents)
 polymer_density <- polymer_density %>% distinct(material, .keep_all = TRUE)
 
 #Add +/- 5% error for measured particle dimensions
-morphology <- c("fragment","sphere","fiber","film","foam")
+morphology <- c("fragment","sphere","film","foam")
 meas_min <- 0.95
 meas_max <- 1.05
-L_min <- c(0.95, 0.95, 0.95, 0.95, 0.95)
-L_max <- c(1.05, 1.05, 1.05, 1.05, 1.05)
+L_min <- c(0.95, 0.95, 0.95, 0.95)
+L_max <- c(1.05, 1.05, 1.05, 1.05)
 
 #Min and max values given in Kooi Koelmans
-W_min <- c(0.1,0.60,0.001,0.1,0.1)
-W_max <- c(1,1,0.5,1,1)
-H_min <- c(0.01,0.36,0.001,0.001,0.01)
-H_max <- c(1,1,0.5,0.1,1)
+W_min <- c(0.1,0.60,0.1,0.1)
+W_max <- c(1,1,1,1)
+H_min <- c(0.01,0.36,0.001,0.01)
+H_max <- c(1,1,0.1,1)
 
 morphology_base <- data.frame(morphology=morphology,
                                L_min=L_min,
@@ -1632,5 +1851,7 @@ files <- list(Materials_Alias,
               PrimeUnclassifiable,
               color
 )
+
+
 
 
