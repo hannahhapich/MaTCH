@@ -256,6 +256,102 @@ material_DB_full <- add_collection(metadata = words_to_match)
 #Save to rda file
 saveRDS(material_DB_full, file = "data/materials_vectorDB.rda")
 
+# ============================================================================
+# GENERATE CATEGORY-SPECIFIC VECTOR DATABASES (TRASH vs MICROPLASTIC)
+# ============================================================================
+
+cat("\n\n╔════════════════════════════════════════════════════════════════╗\n")
+cat("║         GENERATING CATEGORY-SPECIFIC VECTOR DATABASES         ║\n")
+cat("╚════════════════════════════════════════════════════════════════╝\n")
+
+# Load the No_Abbreviations base file
+material_alias_no_abbrev <- read.csv("data/PrimeMaterials_No_Abbreviations.csv")
+
+# Load category-specific material alias files to get the Material names for each category
+material_alias_trash_full <- read.csv("data/PrimeMaterials_trash.csv")
+material_alias_microplastic_full <- read.csv("data/PrimeMaterials_microplastic.csv")
+
+# Extract unique Material names for each category
+trash_material_names <- unique(material_alias_trash_full$Material)
+microplastic_material_names <- unique(material_alias_microplastic_full$Material)
+
+# Filter No_Abbreviations file to create category-specific versions
+cat("\nCreating filtered material alias files for each category...\n")
+
+material_alias_no_abbrev_trash <- material_alias_no_abbrev %>%
+  filter(Material %in% trash_material_names)
+write.csv(material_alias_no_abbrev_trash, 
+          file = "data/PrimeMaterials_No_Abbreviations_trash.csv", 
+          row.names = FALSE)
+cat("  ✓ Saved: PrimeMaterials_No_Abbreviations_trash.csv (", nrow(material_alias_no_abbrev_trash), " rows)\n")
+
+material_alias_no_abbrev_microplastic <- material_alias_no_abbrev %>%
+  filter(Material %in% microplastic_material_names)
+write.csv(material_alias_no_abbrev_microplastic, 
+          file = "data/PrimeMaterials_No_Abbreviations_microplastic.csv", 
+          row.names = FALSE)
+cat("  ✓ Saved: PrimeMaterials_No_Abbreviations_microplastic.csv (", nrow(material_alias_no_abbrev_microplastic), " rows)\n")
+
+# ============================================================================
+# ITEMS - TRASH VECTORDB
+# ============================================================================
+
+cat("\nGenerating ITEMS vector databases...\n")
+
+# Load trash items and create vector DB with only trash item aliases
+item_alias_trash <- read.csv("data/PrimeItems_trash.csv")
+words_to_match_items_trash <- item_alias_trash %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+items_DB_trash <- add_collection(metadata = words_to_match_items_trash)
+saveRDS(items_DB_trash, file = "data/items_vectorDB_trash.rda")
+cat("  ✓ Saved: items_vectorDB_trash.rda (", nrow(item_alias_trash), " unique aliases)\n")
+
+# ============================================================================
+# ITEMS - MICROPLASTIC VECTORDB
+# ============================================================================
+
+# Load microplastic items and create vector DB with only microplastic item aliases
+item_alias_microplastic <- read.csv("data/PrimeItems_microplastic.csv")
+words_to_match_items_microplastic <- item_alias_microplastic %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+items_DB_microplastic <- add_collection(metadata = words_to_match_items_microplastic)
+saveRDS(items_DB_microplastic, file = "data/items_vectorDB_microplastic.rda")
+cat("  ✓ Saved: items_vectorDB_microplastic.rda (", nrow(item_alias_microplastic), " unique aliases)\n")
+
+# ============================================================================
+# MATERIALS - TRASH VECTORDB
+# ============================================================================
+
+cat("\nGenerating MATERIALS vector databases...\n")
+
+# Create vector DB with only trash material aliases (no abbreviations)
+words_to_match_materials_trash <- material_alias_no_abbrev_trash %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+materials_DB_trash <- add_collection(metadata = words_to_match_materials_trash)
+saveRDS(materials_DB_trash, file = "data/materials_vectorDB_trash.rda")
+cat("  ✓ Saved: materials_vectorDB_trash.rda (", nrow(material_alias_no_abbrev_trash), " unique aliases)\n")
+
+# ============================================================================
+# MATERIALS - MICROPLASTIC VECTORDB
+# ============================================================================
+
+# Create vector DB with only microplastic material aliases (no abbreviations)
+words_to_match_materials_microplastic <- material_alias_no_abbrev_microplastic %>%
+  distinct(Alias) %>%
+  rename("text" = "Alias") %>%
+  as.data.table(.)
+materials_DB_microplastic <- add_collection(metadata = words_to_match_materials_microplastic)
+saveRDS(materials_DB_microplastic, file = "data/materials_vectorDB_microplastic.rda")
+cat("  ✓ Saved: materials_vectorDB_microplastic.rda (", nrow(material_alias_no_abbrev_microplastic), " unique aliases)\n")
+
+cat("\n✓ All 4 category-specific vector databases generated successfully!\n")
+
 ##VALIDATION FOR SPLIT DATABASES (TRASH vs MICROPLASTIC)##
 
 cat("\n\n===== ITEMS TRASH DATABASE VALIDATION =====\n")
