@@ -1,0 +1,40 @@
+Item,Alias,readable
+bead,bead,bead
+bead,beads,bead
+fiber,fiber,fiber
+fiber,fibres,fiber
+fiber,filament,fiber
+fiber,fibers,fiber
+fiberbundle,fiberbundle,fiber bundle
+fiberbundle,fiberbundles,fiber bundle
+film,film,film
+film,films,film
+film+fragment,film;fragment,film + fragment
+film+fragment,films;fragments,film + fragment
+film+fragment,film+fragment,film + fragment
+film+fragment,films+fragments,film + fragment
+film+fragment,films/fragments,film + fragment
+film+fragment,filmfragments,film + fragment
+foam,foam,foam
+foam,foams,foam
+foam,styrofoam,foam
+foam,polystyrene,foam
+foam,extrudedpolystyrene,foam
+fragment,fragment,fragment
+fragment,fragments,fragment
+line,line,line
+nurdle,plasticnurdles,nurdle
+nurdle,nurdle,nurdle
+rubberyfragment,trwp,rubbery fragment
+rubberyfragment,tw,rubbery fragment
+rubberyfragment,tirewear,rubbery fragment
+rubberyfragment,tirewears,rubbery fragment
+rubberyfragment,rubberfragments,rubbery fragment
+rubberyfragment,rubberyfragment,rubbery fragment
+sheet,sheet,sheet
+sheet,flake,sheet
+sheet,sheets,sheet
+sphere,sphere,sphere
+sphere,sphericals,sphere
+sphere,spherical,sphere
+sphere,spheres,sphere

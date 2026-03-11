@@ -1,0 +1,21 @@
+X1,X2,X3,X4
+glass OR ceramic,glass,fibreglass,
+glass OR ceramic,ceramic, ,
+plastic,foam,, 
+plastic,rubber,, 
+plastic,soft plastics,, 
+plastic,hard plastics,, 
+biohazard,sanitary waste, , 
+biohazard,feces, , 
+organic,leather, , 
+organic,wood and paper,wood,processed wood
+organic,wood and paper,paper OR cardboard,paper
+organic,cloth,wool, 
+organic,cloth,cotton, 
+metal, , , 
+other, , , 
+concrete OR asphalt,asphalt,, 
+plastic,tire wear & asphalt,tire wear,
+plastic,paint,,
+,, , 
+,, , 

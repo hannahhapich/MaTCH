@@ -256,3 +256,80 @@ material_DB_full <- add_collection(metadata = words_to_match)
 #Save to rda file
 saveRDS(material_DB_full, file = "data/materials_vectorDB.rda")
 
+##VALIDATION FOR SPLIT DATABASES (TRASH vs MICROPLASTIC)##
+
+cat("\n\n===== ITEMS TRASH DATABASE VALIDATION =====\n")
+prime_items_trash <- read.csv("data/PrimeItems_trash.csv")
+hierarchy_items_trash <- read.csv("data/ITEMSHierarchy_trash.csv")
+
+# Check all prime items are in hierarchy
+hierarchy_items_trash_terms <- data.frame(unique = unique(unlist(hierarchy_items_trash)))
+hierarchy_items_trash_terms <- mutate_all(hierarchy_items_trash_terms, cleantext)
+prime_items_trash_terms <- data.frame(unique = unique(prime_items_trash$Item))
+prime_items_trash_terms <- mutate_all(prime_items_trash_terms, cleantext)
+
+items_trash_hierarchy_only <- setdiff(hierarchy_items_trash_terms, prime_items_trash_terms)
+items_trash_prime_only <- setdiff(prime_items_trash_terms, hierarchy_items_trash_terms)
+
+cat("Items in hierarchy but not in prime (TRASH):\n")
+print(items_trash_hierarchy_only)
+cat("Items in prime but not in hierarchy (TRASH):\n")
+print(items_trash_prime_only)
+
+cat("\n\n===== ITEMS MICROPLASTIC DATABASE VALIDATION =====\n")
+prime_items_mp <- read.csv("data/PrimeItems_microplastic.csv")
+hierarchy_items_mp <- read.csv("data/ITEMSHierarchy_microplastic.csv")
+
+# Check all prime items are in hierarchy
+hierarchy_items_mp_terms <- data.frame(unique = unique(unlist(hierarchy_items_mp)))
+hierarchy_items_mp_terms <- mutate_all(hierarchy_items_mp_terms, cleantext)
+prime_items_mp_terms <- data.frame(unique = unique(prime_items_mp$Item))
+prime_items_mp_terms <- mutate_all(prime_items_mp_terms, cleantext)
+
+items_mp_hierarchy_only <- setdiff(hierarchy_items_mp_terms, prime_items_mp_terms)
+items_mp_prime_only <- setdiff(prime_items_mp_terms, hierarchy_items_mp_terms)
+
+cat("Items in hierarchy but not in prime (MICROPLASTIC):\n")
+print(items_mp_hierarchy_only)
+cat("Items in prime but not in hierarchy (MICROPLASTIC):\n")
+print(items_mp_prime_only)
+
+cat("\n\n===== MATERIALS TRASH DATABASE VALIDATION =====\n")
+prime_materials_trash <- read.csv("data/PrimeMaterials_trash.csv")
+hierarchy_materials_trash <- read.csv("data/MaterialsHierarchy_trash.csv")
+
+# Check all prime materials are in hierarchy
+hierarchy_materials_trash_terms <- data.frame(unique = unique(unlist(hierarchy_materials_trash)))
+hierarchy_materials_trash_terms <- mutate_all(hierarchy_materials_trash_terms, cleantext)
+prime_materials_trash_terms <- data.frame(unique = unique(prime_materials_trash$Material))
+prime_materials_trash_terms <- mutate_all(prime_materials_trash_terms, cleantext)
+
+materials_trash_hierarchy_only <- setdiff(hierarchy_materials_trash_terms, prime_materials_trash_terms)
+materials_trash_prime_only <- setdiff(prime_materials_trash_terms, hierarchy_materials_trash_terms)
+
+cat("Materials in hierarchy but not in prime (TRASH):\n")
+print(materials_trash_hierarchy_only)
+cat("Materials in prime but not in hierarchy (TRASH):\n")
+print(materials_trash_prime_only)
+
+cat("\n\n===== MATERIALS MICROPLASTIC DATABASE VALIDATION =====\n")
+prime_materials_mp <- read.csv("data/PrimeMaterials_microplastic.csv")
+hierarchy_materials_mp <- read.csv("data/MaterialsHierarchy_microplastic.csv")
+
+# Check all prime materials are in hierarchy
+hierarchy_materials_mp_terms <- data.frame(unique = unique(unlist(hierarchy_materials_mp)))
+hierarchy_materials_mp_terms <- mutate_all(hierarchy_materials_mp_terms, cleantext)
+prime_materials_mp_terms <- data.frame(unique = unique(prime_materials_mp$Material))
+prime_materials_mp_terms <- mutate_all(prime_materials_mp_terms, cleantext)
+
+materials_mp_hierarchy_only <- setdiff(hierarchy_materials_mp_terms, prime_materials_mp_terms)
+materials_mp_prime_only <- setdiff(prime_materials_mp_terms, hierarchy_materials_mp_terms)
+
+cat("Materials in hierarchy but not in prime (MICROPLASTIC):\n")
+print(materials_mp_hierarchy_only)
+cat("Materials in prime but not in hierarchy (MICROPLASTIC):\n")
+print(materials_mp_prime_only)
+
+cat("\n\n===== VALIDATION COMPLETE =====\n")
+cat("All checks should return empty data frames. If any orphaned terms are found, review the database splits.\n")
+
