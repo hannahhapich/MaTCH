@@ -14,16 +14,7 @@ ui <- dashboardPage(dark = T,
                                  icon = icon("download")),
                         menuItem("About", 
                                  tabName = "About", 
-                                 icon = icon("question")),
-                        menuItem("Relational Tables", 
-                                 tabName = "RelationalTables", 
-                                 icon = icon("table")),
-                        menuItem("Query Tool", 
-                                 tabName = "query", 
-                                 icon = icon("sliders")),
-                        menuItem("Surveys for Download", 
-                                 tabName = "survey", 
-                                 icon = icon("pen-to-square"))
+                                 icon = icon("question"))
                       )
                     ),
                     
@@ -142,15 +133,14 @@ ui <- dashboardPage(dark = T,
                                                   )
                                            ))),
                                   column(2,
-                                         # fluidRow( 
-                                         #   column(5, 
                                          selectInput(inputId = "download_selection",
-                                                     label = downloadButton("download_data",
-                                                                            style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:140%;"),
+                                                     label = "Test Data:",
                                                      choices = c("Particle Test Data",
-                                                                 "Sample Test Data")) 
-                                         #   )
-                                         # )
+                                                                 "Sample Test Data")),
+                                         br(),
+                                         downloadButton("download_data",
+                                                       label = "Download",
+                                                       style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:100%;")
                                   )
                                 
                                 ),
@@ -400,170 +390,6 @@ ui <- dashboardPage(dark = T,
                                          tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
                                   )
                                 )
-                        ),
-                        
-                        #Relational Tables ----
-                        tabItem(tabName = "RelationalTables",
-                                
-                                fluidRow(
-                                  column(12,
-                                         shiny::HTML("<br><br><center> <h1>View and Download Relational Tables</h1> </center><br>")
-                                  )
-                                ), 
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                fluidRow(
-                                    sortable(
-                                      width = 12,
-                                      #p(class = "text-center", paste("Column", i)),
-                                      lapply(1:length(titles), FUN = function(j) {
-                                        box(
-                                          title = titles[j], 
-                                          width = 12,
-                                          collapsed = T,
-                                          style = 'overflow-x: scroll',
-                                          footer = tags$div(align = "center", captions[j]), 
-                                                   DT::dataTableOutput(outputId = view_code[j])
-                                        )
-                                      }), 
-                                      box(
-                                        width = 12,
-                                        collapsed = T,
-                                        title = "Items Hierarchy Tree",
-                                        shinyTree::shinyTree(outputId = "itemshierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)
-                                      ),
-                                      box(
-                                        width = 12, 
-                                        collapsed = T,
-                                        title = "Materials Hierarchy Tree",
-                                        shinyTree::shinyTree(outputId = "materialhierarchy", dragAndDrop=F, sort = F, wholerow = T, theme = "default-dark", themeIcons = F, search = F)   
-                                      ),
-                                      fluidRow(
-                                        column(12,
-                                               align="center",
-                                               hr(),
-                                               tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
-                                        )
-                                      )
-                                    )
-                                )
-                        ),
-                        #end of about tab
-                        
-                        #About tab
-                        tabItem(tabName = "query",
-                                fluidRow(
-                                  column(12,
-                                         
-                                         shiny::HTML("<br><br><center> <h1>Query the Relational Tables with Survey Sheets</h1> </center><br>")
-                                  )
-                                ),
-                                
-                                fluidRow(
-                                  column(2, 
-                                         prettySwitch("share_decision0",
-                                                      label = "Share Your Data?",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T),
-                                         fileInput('df', "Choose CSV File", multiple = FALSE, accept = c(".csv"))%>%
-                                           bs4Dash::popover(placement = "right",
-                                                  title = "Upload Help",
-                                                  content = c("To use the tool, upload a csv file to the upload file tab. The file needs to be a csv with one column named -material- and another named -items-. The material should correspond to the item names in the same row.")),
-                                         
-                                         downloadButton('downloadtest', 'Download Test Data'),
-                                         
-                                         checkboxGroupInput('variable', "Functions:",
-                                                            c("More Specific Materials"="MoreSpecificMaterial",
-                                                              "Less Specific Materials"="LessSpecificMaterial",
-                                                              "More Specific Items"="MoreSpecificItem",
-                                                              "Less Specific Items"="LessSpecificItem"))),
-                                  column(10, 
-                                         fluidRow(
-                                           box(
-                                             width = 4,
-                                             title = "Relational Results",
-                                             style = 'overflow-x: scroll; height: 50vh;',
-                                             maximizable = T,
-                                             dataTableOutput('contents')  
-                                           ),
-                                           box(
-                                             width = 4, 
-                                             title = "Material Keys",
-                                             style = 'overflow-x: scroll; height: 50vh;',
-                                             maximizable = T,
-                                             dataTableOutput('contents1')
-                                           ),
-                                           box(
-                                             width = 4, 
-                                             title = "Morphology Keys",
-                                             style = 'overflow-x: scroll; height: 50vh;',
-                                             maximizable = T,
-                                             dataTableOutput('contents2')
-                                           )  
-                                         )
-                                  )
-                                  
-                                ),
-                                hr(),
-                                fluidRow(
-                                  column(12,
-                                         align="center",
-                                         hr(),
-                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
-                                  )
-                                )
-                                #end of about panel
-                        ),
-                        
-                        tabItem(tabName = "survey",
-                                fluidRow(
-                                  column(12,
-                                         
-                                         shiny::HTML("<br><br><center> <h1>Surveys for Download</h1> </center><br>"),
-                                         shiny::HTML("<h5>View and download suggested trash and microplastic surveys to fit your study needs.</h5>")
-                                         
-                                  )
-                                ),
-                                
-                                fluidRow(
-                                  column(2, 
-                                         selectInput('sizeRange', "Choose size range", c("", "Micro","Macro","All")) %>%
-                                           bs4Dash::popover(placement = "right",
-                                                  title = "Selection Help",
-                                                  content = c("Select if your study will include microplastics, macro-debris, or both.")),
-                                         selectInput('environments', "Choose environment", c("", "Marine/Estuarine", "Riverine", "Terrestrial", "All")) %>%
-                                           bs4Dash::popover(placement = "right",
-                                                  title = "Selection Help",
-                                                  content = c("Select the environment your study will be conducted in, or include all.")),
-                                         selectInput('media', "Choose media", c("", "Surface Water","Sediment")) %>%
-                                           bs4Dash::popover(placement = "right",
-                                                  title = "Selection Help",
-                                                  content = c("Select the media your study will be conducted in.")),
-                                         selectInput('specificity', "Choose specificity", c("", "More Specific","Less Specific")) %>%
-                                           bs4Dash::popover(placement = "right",
-                                                  title = "Selection Help",
-                                                  content = c("Select how specific descriptor terms will be. More specific terms reccomended for scientific studies to increase comparability; less specific terms reccomended for volunteer groups to increase speed of surveying.")),
-                                         
-                                  ),
-                                  
-                                  column(10, 
-                                         dataTableOutput('contents4')
-                                  )
-                                  
-                                ),
-                                
-                                fluidRow(
-                                  column(12,
-                                         align="center",
-                                         hr(),
-                                         tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
-                                  )
-                                )
-                                #end of panel
                         )
                       )
                     )

@@ -4,209 +4,9 @@ server <- function(input,output,session) {
 
   options(shiny.maxRequestSize = 100*1024^2) # 100 MB
   
-  df <- reactive({
-    req(input$df)
-    infile <- input$df
-    df <- fread(infile$datapath)
-    dataframe<- as.data.frame(df)%>%
-      select(material, items)
-    dataframe$material <- as.character(dataframe$material)
-    dataframe$items <- as.character(dataframe$items)
-    dataframeclean <- mutate_all(dataframe, cleantext) 
-    
-  #Material query tool cleaning
-    for(row in 1:nrow(dataframeclean)) {
-      
-      if(is.na(dataframeclean[row,"material"]) | dataframeclean[row,"material"] == "") {
-        dataframe[row, "PrimeMaterial"] <- NA
-        dataframe[row, "MoreSpecificMaterial"] <- NA
-        next #Corrects for cases when there is no val. 
-      }
-      Primename <- unique(aliasclean[unname(unlist(apply(aliasclean, 2, function(x) which(x == dataframeclean[row,"material"], arr.ind = T)))), "Material"])
-      
-      if(length(Primename) == 0 ){
-          #Create new embedding
-        new_material <- data.table(text = dataframeclean[row,"material"])
-        new_material_vDB <- add_collection(metadata = new_material)
-        similarity <- query_collection(db = materials_vectorDB, query_embeddings = new_material_vDB, top_n = 15, type = "dotproduct") %>%
-          left_join(materials_vectorDB$metadata, by = c("db_id" = "id")) %>%
-          rename(Alias = text)
-        similarity <-  left_join(similarity, primeMaterials, by = "Alias", relationship = "many-to-many")
-        top_five <- head(unique(similarity$Material), n=5)
-          match1 <- top_five[[1]]
-          match2 <- top_five[[2]]
-          match3 <- top_five[[3]]
-          match4 <- top_five[[4]]
-          match5 <- top_five[[5]]
-          
-          dataframe[row, "PrimeMaterial"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "200px"))
-      }
-      
-      else{
-        dataframe[row, "PrimeMaterial"] <- Primename
-      }
-      
-      #Identify Column Name in Hierarchy
-      hierarchycolumnnum <- as.numeric(gsub("[[:alpha:]]", "", unique(names(unlist(apply(hierarchyclean, 1, function(x) which(x == dataframe[row, "PrimeMaterial"], arr.ind = T)))))))
-      if(length(hierarchycolumnnum) == 0) {
-        dataframe[row, "MoreSpecificMaterial"] <- "NO VAL IN DATABASE"
-        next #Corrects for cases when there is no val. 
-      }
-      
-      
-      if(hierarchycolumnnum == ncol(hierarchyclean)) next #Corrects for cases when the value is already the most specific material.
-      hierarchyrows <- unname(unlist(apply(hierarchyclean, 2, function(x) which(x == dataframe[row, "PrimeMaterial"], arr.ind = T))))
-      
-      #Get higher values
-      vals <- tolower(unique(unname(unlist(hierarchy[hierarchyrows, (hierarchycolumnnum + 1):ncol(hierarchyclean)]))))
-      
-      #Push values into datatable
-      dataframe[row, "MoreSpecificMaterial"] <- paste(vals[!is.na(vals)], collapse = " | ")
-      
-    }
-    
-    #Less Specific Materials
-    for(row in 1:nrow(dataframeclean)) { 
-      
-      if(is.na(dataframeclean[row,"material"]) | dataframeclean[row,"material"] == "") {
-        dataframe[row, "LessSpecificMaterial"] <- NA
-        next #Corrects for cases when there is no val. 
-      }
-      
-      if(any(PrimeUnclassifiable == dataframeclean[row,"material"])) {
-        dataframe[row, "LessSpecificMaterial"] <- "Unclassifiable"
-        next #Corrects for cases when unclassifiable
-      }
-      
-      
-      hierarchycolumnnum <- as.numeric(gsub("[[:alpha:]]", "", unique(names(unlist(apply(hierarchyclean, 1, function(x) which(x == dataframe[row, "PrimeMaterial"], arr.ind = T)))))))
-      
-      if(length(hierarchycolumnnum) == 0) {
-        dataframe[row, "LessSpecificMaterial"] <- "NO VAL IN DATABASE"
-        next #Corrects for cases when there is no value.
-      }
-      
-      if(hierarchycolumnnum == 1) next #Corrects for cases when the value is already the least specific.
-      hierarchyrows <- unname(unlist(apply(hierarchyclean, 2, function(x) which(x == dataframe[row, "PrimeMaterial"], arr.ind = T))))
-      
-      #Get higher values
-      vals <- tolower(unique(unname(unlist(hierarchy[hierarchyrows, 1:(hierarchycolumnnum - 1)]))))
-      
-      #Push values into datatable
-      dataframe[row, "LessSpecificMaterial"] <- paste(vals[!is.na(vals)], collapse = " | ")
-      
-    }
-    
-    #row = 1
-    
-    #find all more specific items
-    for(row in 1:nrow(dataframeclean)) { 
-      
-      if(is.na(dataframeclean[row,"items"]) | dataframeclean[row,"items"] == "") {
-        dataframe[row, "PrimeItem"] <- NA
-        dataframe[row, "MoreSpecificItem"] <- NA
-        next #Corrects for cases when there is no val. 
-      }
-      
-      
-      #Identify Alias Row and Alias name
-      Primename <- unique(aliascleani[unname(unlist(apply(aliascleani, 2, function(x) which(x == dataframeclean[row,"items"], arr.ind = T)))), "Item"])
-      
-      if(length(Primename) == 0){
-        #Create new embedding
-        new_item <- data.table(text = dataframeclean[row,"items"])
-        new_item_vDB <- add_collection(metadata = new_item)
-        similarity <- query_collection(db = items_vectorDB, query_embeddings = new_item_vDB, top_n = 15, type = "dotproduct") %>%
-          left_join(items_vectorDB$metadata, by = c("db_id" = "id")) %>%
-          rename(Alias = text)
-        similarity <-  left_join(similarity, primeItems, by = "Alias", relationship = "many-to-many")
-        top_five <- head(unique(similarity$Item), n=5)
-        match1 <- top_five[[1]]
-        match2 <- top_five[[2]]
-        match3 <- top_five[[3]]
-        match4 <- top_five[[4]]
-        match5 <- top_five[[5]]
-       
-        dataframe[row, "PrimeItem"] <- as.character(selectInput(paste("sel", row, sep = ""), "", choices = c(match1, match2, match3, match4, match5), width = "200px"))
-        
-      }
-      
-      else{
-        dataframe[row, "PrimeItem"] <- Primename
-      }
-      
-      
-      
-      #Identify Column Name in Hierarchy
-      hierarchycolumnnum <- as.numeric(gsub("[[:alpha:]]", "", unique(names(unlist(apply(hierarchycleani, 1, function(x) which(x == dataframe[row, "PrimeItem"], arr.ind = T)))))))
-      if(length(hierarchycolumnnum) == 0) {
-        dataframe[row, "MoreSpecificItem"] <- "NO VAL IN DATABASE"
-        
-        next #Corrects for cases when there is no value.
-      }
-      
-      if(hierarchycolumnnum == ncol(hierarchycleani)) next #Corrects for cases when the value is already the most specific.
-      
-      hierarchyrows <- unname(unlist(apply(hierarchycleani, 2, function(x) which(x == dataframe[row, "PrimeItem"], arr.ind = T))))
-      
-      #Get higher values
-      vals <- tolower(unique(unname(unlist(hierarchyi[hierarchyrows, (hierarchycolumnnum + 1):ncol(hierarchyclean)]))))
-      
-      #Push values into datatable
-      dataframe[row, "MoreSpecificItem"] <- paste(vals[!is.na(vals)], collapse = " | ")
-      
-    }
-    
-    #find all less specific items
-    for(row in 1:nrow(dataframe)) { 
-      if(is.na(dataframeclean[row,"items"]) | dataframeclean[row,"items"] == "") {
-        dataframe[row, "LessSpecificItem"] <- NA
-        next #Corrects for cases when there is no val. 
-      }
-      
-      if(any(PrimeUnclassifiable == dataframeclean[row,"items"])) {
-        dataframe[row, "LessSpecificItem"] <- "Unclassifiable"
-        next #Corrects for cases when unclassifiable
-      }
-      
-      #Identify Alias Row and Alias name
-      #Identify Column Name in Hierarchy
-      hierarchycolumnnum <- as.numeric(gsub("[[:alpha:]]", "", unique(names(unlist(apply(hierarchycleani, 1, function(x) which(x == dataframe[row, "PrimeItem"], arr.ind = T)))))))
-      if(length(hierarchycolumnnum) == 0) {
-        dataframe[row, "LessSpecificItem"] <- "NO VAL IN DATABASE"
-        next #Corrects for cases when there is no value.
-      }
-      
-      if(hierarchycolumnnum == 1) next #Corrects for cases when the value is already the least specific.
-      hierarchyrows <- unname(unlist(apply(hierarchycleani, 2, function(x) which(x == dataframe[row, "PrimeItem"], arr.ind = T))))
-      
-      #Get higher values
-      vals <- tolower(unique(unname(unlist(hierarchyi[hierarchyrows, 1:(hierarchycolumnnum - 1)]))))
-      
-      #Push values into datatable
-      dataframe[row, "LessSpecificItem"] <- paste(vals[!is.na(vals)], collapse = " | ")
-      
-    }
-    
-    return(dataframe)
-  })
-  
-  columnnames <- reactive({
-    return(input$variable)
-  })
-  
   ###START MERGING TOOL
   
   #Share data ----
-  observeEvent(input$df, {
-    req(input$share_decision0)
-    put_object(
-      file = file.path(as.character(input$df$datapath)),
-      object = paste0("df_", digest(input$df$datapath), "_", gsub(".*/", "", as.character(input$df$name))),
-      bucket = "trashtaxonomy"
-    )
-  })
-
   observeEvent(input$particleData, {
     req(input$share_decision1)
     put_object(
@@ -331,70 +131,6 @@ server <- function(input,output,session) {
   })
   
   ###END MERGING TOOL
-  
-  selectSurvey <- reactive({
-    data = data.frame()
-    if(input$sizeRange == "Micro"){data = MicroOnly
-    data = as.data.frame(data)
-    survey_columns <- c("material","items","color","size")
-    colnames(data) = c("Material","Morphology","Color","Size")
-    return(data)}
-    if(input$specificity == "More Specific"){data = AllMore
-    data = as.data.frame(data)
-    survey_columns <- c("use", "material","items","count")
-    colnames(data) = c("use", "material","items","count")}
-    if(input$specificity == "Less Specific"){data = AllLess
-    data = as.data.frame(data)
-    survey_columns <- c("use", "material","items","count")
-    colnames(data) = c("use", "material","items","count")}
-    
-    if(input$media == "Surface Water"){
-      req(input$specificity)
-      data <- data %>% filter(!use == "large",
-                              !use == "vehicledebris")
-      if(input$specificity == "More Specific"){
-        data <- data %>% filter(!items == "bricks, cinderblocks, chunks of cement",
-                                !items == "piping",
-                                !items == "traffic cones",
-                                !items == "appliances",
-                                !items == "anchor")
-      }
-    }
-    
-    if(input$sizeRange == "Macro"){
-      req(input$specificity)
-      data <- data %>% filter(!use == "microplastics")
-    }
-    
-    if(input$environments == "Marine/Estuarine"){
-      req(input$specificity)
-      data <- data %>% filter(!use == "gardening&farmingrelated",
-                              !use == "officesupplies",
-                              !use == "safetyrelated",
-                              !use == "constructionmaterials")
-    }
-    
-    if(input$environments == "Riverine"){
-      req(input$specificity)
-      data <- data %>% filter(!use == "ocean/waterwayactivities",
-                              !use == "scuba&snorkelgear,masks,snorkels,fins")
-    }
-    
-    if(input$environments == "Terrestrial"){
-      req(input$specificity)
-      data <- data %>% filter(!use == "fishinggear",
-                              !use == "scuba&snorkelgear,masks,snorkels,fins",
-                              !use == "shorelineandrecreationalactivites",
-                              !use == "ocean/waterwayactivities")
-    }
-    if("use" %in% colnames(data)){data <- data %>% rename('Use' = 'use')}
-    if("material" %in% colnames(data)){data <- data %>% rename('Material' = 'material')}
-    if("items" %in% colnames(data)){data <- data %>% rename('Morphology' = 'items')}
-    if("count" %in% colnames(data)){data <- data %>% select(-count)}
-
-    
-    return(data)
-  })
   
   #MaTCH Tool
   #dataframe <- read.csv("data_template.csv")
@@ -812,124 +548,6 @@ server <- function(input,output,session) {
   
   #Output tables
   
-  output$contents <- renderDataTable(datatable({
-                                       df()[, c("material","items",  input$variable)]
-                                     }, 
-                                     rownames = FALSE,
-                                     escape = FALSE,
-                                     #filter = "top", 
-                                     extensions = 'Buttons',
-                                     options = list(
-                                       searchHighlight = TRUE,
-                                       scrollX = TRUE,
-                                       sScrollY = '25vh', 
-                                       scrollCollapse = TRUE,
-                                       lengthChange = FALSE, 
-                                       #pageLength = 5,
-                                       paging = FALSE,
-                                       searching = TRUE,
-                                       fixedColumns = TRUE,
-                                       autoWidth = FALSE,
-                                       ordering = TRUE,
-                                       dom = 'Bfrtip',
-                                       buttons = c('copy', 'csv', 'excel', 'pdf')
-                                     ),
-                                     selection = 'none',  # Disable row selection
-                                     class = "display", style="bootstrap"))
-  
-  output$contents1 <- DT :: renderDataTable(
-                                      datatable({df()[, c("material","PrimeMaterial")] %>% distinct()},
-                                                rownames = FALSE,
-                                                escape = FALSE,
-                                                #filter = "top", 
-                                                extensions = 'Buttons',
-                                                options = list(
-                                                  searchHighlight = TRUE,
-                                                  scrollX = TRUE,
-                                                  sScrollY = '25vh', 
-                                                  scrollCollapse = TRUE,
-                                                  lengthChange = FALSE, 
-                                                  #pageLength = 5,
-                                                  paging = FALSE,
-                                                  searching = TRUE,
-                                                  fixedColumns = TRUE,
-                                                  autoWidth = FALSE,
-                                                  ordering = TRUE,
-                                                  dom = 'Bfrtip',
-                                                  buttons = c('copy', 'csv', 'excel', 'pdf')
-                                                ),
-                                                selection = 'none',  # Disable row selection
-                                                class = "display",
-                                                style="bootstrap",
-                                                callback = JS("table.rows().every(function(row, tab, row) {
-                                              var $this = $(this.node());
-                                              $this.attr('id', this.data()[0]);
-                                              $this.addClass('shiny-input-container');
-                                            });
-                                            Shiny.unbindAll(table.table().node());
-                                            Shiny.bindAll(table.table().node());"))
-                                      
-                                      )
-                                      
-  
-  output$contents2 <- renderDataTable(datatable({df()[, c("items","PrimeItem")] %>% distinct()},
-                                                rownames = FALSE,
-                                                escape = FALSE,
-                                                #filter = "top", 
-                                                extensions = 'Buttons',
-                                                options = list(
-                                                  searchHighlight = TRUE,
-                                                  scrollX = TRUE,
-                                                  sScrollY = '25vh', 
-                                                  scrollCollapse = TRUE,
-                                                  lengthChange = FALSE, 
-                                                  #pageLength = 5,
-                                                  paging = FALSE,
-                                                  searching = TRUE,
-                                                  fixedColumns = TRUE,
-                                                  autoWidth = FALSE,
-                                                  ordering = TRUE,
-                                                  dom = 'Bfrtip',
-                                                  buttons = c('copy', 'csv', 'excel', 'pdf')
-                                                ),
-                                                selection = 'none',  # Disable row selection
-                                                class = "display",
-                                                style="bootstrap",
-                                                callback = JS("table.rows().every(function(row, tab, row) {
-                                              var $this = $(this.node());
-                                              $this.attr('id', this.data()[0]);
-                                              $this.addClass('shiny-input-container');
-                                            });
-                                            Shiny.unbindAll(table.table().node());
-                                            Shiny.bindAll(table.table().node());"))
-  )
-  
-
-  output$contents4 <- renderDataTable(datatable({
-    selectSurvey()
-  }, 
-  rownames = FALSE,
-  escape = FALSE,
-  #filter = "top", 
-  extensions = 'Buttons',
-  options = list(
-    searchHighlight = TRUE,
-    scrollX = TRUE,
-    sScrollY = '25vh', 
-    scrollCollapse = TRUE,
-    lengthChange = FALSE, 
-    #pageLength = 5,
-    paging = FALSE,
-    searching = TRUE,
-    fixedColumns = TRUE,
-    autoWidth = FALSE,
-    ordering = TRUE,
-    dom = 'Bfrtip',
-    buttons = c('copy', 'csv', 'excel', 'pdf')
-  ),
-  selection = 'none',  # Disable row selection
-  class = "display", style="bootstrap"))
-  
   output$contents5 <- DT :: renderDataTable(server = T,
                                             datatable({
                                               convertedParticles()
@@ -954,6 +572,23 @@ server <- function(input,output,session) {
     },
     content = function(file) {
       write.csv(convertedParticles(), file, row.names = FALSE)
+    }
+  )
+  
+  output$download_data <- downloadHandler(
+    filename = function() {
+      if(input$download_selection == "Particle Test Data") {
+        paste("particle_test_data-", Sys.Date(), ".csv", sep = "")
+      } else {
+        paste("sample_test_data-", Sys.Date(), ".csv", sep = "")
+      }
+    },
+    content = function(file) {
+      if(input$download_selection == "Particle Test Data") {
+        write.csv(particle_testData, file, row.names = FALSE)
+      } else {
+        write.csv(sample_testData, file, row.names = FALSE)
+      }
     }
   )
   
@@ -1018,166 +653,15 @@ server <- function(input,output,session) {
                                       style="bootstrap",
                                       rownames = F,))
   
-  output$contents6 <- renderDataTable(datatable({
-                                        correctionFactor()[, c("study_media", "concentration", "concentration_units", "size_min", "size_max",  "alpha", "correction_factor", "corrected_concentration")]
-                                      }, 
-                                      extensions = 'Buttons',
-                                      options = list(
-                                        paging = TRUE,
-                                        searching = TRUE,
-                                        fixedColumns = TRUE,
-                                        autoWidth = TRUE,
-                                        ordering = TRUE,
-                                        dom = 'Bfrtip',
-                                        buttons = c('copy', 'csv', 'excel', 'pdf')
-                                      ),
-                                      class = "display",
-                                      style="bootstrap"))
-  
-  output$download_data <- downloadHandler(
-    filename = "test_data.csv",
-    content = function(file) {
-      if(input$download_selection == "Particle Test Data") {fwrite(particle_testData, file)}
-      if(input$download_selection == "Sample Test Data") {fwrite(sample_testData, file)}
-    })
-  
-  
-  output$downloadData1 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Materials_Alias)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Materials_Alias, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData2 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Materials_Hierarchy)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Materials_Hierarchy, file, row.names=FALSE)
-    }
-  )
-  
-  output$materialhierarchy <- renderTree({
-    Materials_hierarchy
-  }
-  )
-  
-  output$itemshierarchy <- renderTree({
-    Items_hierarchy
-  }
-  )
-  
-  output$downloadData3 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Items_Alias)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Items_Alias, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData4 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Items_Hierarchy)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Items_Hierarchy, file, row.names=FALSE)
-    }
-  )
-  
-  
-  output$downloadData5 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Material_Item_Relation)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Material_Item_Relation, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData6 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Brand_Manufacturer_Relation)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Brand_Manufacturer_Relation, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData7 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(Brand_Item_Relation)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(Brand_Item_Relation, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData8 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(PrimeUnclassifiable)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(PrimeUnclassifiable, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadData9 <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(polymer_db)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(polymer_db, file, row.names=FALSE)
-    }
-  )
-  
-  output$downloadtest <- downloadHandler(    
-    filename = function() {
-      paste(deparse(substitute(NOAA)), '.csv', sep='')
-    },
-    content = function(file) {
-      write.csv(NOAA, file, row.names=FALSE)
-    }
-  )
   
   output$downloadTemplate <- downloadHandler(    
     filename = function() {
-      paste(deparse(substitute(data_template)), '.csv', sep='')
+      paste("data_template-", Sys.Date(), ".csv", sep='')
     },
     content = function(file) {
       write.csv(testData(), file, row.names = FALSE)
     }
   )
-  
-  lapply(1:length(titles), function(j) {
-    output[[view_code[j]]] <- DT::renderDataTable({
-      files[[j]]
-    }, rownames = FALSE,
-    escape = FALSE,
-    filter = "top", 
-    extensions = 'Buttons',
-    selection = "none",
-    options = list(
-      searchHighlight = TRUE,
-      scrollX = TRUE,
-      sScrollY = '25vh', 
-      scrollCollapse = TRUE,
-      lengthChange = FALSE, 
-      #pageLength = 5,
-      paging = FALSE,
-      searching = TRUE,
-      fixedColumns = TRUE,
-      autoWidth = FALSE,
-      ordering = TRUE,
-      dom = 'Bfrtip',
-      buttons = c('copy', 'csv', 'excel', 'pdf')),
-    #style = "bootstrap",
-    class = "display", style="bootstrap")
-  })
-  
   
   
 }
