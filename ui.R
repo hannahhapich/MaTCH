@@ -34,16 +34,6 @@ ui <- dashboardPage(dark = T,
                                                            bs4Dash::popover(
                                                              title = "Upload microplastics or trash data as a .csv.",
                                                              content = "File Upload", placement = "right"
-                                                           ),
-                                                         prettySwitch("share_decision",
-                                                                      label = "Share Your Data?",
-                                                                      inline = T,
-                                                                      value = T,
-                                                                      status = "success",
-                                                                      fill = T) %>%
-                                                           bs4Dash::popover(
-                                                             title = "If you like, we share your uploaded data table and settings with the plastic community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded data tables will appear here: https://osf.io/rjg3c. If you have particles of known density, volume, or mass that you can share, please upload a .csv file.",
-                                                             content = "Share Decision", placement = "right"
                                                            )
                                                   )
                                          )

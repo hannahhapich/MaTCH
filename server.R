@@ -6,26 +6,6 @@ server <- function(input,output,session) {
   
   ###START MERGING TOOL
   
-  #Share data ----
-  observeEvent(input$particleData, {
-    req(input$share_decision1)
-    put_object(
-      file = file.path(as.character(input$particleData$datapath)),
-      object = paste0("particleData_", digest(input$particleData$datapath), "_", gsub(".*/", "", as.character(input$particleData$name))),
-      bucket = "trashtaxonomy"
-    )
-  })
-  
-  observeEvent(input$concentrationData, {
-    req(input$share_decision2)
-    put_object(
-      file = file.path(as.character(input$concentrationData$datapath)),
-      object = paste0("concentrationData_", digest(input$concentrationData$datapath), "_", gsub(".*/", "", as.character(input$concentrationData$name))),
-      bucket = "trashtaxonomy"
-    )
-  })
-
-  
   #Plot new merged data as sunburst plots
   #Material Sunburst Plot ----
   
