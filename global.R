@@ -20,9 +20,19 @@ library(shinyFeedback)
 color <- read.csv("data/Microplastics_Color.csv")
 
 
-#Data for embeddings generation via chRoma
-items_vectorDB <- readRDS(file = "data/items_vectorDB.rda")
-materials_vectorDB <- readRDS(file = "data/materials_vectorDB.rda")
+#Data for embeddings generation via chRoma - Category-Specific Versions
+# Trash vector databases
+items_vectorDB_trash <- readRDS(file = "data/items_vectorDB_trash.rda")
+materials_vectorDB_trash <- readRDS(file = "data/materials_vectorDB_trash.rda")
+
+# Microplastic vector databases
+items_vectorDB_microplastic <- readRDS(file = "data/items_vectorDB_microplastic.rda")
+materials_vectorDB_microplastic <- readRDS(file = "data/materials_vectorDB_microplastic.rda")
+
+# Keep unified versions for backward compatibility (fallback)
+items_vectorDB <- items_vectorDB_trash
+materials_vectorDB <- materials_vectorDB_trash
+
 Sys.setenv(OPENAI_API_KEY = readLines("data/openai.txt", warn = FALSE))
 creds <- read.csv("data/s3_cred.csv")
 Sys.setenv(
@@ -31,7 +41,22 @@ Sys.setenv(
   "AWS_DEFAULT_REGION" = "us-east-2"
 )
 
-merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable) {
+# Note: VectorDB filtering happens through alias joins in merge_terms, not by filtering the DB itself
+# This preserves the vectorDB structure needed for chRoma functions like query_collection()
+
+merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, aliasi, use_cases, prime_unclassifiable, type = "trash") {
+  # Use category-specific vectorDBs based on type parameter
+  if (type == "microplastics") {
+    materials_vectorDB <- materials_vectorDB_microplastic
+    items_vectorDB <- items_vectorDB_microplastic
+  } else {  # Default to trash
+    materials_vectorDB <- materials_vectorDB_trash
+    items_vectorDB <- items_vectorDB_trash
+  }
+  if (type == "microplastics") {
+    # These will be overridden in server.R when calling the function
+  }
+  
   clean_and_prepare_data <- function(dataframe, column, descriptor) {
     if (!column %in% colnames(dataframe)) {
       stop(paste("Column", column, "not found in dataframe"))
@@ -1306,17 +1331,29 @@ mean_val = function(a, #alpha, either solved for or default 1.6
   }
   return(c)}
 
-#Files for tool
-alias <- read.csv("data/PrimeMaterials.csv")
-hierarchy <- read.csv("data/MaterialsHierarchyLower.csv")
-aliasi <- read.csv("data/PrimeItems.csv")
-hierarchyi <- read.csv("data/ITEMSHierarchyLower.csv")
-microcolor <- read.csv("data/Microplastics_Color.csv")
-trash_mass <- read.csv("data/trash_mass.csv")
+#Files for tool - TRASH versions (default for backward compatibility)
+alias <- read.csv("data/PrimeMaterials_trash.csv")
+hierarchy <- read.csv("data/MaterialsHierarchy_trash.csv")
+aliasi <- read.csv("data/PrimeItems_trash.csv")
+hierarchyi <- read.csv("data/ITEMSHierarchy_trash.csv")
 aliasclean <- mutate_all(alias, cleantext)
 aliascleani <- mutate_all(aliasi, cleantext)
 hierarchyclean <- mutate_all(hierarchy, cleantext)
 hierarchycleani <- mutate_all(hierarchyi, cleantext)
+
+#Files for tool - MICROPLASTICS versions
+alias_microplastic <- read.csv("data/PrimeMaterials_microplastic.csv")
+hierarchy_microplastic <- read.csv("data/MaterialsHierarchy_microplastic.csv")
+aliasi_microplastic <- read.csv("data/PrimeItems_microplastic.csv")
+hierarchyi_microplastic <- read.csv("data/ITEMSHierarchy_microplastic.csv")
+aliasclean_microplastic <- mutate_all(alias_microplastic, cleantext)
+aliascleani_microplastic <- mutate_all(aliasi_microplastic, cleantext)
+hierarchyclean_microplastic <- mutate_all(hierarchy_microplastic, cleantext)
+hierarchycleani_microplastic <- mutate_all(hierarchyi_microplastic, cleantext)
+
+#Shared files
+microcolor <- read.csv("data/Microplastics_Color.csv")
+trash_mass <- read.csv("data/trash_mass.csv")
 microcolorclean <- mutate_all(microcolor, cleantext)
 trash_mass_clean <- mutate_all(trash_mass, cleantext)
 
@@ -1360,11 +1397,19 @@ Items_hierarchy <- as.Node(Items_hierarchy, pathDelimiter = "/")
 Items_hierarchy <- as.list(Items_hierarchy)
 Items_hierarchy <- Items_hierarchy[-1]
 
-#Files for display
-Materials_Alias <- read.csv("data/PrimeMaterials.csv")
-Materials_Hierarchy <- read.csv("data/MaterialsHierarchyLower.csv")
-Items_Alias <- read.csv("data/PrimeItems.csv")
-Items_Hierarchy <- read.csv("data/ITEMSHierarchyLower.csv")
+#Files for display - TRASH versions (default for backward compatibility)
+Materials_Alias <- read.csv("data/PrimeMaterials_trash.csv")
+Materials_Hierarchy <- read.csv("data/MaterialsHierarchy_trash.csv")
+Items_Alias <- read.csv("data/PrimeItems_trash.csv")
+Items_Hierarchy <- read.csv("data/ITEMSHierarchy_trash.csv")
+
+#Files for display - MICROPLASTICS versions
+Materials_Alias_microplastic <- read.csv("data/PrimeMaterials_microplastic.csv")
+Materials_Hierarchy_microplastic <- read.csv("data/MaterialsHierarchy_microplastic.csv")
+Items_Alias_microplastic <- read.csv("data/PrimeItems_microplastic.csv")
+Items_Hierarchy_microplastic <- read.csv("data/ITEMSHierarchy_microplastic.csv")
+
+#Shared relation files
 Material_Item_Relation <- read.csv("data/MaterialItemRelationship.csv")
 Brand_Manufacturer_Relation <- read.csv("data/BrandManufacturer.csv")
 Brand_Item_Relation <- read.csv("data/BrandItem.csv")
@@ -1422,10 +1467,16 @@ for(y in 1:ncol(hierarchyclean)){
   MaterialsHierarchy_sunburst <- MaterialsHierarchy_sunburst %>% distinct() %>% drop_na()
 }
 
-ItemsAlias_sunburst <- read.csv("data/PrimeItems.csv")%>%
+ItemsAlias_sunburst <- read.csv("data/PrimeItems_trash.csv")%>%
   rename(Key = Item) %>%
   select(-readable)
-MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials.csv") %>%
+ItemsAlias_sunburst_microplastic <- read.csv("data/PrimeItems_microplastic.csv")%>%
+  rename(Key = Item) %>%
+  select(-readable)
+MaterialsAlias_sunburst <- read.csv("data/PrimeMaterials_trash.csv") %>%
+  rename(Key = Material) %>%
+  select(-readable)
+MaterialsAlias_sunburst_microplastic <- read.csv("data/PrimeMaterials_microplastic.csv") %>%
   rename(Key = Material) %>%
   select(-readable)
 

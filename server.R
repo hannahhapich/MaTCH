@@ -165,7 +165,9 @@ server <- function(input,output,session) {
     }
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+      # Microplastic - Particle tab: use microplastic-specific aliases and full vectorDBs
+      # Filtering happens through alias joins in merge_terms function
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias_microplastic, aliasi = aliasi_microplastic, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable, type = "microplastics")
     }else{dataframe2 <- dataframe}
     
     return(dataframe2)
@@ -214,7 +216,8 @@ server <- function(input,output,session) {
         
         # Join with descriptor to get readable PRIME terms and rank by appearance (ranking preserved from embedding)
         choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
-          left_join(Materials_Alias, by = "Alias") %>%
+          left_join(Materials_Alias_microplastic, by = "Alias") %>%
+          drop_na(Material) %>%  # Remove aliases not found in microplastic alias list
           group_by(Material) %>%
           slice(1) %>%  # First occurrence of each PRIME term (best ranking)
           ungroup() %>%
@@ -266,7 +269,115 @@ server <- function(input,output,session) {
         
         # Join with descriptor to get readable PRIME terms and rank by appearance (ranking preserved from embedding)
         choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
+          left_join(Items_Alias_microplastic, by = "Alias") %>%
+          drop_na(Item) %>%  # Remove aliases not found in microplastic alias list
+          group_by(Item) %>%
+          slice(1) %>%  # First occurrence of each PRIME term (best ranking)
+          ungroup() %>%
+          slice(1:5) %>%  # Keep top 5 unique PRIME terms
+          arrange(rank)   # Re-order by original ranking
+        
+        # Create named vector: display readable names, but store Alias values
+        choice_vector <- setNames(choices_df$Alias, choices_df$readable)
+        
+        dataframe_morph2$input_id[i] <- stable_id
+        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(
+          stable_id, 
+          "", 
+          choices = choice_vector, 
+          selected = choice_vector[1], 
+          width = "200px"
+        ))
+      }
+      dataframe_morph2 <- dataframe_morph2 %>% 
+        select(morphology_raw, input_id, Prime_Morphology) %>%
+        rename(alias = Prime_Morphology)
+    }else{dataframe_morph2 <- data.frame(NA)}
+    
+    return(dataframe_morph2)
+    
+  })
+  
+  # TRASH-SPECIFIC DROPDOWN FUNCTIONS
+  materialDisplayTrash <- reactive({
+    req(input$particleDataTrash)
+    req(aliasDisplayTrash())
+    dataframe_mat <- as.data.frame(aliasDisplayTrash())
+    
+    if("material" %in% colnames(dataframe_mat) && "material_match_1" %in% colnames(dataframe_mat)){
+      # Select only unique material_raw values (deduplicate if any duplicates exist)
+      dataframe_mat2 <- dataframe_mat %>% 
+        select(material_raw, material, starts_with("material_match")) %>% 
+        filter(!(is.na(material_match_1))) %>% 
+        distinct(material_raw, .keep_all = TRUE) %>%  # Ensure one row per material_raw
+        add_column(Prime_Material = NA, input_id = NA)
+      
+      for (i in 1:nrow(dataframe_mat2)) {
+        # Create stable ID based on material_raw hash
+        stable_id <- paste0("material_select_trash_", digest::digest(dataframe_mat2[i, 1], algo = "md5"))
+        
+        # Collect all match aliases (material_match_1 through material_match_15)
+        alias_cols <- names(dataframe_mat2) %>% grep("^material_match", ., value = TRUE)
+        alias_choices <- as.character(dataframe_mat2[i, alias_cols])
+        alias_choices <- alias_choices[!is.na(alias_choices)]
+        
+        # Join with descriptor to get readable PRIME terms using TRASH alias table
+        choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
+          left_join(Materials_Alias, by = "Alias") %>%
+          drop_na(Material) %>%  # Remove aliases not found in trash alias list
+          group_by(Material) %>%
+          slice(1) %>%  # First occurrence of each PRIME term (best ranking)
+          ungroup() %>%
+          slice(1:5) %>%  # Keep top 5 unique PRIME terms
+          arrange(rank)   # Re-order by original ranking
+        
+        # Create named vector: display readable names, but store Alias values
+        choice_vector <- setNames(choices_df$Alias, choices_df$readable)
+        
+        dataframe_mat2$input_id[i] <- stable_id
+        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(
+          stable_id, 
+          "", 
+          choices = choice_vector, 
+          selected = choice_vector[1], 
+          width = "200px"
+        ))
+      }
+      dataframe_mat2 <- dataframe_mat2 %>% 
+        select(material_raw, input_id, Prime_Material) %>%
+        rename(alias = Prime_Material)
+    }else{dataframe_mat2 <- data.frame(NA)}
+    
+    return(dataframe_mat2)
+    
+  })
+  
+  morphologyDisplayTrash <- reactive({
+    req(input$particleDataTrash)
+    req(aliasDisplayTrash())
+    dataframe_morph <- as.data.frame(aliasDisplayTrash())
+    
+    if("morphology" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
+      # Select only unique morphology_raw values (deduplicate if any duplicates exist)
+      dataframe_morph2 <- dataframe_morph %>% 
+        select(morphology_raw, morphology, starts_with("morphology_match")) %>% 
+        filter(!(is.na(morphology_match_1))) %>% 
+        distinct(morphology_raw, .keep_all = TRUE) %>%  # Ensure one row per morphology_raw
+        add_column(Prime_Morphology = NA, input_id = NA)
+      
+      for (i in 1:nrow(dataframe_morph2)) {
+        # Create stable ID based on morphology_raw hash
+        stable_id <- paste0("morph_select_trash_", digest::digest(dataframe_morph2[i, 1], algo = "md5"))
+        
+        # Collect all match aliases (morphology_match_1 through morphology_match_15)
+        alias_cols <- names(dataframe_morph2) %>% grep("^morphology_match", ., value = TRUE)
+        alias_choices <- as.character(dataframe_morph2[i, alias_cols])
+        alias_choices <- alias_choices[!is.na(alias_choices)]
+        
+        # Join with descriptor to get readable PRIME terms using TRASH alias table
+        choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
           left_join(Items_Alias, by = "Alias") %>%
+          drop_na(Item) %>%  # Remove aliases not found in trash alias list
           group_by(Item) %>%
           slice(1) %>%  # First occurrence of each PRIME term (best ranking)
           ungroup() %>%
@@ -333,6 +444,62 @@ server <- function(input,output,session) {
     
     
   })
+  
+  # TRASH-SPECIFIC ALIAS AND SELECTION FUNCTIONS
+  aliasDisplayTrash <- reactive({
+    req(input$particleDataTrash)
+    req(convertedTermsTrash())
+    dataframe <- convertedTermsTrash()
+    
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"), morphology_raw, morphology, starts_with("morphology_match"))
+    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"))
+      dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
+    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
+      dataframe2 <- dataframe %>% select(morphology_raw, morphology, starts_with("morphology_match"))
+    }else{dataframe2 <- data.frame(NA)}
+    return(dataframe2)
+    
+  })
+  
+  materialSelectTrash <- reactive({
+    req(input$particleDataTrash)
+    req(materialDisplayTrash())
+    data <- materialDisplayTrash()
+    
+    if("alias" %in% colnames(data)){
+      # Get unique material_raw values and their corresponding stable IDs
+      selection_data <- data %>%
+        select(material_raw, input_id) %>%
+        distinct() %>%
+        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+      slct <- data %>%
+        left_join(selection_data %>% select(material_raw, selection), by = "material_raw")
+    }else{slct <- data.frame(NA)}
+    
+    return(slct)
+    
+  })
+
+  morphologySelectTrash <- reactive({
+    req(input$particleDataTrash)
+    req(morphologyDisplayTrash())
+    data <- morphologyDisplayTrash()
+    
+    if("alias" %in% colnames(data)){
+      # Get unique morphology_raw values and their corresponding stable IDs
+      selection_data <- data %>%
+        select(morphology_raw, input_id) %>%
+        distinct() %>%
+        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+      slct <- data %>%
+        left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw")
+    }else{slct <- data.frame(NA)}
+    return(slct)
+    
+    
+  })
 
   convertedTermsSelect <- reactive({
     req(input$particleData)
@@ -341,7 +508,7 @@ server <- function(input,output,session) {
     
     if ("material_match_1" %in% colnames(dataframe)) {
       key <- materialSelect() %>%
-        left_join(Materials_Alias, by = c("selection" = "Alias")) %>%
+        left_join(Materials_Alias_microplastic, by = c("selection" = "Alias")) %>%
         select(material_raw, readable) %>%
         rename(material_select = readable)
       
@@ -356,7 +523,7 @@ server <- function(input,output,session) {
     
     if ("morphology_match_1" %in% colnames(dataframe)) {
       key <- morphologySelect() %>%
-        left_join(Items_Alias, by = c("selection" = "Alias")) %>%
+        left_join(Items_Alias_microplastic, by = c("selection" = "Alias")) %>%
         select(morphology_raw, readable) %>%
         rename(morphology_select = readable)
       
@@ -493,7 +660,9 @@ server <- function(input,output,session) {
     # Add column renaming logic here (similar to convertedTerms)
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+      # Microplastic - Concentration tab: use microplastic-specific aliases and full vectorDBs
+      # Filtering happens through alias joins in merge_terms function
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias_microplastic, aliasi = aliasi_microplastic, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable, type = "microplastics")
     }else{dataframe2 <- dataframe}
     
     return(dataframe2)
@@ -571,7 +740,9 @@ server <- function(input,output,session) {
     # Add column renaming logic here (similar to convertedTerms)
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+      # Trash tab: use trash-specific aliases and full vectorDBs
+      # Filtering happens through alias joins in merge_terms function
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable, type = "trash")
     }else{dataframe2 <- dataframe}
     
     return(dataframe2)
