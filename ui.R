@@ -22,7 +22,12 @@ ui <- dashboardPage(dark = T,
                       tabItems(
                         tabItem(tabName = "match",
                                 br(),
-                                fluidRow(
+                                # Mode Selection Tabs
+                                bs4Dash::tabBox(
+                                  id = "matchModeTabs",
+                                  width = 12,
+                                  tabPanel("Microplastic - Particle",
+                                    fluidRow(
                                   column(2,
                                          fluidRow(style = "display: flex; align-items: flex-end;",
                                                   column(12, 
@@ -50,23 +55,6 @@ ui <- dashboardPage(dark = T,
                                                         title = "Advanced Settings",
                                                         fluidRow(
                                                           box(width = 12,
-                                                              title = "Rescaling Settings",
-                                                              collapsed = T,
-                                                              br(),
-                                                              selectInput('concentration_type', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")),
-                                                              br(),
-                                                              numericInput('corrected_min', "Corrected Particle Range Minimum", 1, min = 1),
-                                                              br(), 
-                                                              numericInput('corrected_max', "Corrected Particle Range Maximum", 5000, min = 1),
-                                                              footer = tags$small("Select the measured characteristic of your particles over which to normalize. 
-                                                                                   Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', and 'effluent.' 
-                                                                                   (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values).
-                                                                                   If known particle characteristic is length, 'drinking water' is an additional option.")
-                                                          )
-                                                        ),
-                                                        
-                                                        fluidRow(
-                                                          box(width = 12,
                                                               collapsed = T,
                                                               footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
                                                                                   'equal' divides the range into 'n' parts.
@@ -83,12 +71,34 @@ ui <- dashboardPage(dark = T,
                                                               collapsed = T,
                                                               footer = tags$small("For fibers with unknown width and height, the following values will be used. Default values are from Suaria et al. (2020) and represent Q1, Q2, and Q3 of their measured microfiber diameters."),
                                                               title = "Fiber Width Settings",
+                                                              prettySwitch("fiber_auto_width",
+                                                                           label = "Use Fiber Auto Width",
+                                                                           inline = T,
+                                                                           value = T,
+                                                                           status = "success",
+                                                                           fill = T),
                                                               br(),
-                                                              numericInput('fiber_min', "Fiber Minimum Diameter", 15, min = 1),
+                                                              tags$small("When toggled on, fiber width values shown here will be auto applied to all fibers in the database, reguardless if width/min feret existis in the database. Can only be turned off if alternate width values are provided."),
                                                               br(),
-                                                              numericInput('fiber_med', "Fiber Median Diameter", 16.7, min = 1),
                                                               br(),
-                                                              numericInput('fiber_max', "Fiber Max Diameter", 20.4, min = 1)
+                                                              numericInput('fiber_min', "Fiber Minimum Diameter (microns)", 15, min = 1),
+                                                              br(),
+                                                              numericInput('fiber_med', "Fiber Median Diameter (microns)", 16.7, min = 1),
+                                                              br(),
+                                                              numericInput('fiber_max', "Fiber Max Diameter (microns)", 20.4, min = 1)
+                                                          )
+                                                        ),
+                                                        fluidRow(
+                                                          box(width = 12,
+                                                              collapsed = T,
+                                                              footer = tags$small("For films with unknown height, the following values will be used. Default values are from materials databases that report commonly used film thicknesses for consumer products and industrial/agricultural uses."),
+                                                              title = "Film Thickness Settings",
+                                                              br(),
+                                                              numericInput('film_min', "Film Min Thickness (microns)", 20, min = 1, max = 5000),
+                                                              br(),
+                                                              numericInput('film_med', "Film Median Thickness (microns)", 40, min = 1, max = 5000),
+                                                              br(),
+                                                              numericInput('film_max', "Film Max Thickness (microns)", 100, min = 1, max = 5000)
                                                           )
                                                         ),
                                                         fluidRow(
@@ -123,13 +133,8 @@ ui <- dashboardPage(dark = T,
                                                   )
                                            ))),
                                   column(2,
-                                         selectInput(inputId = "download_selection",
-                                                     label = "Test Data:",
-                                                     choices = c("Particle Test Data",
-                                                                 "Sample Test Data")),
-                                         br(),
-                                         downloadButton("download_data",
-                                                       label = "Download",
+                                         downloadButton("downloadParticleTestData",
+                                                       label = "Download test data",
                                                        style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:100%;")
                                   )
                                 
@@ -194,6 +199,196 @@ ui <- dashboardPage(dark = T,
                                          tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
                                   )
                                 )
+                                  ), # End tabPanel - Microplastic - Particle
+                                  
+                                  tabPanel("Microplastic - Concentration",
+                                    br(),
+                                    fluidRow(
+                                      column(2,
+                                             fluidRow(style = "display: flex; align-items: flex-end;",
+                                                      column(12, 
+                                                             fileInput('particleDataConc', "Choose CSV File", multiple = FALSE,
+                                                                       placeholder = ".csv",
+                                                                       accept=c("text/csv",
+                                                                                "text/comma-separated-values,text/plain",
+                                                                                ".csv")) %>%
+                                                               bs4Dash::popover(
+                                                                 title = "Upload microplastics concentration data as a .csv.",
+                                                                 content = "File Upload", placement = "right"
+                                                               )
+                                                      )
+                                             )
+                                      ),
+                                      column(8,
+                                             fluidRow( 
+                                               column(10, 
+                                                      ## Preprocessing ----
+                                                      fluidRow(
+                                                        box(width = 12,
+                                                            collapsed = T,
+                                                            style = "height: 27vh; overflow-y: auto;",
+                                                            footer = tags$small("Rescaling settings for concentration data."),
+                                                            title = "Advanced Settings",
+                                                            fluidRow(
+                                                              box(width = 12,
+                                                                  title = "Rescaling Settings",
+                                                                  collapsed = T,
+                                                                  br(),
+                                                                  selectInput('concentration_type_conc', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")),
+                                                                  br(),
+                                                                  numericInput('corrected_min_conc', "Corrected Particle Range Minimum", 1, min = 1),
+                                                                  br(), 
+                                                                  numericInput('corrected_max_conc', "Corrected Particle Range Maximum", 5000, min = 1),
+                                                                  footer = tags$small("Select the measured characteristic of your particles over which to normalize. 
+                                                                                       Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', and 'effluent.' 
+                                                                                       (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values).
+                                                                                       If known particle characteristic is length, 'drinking water' is an additional option.")
+                                                              )
+                                                            )
+                                                        )
+                                                      )
+                                               ))),
+                                      column(2,
+                                             downloadButton("downloadConcentrationTestData",
+                                                           label = "Download test data",
+                                                           style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:100%;")
+                                      )
+                                    ),
+                                    ## Plot ----
+                                    fluidRow(
+                                      box(title = HTML(paste0("Cleaned Data")), 
+                                          maximizable = T,
+                                          width = 12,
+                                          downloadButton("downloadDataConc", "Download Full Dataset"),
+                                          fluidRow(
+                                            div(style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents5Conc")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Material Terms")), 
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          fluidRow(
+                                            div(#style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents8Conc")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Morphology Terms")), 
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          fluidRow(
+                                            div(#style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents9Conc")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Material Plot")),
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          plotlyOutput("plot1Conc")
+                                      ),
+                                      box(title = HTML(paste0("Morphology Plot")),
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          plotlyOutput("plot2Conc")
+                                      )
+                                    ),
+                                    
+                                    tags$hr(),
+                                    
+                                    fluidRow(
+                                      column(12,
+                                             align="center",
+                                             hr(),
+                                             tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                      )
+                                    )
+                                  ), # End tabPanel - Microplastic - Concentration
+                                  
+                                  tabPanel("Trash",
+                                    br(),
+                                    fluidRow(
+                                      column(2,
+                                             fluidRow(style = "display: flex; align-items: flex-end;",
+                                                      column(12, 
+                                                             fileInput('particleDataTrash', "Choose CSV File", multiple = FALSE,
+                                                                       placeholder = ".csv",
+                                                                       accept=c("text/csv",
+                                                                                "text/comma-separated-values,text/plain",
+                                                                                ".csv")) %>%
+                                                               bs4Dash::popover(
+                                                                 title = "Upload trash data as a .csv.",
+                                                                 content = "File Upload", placement = "right"
+                                                               )
+                                                      )
+                                             )
+                                      ),
+                                      column(8,
+                                             fluidRow()
+                                      ),
+                                      column(2,
+                                             downloadButton("downloadTrashTestData",
+                                                           label = "Download test data",
+                                                           style = "background-color: rgb(0,0,0); color: rgb(255,255,255); width:100%;")
+                                      )
+                                    ),
+                                    ## Plot ----
+                                    fluidRow(
+                                      box(title = HTML(paste0("Cleaned Data")), 
+                                          maximizable = T,
+                                          width = 12,
+                                          downloadButton("downloadDataTrash", "Download Full Dataset"),
+                                          fluidRow(
+                                            div(style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents5Trash")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Material Terms")), 
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          fluidRow(
+                                            div(#style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents8Trash")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Morphology Terms")), 
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          fluidRow(
+                                            div(#style = "overflow-x: scroll",
+                                                DT::dataTableOutput("contents9Trash")
+                                            ))
+                                      ),
+                                      box(title = HTML(paste0("Material Plot")),
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          plotlyOutput("plot1Trash")
+                                      ),
+                                      box(title = HTML(paste0("Morphology Plot")),
+                                          maximizable = T,
+                                          collapsed = T,
+                                          width = 6,
+                                          plotlyOutput("plot2Trash")
+                                      )
+                                    ),
+                                    
+                                    tags$hr(),
+                                    
+                                    fluidRow(
+                                      column(12,
+                                             align="center",
+                                             hr(),
+                                             tags$p("Citation: H. Hapich, W. Cowger, A. Gray. 2024. https://doi.org/10.1021/acs.est.4c02406 ES&T.")
+                                      )
+                                    )
+                                  ) # End tabPanel - Trash
+                                ) # End tabBox
                         ),
                         #About tab
                         tabItem(tabName = "About",

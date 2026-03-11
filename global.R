@@ -56,14 +56,15 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
   process_unknowns <- function(left, vectorDB, descriptor, column, key) {
     if (nrow(left) > 0) {
       new_vDB <- add_collection(metadata = left)
-      unknown_key <- query_collection(db = vectorDB, query_embeddings = new_vDB, top_n = 5, type = "dotproduct") %>%
+      # Pull 15 aliases to allow deduplication down to 5 unique PRIME terms
+      unknown_key <- query_collection(db = vectorDB, query_embeddings = new_vDB, top_n = 15, type = "dotproduct") %>%
         left_join(vectorDB$metadata, by = c("db_id" = "id")) %>%
         rename(Alias = text) %>%
         left_join(new_vDB$metadata, by = c("query_id" = "id")) %>%
         rename(!!sym(column) := text)
       
       embedding <- unknown_key %>%
-        add_column(rank = rep(seq(5), nrow(unknown_key) / 5)) %>%
+        add_column(rank = rep(seq(15), nrow(unknown_key) / 15)) %>%
         select(Alias, !!sym(column), rank) %>%
         pivot_wider(names_from = rank, values_from = Alias) %>%
         rename(!!paste0(column, "_raw") := 1,
@@ -71,7 +72,17 @@ merge_terms <- function(file_paths, materials_vectorDB, items_vectorDB, alias, a
                !!paste0(column, "_match_2") := 3,
                !!paste0(column, "_match_3") := 4,
                !!paste0(column, "_match_4") := 5,
-               !!paste0(column, "_match_5") := 6)
+               !!paste0(column, "_match_5") := 6,
+               !!paste0(column, "_match_6") := 7,
+               !!paste0(column, "_match_7") := 8,
+               !!paste0(column, "_match_8") := 9,
+               !!paste0(column, "_match_9") := 10,
+               !!paste0(column, "_match_10") := 11,
+               !!paste0(column, "_match_11") := 12,
+               !!paste0(column, "_match_12") := 13,
+               !!paste0(column, "_match_13") := 14,
+               !!paste0(column, "_match_14") := 15,
+               !!paste0(column, "_match_15") := 16)
       
       unknown_key <- unknown_key %>% distinct(!!sym(column), .keep_all = TRUE) %>%
         select(Alias, !!sym(column))

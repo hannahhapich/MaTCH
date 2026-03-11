@@ -178,12 +178,12 @@ server <- function(input,output,session) {
     dataframe <- convertedTerms()
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
-      dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5, morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
+      dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"), morphology_raw, morphology, starts_with("morphology_match"))
     }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe)){
-      dataframe2 <- dataframe %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)
+      dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"))
       dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
     }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
-      dataframe2 <- dataframe %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
+      dataframe2 <- dataframe %>% select(morphology_raw, morphology, starts_with("morphology_match"))
     }else{dataframe2 <- data.frame(NA)}
     return(dataframe2)
     
@@ -196,12 +196,45 @@ server <- function(input,output,session) {
     dataframe_mat <- as.data.frame(aliasDisplay())
     
     if("material" %in% colnames(dataframe_mat) && "material_match_1" %in% colnames(dataframe_mat)){
-      dataframe_mat2 <- dataframe_mat %>% select(material_raw, material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)
-      dataframe_mat2 <- dataframe_mat2 %>% filter(!(is.na(material_match_1))) %>% add_column(Prime_Material = NA) %>% unique()
+      # Select only unique material_raw values (deduplicate if any duplicates exist)
+      dataframe_mat2 <- dataframe_mat %>% 
+        select(material_raw, material, starts_with("material_match")) %>% 
+        filter(!(is.na(material_match_1))) %>% 
+        distinct(material_raw, .keep_all = TRUE) %>%  # Ensure one row per material_raw
+        add_column(Prime_Material = NA, input_id = NA)
+      
       for (i in 1:nrow(dataframe_mat2)) {
-        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(paste0("sel", i), "", choices = c(dataframe_mat2[i, 3], dataframe_mat2[i, 4], dataframe_mat2[i, 5], dataframe_mat2[i, 6], dataframe_mat2[i, 7]), selected = dataframe_mat2[i, 3], width = "200px"))
+        # Create stable ID based on material_raw hash
+        stable_id <- paste0("material_select_", digest::digest(dataframe_mat2[i, 1], algo = "md5"))
+        
+        # Collect all match aliases (material_match_1 through material_match_15)
+        alias_cols <- names(dataframe_mat2) %>% grep("^material_match", ., value = TRUE)
+        alias_choices <- as.character(dataframe_mat2[i, alias_cols])
+        alias_choices <- alias_choices[!is.na(alias_choices)]
+        
+        # Join with descriptor to get readable PRIME terms and rank by appearance (ranking preserved from embedding)
+        choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
+          left_join(Materials_Alias, by = "Alias") %>%
+          group_by(Material) %>%
+          slice(1) %>%  # First occurrence of each PRIME term (best ranking)
+          ungroup() %>%
+          slice(1:5) %>%  # Keep top 5 unique PRIME terms
+          arrange(rank)   # Re-order by original ranking
+        
+        # Create named vector: display readable names, but store Alias values
+        choice_vector <- setNames(choices_df$Alias, choices_df$readable)
+        
+        dataframe_mat2$input_id[i] <- stable_id
+        dataframe_mat2$Prime_Material[i] <- as.character(selectInput(
+          stable_id, 
+          "", 
+          choices = choice_vector, 
+          selected = choice_vector[1], 
+          width = "200px"
+        ))
       }
-      dataframe_mat2 <- dataframe_mat2 %>% select(-c(material, material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
+      dataframe_mat2 <- dataframe_mat2 %>% 
+        select(material_raw, input_id, Prime_Material) %>%
         rename(alias = Prime_Material)
     }else{dataframe_mat2 <- data.frame(NA)}
     
@@ -215,17 +248,49 @@ server <- function(input,output,session) {
     dataframe_morph <- as.data.frame(aliasDisplay())
     
     if("morphology" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
-      dataframe_morph2 <- dataframe_morph %>% select(morphology_raw, morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)
-      dataframe_morph2 <- dataframe_morph2 %>% filter(!(is.na(morphology_match_1))) %>% unique()
+      # Select only unique morphology_raw values (deduplicate if any duplicates exist)
+      dataframe_morph2 <- dataframe_morph %>% 
+        select(morphology_raw, morphology, starts_with("morphology_match")) %>% 
+        filter(!(is.na(morphology_match_1))) %>% 
+        distinct(morphology_raw, .keep_all = TRUE) %>%  # Ensure one row per morphology_raw
+        add_column(Prime_Morphology = NA, input_id = NA)
+      
       for (i in 1:nrow(dataframe_morph2)) {
-        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(paste0("sel2", i), "", choices = c(dataframe_morph2[i, 3], dataframe_morph2[i, 4], dataframe_morph2[i, 5], dataframe_morph2[i, 6], dataframe_morph2[i, 7]), selected = dataframe_morph2[i, 3], width = "200px"))
-
+        # Create stable ID based on morphology_raw hash
+        stable_id <- paste0("morph_select_", digest::digest(dataframe_morph2[i, 1], algo = "md5"))
+        
+        # Collect all match aliases (morphology_match_1 through morphology_match_15)
+        alias_cols <- names(dataframe_morph2) %>% grep("^morphology_match", ., value = TRUE)
+        alias_choices <- as.character(dataframe_morph2[i, alias_cols])
+        alias_choices <- alias_choices[!is.na(alias_choices)]
+        
+        # Join with descriptor to get readable PRIME terms and rank by appearance (ranking preserved from embedding)
+        choices_df <- data.frame(Alias = alias_choices, rank = seq_along(alias_choices)) %>%
+          left_join(Items_Alias, by = "Alias") %>%
+          group_by(Item) %>%
+          slice(1) %>%  # First occurrence of each PRIME term (best ranking)
+          ungroup() %>%
+          slice(1:5) %>%  # Keep top 5 unique PRIME terms
+          arrange(rank)   # Re-order by original ranking
+        
+        # Create named vector: display readable names, but store Alias values
+        choice_vector <- setNames(choices_df$Alias, choices_df$readable)
+        
+        dataframe_morph2$input_id[i] <- stable_id
+        dataframe_morph2$Prime_Morphology[i] <- as.character(selectInput(
+          stable_id, 
+          "", 
+          choices = choice_vector, 
+          selected = choice_vector[1], 
+          width = "200px"
+        ))
       }
-      dataframe_morph2 <- dataframe_morph2 %>% select(-c(morphology, morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
+      dataframe_morph2 <- dataframe_morph2 %>% 
+        select(morphology_raw, input_id, Prime_Morphology) %>%
         rename(alias = Prime_Morphology)
     }else{dataframe_morph2 <- data.frame(NA)}
-    return(dataframe_morph2)
     
+    return(dataframe_morph2)
     
   })
   
@@ -237,8 +302,13 @@ server <- function(input,output,session) {
     data <- materialDisplay()
     
     if("alias" %in% colnames(data)){
-      selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel", i)]]))
-      slct <- data %>% add_column(selection = selection)
+      # Get unique material_raw values and their corresponding stable IDs
+      selection_data <- data %>%
+        select(material_raw, input_id) %>%
+        distinct() %>%
+        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+      slct <- data %>% 
+        left_join(selection_data %>% select(material_raw, selection), by = "material_raw")
     }else{slct <- data.frame(NA)}
     
     return(slct)
@@ -251,8 +321,13 @@ server <- function(input,output,session) {
     data <- morphologyDisplay()
     
     if("alias" %in% colnames(data)){
-      selection <- as.character(sapply(1:nrow(data), function(i) input[[paste0("sel2", i)]]))
-      slct <- data %>% add_column(selection = selection)
+      # Get unique morphology_raw values and their corresponding stable IDs
+      selection_data <- data %>%
+        select(morphology_raw, input_id) %>%
+        distinct() %>%
+        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+      slct <- data %>%
+        left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw")
     }else{slct <- data.frame(NA)}
     return(slct)
     
@@ -271,7 +346,7 @@ server <- function(input,output,session) {
         rename(material_select = readable)
       
       dataframe <- dataframe %>%
-        select(-c(material_match_1, material_match_2, material_match_3, material_match_4, material_match_5)) %>%
+        select(-starts_with("material_match")) %>%
         left_join(key, by = "material_raw")
       
       dataframe <- dataframe %>%
@@ -286,7 +361,7 @@ server <- function(input,output,session) {
         rename(morphology_select = readable)
       
       dataframe <- dataframe %>%
-        select(-c(morphology_match_1, morphology_match_2, morphology_match_3, morphology_match_4, morphology_match_5)) %>%
+        select(-starts_with("morphology_match")) %>%
         left_join(key, by = "morphology_raw")
       
       dataframe <- dataframe %>%
@@ -406,6 +481,164 @@ server <- function(input,output,session) {
     })
     
   })
+  
+  # CONCENTRATION TAB REACTIVE FUNCTIONS
+  
+  convertedTermsConc <- reactive({
+    req(input$particleDataConc)
+    infile <- input$particleDataConc
+    file <- fread(infile$datapath)
+    dataframe <- as.data.frame(file)
+    
+    # Add column renaming logic here (similar to convertedTerms)
+    
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+    }else{dataframe2 <- dataframe}
+    
+    return(dataframe2)
+  })
+  
+  convertedParticlesConc <- reactive({
+    req(input$particleDataConc)
+    req(convertedTermsConc())
+    
+    withProgress(message = 'Processing concentration data...', value = 0, {
+      dataframe <- convertedTermsConc()
+      incProgress(1, detail = "Complete")
+      return(dataframe)
+    })
+  })
+  
+  output$contents5Conc <- DT::renderDataTable(server = T,
+                                              {req(convertedParticlesConc())
+                                                convertedParticlesConc()},
+                                              options = list(scrollX = TRUE,
+                                                            pageLength = 5),
+                                              rownames = FALSE)
+  
+  output$contents8Conc <- DT::renderDataTable(server = T,
+                                              {req(convertedTermsConc())
+                                                req("material" %in% colnames(convertedTermsConc()))
+                                                convertedTermsConc() %>% select(material) %>% distinct()},
+                                              options = list(scrollX = TRUE),
+                                              rownames = FALSE)
+  
+  output$contents9Conc <- DT::renderDataTable(server = T,
+                                              {req(convertedTermsConc())
+                                                req("morphology" %in% colnames(convertedTermsConc()))
+                                                convertedTermsConc() %>% select(morphology) %>% distinct()},
+                                              options = list(scrollX = TRUE),
+                                              rownames = FALSE)
+  
+  output$plot1Conc <- renderPlotly({
+    req(convertedParticlesConc())
+    dataframe <- convertedParticlesConc()
+    if("material" %in% colnames(dataframe)){
+      return(plotly_empty(type = "scatter"))
+    }else{
+      return(plotly_empty(type = "scatter"))
+    }
+  })
+  
+  output$plot2Conc <- renderPlotly({
+    req(convertedParticlesConc())
+    dataframe <- convertedParticlesConc()
+    if("morphology" %in% colnames(dataframe)){
+      return(plotly_empty(type = "scatter"))
+    }else{
+      return(plotly_empty(type = "scatter"))
+    }
+  })
+  
+  output$downloadDataConc <- downloadHandler(
+    filename = function() {
+      paste("concentration_data-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(convertedParticlesConc(), file, row.names = FALSE)
+    }
+  )
+  
+  # TRASH TAB REACTIVE FUNCTIONS
+  
+  convertedTermsTrash <- reactive({
+    req(input$particleDataTrash)
+    infile <- input$particleDataTrash
+    file <- fread(infile$datapath)
+    dataframe <- as.data.frame(file)
+    
+    # Add column renaming logic here (similar to convertedTerms)
+    
+    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias, aliasi = aliasi, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable)
+    }else{dataframe2 <- dataframe}
+    
+    return(dataframe2)
+  })
+  
+  convertedParticlesTrash <- reactive({
+    req(input$particleDataTrash)
+    req(convertedTermsTrash())
+    
+    withProgress(message = 'Processing trash data...', value = 0, {
+      dataframe <- convertedTermsTrash()
+      incProgress(1, detail = "Complete")
+      return(dataframe)
+    })
+  })
+  
+  output$contents5Trash <- DT::renderDataTable(server = T,
+                                               {req(convertedParticlesTrash())
+                                                 convertedParticlesTrash()},
+                                               options = list(scrollX = TRUE,
+                                                             pageLength = 5),
+                                               rownames = FALSE)
+  
+  output$contents8Trash <- DT::renderDataTable(server = T,
+                                               {req(convertedTermsTrash())
+                                                 req("material" %in% colnames(convertedTermsTrash()))
+                                                 convertedTermsTrash() %>% select(material) %>% distinct()},
+                                               options = list(scrollX = TRUE),
+                                               rownames = FALSE)
+  
+  output$contents9Trash <- DT::renderDataTable(server = T,
+                                               {req(convertedTermsTrash())
+                                                 req("morphology" %in% colnames(convertedTermsTrash()))
+                                                 convertedTermsTrash() %>% select(morphology) %>% distinct()},
+                                               options = list(scrollX = TRUE),
+                                               rownames = FALSE)
+  
+  output$plot1Trash <- renderPlotly({
+    req(convertedParticlesTrash())
+    dataframe <- convertedParticlesTrash()
+    if("material" %in% colnames(dataframe)){
+      return(plotly_empty(type = "scatter"))
+    }else{
+      return(plotly_empty(type = "scatter"))
+    }
+  })
+  
+  output$plot2Trash <- renderPlotly({
+    req(convertedParticlesTrash())
+    dataframe <- convertedParticlesTrash()
+    if("morphology" %in% colnames(dataframe)){
+      return(plotly_empty(type = "scatter"))
+    }else{
+      return(plotly_empty(type = "scatter"))
+    }
+  })
+  
+  output$downloadDataTrash <- downloadHandler(
+    filename = function() {
+      paste("trash_data-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(convertedParticlesTrash(), file, row.names = FALSE)
+    }
+  )
+  
+  # Placeholder for downloadTrashTestData - hook up when test data is ready
   
   #Test data
   
@@ -572,11 +805,33 @@ server <- function(input,output,session) {
     }
   )
   
+  output$downloadParticleTestData <- downloadHandler(
+    filename = function() {
+      paste("particle_test_data-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(particle_testData, file, row.names = FALSE)
+    }
+  )
+  
+  output$downloadConcentrationTestData <- downloadHandler(
+    filename = function() {
+      paste("sample_test_data-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(sample_testData, file, row.names = FALSE)
+    }
+  )
+  
   output$contents8 = DT::renderDataTable(
     materialDisplay(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap", rownames = F,
     options = list(dom = 'f', 
                    paging = FALSE, 
                    columnDefs = list(
+                     list(
+                       targets = 1,  # Hide input_id column (index 1)
+                       visible = FALSE
+                     ),
                      list(
                        targets = '_all',  
                        width = '200px'  
@@ -598,6 +853,10 @@ server <- function(input,output,session) {
     options = list(dom = 'f', 
                    paging = FALSE, 
                    columnDefs = list(
+                     list(
+                       targets = 1,  # Hide input_id column (index 1)
+                       visible = FALSE
+                     ),
                      list(
                        targets = '_all',  
                        width = '200px'  
