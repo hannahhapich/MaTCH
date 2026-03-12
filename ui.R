@@ -19,6 +19,23 @@ ui <- dashboardPage(dark = T,
                     ),
                     
                     dashboardBody(
+                      tags$head(
+                        tags$style(HTML("
+                          .dataTables_wrapper .dataTables_scroll { overflow: visible !important; }
+                          .dataTables_wrapper { overflow: visible !important; }
+                          .shiny-input-container { z-index: 1000 !important; position: relative; }
+                          .form-group { z-index: 1000 !important; position: relative; }
+                          .selectize-control { z-index: 1001 !important; }
+                          .selectize-dropdown { z-index: 1001 !important; max-height: 300px; overflow-y: auto; }
+                          .dropdown, .dropup { position: relative; }
+                          .dropdown-menu { z-index: 1001 !important; }
+                          table.dataTable tbody tr { position: relative; z-index: auto; }
+                          table.dataTable tbody tr td { padding: 8px !important; overflow: visible !important; }
+                          table.dataTable td div { overflow: visible !important; }
+                          table.dataTable tbody tr td select { position: relative; z-index: 1050 !important; }
+                          .shiny-input-container select { z-index: 1050 !important; position: relative; }
+                        "))
+                      ),
                       tabItems(
                         tabItem(tabName = "match",
                                 br(),

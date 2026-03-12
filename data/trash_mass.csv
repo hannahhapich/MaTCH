@@ -90,16 +90,16 @@ weight_estimate_g,items,material
 15.42,food wrappers or containers,paper OR cardboard
 15.42,food wrappers or containers,plastic
 15.42,food wrappers or containers,metal
-1.05,fragments(trash),glass
-1.05,fragments(trash),plastic
-1.05,fragments(trash),metal
-1.05,fragments(trash),paper
-1.05,fragments(trash),rubber
-1.05,fragments(trash),cloth
-1.05,fragments(trash),foam
-1.05,fragments(trash),paper OR cardboard
-1.05,fragments(trash),wood
-1.05,fragments(trash),other
+1.05,fragments,glass
+1.05,fragments,plastic
+1.05,fragments,metal
+1.05,fragments,paper
+1.05,fragments,rubber
+1.05,fragments,cloth
+1.05,fragments,foam
+1.05,fragments,paper OR cardboard
+1.05,fragments,wood
+1.05,fragments,other
 82.5,gloves,rubber
 82.5,gloves,plastic
 82.5,gloves,cloth

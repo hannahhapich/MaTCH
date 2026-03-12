@@ -1483,6 +1483,7 @@ MaterialsAlias_sunburst_microplastic <- read.csv("data/PrimeMaterials_microplast
 #Test data
 particle_testData <- read.csv("tests/rescaling_particle.csv", check.names = FALSE)
 sample_testData <- read.csv("tests/count_mass_concentration.csv", check.names = FALSE)
+trash_particle_testData <- read.csv("tests/trash_particle_mass.csv", check.names = FALSE)
 
 #data tables for count to mass conversion
 #Make polymer-density dataframe

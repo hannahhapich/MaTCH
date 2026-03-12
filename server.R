@@ -299,6 +299,7 @@ server <- function(input,output,session) {
   })
   
   # TRASH-SPECIFIC DROPDOWN FUNCTIONS
+  # Simplified trash material display - just shows available matches
   materialDisplayTrash <- reactive({
     req(input$particleDataTrash)
     req(aliasDisplayTrash())
@@ -340,7 +341,7 @@ server <- function(input,output,session) {
           "", 
           choices = choice_vector, 
           selected = choice_vector[1], 
-          width = "200px"
+          width = "100%"
         ))
       }
       dataframe_mat2 <- dataframe_mat2 %>% 
@@ -349,7 +350,6 @@ server <- function(input,output,session) {
     }else{dataframe_mat2 <- data.frame(NA)}
     
     return(dataframe_mat2)
-    
   })
   
   morphologyDisplayTrash <- reactive({
@@ -393,7 +393,7 @@ server <- function(input,output,session) {
           "", 
           choices = choice_vector, 
           selected = choice_vector[1], 
-          width = "200px"
+          width = "100%"
         ))
       }
       dataframe_morph2 <- dataframe_morph2 %>% 
@@ -417,7 +417,10 @@ server <- function(input,output,session) {
       selection_data <- data %>%
         select(material_raw, input_id) %>%
         distinct() %>%
-        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+        mutate(selection = sapply(input_id, function(id) {
+          val <- input[[id]]
+          if (is.null(val)) NA_character_ else as.character(val)
+        }, USE.NAMES = FALSE))
       slct <- data %>% 
         left_join(selection_data %>% select(material_raw, selection), by = "material_raw")
     }else{slct <- data.frame(NA)}
@@ -436,7 +439,10 @@ server <- function(input,output,session) {
       selection_data <- data %>%
         select(morphology_raw, input_id) %>%
         distinct() %>%
-        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+        mutate(selection = sapply(input_id, function(id) {
+          val <- input[[id]]
+          if (is.null(val)) NA_character_ else as.character(val)
+        }, USE.NAMES = FALSE))
       slct <- data %>%
         left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw")
     }else{slct <- data.frame(NA)}
@@ -463,23 +469,49 @@ server <- function(input,output,session) {
     
   })
   
+  # Initialize reactive values for trash selections
+  trash_material_selections <- reactiveValues()
+  trash_morphology_selections <- reactiveValues()
+  
+  observe({
+    req(materialDisplayTrash())
+    data <- materialDisplayTrash()
+    if("input_id" %in% colnames(data)) {
+      for(id in unique(data$input_id)) {
+        trash_material_selections[[id]] <- input[[id]]
+      }
+    }
+  })
+  
+  observe({
+    req(morphologyDisplayTrash())
+    data <- morphologyDisplayTrash()
+    if("input_id" %in% colnames(data)) {
+      for(id in unique(data$input_id)) {
+        trash_morphology_selections[[id]] <- input[[id]]
+      }
+    }
+  })
+
   materialSelectTrash <- reactive({
     req(input$particleDataTrash)
     req(materialDisplayTrash())
     data <- materialDisplayTrash()
     
-    if("alias" %in% colnames(data)){
+    if("alias" %in% colnames(data) && nrow(data) > 0){
       # Get unique material_raw values and their corresponding stable IDs
       selection_data <- data %>%
         select(material_raw, input_id) %>%
         distinct() %>%
-        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
-      slct <- data %>%
+        mutate(selection = sapply(input_id, function(id) {
+          val <- input[[id]]
+          if (is.null(val)) NA_character_ else as.character(val)
+        }, USE.NAMES = FALSE))
+      slct <- data %>% 
         left_join(selection_data %>% select(material_raw, selection), by = "material_raw")
-    }else{slct <- data.frame(NA)}
+    }else{slct <- data.frame()}
     
     return(slct)
-    
   })
 
   morphologySelectTrash <- reactive({
@@ -487,18 +519,19 @@ server <- function(input,output,session) {
     req(morphologyDisplayTrash())
     data <- morphologyDisplayTrash()
     
-    if("alias" %in% colnames(data)){
+    if("alias" %in% colnames(data) && nrow(data) > 0){
       # Get unique morphology_raw values and their corresponding stable IDs
       selection_data <- data %>%
         select(morphology_raw, input_id) %>%
         distinct() %>%
-        mutate(selection = as.character(sapply(input_id, function(id) input[[id]], simplify = TRUE)))
+        mutate(selection = sapply(input_id, function(id) {
+          val <- input[[id]]
+          if (is.null(val)) NA_character_ else as.character(val)
+        }, USE.NAMES = FALSE))
       slct <- data %>%
         left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw")
-    }else{slct <- data.frame(NA)}
+    }else{slct <- data.frame()}
     return(slct)
-    
-    
   })
 
   convertedTermsSelect <- reactive({
@@ -678,27 +711,27 @@ server <- function(input,output,session) {
       return(dataframe)
     })
   })
+  output$contents5Conc <- DT::renderDT(
+    convertedParticlesConc(),
+    rownames = FALSE,
+    options = list(scrollX = TRUE, pageLength = 5)
+  )
   
-  output$contents5Conc <- DT::renderDataTable(server = T,
-                                              {req(convertedParticlesConc())
-                                                convertedParticlesConc()},
-                                              options = list(scrollX = TRUE,
-                                                            pageLength = 5),
-                                              rownames = FALSE)
+  output$contents8Conc <- DT::renderDT(
+    {req(convertedTermsConc())
+     req("material" %in% colnames(convertedTermsConc()))
+     convertedTermsConc() %>% select(material) %>% distinct()},
+    rownames = FALSE,
+    options = list(scrollX = TRUE)
+  )
   
-  output$contents8Conc <- DT::renderDataTable(server = T,
-                                              {req(convertedTermsConc())
-                                                req("material" %in% colnames(convertedTermsConc()))
-                                                convertedTermsConc() %>% select(material) %>% distinct()},
-                                              options = list(scrollX = TRUE),
-                                              rownames = FALSE)
-  
-  output$contents9Conc <- DT::renderDataTable(server = T,
-                                              {req(convertedTermsConc())
-                                                req("morphology" %in% colnames(convertedTermsConc()))
-                                                convertedTermsConc() %>% select(morphology) %>% distinct()},
-                                              options = list(scrollX = TRUE),
-                                              rownames = FALSE)
+  output$contents9Conc <- DT::renderDT(
+    {req(convertedTermsConc())
+     req("morphology" %in% colnames(convertedTermsConc()))
+     convertedTermsConc() %>% select(morphology) %>% distinct()},
+    rownames = FALSE,
+    options = list(scrollX = TRUE)
+  )
   
   output$plot1Conc <- renderPlotly({
     req(convertedParticlesConc())
@@ -737,7 +770,20 @@ server <- function(input,output,session) {
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
     
-    # Add column renaming logic here (similar to convertedTerms)
+    # Standardize column names (similar to convertedTerms)
+    if("Sample ID" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_ID' = 'Sample ID')}
+    if("Concentration (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('concentration_particle_vol' = 'Concentration (particles/volume)')}
+    if("Material" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material' = 'Material')}
+    if("Material %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material_percent' = 'Material %')}
+    if("Morphology" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology' = 'Morphology')}
+    if("Morphology %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology_percent' = 'Morphology %')}
+    if("Study Media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('study_media' = 'Study Media')}
+    if("Min Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_min' = 'Min Length (microns)')}
+    if("Max Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_max' = 'Max Length (microns)')}
+    if("Known Alpha Value" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('known_alpha' = 'Known Alpha Value')}
+    if("Concentration Upper (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_upper' = 'Concentration Upper (particles/volume)')}
+    if("Concentration Lower (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_lower' = 'Concentration Lower (particles/volume)')}
+    if("Concentration Standard Deviation" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_SD' = 'Concentration Standard Deviation')}
     
     if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
       # Trash tab: use trash-specific aliases and full vectorDBs
@@ -748,37 +794,152 @@ server <- function(input,output,session) {
     return(dataframe2)
   })
   
+  convertedTermsSelectTrash <- reactive({
+    req(input$particleDataTrash)
+    req(isTruthy(materialSelectTrash()) || isTruthy(morphologySelectTrash()))
+    dataframe <- convertedTermsTrash()
+    
+    # Apply material selections from dropdown
+    if ("material_match_1" %in% colnames(dataframe)) {
+      mat_select <- materialSelectTrash()
+      if(nrow(mat_select) > 0 && "selection" %in% colnames(mat_select)){
+        key <- mat_select %>%
+          left_join(Materials_Alias, by = c("selection" = "Alias")) %>%
+          select(material_raw, readable) %>%
+          rename(material_select = readable)
+        
+        dataframe <- dataframe %>%
+          select(-starts_with("material_match")) %>%
+          left_join(key, by = "material_raw")
+        
+        dataframe <- dataframe %>%
+          mutate(material = ifelse(!is.na(material_select), material_select, material)) %>%
+          select(-material_select)
+      } else {
+        dataframe <- dataframe %>%
+          select(-starts_with("material_match"))
+      }
+    }
+    
+    # Apply morphology selections from dropdown
+    if ("morphology_match_1" %in% colnames(dataframe)) {
+      morph_select <- morphologySelectTrash()
+      if(nrow(morph_select) > 0 && "selection" %in% colnames(morph_select)){
+        key <- morph_select %>%
+          left_join(Items_Alias, by = c("selection" = "Alias")) %>%
+          select(morphology_raw, readable) %>%
+          rename(morphology_select = readable)
+        
+        dataframe <- dataframe %>%
+          select(-starts_with("morphology_match")) %>%
+          left_join(key, by = "morphology_raw")
+        
+        dataframe <- dataframe %>%
+          mutate(morphology = ifelse(!is.na(morphology_select), morphology_select, morphology)) %>%
+          select(-morphology_select)
+      } else {
+        dataframe <- dataframe %>%
+          select(-starts_with("morphology_match"))
+      }
+    }
+    
+    return(dataframe)
+  })
+  
   convertedParticlesTrash <- reactive({
     req(input$particleDataTrash)
-    req(convertedTermsTrash())
+    req(convertedTermsSelectTrash())
     
     withProgress(message = 'Processing trash data...', value = 0, {
-      dataframe <- convertedTermsTrash()
+      dataframe <- convertedTermsSelectTrash()
+      incProgress(0.5, detail = "Joining with mass data")
+      
+      # Join with trash mass database based on material AND morphology
+      if ("material" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe)) {
+        # Use cleaned versions for joining, but preserve readable names for display
+        dataframe <- dataframe %>%
+          mutate(
+            material_clean = cleantext(material),
+            morphology_clean = cleantext(morphology)
+          ) %>%
+          left_join(trash_mass_clean, by = c("material_clean" = "material", "morphology_clean" = "items")) %>%
+          select(-material_clean, -morphology_clean)
+      }
+      
+      # Reorder columns for display
+      dataframe <- dataframe %>%
+        select(material, morphology, material_raw, morphology_raw, everything())
+      
       incProgress(1, detail = "Complete")
       return(dataframe)
     })
   })
   
-  output$contents5Trash <- DT::renderDataTable(server = T,
-                                               {req(convertedParticlesTrash())
-                                                 convertedParticlesTrash()},
-                                               options = list(scrollX = TRUE,
-                                                             pageLength = 5),
-                                               rownames = FALSE)
+  output$contents5Trash <- DT::renderDT(
+    convertedParticlesTrash(),
+    rownames = FALSE,
+    options = list(
+      scrollX = TRUE,
+      pageLength = 10,
+      columnDefs = list(
+        list(targets = '_all', className = 'dt-left')
+      )
+    )
+  )
   
-  output$contents8Trash <- DT::renderDataTable(server = T,
-                                               {req(convertedTermsTrash())
-                                                 req("material" %in% colnames(convertedTermsTrash()))
-                                                 convertedTermsTrash() %>% select(material) %>% distinct()},
-                                               options = list(scrollX = TRUE),
-                                               rownames = FALSE)
+  output$contents8Trash <- DT::renderDT(
+    materialDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, rownames = F,
+    options = list(
+      dom = 'f', 
+      paging = FALSE,
+      columnDefs = list(
+        list(
+          targets = 1,
+          visible = FALSE
+        ),
+        list(
+          targets = '_all',
+          width = '200px'
+        )
+      ),
+      searching = F,
+      ordering = FALSE
+    ),
+    callback = JS("table.rows().every(function(i, tab, row) {
+        var $this = $(this.node());
+        $this.attr('id', this.data()[0]);
+        $this.addClass('shiny-input-container');
+      });
+      Shiny.unbindAll(table.table().node());
+      Shiny.bindAll(table.table().node());")
+  )
   
-  output$contents9Trash <- DT::renderDataTable(server = T,
-                                               {req(convertedTermsTrash())
-                                                 req("morphology" %in% colnames(convertedTermsTrash()))
-                                                 convertedTermsTrash() %>% select(morphology) %>% distinct()},
-                                               options = list(scrollX = TRUE),
-                                               rownames = FALSE)
+  output$contents9Trash <- DT::renderDT(
+    morphologyDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, rownames = F,
+    options = list(
+      dom = 'f', 
+      paging = FALSE,
+      columnDefs = list(
+        list(
+          targets = 1,
+          visible = FALSE
+        ),
+        list(
+          targets = '_all',
+          width = '200px'
+        )
+      ),
+      searching = F,
+      ordering = FALSE
+    ),
+    callback = JS("table.rows().every(function(i, tab, row) {
+        var $this = $(this.node());
+        $this.attr('id', this.data()[0]);
+        $this.addClass('shiny-input-container');
+      });
+      Shiny.unbindAll(table.table().node());
+      Shiny.bindAll(table.table().node());")
+  )
   
   output$plot1Trash <- renderPlotly({
     req(convertedParticlesTrash())
@@ -809,7 +970,14 @@ server <- function(input,output,session) {
     }
   )
   
-  # Placeholder for downloadTrashTestData - hook up when test data is ready
+  output$downloadTrashTestData <- downloadHandler(
+    filename = function() {
+      paste("trash_particle_test_data-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(trash_particle_testData, file, row.names = FALSE)
+    }
+  )
   
   #Test data
   
@@ -932,23 +1100,24 @@ server <- function(input,output,session) {
   
   #Output tables
   
-  output$contents5 <- DT :: renderDataTable(server = T,
-                                            datatable({
-                                              convertedParticles()
-                                            }, 
-                                            options = list(
-                                              paging = TRUE,
-                                              searching = TRUE,
-                                              fixedColumns = TRUE,
-                                              autoWidth = TRUE,
-                                              ordering = TRUE,
-                                              dom = 'Bfrtip',
-                                              check.names = FALSE
-                                            ),
-                                            selection = 'none',  # Disable row selection
-                                            class = "display",
-                                            style="bootstrap",
-                                            rownames = F))
+  output$contents5 <- DT::renderDT(
+    convertedParticles(),
+    rownames = FALSE,
+    options = list(
+      paging = TRUE,
+      searching = TRUE,
+      fixedColumns = TRUE,
+      autoWidth = TRUE,
+      ordering = TRUE,
+      dom = 'lfrtip',
+      scrollX = TRUE,
+      check.names = FALSE,
+      columnDefs = list(
+        list(targets = '_all', className = 'dt-left')
+      )
+    ),
+    selection = 'none'
+  )
   
   output$downloadData <- downloadHandler(
     filename = function() {
