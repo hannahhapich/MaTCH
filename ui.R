@@ -23,17 +23,144 @@ ui <- dashboardPage(dark = T,
                         tags$style(HTML("
                           .dataTables_wrapper .dataTables_scroll { overflow: visible !important; }
                           .dataTables_wrapper { overflow: visible !important; }
+                          table.dataTable tbody { overflow: visible !important; }
                           .shiny-input-container { z-index: 1000 !important; position: relative; }
                           .form-group { z-index: 1000 !important; position: relative; }
-                          .selectize-control { z-index: 1001 !important; }
-                          .selectize-dropdown { z-index: 1001 !important; max-height: 300px; overflow-y: auto; }
+                          .selectize-control { z-index: 1002 !important; position: relative !important; }
+                          .selectize-dropdown { z-index: 10000 !important; max-height: 300px; overflow-y: auto; }
+                          .selectize-input { position: relative !important; }
                           .dropdown, .dropup { position: relative; }
-                          .dropdown-menu { z-index: 1001 !important; }
-                          table.dataTable tbody tr { position: relative; z-index: auto; }
+                          .dropdown-menu { z-index: 10000 !important; }
+                          table.dataTable tbody tr { position: static !important; z-index: auto; }
                           table.dataTable tbody tr td { padding: 8px !important; overflow: visible !important; }
                           table.dataTable td div { overflow: visible !important; }
                           table.dataTable tbody tr td select { position: relative; z-index: 1050 !important; }
                           .shiny-input-container select { z-index: 1050 !important; position: relative; }
+                          .popover { z-index: 10001 !important; max-width: 400px; }
+                          .popover-header { background-color: #555; color: white; font-weight: bold; }
+                          .popover-body { background-color: #666; color: white; }
+                        ")),
+                        tags$script(HTML("
+                          document.addEventListener('DOMContentLoaded', function() {
+                            // Helper to close all popovers
+                            function closeAllPopovers() {
+                              document.querySelectorAll('[data-bs-toggle=\"popover\"]').forEach(el => {
+                                const popover = bootstrap.Popover.getInstance(el);
+                                if (popover) {
+                                  popover.hide();
+                                }
+                              });
+                            }
+                            
+                            // Close all popovers when clicking outside
+                            document.addEventListener('click', function(event) {
+                              // Get all popover triggers and popovers
+                              const triggers = document.querySelectorAll('[data-bs-toggle=\"popover\"]');
+                              let isPopoverRelated = false;
+                              
+                              // Check if click is on a trigger or inside a popover
+                              for (let trigger of triggers) {
+                                const popover = bootstrap.Popover.getInstance(trigger);
+                                const popoverElement = document.querySelector('[role=\"tooltip\"][data-popper-placement]') || 
+                                                       $('.popover:visible')[0];
+                                
+                                if (trigger.contains(event.target)) {
+                                  isPopoverRelated = true;
+                                  break;
+                                }
+                                if (popoverElement && popoverElement.contains(event.target)) {
+                                  isPopoverRelated = true;
+                                  break;
+                                }
+                              }
+                              
+                              // If click is outside all popovers, close them all
+                              if (!isPopoverRelated && !$(event.target).closest('.popover').length) {
+                                closeAllPopovers();
+                              }
+                            });
+                            
+                            // Also close popovers when pressing Escape
+                            document.addEventListener('keydown', function(event) {
+                              if (event.key === 'Escape') {
+                                closeAllPopovers();
+                              }
+                            });
+                            
+                            // Setup for each selectize instance
+                            function setupSelectize($select) {
+                              if (!$select[0].selectize) {
+                                setTimeout(() => setupSelectize($select), 100);
+                                return;
+                              }
+                              
+                              const selectize = $select[0].selectize;
+                              
+                              selectize.on('dropdown_open', function() {
+                                setTimeout(() => {
+                                  const $dropdown = $(selectize.$dropdown);
+                                  const $input = $(selectize.$control);
+                                  
+                                  // Move dropdown to body to escape table constraints
+                                  $dropdown.appendTo('body').css({
+                                    'position': 'fixed',
+                                    'z-index': '10000',
+                                    'margin': '0',
+                                    'box-sizing': 'border-box'
+                                  });
+                                  
+                                  // Get position from control element
+                                  const inputRect = $input[0].getBoundingClientRect();
+                                  $dropdown.css({
+                                    'left': inputRect.left + 'px',
+                                    'top': (inputRect.bottom) + 'px',
+                                    'width': inputRect.width + 'px'
+                                  });
+                                  
+                                  // Reposition on scroll while dropdown is open
+                                  const scrollHandler = function() {
+                                    if ($dropdown.is(':visible')) {
+                                      const updatedRect = $input[0].getBoundingClientRect();
+                                      $dropdown.css({
+                                        'left': updatedRect.left + 'px',
+                                        'top': (updatedRect.bottom) + 'px',
+                                        'width': updatedRect.width + 'px'
+                                      });
+                                    }
+                                  };
+                                  
+                                  $(window).on('scroll.selectize', scrollHandler);
+                                  
+                                  // Store handler reference for cleanup
+                                  selectize._scrollHandler = scrollHandler;
+                                }, 10);
+                              });
+                              
+                              selectize.on('dropdown_close', function() {
+                                // Remove scroll listener when dropdown closes
+                                if (selectize._scrollHandler) {
+                                  $(window).off('scroll.selectize', selectize._scrollHandler);
+                                }
+                              });
+                            }
+                            
+                            // Initialize all select elements
+                            $('select').each(function() {
+                              setupSelectize($(this));
+                            });
+                            
+                            // Re-initialize when table updates
+                            $(document).on('draw.dt', function() {
+                              setTimeout(() => {
+                                $('select').each(function() {
+                                  if (!this._selectizeSetup) {
+                                    this._selectizeSetup = true;
+                                    setupSelectize($(this));
+                                  }
+                                });
+                              }, 200);
+                            });
+                          });
                         "))
                       ),
                       tabItems(
@@ -545,7 +672,7 @@ ui <- dashboardPage(dark = T,
                                                                 br(),
                                                                 choices = NULL) %>%
                                                bs4Dash::popover(title = "Data Characteristics",
-                                                       content = "Choose the commonly associated metadata you have available to describe your particles.",
+                                                       content = "Select all data you have available to describe your particle or sample characteristics.",
                                                        placement = "right"),
                                              
                                              box(width = 12,
