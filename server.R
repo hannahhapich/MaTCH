@@ -125,9 +125,9 @@ server <- function(input,output,session) {
       dataframe$material[dataframe$material == 0] <- NA
     }
     
-    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-      # Microplastic - Particle tab: use microplastic-specific aliases and full vectorDBs
-      # Filtering happens through alias joins in merge_terms function
+    if("material" %in% colnames(dataframe)){
+      # Call merge_terms to process material (and morphology if present)
+      # This ensures material_raw, material_match_*, and morphology_raw, morphology_match_* columns are created
       dataframe2 <- merge_terms(file_paths = dataframe, materials_vectorDB = materials_vectorDB, items_vectorDB = items_vectorDB, alias = alias_microplastic, aliasi = aliasi_microplastic, use_cases = use_cases, prime_unclassifiable = prime_unclassifiable, type = "microplastics")
     }else{dataframe2 <- dataframe}
     
@@ -140,14 +140,19 @@ server <- function(input,output,session) {
     req(convertedTerms())
     dataframe <- convertedTerms()
     
-    if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
+    has_material <- "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe)
+    has_morphology <- "morphology" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)
+    
+    if (has_material && has_morphology) {
       dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"), morphology_raw, morphology, starts_with("morphology_match"))
-    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "material_match_1" %in% colnames(dataframe)){
+    } else if (has_material) {
       dataframe2 <- dataframe %>% select(material_raw, material, starts_with("material_match"))
-      dataframe2 <- dataframe2[,colSums(is.na(dataframe2))<nrow(dataframe2)]
-    }else if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe) && "morphology_match_1" %in% colnames(dataframe)){
+      # Don't remove match columns even if all NA - they're needed by materialDisplay()
+    } else if (has_morphology) {
       dataframe2 <- dataframe %>% select(morphology_raw, morphology, starts_with("morphology_match"))
-    }else{dataframe2 <- data.frame(NA)}
+    } else {
+      dataframe2 <- data.frame()
+    }
     return(dataframe2)
     
   })
@@ -200,7 +205,10 @@ server <- function(input,output,session) {
       dataframe_mat2 <- dataframe_mat2 %>% 
         select(material_raw, input_id, Prime_Material) %>%
         rename(alias = Prime_Material)
-    }else{dataframe_mat2 <- data.frame(NA)}
+    }else{
+      # Return empty dataframe with expected columns if no matches found
+      dataframe_mat2 <- data.frame(material_raw = character(), input_id = character(), alias = character())
+    }
     
     return(dataframe_mat2)
     
@@ -253,7 +261,10 @@ server <- function(input,output,session) {
       dataframe_morph2 <- dataframe_morph2 %>% 
         select(morphology_raw, input_id, Prime_Morphology) %>%
         rename(alias = Prime_Morphology)
-    }else{dataframe_morph2 <- data.frame(NA)}
+    }else{
+      # Return empty dataframe with expected columns if no morphology data
+      dataframe_morph2 <- data.frame(morphology_raw = character(), input_id = character(), alias = character())
+    }
     
     return(dataframe_morph2)
     
@@ -373,7 +384,7 @@ server <- function(input,output,session) {
     req(materialDisplay())
     data <- materialDisplay()
     
-    if("alias" %in% colnames(data)){
+    if("alias" %in% colnames(data) && nrow(data) > 0){
       # Get unique material_raw values and their corresponding stable IDs
       selection_data <- data %>%
         select(material_raw, input_id) %>%
@@ -383,8 +394,9 @@ server <- function(input,output,session) {
           if (is.null(val)) NA_character_ else as.character(val)
         }, USE.NAMES = FALSE))
       slct <- data %>% 
-        left_join(selection_data %>% select(material_raw, selection), by = "material_raw")
-    }else{slct <- data.frame(NA)}
+        left_join(selection_data %>% select(material_raw, selection), by = "material_raw") %>%
+        mutate(selection = as.character(selection))
+    }else{slct <- data.frame()}
     
     return(slct)
     
@@ -395,7 +407,7 @@ server <- function(input,output,session) {
     req(morphologyDisplay())
     data <- morphologyDisplay()
     
-    if("alias" %in% colnames(data)){
+    if("alias" %in% colnames(data) && nrow(data) > 0){
       # Get unique morphology_raw values and their corresponding stable IDs
       selection_data <- data %>%
         select(morphology_raw, input_id) %>%
@@ -405,8 +417,9 @@ server <- function(input,output,session) {
           if (is.null(val)) NA_character_ else as.character(val)
         }, USE.NAMES = FALSE))
       slct <- data %>%
-        left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw")
-    }else{slct <- data.frame(NA)}
+        left_join(selection_data %>% select(morphology_raw, selection), by = "morphology_raw") %>%
+        mutate(selection = as.character(selection))
+    }else{slct <- data.frame()}
     return(slct)
     
     
@@ -500,34 +513,46 @@ server <- function(input,output,session) {
     req(isTruthy(morphologySelect()) || isTruthy(materialSelect()))
     dataframe <- convertedTerms()
     
-    if ("material_match_1" %in% colnames(dataframe)) {
-      key <- materialSelect() %>%
-        left_join(Materials_Alias_microplastic, by = c("selection" = "Alias")) %>%
-        select(material_raw, readable) %>%
-        rename(material_select = readable)
-      
-      dataframe <- dataframe %>%
-        select(-starts_with("material_match")) %>%
-        left_join(key, by = "material_raw")
-      
-      dataframe <- dataframe %>%
-        mutate(material = ifelse(!is.na(material_select), material_select, material)) %>%
-        select(-material_select)
+    if ("material_match_1" %in% colnames(dataframe) && nrow(materialSelect()) > 0) {
+      mat_select <- materialSelect()
+      if (!is.null(mat_select$selection) && is.character(mat_select$selection)) {
+        key <- mat_select %>%
+          filter(!is.na(selection)) %>%
+          select(material_raw, selection) %>%
+          distinct() %>%
+          left_join(Materials_Alias_microplastic, by = c("selection" = "Alias")) %>%
+          select(material_raw, readable) %>%
+          rename(material_select = readable)
+        
+        dataframe <- dataframe %>%
+          select(-starts_with("material_match")) %>%
+          left_join(key, by = "material_raw")
+        
+        dataframe <- dataframe %>%
+          mutate(material = ifelse(!is.na(material_select), material_select, material)) %>%
+          select(-material_select)
+      }
     }
     
-    if ("morphology_match_1" %in% colnames(dataframe)) {
-      key <- morphologySelect() %>%
-        left_join(Items_Alias_microplastic, by = c("selection" = "Alias")) %>%
-        select(morphology_raw, readable) %>%
-        rename(morphology_select = readable)
-      
-      dataframe <- dataframe %>%
-        select(-starts_with("morphology_match")) %>%
-        left_join(key, by = "morphology_raw")
-      
-      dataframe <- dataframe %>%
-        mutate(morphology = ifelse(!is.na(morphology_select), morphology_select, morphology)) %>%
-        select(-morphology_select)
+    if ("morphology_match_1" %in% colnames(dataframe) && nrow(morphologySelect()) > 0) {
+      morph_select <- morphologySelect()
+      if (!is.null(morph_select$selection) && is.character(morph_select$selection)) {
+        key <- morph_select %>%
+          filter(!is.na(selection)) %>%
+          select(morphology_raw, selection) %>%
+          distinct() %>%
+          left_join(Items_Alias_microplastic, by = c("selection" = "Alias")) %>%
+          select(morphology_raw, readable) %>%
+          rename(morphology_select = readable)
+        
+        dataframe <- dataframe %>%
+          select(-starts_with("morphology_match")) %>%
+          left_join(key, by = "morphology_raw")
+        
+        dataframe <- dataframe %>%
+          mutate(morphology = ifelse(!is.na(morphology_select), morphology_select, morphology)) %>%
+          select(-morphology_select)
+      }
     }
     return(dataframe)
     
@@ -541,19 +566,31 @@ server <- function(input,output,session) {
     withProgress(message = 'Processing data...', value = 0, {
     dataframe <- convertedTermsSelect()
     
-    if("morphology" %in% colnames(dataframe) && ("particle_concentration" %in% colnames(dataframe)) == F && "material" %in% colnames(dataframe)){
-      dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
+    if(("particle_concentration" %in% colnames(dataframe)) == F){
+      dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = NULL, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight,
-                                        fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
-      dataframe2 <- dataframe2 %>% select(morphology_raw, everything()) 
-      dataframe2 <- dataframe2 %>% select(material_raw, everything()) 
-      dataframe2 <- dataframe2 %>% select(morphology, everything()) 
-      dataframe2 <- dataframe2 %>% select(material, everything())
+                                        fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max,
+                                        film_min = input$film_min, film_med = input$film_med, film_max = input$film_max, fiber_width_switch = input$fiber_auto_width)
+      # Handle optional morphology_raw and material_raw columns
+      if("morphology_raw" %in% colnames(dataframe2)) {
+        dataframe2 <- dataframe2 %>% select(morphology_raw, everything())
+      }
+      if("material_raw" %in% colnames(dataframe2)) {
+        dataframe2 <- dataframe2 %>% select(material_raw, everything())
+      }
+      if("morphology" %in% colnames(dataframe2)) {
+        dataframe2 <- dataframe2 %>% select(morphology, everything())
+      }
+      if("material" %in% colnames(dataframe2)) {
+        dataframe2 <- dataframe2 %>% select(material, everything())
+      }
       
       
       if(all(is.na(dataframe2$length_um))){
+        # Remove columns that may not exist (use any_of to avoid errors)
+        cols_to_remove <- c("length_um", "min_volume_um3", "volume_um3", "max_volume_um3", "min_mass_mg", "max_mass_mg")
         dataframe2 <- dataframe2 %>%
-          select(-c(length_um, L_min, L_max, W_min, W_max, H_min, H_max, density_mg_um_3, density_max, density_min, W_mean, H_mean, L_mean, volume_min_um_3, volume_mean_um_3, volume_max_um_3, min_mass_mg, max_mass_mg))
+          select(-any_of(cols_to_remove))
       }
       
       incProgress(0.3, detail = "Completed particle mass calculation")
@@ -581,10 +618,8 @@ server <- function(input,output,session) {
     if("length_um" %in% colnames(dataframe) && "sample_id" %in% colnames(dataframe)){
       dataframe5 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
       if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-        dataframe2 <- dataframe2 %>% select(volume_min_um_3, volume_mean_um_3, volume_max_um_3, min_mass_mg, mean_mass_mg, max_mass_mg, W_min, W_max, W_mean, H_min, H_max, H_mean, density_mg_um_3, density_min, density_max)
-        if("width_um" %in% colnames(dataframe) == TRUE){dataframe2 <- dataframe2 %>% select(-c(W_min, W_max, W_mean))}
-        if("height_um" %in% colnames(dataframe) == TRUE){dataframe2 <- dataframe2 %>% select(-c(H_min, H_max, H_mean))}
-        if("density" %in% colnames(dataframe) == TRUE){dataframe2 <- dataframe2 %>% select(-c(density_mg_um_3, density_min, density_max))}
+        # Note: Only keep the volume and mass columns from particle_count_mass output
+        # Old dimension columns (W_min, W_max, H_min, H_max, etc.) no longer exist with new volume calculation
         dataframe5 <- cbind(dataframe5, dataframe2)
       
       }
@@ -934,7 +969,9 @@ server <- function(input,output,session) {
                                            "Sample ID" = "sample",
                                            "Projected Area" = "area",
                                            "Perimeter" = "perimeter",
-                                           "Circularity" = "circularity"))
+                                           "Circularity" = "circularity",
+                                           "Ellipsoid major axis" = "Dx",
+                                           "Ellipsoid minor axis" = "Dy"))
       
       updateCheckboxGroupInput(inputId = "advanced", label = "",
                                choices = c("Particle Width (microns)" = "width_p",
@@ -988,6 +1025,10 @@ server <- function(input,output,session) {
       data <- add_column(data, "perimeter_um" = perimeter_um)}
       if ("circularity" %in% as.vector(input$characteristics)){circularity = c(0.8, 0.9, 0.7)
       data <- add_column(data, "circularity" = circularity)}
+      if ("Dx" %in% as.vector(input$characteristics)){Dx = c(120, 70, 80)
+      data <- add_column(data, "Dx" = Dx)}
+      if ("Dy" %in% as.vector(input$characteristics)){Dy = c(60, 35, 40)
+      data <- add_column(data, "Dy" = Dy)}
       if ("width_p" %in% as.vector(input$advanced)){width_um = c(NA, 30, NA)
       data <- add_column(data, "width_um" = width_um)}
       if ("height_p" %in% as.vector(input$advanced)){height_um = c(20, NA, NA)
