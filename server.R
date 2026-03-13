@@ -125,6 +125,11 @@ server <- function(input,output,session) {
       dataframe$material[dataframe$material == 0] <- NA
     }
     
+    # Handle alternate column naming: material_class -> material
+    if ("material_class" %in% colnames(dataframe) && !("material" %in% colnames(dataframe))) {
+      dataframe$material <- dataframe$material_class
+    }
+    
     if("material" %in% colnames(dataframe)){
       # Call merge_terms to process material (and morphology if present)
       # This ensures material_raw, material_match_*, and morphology_raw, morphology_match_* columns are created
@@ -1150,6 +1155,12 @@ server <- function(input,output,session) {
                    paging = FALSE, 
                    columnDefs = list(
                      list(
+                       targets = 0,  # material_raw column
+                       createdCell = JS("function(td, cellData, rowData, row, col) {
+                         $(td).css({'word-wrap': 'break-word', 'white-space': 'normal', 'overflow-wrap': 'break-word', 'width': '200px', 'max-width': '200px'});
+                       }")
+                     ),
+                     list(
                        targets = 1,  # Hide input_id column (index 1)
                        visible = FALSE
                      ),
@@ -1180,6 +1191,12 @@ server <- function(input,output,session) {
     options = list(dom = 'f', 
                    paging = FALSE, 
                    columnDefs = list(
+                     list(
+                       targets = 0,  # morphology_raw column
+                       createdCell = JS("function(td, cellData, rowData, row, col) {
+                         $(td).css({'word-wrap': 'break-word', 'white-space': 'normal', 'overflow-wrap': 'break-word', 'width': '200px', 'max-width': '200px'});
+                       }")
+                     ),
                      list(
                        targets = 1,  # Hide input_id column (index 1)
                        visible = FALSE
