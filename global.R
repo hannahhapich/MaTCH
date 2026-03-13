@@ -206,7 +206,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
   if("width_um" %in% colnames(dataframe) == TRUE){dataframe$width_um <- as.numeric(dataframe$width_um)}
   if("height_um" %in% colnames(dataframe) == TRUE){dataframe$height_um <- as.numeric(dataframe$height_um)}
   if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)}
-  if("sample_ID" %in% colnames(dataframe) == TRUE){dataframe$sample_ID <- as.character(dataframe$sample_ID)}
+  if("sample_id" %in% colnames(dataframe) == TRUE){dataframe$sample_id <- as.character(dataframe$sample_id)}
   dataframe <- dataframe %>%
     mutate(material = ifelse(material == "polystyrene" & morphology == "foam", "EPS", material))
   
@@ -420,8 +420,8 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     dataframeclean_particles_avg <- dataframeclean_particles
     for(x in 1:nrow(dataframeclean_particles)){
       if(is.na(dataframeclean_particles$mean_mass_mg[[x]]) && ! is.na(dataframeclean_particles$volume_mean_um_3[[x]])){
-        if(morph_weight == F && sample_weight == T && "sample_ID" %in% colnames(dataframeclean_particles) == TRUE){
-          dataframeclean_particles_avg <- dataframeclean_particles %>% filter(sample_ID == dataframeclean_particles$sample_ID[[x]])
+        if(morph_weight == F && sample_weight == T && "sample_id" %in% colnames(dataframeclean_particles) == TRUE){
+          dataframeclean_particles_avg <- dataframeclean_particles %>% filter(sample_id == dataframeclean_particles$sample_id[[x]])
           density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
           dataframeclean_particles$density_max[[x]] <- mean(dataframeclean_particles_avg$density_max, na.rm = T)
           dataframeclean_particles$density_min[[x]] <- mean(dataframeclean_particles_avg$density_min, na.rm = T)
@@ -429,7 +429,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
           dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
           dataframeclean_particles$max_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_max[[x]])
           dataframeclean_particles$min_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_min[[x]])
-        }else if(morph_weight == T && sample_weight == F || morph_weight == T && sample_weight == T && !("sample_ID" %in% colnames(dataframeclean_particles))){
+        }else if(morph_weight == T && sample_weight == F || morph_weight == T && sample_weight == T && !("sample_id" %in% colnames(dataframeclean_particles))){
           dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
           density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
           dataframeclean_particles$density_max[[x]] <- mean(dataframeclean_particles_avg$density_max, na.rm = T)
@@ -438,9 +438,9 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
           dataframeclean_particles$mean_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*density
           dataframeclean_particles$max_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_max[[x]])
           dataframeclean_particles$min_mass_mg[[x]] <- (dataframeclean_particles$volume_mean_um_3[[x]])*(dataframeclean_particles$density_min[[x]])
-        }else if(morph_weight == T && sample_weight == T && "sample_ID" %in% colnames(dataframeclean_particles) == TRUE){
+        }else if(morph_weight == T && sample_weight == T && "sample_id" %in% colnames(dataframeclean_particles) == TRUE){
           dataframeclean_particles_avg <- dataframeclean_particles %>% filter(morphology == dataframeclean_particles$morphology[[x]])
-          dataframeclean_particles_avg <- dataframeclean_particles_avg %>% filter(sample_ID == dataframeclean_particles$sample_ID[[x]])
+          dataframeclean_particles_avg <- dataframeclean_particles_avg %>% filter(sample_id == dataframeclean_particles$sample_id[[x]])
           density <- mean(dataframeclean_particles_avg$density_mg_um_3, na.rm = T)
           dataframeclean_particles$density_max[[x]] <- mean(dataframeclean_particles_avg$density_max, na.rm = T)
           dataframeclean_particles$density_min[[x]] <- mean(dataframeclean_particles_avg$density_min, na.rm = T)
@@ -481,8 +481,8 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
 
 
 concentration_count_mass <- function(dataframe, morphology_shape, polymer_density, corrected_DF, trash_mass_clean, fiber_min, fiber_med, fiber_max){
-  dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
-  dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  dataframe$particle_concentration <- as.numeric(dataframe$particle_concentration)
+  dataframe$sample_id <- as.character(dataframe$sample_id)
   if("morphology" %in% colnames(dataframe) == TRUE){dataframe$morphology <- as.character(dataframe$morphology)}
   if("material" %in% colnames(dataframe) == TRUE){dataframe$material <- as.character(dataframe$material)}
   if("density" %in% colnames(dataframe) == TRUE){dataframe$density <- as.numeric(dataframe$density)}
@@ -491,29 +491,29 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
   if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
   dataframeclean <- dataframe
   
-  corrected_DF <- corrected_DF %>% select(sample_ID, alpha, alpha_upper, alpha_lower)
+  corrected_DF <- corrected_DF %>% select(sample_id, alpha, alpha_upper, alpha_lower)
   corrected_DF$alpha <- as.numeric(corrected_DF$alpha)
   corrected_DF$alpha_upper <- as.numeric(corrected_DF$alpha_upper)
   corrected_DF$alpha_lower <- as.numeric(corrected_DF$alpha_lower)
-  dataframeclean <- dataframeclean %>% left_join(corrected_DF, by = "sample_ID")
+  dataframeclean <- dataframeclean %>% left_join(corrected_DF, by = "sample_id")
   
-  dataframeclean$size_min <- as.numeric(dataframeclean$size_min)
-  dataframeclean$size_max <- as.numeric(dataframeclean$size_max)
+  dataframeclean$min_length_um_um <- as.numeric(dataframeclean$min_length_um)
+  dataframeclean$max_length_um_um <- as.numeric(dataframeclean$max_length_um)
   
-  unique_IDs <- dataframeclean %>% select(sample_ID) %>% unique()
+  unique_IDs <- dataframeclean %>% select(sample_id) %>% unique()
   concentration_mass <- data.frame()
   concentration_mass_trash <- data.frame()
   for(x in 1:nrow(unique_IDs)){
     #x = 1
     print(x)
-    ID <- unique_IDs[x, "sample_ID"]
-    data_ID <- dataframeclean %>% filter(sample_ID == ID)
+    ID <- unique_IDs[x, "sample_id"]
+    data_ID <- dataframeclean %>% filter(sample_id == ID)
     data_ID <- discard(data_ID, ~all(is.na(.)))
     
-    if("size_min" %in% colnames(data_ID) == TRUE && "size_max" %in% colnames(data_ID) == TRUE){
-      concentration_ID <- data_ID %>% select(sample_ID, concentration_particle_vol, size_min, size_max, alpha) %>% filter(!is.na(size_min)) %>% filter(!is.na(size_max)) %>% unique()
+    if("min_length_um" %in% colnames(data_ID) == TRUE && "max_length_um" %in% colnames(data_ID) == TRUE){
+      concentration_ID <- data_ID %>% select(sample_id, particle_concentration, min_length_um, max_length_um, alpha) %>% filter(!is.na(min_length_um)) %>% filter(!is.na(max_length_um)) %>% unique()
     }else{
-      concentration_ID <- data_ID %>% select(sample_ID, concentration_particle_vol) %>% unique()
+      concentration_ID <- data_ID %>% select(sample_id, particle_concentration) %>% unique()
     }
     
     if("morphology" %in% colnames(data_ID) == TRUE && "morphology_percent" %in% colnames(data_ID) == TRUE){
@@ -544,12 +544,12 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
     concentration_ID <- concentration_ID %>% add_column(min_concentration_um3_vol = NA, mean_concentration_um3_vol = NA, max_concentration_um3_vol = NA, min_concentration_mg_vol = NA, mean_concentration_mg_vol = NA, max_concentration_mg_vol = NA)
     #y = 1
     for(y in 1:nrow(concentration_ID)){
-      if("size_min" %in% colnames(data_ID) == TRUE && "size_max" %in% colnames(data_ID) == TRUE){
+      if("min_length_um" %in% colnames(data_ID) == TRUE && "max_length_um" %in% colnames(data_ID) == TRUE){
         # Parameters
-        total <- as.numeric(concentration_ID[y, "concentration_particle_vol"])
+        total <- as.numeric(concentration_ID[y, "particle_concentration"])
         ifelse(total <10 || total > 1000, n <- 1000, n <- total)
-        xmin <- concentration_ID[y, "size_min"]
-        xmax <- concentration_ID[y, "size_max"]
+        xmin <- concentration_ID[y, "min_length_um"]
+        xmax <- concentration_ID[y, "max_length_um"]
         alpha <- concentration_ID[y, "alpha"]
         
         # Generate the data
@@ -577,7 +577,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
         #For trash data, don't perform the inverse power dist, don't mix up material and morphology types
         particle_lengths = NA
         # Calculate the number of particles for each morphology and material
-        n <- as.numeric(concentration_ID[y, "concentration_particle_vol"])
+        n <- as.numeric(concentration_ID[y, "particle_concentration"])
         morph_ID <- morph_ID %>% mutate(count = round(n * morphology_percent))
         material_ID <- material_ID %>% mutate(count = round(n * material_percent))
         
@@ -619,7 +619,7 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
       
     }
     
-    if("size_min" %in% colnames(concentration_ID) == FALSE && "size_max" %in% colnames(concentration_ID) == FALSE){
+    if("min_length_um" %in% colnames(concentration_ID) == FALSE && "max_length_um" %in% colnames(concentration_ID) == FALSE){
       concentration_mass_trash <- rbind(concentration_mass_trash, concentration_ID) %>% discard(~all(is.na(.)))
     }else{
       concentration_mass <- rbind(concentration_mass, concentration_ID)
@@ -627,10 +627,10 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
     }
   }
   
-  dataframe <- dataframe %>% left_join(concentration_mass, by = c("sample_ID", "concentration_particle_vol", "size_min", "size_max")) %>% select(-alpha)
+  dataframe <- dataframe %>% left_join(concentration_mass, by = c("sample_id", "particle_concentration", "min_length_um", "max_length_um")) %>% select(-alpha)
   if(nrow(concentration_mass_trash) > 0){
     dataframe <- dataframe %>% 
-      left_join(concentration_mass_trash, by = c("sample_ID", "concentration_particle_vol")) %>% 
+      left_join(concentration_mass_trash, by = c("sample_id", "particle_concentration")) %>% 
       mutate(mean_concentration_mg_vol = coalesce(mean_concentration_mg_vol.y, mean_concentration_mg_vol.x)) %>%
       select(-c(mean_concentration_mg_vol.y, mean_concentration_mg_vol.x))
   }
@@ -639,13 +639,13 @@ concentration_count_mass <- function(dataframe, morphology_shape, polymer_densit
 }
 
 correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, corrected_max){
-  dataframe$concentration_particle_vol <- as.numeric(dataframe$concentration_particle_vol)
-  dataframe$size_min <- as.numeric(dataframe$size_min)
-  dataframe$size_max <- as.numeric(dataframe$size_max)
-  dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  dataframe$particle_concentration <- as.numeric(dataframe$particle_concentration)
+  dataframe$min_length_um <- as.numeric(dataframe$min_length_um)
+  dataframe$max_length_um <- as.numeric(dataframe$max_length_um)
+  dataframe$sample_id <- as.character(dataframe$sample_id)
   if("study_media" %in% colnames(dataframe) == TRUE){dataframe$study_media <- as.character(dataframe$study_media)}
   if("known_alpha" %in% colnames(dataframe) == TRUE){dataframe$known_alpha <- as.numeric(dataframe$known_alpha)}
-  if("sample_ID"  %in% colnames(dataframe) == TRUE){dataframe$sample_ID <- as.character(dataframe$sample_ID)}
+  if("sample_id"  %in% colnames(dataframe) == TRUE){dataframe$sample_id <- as.character(dataframe$sample_id)}
   if("error_SD" %in% colnames(dataframe) == TRUE){dataframe$error_SD <- as.numeric(dataframe$error_SD)}
   if("error_upper" %in% colnames(dataframe) == TRUE){dataframe$error_upper <- as.numeric(dataframe$error_upper)}
   if("error_lower" %in% colnames(dataframe) == TRUE){dataframe$error_lower <- as.numeric(dataframe$error_lower)}
@@ -695,25 +695,25 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
       )
   }
   
-  if("sample_ID" %in% colnames(dataframeclean) == TRUE){
-    unique_bins <- dataframeclean %>% count(sample_ID, size_min, size_max)
-    bin_numbers <- unique_bins %>% count(sample_ID)
+  if("sample_id" %in% colnames(dataframeclean) == TRUE){
+    unique_bins <- dataframeclean %>% count(sample_id, min_length_um, max_length_um)
+    bin_numbers <- unique_bins %>% count(sample_id)
     alpha_bins <- bin_numbers %>% filter(n >= 5)
     if(nrow(alpha_bins) >= 1){
       unique_alpha <- data.frame()
       for(x in 1:nrow(alpha_bins)){
         x = 1
-        sample_name <- alpha_bins$sample_ID[[x]]
-        sample_bins <- dataframeclean %>% filter(sample_ID == sample_name)
-        midpoint <- (as.numeric(sample_bins$size_min) + as.numeric(sample_bins$size_max))/2
+        sample_name <- alpha_bins$sample_id[[x]]
+        sample_bins <- dataframeclean %>% filter(sample_id == sample_name)
+        midpoint <- (as.numeric(sample_bins$min_length_um) + as.numeric(sample_bins$max_length_um))/2
         sample_bins <- sample_bins %>%
           add_column(midpoint = midpoint,
                      alpha_calc_lower = NA,
                      alpha_calc_upper = NA) %>%
-          select(sample_ID, midpoint, concentration_particle_vol, alpha, alpha_calc_lower, alpha_calc_upper)
+          select(sample_id, midpoint, particle_concentration, alpha, alpha_calc_lower, alpha_calc_upper)
         sample_bins$log_size <- log10(sample_bins$midpoint)
-        sample_bins$concentration_particle_vol <- as.numeric(sample_bins$concentration_particle_vol)
-        sample_bins$log_abundance <- log10(sample_bins$concentration_particle_vol)
+        sample_bins$particle_concentration <- as.numeric(sample_bins$particle_concentration)
+        sample_bins$log_abundance <- log10(sample_bins$particle_concentration)
         r1model <- lm(log_abundance ~ log_size, data = sample_bins)
         alpha <- -(as.numeric(coef(r1model)[2]))
         sample_bins$alpha <- alpha
@@ -721,12 +721,12 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
         error <- as.numeric(coef(r1model_sum)[4])
         sample_bins$alpha_calc_lower <- alpha - error
         sample_bins$alpha_calc_upper <- alpha + error
-        sample_bins <- sample_bins %>% select(sample_ID, alpha, alpha_calc_lower, alpha_calc_upper)
+        sample_bins <- sample_bins %>% select(sample_id, alpha, alpha_calc_lower, alpha_calc_upper)
         sample_bins <- unique(sample_bins)
         unique_alpha <- rbind(unique_alpha, sample_bins)
         unique_alpha <- unique_alpha %>% rename(alpha_calc = alpha)
       }
-      dataframeclean <- dataframeclean %>% left_join(unique_alpha, by = "sample_ID")
+      dataframeclean <- dataframeclean %>% left_join(unique_alpha, by = "sample_id")
       for(x in 1:nrow(dataframeclean)){
         if(! is.na(dataframeclean[x, "alpha_calc"])){
           dataframeclean[x, "alpha"] <- dataframeclean[x, "alpha_calc"]
@@ -772,31 +772,31 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     add_column(concentration_lower = NA,
                concentration_upper = NA)
   
-  if("sample_ID" %in% colnames(dataframeclean) == TRUE){
-    unique_bins <- dataframeclean %>% count(sample_ID, size_min, size_max)
-    bin_numbers <- unique_bins %>% count(sample_ID)
+  if("sample_id" %in% colnames(dataframeclean) == TRUE){
+    unique_bins <- dataframeclean %>% count(sample_id, min_length_um, max_length_um)
+    bin_numbers <- unique_bins %>% count(sample_id)
     bins_add <- bin_numbers %>% filter(n >= 2)
     
-    dataframeclean_ <- dataframeclean %>% distinct(sample_ID, .keep_all = T)
+    dataframeclean_ <- dataframeclean %>% distinct(sample_id, .keep_all = T)
     
     if(nrow(bins_add) >= 1){
       sample_add <- data.frame()
       for(x in 1:nrow(bins_add)){
         #x = 1
-        sample_name <- bins_add$sample_ID[[x]]
-        sample_bins <- dataframeclean %>% filter(sample_ID == sample_name)
-        sample_bins$size_min <- as.numeric(sample_bins$size_min)
-        sample_bins$size_max <- as.numeric(sample_bins$size_max)
-        sample_bins$concentration_particle_vol <- as.numeric(sample_bins$concentration_particle_vol)
-        row <- which(grepl(sample_name, dataframeclean_$sample_ID))
-        dataframeclean_$size_min[[row]] <- min(sample_bins$size_min)
-        dataframeclean_$size_max[[row]] <- max(sample_bins$size_max)
-        dataframeclean_$concentration_particle_vol[[row]] <- sum(sample_bins$concentration_particle_vol)
+        sample_name <- bins_add$sample_id[[x]]
+        sample_bins <- dataframeclean %>% filter(sample_id == sample_name)
+        sample_bins$min_length_um <- as.numeric(sample_bins$min_length_um)
+        sample_bins$max_length_um <- as.numeric(sample_bins$max_length_um)
+        sample_bins$particle_concentration <- as.numeric(sample_bins$particle_concentration)
+        row <- which(grepl(sample_name, dataframeclean_$sample_id))
+        dataframeclean_$min_length_um[[row]] <- min(sample_bins$min_length_um)
+        dataframeclean_$max_length_um[[row]] <- max(sample_bins$max_length_um)
+        dataframeclean_$particle_concentration[[row]] <- sum(sample_bins$particle_concentration)
         if("error_SD" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_SD[[1]]))){
             sample_bins$error_SD <- as.numeric(sample_bins$error_SD)
-            dataframeclean_$concentration_particle_vol <- as.numeric(dataframeclean_$concentration_particle_vol)
-            dataframeclean_$concentration_upper[[row]] <- dataframeclean_$concentration_particle_vol[[row]] + (max(sample_bins$error_SD))
-            dataframeclean_$concentration_lower[[row]] <- dataframeclean_$concentration_particle_vol[[row]] - (max(sample_bins$error_SD))
+            dataframeclean_$particle_concentration <- as.numeric(dataframeclean_$particle_concentration)
+            dataframeclean_$concentration_upper[[row]] <- dataframeclean_$particle_concentration[[row]] + (max(sample_bins$error_SD))
+            dataframeclean_$concentration_lower[[row]] <- dataframeclean_$particle_concentration[[row]] - (max(sample_bins$error_SD))
         }
         
         if("error_lower" %in% colnames(dataframeclean) == TRUE && "error_upper" %in% colnames(dataframeclean) == TRUE && !(is.na(sample_bins$error_upper[[1]])) && !(is.na(sample_bins$error_lower[[1]]))){
@@ -809,25 +809,25 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     }
     
     dataframeclean <- dataframeclean_
-    ID <- dataframe %>% select(sample_ID)
+    ID <- dataframe %>% select(sample_id)
     ID_clean <- mutate_all(ID, cleantext) 
     unique_ID <- unique(ID)
     unique_ID_clean <- unique(ID_clean)
     ID_raw_clean <- data.table(unique_ID = unique_ID, unique_ID_clean = unique_ID_clean) %>%
-      rename(unique_ID = unique_ID.sample_ID,
-             unique_ID_clean = unique_ID_clean.sample_ID)
+      rename(unique_ID = unique_ID.sample_id,
+             unique_ID_clean = unique_ID_clean.sample_id)
     
-    unique_ID_clean <- as.list(unique_ID_clean$sample_ID)
-    dataframeclean <- dataframeclean %>% arrange(factor(sample_ID, levels = unique_ID_clean))
+    unique_ID_clean <- as.list(unique_ID_clean$sample_id)
+    dataframeclean <- dataframeclean %>% arrange(factor(sample_id, levels = unique_ID_clean))
     dataframeclean$alpha <- as.numeric(dataframeclean$alpha)
   }
   
   for(x in 1:nrow(dataframeclean)){
     if(is.na(dataframeclean$concentration_upper[[x]])){
-      dataframeclean$concentration_upper[[x]] <- dataframeclean$concentration_particle_vol[[x]]
+      dataframeclean$concentration_upper[[x]] <- dataframeclean$particle_concentration[[x]]
     }
     if(is.na(dataframeclean$concentration_lower[[x]])){
-      dataframeclean$concentration_lower[[x]] <- dataframeclean$concentration_particle_vol[[x]]
+      dataframeclean$concentration_lower[[x]] <- dataframeclean$particle_concentration[[x]]
     }
   }
   
@@ -845,8 +845,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
   
   for(x in 1:nrow(dataframeclean)) {
     #mean alpha
-    x1M_set = as.numeric(dataframeclean$size_min[[x]])
-    x2M_set = as.numeric(dataframeclean$size_max[[x]])
+    x1M_set = as.numeric(dataframeclean$min_length_um[[x]])
+    x2M_set = as.numeric(dataframeclean$max_length_um[[x]])
     alpha = as.numeric(dataframeclean$alpha[[x]])
     if(alpha == 1){
       CFL <- CFfnx(x1M = x1M_set, x2M = x2M_set, x1D = x1D_set, x2D = x2D_set, a = 0.999)
@@ -861,7 +861,7 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     }
     
     dataframeclean$correction_factor[[x]] <- as.numeric(CF)
-    dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$concentration_particle_vol[[x]])
+    dataframeclean$corrected_concentration[[x]] <- as.numeric(dataframeclean$correction_factor[[x]]) * as.numeric(dataframeclean$particle_concentration[[x]])
     
     #min alpha
     alpha = as.numeric(dataframeclean$alpha_lower[[x]])
@@ -903,106 +903,17 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
 correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, binning_type, bin_number){
   
   dataframe$length_um <- as.numeric(dataframe$length_um)
-  dataframe$sample_ID <- as.character(dataframe$sample_ID)
+  dataframe$sample_id <- as.character(dataframe$sample_id)
   if("sample_volume" %in% colnames(dataframe) == TRUE){
     dataframe$sample_volume <- as.numeric(dataframe$sample_volume)}
   
-  unique_sample_ID <- unique(dataframe$sample_ID)
-  unique_sample_ID <- as.data.frame(unique_sample_ID) %>%
-    rename(sample_ID = unique_sample_ID)
+  unique_sample_id <- unique(dataframe$sample_id)
+  unique_sample_id <- as.data.frame(unique_sample_id) %>%
+    rename(sample_id = unique_sample_id)
   unique_alpha <- data.frame()
   
-  # for (x in 1:nrow(unique_sample_ID)) {
-  #   subset <- dplyr::filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
-  #   subset <- dplyr::filter(subset, !is.na(length_um))
-  #   sample_size <- nrow(subset)
-  #   
-  #   if (sample_size == 0) next
-  #   
-  #   # ---- deterministic breaks & fit ----
-  #   get_breaks <- function(x, n, style) {
-  #     x <- sort(x[is.finite(x)])
-  #     stopifnot(length(x) > 1)
-  #     
-  #     # If any of your styles are kmeans-like, fix the RNG so breaks don't drift
-  #     if (style %in% c("kmeans", "kmeans++")) set.seed(42)
-  #     
-  #     if (style %in% c("equal", "quantile", "fisher", "jenks", "kmeans")) {
-  #       ci <- classInt::classIntervals(
-  #         x, n = n,
-  #         style = switch(style,
-  #                        equal = "equal",
-  #                        quantile = "quantile",
-  #                        fisher = "fisher",
-  #                        jenks = "jenks",
-  #                        kmeans = "kmeans"
-  #         )
-  #       )
-  #       return(unname(ci$brks))
-  #     }
-  #     
-  #     # Optional deterministic log-equal bins
-  #     if (style == "log_equal") {
-  #       rng <- range(x, finite = TRUE)
-  #       return(10^(seq(log10(rng[1]), log10(rng[2]), length.out = n + 1)))
-  #     }
-  #     
-  #     # Fallback: equal width
-  #     rng <- range(x, finite = TRUE)
-  #     seq(rng[1], rng[2], length.out = n + 1)
-  #   }
-  #   
-  #   brks <- get_breaks(subset$length_um, n = bin_number, style = binning_type)
-  #   brks <- unique(brks)                       # guard against duplicate edges
-  #   if (length(brks) <= 2L) {
-  #     subset_ <- tibble::tibble(
-  #       sample_ID   = unique_sample_ID$sample_ID[[x]],
-  #       alpha       = NA_real_,
-  #       alpha_lower = NA_real_,
-  #       alpha_upper = NA_real_
-  #     )
-  #     unique_alpha <- dplyr::bind_rows(unique_alpha, subset_)
-  #     next
-  #   }
-  #   
-  #   bins <- cut(subset$length_um, breaks = brks, include.lowest = TRUE, right = TRUE)
-  #   
-  #   counts <- as.integer(table(bins))          # aligned to factor levels
-  #   mids   <- (brks[-1] + brks[-length(brks)]) / 2
-  #   
-  #   freq <- data.frame(
-  #     length_um = mids,
-  #     abundance = counts
-  #   )
-  #   freq <- freq[freq$abundance > 0, , drop = FALSE]  # drop empty bins
-  #   
-  #   freq$log_size      <- log10(freq$length_um)
-  #   freq$log_abundance <- log10(freq$abundance)
-  #   
-  #   r1model <- lm(log_abundance ~ log_size, data = freq)
-  #   alpha   <- -coef(r1model)[["log_size"]]
-  #   
-  #   rsum <- summary(r1model)
-  #   se   <- coef(rsum)[ "log_size", "Std. Error" ]     # name-safe, not [4]
-  #   alpha_lower <- alpha - se
-  #   alpha_upper <- alpha + se
-  #   
-  #   subset_ <- tibble::tibble(
-  #     sample_ID   = unique_sample_ID$sample_ID[[x]],
-  #     alpha       = as.numeric(alpha),
-  #     alpha_lower = as.numeric(alpha_lower),
-  #     alpha_upper = as.numeric(alpha_upper)
-  #   )
-  #   
-  #   unique_alpha <- dplyr::bind_rows(unique_alpha, subset_)
-  #   # ---- end deterministic fit ----
-  # }
-  # 
-  # unique_alpha <- dplyr::distinct(unique_alpha)
-  # 
-  
-  for(x in 1:nrow(unique_sample_ID)){
-    subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
+  for(x in 1:nrow(unique_sample_id)){
+    subset <- filter(dataframe, sample_id == unique_sample_id$sample_id[[x]])
     subset <- subset %>% filter(!is.na(length_um))
     sample_size <- as.numeric(nrow(subset))
     if(sample_size != 0){
@@ -1023,7 +934,7 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
       subset_ <- subset %>% add_column(alpha = alpha,
                                        alpha_lower = alpha_lower,
                                        alpha_upper = alpha_upper) %>%
-        select(sample_ID, alpha, alpha_lower, alpha_upper)
+        select(sample_id, alpha, alpha_lower, alpha_upper)
       subset_ <- unique(subset_)
       unique_alpha <- rbind(unique_alpha, subset_)
     }
@@ -1035,13 +946,13 @@ correctionFactor_particle <- function(dataframe, corrected_min, corrected_max, b
   
   
   
-  dataframe <- left_join(dataframe, unique_alpha, by = "sample_ID")
+  dataframe <- left_join(dataframe, unique_alpha, by = "sample_id")
   
   if("sample_volume" %in% colnames(dataframe) == TRUE){
     dataframe_ <- data.table()
     
-    for(x in 1:nrow(unique_sample_ID)){
-      subset <- filter(dataframe, sample_ID == unique_sample_ID$sample_ID[[x]])
+    for(x in 1:nrow(unique_sample_id)){
+      subset <- filter(dataframe, sample_id == unique_sample_id$sample_id[[x]])
       particle_number <- subset %>% count(sample_volume) %>%
         rename(particle_number = n)
       concentration <- (as.numeric(particle_number$particle_number))/(as.numeric(particle_number$sample_volume))

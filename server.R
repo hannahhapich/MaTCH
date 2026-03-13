@@ -113,50 +113,11 @@ server <- function(input,output,session) {
   ###END MERGING TOOL
   
   #MaTCH Tool
-  #dataframe <- read.csv("data_template.csv")
   convertedTerms <- reactive({
     req(input$particleData)
     infile <- input$particleData
     file <- fread(infile$datapath)
     dataframe <- as.data.frame(file)
-    
-    if("Sample ID" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_ID' = 'Sample ID')}
-    if("Concentration (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('concentration_particle_vol' = 'Concentration (particles/volume)')}
-    if("Material" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material' = 'Material')}
-    if("Material %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material_percent' = 'Material %')}
-    if("Morphology" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology' = 'Morphology')}
-    if("Morphology %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology_percent' = 'Morphology %')}
-    if("Study Media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('study_media' = 'Study Media')}
-    if("Min Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_min' = 'Min Length (microns)')}
-    if("Max Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_max' = 'Max Length (microns)')}
-    if("Known Alpha Value" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('known_alpha' = 'Known Alpha Value')}
-    if("Concentration Upper (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_upper' = 'Concentration Upper (particles/volume)')}
-    if("Concentration Lower (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_lower' = 'Concentration Lower (particles/volume)')}
-    if("Concentration Standard Deviation" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_SD' = 'Concentration Standard Deviation')}
-    if("Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('length_um' = 'Length (microns)')}
-    if("Width (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('width_um' = 'Width (microns)')}
-    if("Height (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('height_um' = 'Height (microns)')}
-    if("Sample Volume" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_volume' = 'Sample Volume')}
-    if("Density (mg/microns3)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('density' = 'Density (mg/microns3)')}
-
-    if("Sample.ID" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_ID' = 'Sample.ID')}
-    if("Concentration..particles.volume." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('concentration_particle_vol' = 'Concentration..particles.volume.')}
-    if("Material" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material' = 'Material')}
-    if("Material.." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material_percent' = 'Material..')}
-    if("Morphology" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology' = 'Morphology')}
-    if("Morphology.." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology_percent' = 'Morphology..')}
-    if("Study.Media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('study_media' = 'Study.Media')}
-    if("Min.Length..microns." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_min' = 'Min.Length..microns.')}
-    if("Max.Length..microns." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_max' = 'Max.Length..microns.')}
-    if("Known.Alpha.Value" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('known_alpha' = 'Known.Alpha.Value')}
-    if("Concentration.Upper.particles.volume." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_upper' = 'Concentration.Upper.particles.volume.')}
-    if("Concentration.Lower..particles.volume." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_lower' = 'Concentration.Lower..particles.volume.')}
-    if("Concentration.Standard.Deviation" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_SD' = 'Concentration.Standard.Deviation')}
-    if("Length..microns." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('length_um' = 'Length..microns.')}
-    if("Width..microns." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('width_um' = 'Width..microns.')}
-    if("Height..microns." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('height_um' = 'Height..microns.')}
-    if("Sample.Volume" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_volume' = 'Sample.Volume')}
-    if("Density..mg.microns3." %in% colnames(dataframe)){dataframe <- dataframe %>% rename('density' = 'Density..mg.microns3.')}
     
     if("polymer" %in% colnames(dataframe) && "polymer_class" %in% colnames(dataframe)){
       dataframe <- dataframe %>% add_column(material = NA)
@@ -580,7 +541,7 @@ server <- function(input,output,session) {
     withProgress(message = 'Processing data...', value = 0, {
     dataframe <- convertedTermsSelect()
     
-    if("morphology" %in% colnames(dataframe) && ("concentration_particle_vol" %in% colnames(dataframe)) == F && "material" %in% colnames(dataframe)){
+    if("morphology" %in% colnames(dataframe) && ("particle_concentration" %in% colnames(dataframe)) == F && "material" %in% colnames(dataframe)){
       dataframe2 <- particle_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, trash_mass_clean = trash_mass_clean, 
                                         polymer_avg_decision = input$polymer_avg_decision, morph_weight = input$morph_weight, sample_weight = input$sample_weight,
                                         fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
@@ -598,17 +559,17 @@ server <- function(input,output,session) {
       incProgress(0.3, detail = "Completed particle mass calculation")
     }else{dataframe2 <- dataframe}
       
-    if("concentration_particle_vol" %in% colnames(dataframe) && "size_min" %in% colnames(dataframe) && "size_max" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
-      dataframe <- dataframe %>% mutate(concentration_particle_vol = replace_na(concentration_particle_vol, 0))
+    if("particle_concentration" %in% colnames(dataframe) && "min_length_um" %in% colnames(dataframe) && "max_length_um" %in% colnames(dataframe) && "sample_id" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% mutate(particle_concentration = replace_na(particle_concentration, 0))
       dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
       #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 100)
       incProgress(0.3, detail = "Completed concentration size rescaling")
       if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
         dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean,
                                                fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
-        dataframe3 <- dataframe3 %>% select(sample_ID, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
-        dataframe3 <- dataframe3 %>% rename(corrected_concentration_particle_vol = corrected_concentration)
-        dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_ID")
+        dataframe3 <- dataframe3 %>% select(sample_id, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
+        dataframe3 <- dataframe3 %>% rename(corrected_particle_concentration = corrected_concentration)
+        dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_id")
         
         incProgress(0.6, detail = "Completed concentration mass calculation")
       }else{
@@ -617,7 +578,7 @@ server <- function(input,output,session) {
       
     }else{dataframe4 <- dataframe2} 
     
-    if("length_um" %in% colnames(dataframe) && "sample_ID" %in% colnames(dataframe)){
+    if("length_um" %in% colnames(dataframe) && "sample_id" %in% colnames(dataframe)){
       dataframe5 <- correctionFactor_particle(dataframe = dataframe, corrected_min = input$corrected_min, corrected_max = input$corrected_max, binning_type = input$binning_type, bin_number = input$bin_number)
       if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
         dataframe2 <- dataframe2 %>% select(volume_min_um_3, volume_mean_um_3, volume_max_um_3, min_mass_mg, mean_mass_mg, max_mass_mg, W_min, W_max, W_mean, H_min, H_max, H_mean, density_mg_um_3, density_min, density_max)
@@ -631,48 +592,6 @@ server <- function(input,output,session) {
     }else{dataframe5 <- dataframe4}
     
     incProgress(1, detail = "Complete")
-    
-    if("sample_ID" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample ID' = 'sample_ID')}
-    if("concentration_particle_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration (particles/volume)' = 'concentration_particle_vol')}
-    if("material" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material' = 'material')}
-    if("material_percent" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material %' = 'material_percent')}
-    if("morphology" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Morphology' = 'morphology')}
-    if("morphology_percent" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Morphology %' = 'morphology_percent')}
-    if("study_media" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Study Media' = 'study_media')}
-    if("size_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Length (microns)' = 'size_min')}
-    if("size_max" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Max Length (microns)' = 'size_max')}
-    if("known_alpha" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Known Alpha Value' = 'known_alpha')}
-    if("error_upper" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Upper (particles/volume)' = 'error_upper')}
-    if("error_lower" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Lower (particles/volume)' = 'error_lower')}
-    if("error_SD" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Concentration Standard Deviation' = 'error_SD')}
-    if("length_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Length (microns)' = 'length_um')}
-    if("L_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c(L_min, L_max))}
-    if("width_um" %in% colnames(dataframe5) && "W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um', 'Projected Width (microns)' = 'W_mean')}
-    if("width_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'width_um')}
-    if("W_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Width (microns)' = 'W_mean')}
-    #if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
-    if("height_um" %in% colnames(dataframe5) && "H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um', 'Projected Height (microns)' = 'H_mean')}
-    if("height_um" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'height_um')}
-    if("H_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Height (microns)' = 'H_mean')}
-    
-    if("L_mean" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% select(-c("L_mean"))}
-    
-    if("study_media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('Study Media' = 'study_media')}
-    if("sample_volume" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Sample Volume' = 'sample_volume')}
-    if("density" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Density (mg/microns3)' = 'density')}
-    if("material_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Material (Raw Data)' = 'material_raw')}
-    if("morphology_raw" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Morphology (Raw Data)' = 'morphology_raw')}
-    if("alpha" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Alpha' = 'alpha', 'Alpha Min' = 'alpha_lower', 'Alpha Max' = 'alpha_upper' )}
-    if("correction_factor" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Correction Factor' = 'correction_factor', 'Max Correction Factor' = 'correction_factor_upper', 'Min Correction Factor' = 'correction_factor_lower')}
-    if("mean_mass_mg" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Mass (mg)' = 'mean_mass_mg')}
-    if("volume_min_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Volume (microns3)' = 'volume_min_um_3', 'Volume (microns3)' = 'volume_mean_um_3', 'Max Volume (microns3)' = 'volume_max_um_3', 'Min Mass (mg)' = 'min_mass_mg', 'Max Mass (mg)' = 'max_mass_mg')}
-    if("W_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Width (microns)' = 'W_min', 'Max Width (microns)' = 'W_max')}
-    if("H_min" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Height (microns)' = 'H_min', 'Max Height (microns)' = 'H_max')}
-    if("density_mg_um_3" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Density (mg/microns3)' = 'density_min', 'Density (mg/microns3)' = 'density_mg_um_3', 'Max Density (mg/microns3)' = 'density_max')}
-    if("corrected_concentration" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
-    if("corrected_concentration_particle_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Corrected Concentration (particles/volume)' = 'corrected_concentration_particle_vol', 'Min Corrected Concentration (particles/volume)' = 'corrected_concentration_lower', 'Max Corrected Concentration (particles/volume)' = 'corrected_concentration_upper')}
-    if("min_concentration_um3_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (microns3/volume)' = 'min_concentration_um3_vol', 'Concentration (microns3/volume)' = 'mean_concentration_um3_vol', 'Max Concentration (microns3/volume)' = 'max_concentration_um3_vol')}
-    if("min_concentration_mg_vol" %in% colnames(dataframe5)){dataframe5 <- dataframe5 %>% rename('Min Concentration (mg/volume)' = 'min_concentration_mg_vol', 'Concentration (mg/volume)' = 'mean_concentration_mg_vol', 'Max Concentration (mg/volume)' = 'max_concentration_mg_vol')}
     
     dataframe5 <- dataframe5 %>%
       select_if(~ !all(is.na(.)))
@@ -771,15 +690,15 @@ server <- function(input,output,session) {
     dataframe <- as.data.frame(file)
     
     # Standardize column names (similar to convertedTerms)
-    if("Sample ID" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_ID' = 'Sample ID')}
-    if("Concentration (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('concentration_particle_vol' = 'Concentration (particles/volume)')}
+    if("Sample ID" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('sample_id' = 'Sample ID')}
+    if("Concentration (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('particle_concentration' = 'Concentration (particles/volume)')}
     if("Material" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material' = 'Material')}
     if("Material %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('material_percent' = 'Material %')}
     if("Morphology" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology' = 'Morphology')}
     if("Morphology %" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('morphology_percent' = 'Morphology %')}
     if("Study Media" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('study_media' = 'Study Media')}
-    if("Min Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_min' = 'Min Length (microns)')}
-    if("Max Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('size_max' = 'Max Length (microns)')}
+    if("Min Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('min_length_um' = 'Min Length (microns)')}
+    if("Max Length (microns)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('max_length_um' = 'Max Length (microns)')}
     if("Known Alpha Value" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('known_alpha' = 'Known Alpha Value')}
     if("Concentration Upper (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_upper' = 'Concentration Upper (particles/volume)')}
     if("Concentration Lower (particles/volume)" %in% colnames(dataframe)){dataframe <- dataframe %>% rename('error_lower' = 'Concentration Lower (particles/volume)')}
@@ -887,8 +806,8 @@ server <- function(input,output,session) {
     )
   )
   
-  output$contents8Trash <- DT::renderDT(
-    materialDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, rownames = F,
+  output$contents8Trash = DT::renderDataTable(
+    materialDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap", rownames = F,
     options = list(
       dom = 'f', 
       paging = FALSE,
@@ -905,7 +824,13 @@ server <- function(input,output,session) {
       searching = F,
       ordering = FALSE
     ),
-    callback = JS("table.rows().every(function(i, tab, row) {
+    callback = JS("// Destroy existing Bootstrap popovers to prevent stuck overlays
+      $('[data-bs-toggle=\"popover\"]').each(function() {
+        var popover = bootstrap.Popover.getInstance(this);
+        if (popover) popover.dispose();
+      });
+      
+      table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
@@ -914,8 +839,8 @@ server <- function(input,output,session) {
       Shiny.bindAll(table.table().node());")
   )
   
-  output$contents9Trash <- DT::renderDT(
-    morphologyDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, rownames = F,
+  output$contents9Trash = DT::renderDataTable(
+    morphologyDisplayTrash(), escape = FALSE, selection = 'none', server = FALSE, style="bootstrap", rownames = F,
     options = list(
       dom = 'f', 
       paging = FALSE,
@@ -932,7 +857,13 @@ server <- function(input,output,session) {
       searching = F,
       ordering = FALSE
     ),
-    callback = JS("table.rows().every(function(i, tab, row) {
+    callback = JS("// Destroy existing Bootstrap popovers to prevent stuck overlays
+      $('[data-bs-toggle=\"popover\"]').each(function() {
+        var popover = bootstrap.Popover.getInstance(this);
+        if (popover) popover.dispose();
+      });
+      
+      table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
@@ -1000,7 +931,10 @@ server <- function(input,output,session) {
                                choices = c("Material" = "material_p",
                                            "Morphology" = "morph_p",
                                            "Particle Length (microns)" = "length_p",
-                                           "Sample ID" = "sample"))
+                                           "Sample ID" = "sample",
+                                           "Projected Area" = "area",
+                                           "Perimeter" = "perimeter",
+                                           "Circularity" = "circularity"))
       
       updateCheckboxGroupInput(inputId = "advanced", label = "",
                                choices = c("Particle Width (microns)" = "width_p",
@@ -1015,47 +949,53 @@ server <- function(input,output,session) {
     req(input$reporting_level)
     data = data.frame(matrix(ncol = 0, nrow = 3))
     if(input$reporting_level == "Sample (particles/volume)"){
-      concentration_particle_vol = c(100, 100, 100)
-      sample_ID = c("test", "test", "test")
-      data <- data %>% add_column("Concentration (particles/volume)" = concentration_particle_vol, "Sample ID" = sample_ID)
+      particle_concentration = c(100, 100, 100)
+      sample_id = c("test", "test", "test")
+      data <- data %>% add_column("particle_concentration" = particle_concentration, "sample_id" = sample_id)
       if ("material" %in% as.vector(input$characteristics)){material = c("PE", "LDPE", NA)
         material_percent = c(70, 30, NA)
-        data <- add_column(data, "Material" = material, "Material %" = material_percent)}
+        data <- add_column(data, "material" = material, "material_percent" = material_percent)}
       if ("morph" %in% as.vector(input$characteristics)){morphology = c("fiber", "fragment", "film")
         morphology_percent = c(70, 20, 10)
-        data <- add_column(data, "Morphology" = morphology, "Morphology %" = morphology_percent)}
+        data <- add_column(data, "morphology" = morphology, "morphology_percent" = morphology_percent)}
       if ("media" %in% as.vector(input$characteristics)){study_media = c("marine surface", "marine surface", "marine surface")
-        data <- add_column(data, "Study Media" = study_media)}
-      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$advanced)){size_min = c(50, 201, 1001)
-        size_max = c(200, 1000, 5000)
-        data <- add_column(data, "Min Length (microns)" = size_min, "Max Length (microns)" = size_max)}
+        data <- add_column(data, "study_media" = study_media)}
+      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$advanced)){min_length_um = c(50, 201, 1001)
+        max_length_um = c(200, 1000, 5000)
+        data <- add_column(data, "min_length_um" = min_length_um, "max_length_um" = max_length_um)}
       if ("alpha" %in% as.vector(input$advanced)){known_alpha = c(1.80, 1.80, 1.80)
-        data <- add_column(data, "Known Alpha Value" = known_alpha)}
+        data <- add_column(data, "known_alpha" = known_alpha)}
       if ("sd_error" %in% as.vector(input$advanced)){error_SD = c(18, 18, 18)
-      data <- add_column(data, "Concentration Standard Deviation" = error_SD)}
+      data <- add_column(data, "error_SD" = error_SD)}
       if ("error" %in% as.vector(input$advanced)){error_upper = c(110, 110, 110)
       error_lower = c(90, 90, 90)
-      data <- add_column(data, "Concentration Upper (particles/volume)" = error_upper,
-                         "Concentration Lower (particles/volume)" = error_lower)}
+      data <- add_column(data, "error_upper" = error_upper,
+                         "error_lower" = error_lower)}
     }
     
     if(input$reporting_level == "Particle"){
       if ("material_p" %in% as.vector(input$characteristics)){material = c("PE", "LDPE", "PET")
-      data <- add_column(data, "Material" = material)}
+      data <- add_column(data, "material" = material)}
       if ("morph_p" %in% as.vector(input$characteristics)){morphology = c("fiber", "fragment", "film")
-      data <- add_column(data, "Morphology" = morphology)}
+      data <- add_column(data, "morphology" = morphology)}
       if ("length_p" %in% as.vector(input$characteristics)){length_um = c(120, 70, 80)
-      data <- add_column(data, "Length (microns)" = length_um)}
-      if ("sample" %in% as.vector(input$characteristics)){sample_ID = c("test", "test", "test")
-      data <- add_column(data, "Sample ID" = sample_ID)}
+      data <- add_column(data, "length_um" = length_um)}
+      if ("sample" %in% as.vector(input$characteristics)){sample_id = c("test", "test", "test")
+      data <- add_column(data, "sample_id" = sample_id)}
+      if ("area" %in% as.vector(input$characteristics)){area_um2 = c(120, 70, 80)
+      data <- add_column(data, "area_um2" = area_um2)}
+      if ("perimeter" %in% as.vector(input$characteristics)){perimeter_um = c(120, 70, 80)
+      data <- add_column(data, "perimeter_um" = perimeter_um)}
+      if ("circularity" %in% as.vector(input$characteristics)){circularity = c(0.8, 0.9, 0.7)
+      data <- add_column(data, "circularity" = circularity)}
       if ("width_p" %in% as.vector(input$advanced)){width_um = c(NA, 30, NA)
-      data <- add_column(data, "Width (microns)" = width_um)}
+      data <- add_column(data, "width_um" = width_um)}
       if ("height_p" %in% as.vector(input$advanced)){height_um = c(20, NA, NA)
-      data <- add_column(data, "Height (microns)" = height_um)}
+      data <- add_column(data, "height_um" = height_um)}
       if ("volume" %in% as.vector(input$advanced)){sample_volume = c(80, 80, 80)
-      data <- add_column(data, "Sample Volume" = sample_volume)}
+      data <- add_column(data, "sample_volume" = sample_volume)}
       if ("density_p" %in% as.vector(input$advanced)){density = c(NA, 0.00000000098, NA)
-      data <- add_column(data, "Density (mg/microns3)" = density)}
+      data <- add_column(data, "density" = density)}
     }
     
     return(data)
@@ -1179,7 +1119,13 @@ server <- function(input,output,session) {
                     ), 
                   searching = F, 
                   ordering = FALSE),
-    callback = JS("table.rows().every(function(i, tab, row) {
+    callback = JS("// Destroy existing Bootstrap popovers to prevent stuck overlays
+      $('[data-bs-toggle=\"popover\"]').each(function() {
+        var popover = bootstrap.Popover.getInstance(this);
+        if (popover) popover.dispose();
+      });
+      
+      table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
@@ -1204,7 +1150,13 @@ server <- function(input,output,session) {
                    ),
                    searching = F, 
                    ordering = FALSE),
-    callback = JS("table.rows().every(function(i, tab, row) {
+    callback = JS("// Destroy existing Bootstrap popovers to prevent stuck overlays
+      $('[data-bs-toggle=\"popover\"]').each(function() {
+        var popover = bootstrap.Popover.getInstance(this);
+        if (popover) popover.dispose();
+      });
+      
+      table.rows().every(function(i, tab, row) {
         var $this = $(this.node());
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');

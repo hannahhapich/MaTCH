@@ -533,9 +533,8 @@ ui <- dashboardPage(dark = T,
                                   column(4, 
                                          ## Preprocessing ----
                                          box(width = 12,
-                                             style = "height: 70vh, overflow-y: auto",
                                              title = "Choose Data Type",
-                                             selectInput('reporting_level', "Data Reporting Level", c("", "Sample (particles/volume)","Particle")) %>%
+                                             selectInput('reporting_level', "Data Reporting Level", c("Sample (particles/volume)", "Particle")) %>%
                                                bs4Dash::popover(title = "Data Reporting Level",
                                                        content = "Choose the level at which your data was reported. Sample data is in the format of plastics concentrations as a particle count per volume.
                                                            Particle data contains individual rows for each particle found detailing its characteristics.",
