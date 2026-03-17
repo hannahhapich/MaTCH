@@ -670,10 +670,7 @@ ui <- dashboardPage(dark = T,
                                              checkboxGroupInput('characteristics', 
                                                                 "", 
                                                                 br(),
-                                                                choices = NULL) %>%
-                                               bs4Dash::popover(title = "Data Characteristics",
-                                                       content = "Select all data you have available to describe your particle or sample characteristics.",
-                                                       placement = "right"),
+                                                                choices = NULL),
                                              
                                              box(width = 12,
                                                  collapsed = T,
