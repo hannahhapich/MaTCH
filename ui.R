@@ -367,29 +367,14 @@ ui <- dashboardPage(dark = T,
                                              fluidRow( 
                                                column(10, 
                                                       ## Preprocessing ----
-                                                      fluidRow(
-                                                        box(width = 12,
-                                                            collapsed = T,
-                                                            style = "height: 27vh; overflow-y: auto;",
-                                                            footer = tags$small("Rescaling settings for concentration data."),
-                                                            title = "Advanced Settings",
-                                                            fluidRow(
-                                                              box(width = 12,
-                                                                  title = "Rescaling Settings",
-                                                                  collapsed = T,
-                                                                  br(),
-                                                                  selectInput('concentration_type_conc', "Known Particle Characteristic", c("length (um)", "width (um)", "mass (ug)","volume (um3)","surface area (um2)","specific surface area (g/m2)")),
-                                                                  br(),
-                                                                  numericInput('corrected_min_conc', "Corrected Particle Range Minimum", 1, min = 1),
-                                                                  br(), 
-                                                                  numericInput('corrected_max_conc', "Corrected Particle Range Maximum", 5000, min = 1),
-                                                                  footer = tags$small("Select the measured characteristic of your particles over which to normalize. 
-                                                                                       Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', and 'effluent.' 
-                                                                                       (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values).
-                                                                                       If known particle characteristic is length, 'drinking water' is an additional option.")
-                                                              )
-                                                            )
-                                                        )
+                                                      box(width = 12,
+                                                          title = "Rescaling Settings",
+                                                          collapsed = T,
+                                                          br(),
+                                                          numericInput('corrected_min_conc', "Corrected Particle Range Minimum", 20, min = 1),
+                                                          br(), 
+                                                          numericInput('corrected_max_conc', "Corrected Particle Range Maximum", 5000, min = 1),
+                                                          footer = tags$small("Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', 'effluent.' (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values), and 'drinking water' (Singh et al., in prep).")
                                                       )
                                                ))),
                                       column(2,
@@ -408,37 +393,38 @@ ui <- dashboardPage(dark = T,
                                             div(style = "overflow-x: scroll",
                                                 DT::dataTableOutput("contents5Conc")
                                             ))
-                                      ),
-                                      box(title = HTML(paste0("Material Terms")), 
-                                          maximizable = T,
-                                          collapsed = T,
-                                          width = 6,
-                                          fluidRow(
-                                            div(#style = "overflow-x: scroll",
-                                                DT::dataTableOutput("contents8Conc")
-                                            ))
-                                      ),
-                                      box(title = HTML(paste0("Morphology Terms")), 
-                                          maximizable = T,
-                                          collapsed = T,
-                                          width = 6,
-                                          fluidRow(
-                                            div(#style = "overflow-x: scroll",
-                                                DT::dataTableOutput("contents9Conc")
-                                            ))
-                                      ),
-                                      box(title = HTML(paste0("Material Plot")),
-                                          maximizable = T,
-                                          collapsed = T,
-                                          width = 6,
-                                          plotlyOutput("plot1Conc")
-                                      ),
-                                      box(title = HTML(paste0("Morphology Plot")),
-                                          maximizable = T,
-                                          collapsed = T,
-                                          width = 6,
-                                          plotlyOutput("plot2Conc")
                                       )
+                                      # HIDDEN FOR NOW - Material Terms, Morphology Terms, Material Plot, Morphology Plot
+                                      # box(title = HTML(paste0("Material Terms")), 
+                                      #     maximizable = T,
+                                      #     collapsed = T,
+                                      #     width = 6,
+                                      #     fluidRow(
+                                      #       div(#style = "overflow-x: scroll",
+                                      #           DT::dataTableOutput("contents8Conc")
+                                      #       ))
+                                      # ),
+                                      # box(title = HTML(paste0("Morphology Terms")), 
+                                      #     maximizable = T,
+                                      #     collapsed = T,
+                                      #     width = 6,
+                                      #     fluidRow(
+                                      #       div(#style = "overflow-x: scroll",
+                                      #           DT::dataTableOutput("contents9Conc")
+                                      #       ))
+                                      # ),
+                                      # box(title = HTML(paste0("Material Plot")),
+                                      #     maximizable = T,
+                                      #     collapsed = T,
+                                      #     width = 6,
+                                      #     plotlyOutput("plot1Conc")
+                                      # ),
+                                      # box(title = HTML(paste0("Morphology Plot")),
+                                      #     maximizable = T,
+                                      #     collapsed = T,
+                                      #     width = 6,
+                                      #     plotlyOutput("plot2Conc")
+                                      # )
                                     ),
                                     
                                     tags$hr(),
@@ -677,11 +663,7 @@ ui <- dashboardPage(dark = T,
                                                  title = "Advanced Data Characteristics",
                                                  checkboxGroupInput('advanced', 
                                                                     "", 
-                                                                    choices = NULL) %>%
-                                                   bs4Dash::popover(
-                                                     title = "Choose from advanced, less commonly associated metadata you may have to describe your particles.",
-                                                     content = "Share Decision", placement = "right"
-                                                   )
+                                                                    choices = NULL)
                                              )
                                          )
                                   ),

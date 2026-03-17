@@ -606,17 +606,7 @@ server <- function(input,output,session) {
       dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = input$concentration_type, corrected_min = input$corrected_min, corrected_max = input$corrected_max)
       #dataframe3 <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = 1, corrected_max = 100)
       incProgress(0.3, detail = "Completed concentration size rescaling")
-      if("morphology" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
-        dataframe4 <- concentration_count_mass(dataframe = dataframe, morphology_shape = morphology_shape, polymer_density = polymer_density, corrected_DF = dataframe3, trash_mass_clean = trash_mass_clean,
-                                               fiber_min = input$fiber_min, fiber_med = input$fiber_med, fiber_max = input$fiber_max)
-        dataframe3 <- dataframe3 %>% select(sample_id, alpha, alpha_upper, alpha_lower, correction_factor, correction_factor_upper, correction_factor_lower, corrected_concentration, corrected_concentration_upper, corrected_concentration_lower)
-        dataframe3 <- dataframe3 %>% rename(corrected_particle_concentration = corrected_concentration)
-        dataframe4 <- dataframe4 %>% left_join(dataframe3, by = "sample_id")
-        
-        incProgress(0.6, detail = "Completed concentration mass calculation")
-      }else{
-        dataframe4 <- dataframe3
-      }
+      dataframe4 <- dataframe3
       
     }else{dataframe4 <- dataframe2} 
     
@@ -666,6 +656,14 @@ server <- function(input,output,session) {
     
     withProgress(message = 'Processing concentration data...', value = 0, {
       dataframe <- convertedTermsConc()
+      
+      if("particle_concentration" %in% colnames(dataframe) && "min_length_um" %in% colnames(dataframe) && "max_length_um" %in% colnames(dataframe) && "sample_id" %in% colnames(dataframe)){
+        dataframe <- dataframe %>% mutate(particle_concentration = replace_na(particle_concentration, 0))
+        dataframe_rescaled <- correctionFactor_conc(dataframe = dataframe, alpha_vals = alpha_vals, metric = "length (um)", corrected_min = input$corrected_min_conc, corrected_max = input$corrected_max_conc)
+        incProgress(0.5, detail = "Completed concentration size rescaling")
+        dataframe <- dataframe_rescaled
+      }
+      
       incProgress(1, detail = "Complete")
       return(dataframe)
     })
@@ -673,6 +671,8 @@ server <- function(input,output,session) {
   output$contents5Conc <- DT::renderDT(
     convertedParticlesConc(),
     rownames = FALSE,
+    style = "bootstrap",
+    class = "display",
     options = list(scrollX = TRUE, pageLength = 5)
   )
   
@@ -837,6 +837,8 @@ server <- function(input,output,session) {
   output$contents5Trash <- DT::renderDT(
     convertedParticlesTrash(),
     rownames = FALSE,
+    style = "bootstrap",
+    class = "display",
     options = list(
       scrollX = TRUE,
       pageLength = 10,
@@ -875,7 +877,6 @@ server <- function(input,output,session) {
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
       });
-      Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
   
@@ -908,7 +909,6 @@ server <- function(input,output,session) {
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
       });
-      Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
   
@@ -955,9 +955,7 @@ server <- function(input,output,session) {
   observeEvent(input$reporting_level, {
     if(input$reporting_level == "Sample (particles/volume)"){
       updateCheckboxGroupInput(inputId = "characteristics",
-                               choices = c("Material Proportion" = "material",
-                                           "Morphologic Proportion" = "morph",
-                                           "Study Media" = "media",
+                               choices = c("Study Media" = "media",
                                            "Min/Max Particle Size Range" = "range"))
       
       updateCheckboxGroupInput(inputId = "advanced", label = "",
@@ -991,28 +989,62 @@ server <- function(input,output,session) {
     req(input$reporting_level)
     data = data.frame(matrix(ncol = 0, nrow = 3))
     if(input$reporting_level == "Sample (particles/volume)"){
-      particle_concentration = c(100, 100, 100)
-      sample_id = c("test", "test", "test")
+      # Base data - 3 rows
+      particle_concentration = c(150, 100, 20)
+      sample_id = c("test_1", "test_2", "test_3")
       data <- data %>% add_column("particle_concentration" = particle_concentration, "sample_id" = sample_id)
-      if ("material" %in% as.vector(input$characteristics)){material = c("PE", "LDPE", NA)
-        material_percent = c(70, 30, NA)
-        data <- add_column(data, "material" = material, "material_percent" = material_percent)}
-      if ("morph" %in% as.vector(input$characteristics)){morphology = c("fiber", "fragment", "film")
-        morphology_percent = c(70, 20, 10)
-        data <- add_column(data, "morphology" = morphology, "morphology_percent" = morphology_percent)}
-      if ("media" %in% as.vector(input$characteristics)){study_media = c("marine surface", "marine surface", "marine surface")
-        data <- add_column(data, "study_media" = study_media)}
-      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$advanced)){min_length_um = c(50, 201, 1001)
-        max_length_um = c(200, 1000, 5000)
-        data <- add_column(data, "min_length_um" = min_length_um, "max_length_um" = max_length_um)}
-      if ("alpha" %in% as.vector(input$advanced)){known_alpha = c(1.80, 1.80, 1.80)
-        data <- add_column(data, "known_alpha" = known_alpha)}
-      if ("sd_error" %in% as.vector(input$advanced)){error_SD = c(18, 18, 18)
-      data <- add_column(data, "error_SD" = error_SD)}
-      if ("error" %in% as.vector(input$advanced)){error_upper = c(110, 110, 110)
-      error_lower = c(90, 90, 90)
-      data <- add_column(data, "error_upper" = error_upper,
-                         "error_lower" = error_lower)}
+      
+      # Check if binned is selected - add 2 more rows if so
+      if ("binned" %in% as.vector(input$advanced)){
+        data <- rbind(data, data.frame(particle_concentration = c(50, 70), sample_id = c("test_3", "test_3")))
+      }
+      
+      # Handle range and size bins
+      if ("range" %in% as.vector(input$characteristics) || "binned" %in% as.vector(input$advanced)){
+        if ("binned" %in% as.vector(input$advanced)){
+          # 5-row values when binned
+          min_length_um = c(150, 200, 500, 350, 200)
+          max_length_um = c(5000, 5000, 5000, 500, 350)
+        } else {
+          # 3-row values when only range
+          min_length_um = c(150, 200, 500)
+          max_length_um = c(5000, 5000, 5000)
+        }
+        data <- add_column(data, "min_length_um" = min_length_um, "max_length_um" = max_length_um)
+      }
+      
+      # Handle study media
+      if ("media" %in% as.vector(input$characteristics)){
+        if ("binned" %in% as.vector(input$advanced)){
+          study_media = c("marine surface", "marine surface", "marine surface", "marine surface", "marine surface")
+        } else {
+          study_media = c("marine surface", "marine surface", "marine surface")
+        }
+        data <- add_column(data, "study_media" = study_media)
+      }
+      
+      # Handle known alpha - only for test_1
+      if ("alpha" %in% as.vector(input$advanced)){
+        known_alpha = rep(NA, nrow(data))
+        known_alpha[which(data$sample_id == "test_1")] = 1.8
+        data <- add_column(data, "known_alpha" = known_alpha)
+      }
+      
+      # Handle error SD - only for test_2
+      if ("sd_error" %in% as.vector(input$advanced)){
+        error_SD = rep(NA, nrow(data))
+        error_SD[which(data$sample_id == "test_2")] = 18
+        data <- add_column(data, "error_SD" = error_SD)
+      }
+      
+      # Handle error bounds - only for test_1
+      if ("error" %in% as.vector(input$advanced)){
+        error_upper = rep(NA, nrow(data))
+        error_lower = rep(NA, nrow(data))
+        error_upper[which(data$sample_id == "test_1")] = 160
+        error_lower[which(data$sample_id == "test_1")] = 140
+        data <- add_column(data, "error_upper" = error_upper, "error_lower" = error_lower)
+      }
     }
     
     if(input$reporting_level == "Particle"){
@@ -1050,30 +1082,25 @@ server <- function(input,output,session) {
   observeEvent(input$characteristics, {
     req(input$characteristics)
     functions_perf <- c()
-    if("material" %in% as.vector(input$characteristics) && "morph" %in% as.vector(input$characteristics) || "material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics)){
+    if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics)){
       output$function1 <- renderText({paste("-Semantic matching of material and morphology")})
-    }else if(!("material" %in% as.vector(input$characteristics)) || !("morph" %in% as.vector(input$characteristics))){
-        output$function1 <- renderText("")
-    }else if(!("material_p" %in% as.vector(input$characteristics)) || !("morph_p" %in% as.vector(input$characteristics))){
-        output$function1 <- renderText("")
+    }else{
+      output$function1 <- renderText("")
     }
 
-    if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics) ||
-       "range" %in% as.vector(input$characteristics)){
+    if("material_p" %in% as.vector(input$characteristics) && "morph_p" %in% as.vector(input$characteristics) && "length_p" %in% as.vector(input$characteristics)){
       output$function2 <- renderText({paste("-Count to mass conversion")})
-    }else if(!("sample" %in% as.vector(input$characteristics)) || !("range" %in% as.vector(input$characteristics))){
-      output$function2 <- renderText("")
-    }else if(!("material_p" %in% as.vector(input$characteristics)) || !("morph_p" %in% as.vector(input$characteristics)) || !("length_p" %in% as.vector(input$characteristics))){
+    }else{
       output$function2 <- renderText("")
     }
 
-    if("range" %in% as.vector(input$characteristics) || "length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics) && "volume" %in% as.vector(input$advanced)){
+    if(input$reporting_level == "Sample (particles/volume)"){
+      output$function3 <- renderText({paste("-Perform particle size rescaling")})
+    }else if("range" %in% as.vector(input$characteristics) || "length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics) && "volume" %in% as.vector(input$advanced)){
       output$function3 <- renderText({paste("-Perform particle size rescaling")})
     }else if("length_p" %in% as.vector(input$characteristics) && "sample" %in% as.vector(input$characteristics)  && !("volume" %in% as.vector(input$advanced))){
       output$function3 <- renderText({paste("-Calculate correction factor for size rescaling")})
-    }else if(!("range" %in% as.vector(input$characteristics)) && input$reporting_level == "Sample (particles/volume)"){
-      output$function3 <- renderText("")
-    }else if(!("sample" %in% as.vector(input$characteristics)) || !("length_p" %in% as.vector(input$characteristics))){
+    }else{
       output$function3 <- renderText("")
     }
 
@@ -1089,6 +1116,8 @@ server <- function(input,output,session) {
   output$contents5 <- DT::renderDT(
     convertedParticles(),
     rownames = FALSE,
+    style = "bootstrap",
+    class = "display",
     options = list(
       paging = TRUE,
       searching = TRUE,
@@ -1182,7 +1211,6 @@ server <- function(input,output,session) {
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
       });
-      Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
 
@@ -1219,12 +1247,9 @@ server <- function(input,output,session) {
         $this.attr('id', this.data()[0]);
         $this.addClass('shiny-input-container');
       });
-      Shiny.unbindAll(table.table().node());
       Shiny.bindAll(table.table().node());")
   )
-  
 
-  
   output$testDataDownload <- DT:: renderDataTable(server = F,
                                       datatable({
                                         testData()

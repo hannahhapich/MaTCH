@@ -1099,7 +1099,6 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     if(nrow(alpha_bins) >= 1){
       unique_alpha <- data.frame()
       for(x in 1:nrow(alpha_bins)){
-        x = 1
         sample_name <- alpha_bins$sample_id[[x]]
         sample_bins <- dataframeclean %>% filter(sample_id == sample_name)
         midpoint <- (as.numeric(sample_bins$min_length_um) + as.numeric(sample_bins$max_length_um))/2
@@ -1121,8 +1120,8 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
         sample_bins <- sample_bins %>% select(sample_id, alpha, alpha_calc_lower, alpha_calc_upper)
         sample_bins <- unique(sample_bins)
         unique_alpha <- rbind(unique_alpha, sample_bins)
-        unique_alpha <- unique_alpha %>% rename(alpha_calc = alpha)
       }
+      unique_alpha <- unique_alpha %>% rename(alpha_calc = alpha)
       dataframeclean <- dataframeclean %>% left_join(unique_alpha, by = "sample_id")
       for(x in 1:nrow(dataframeclean)){
         if(! is.na(dataframeclean[x, "alpha_calc"])){
@@ -1293,7 +1292,15 @@ correctionFactor_conc <- function(dataframe, alpha_vals, metric, corrected_min, 
     dataframeclean$corrected_concentration_upper[[x]] <- as.numeric(dataframeclean$correction_factor_upper[[x]]) * as.numeric(dataframeclean$concentration_upper[[x]])
   }
   dataframeclean <- dataframeclean %>% 
-    select(-c(concentration_lower, concentration_upper)) 
+    select(-c(concentration_lower, concentration_upper))
+  
+  # Final rounding: alpha values to 3 decimals max (without trailing zeros)
+  dataframeclean <- dataframeclean %>% mutate(
+    alpha = ifelse(!is.na(alpha), round(alpha, 3), alpha),
+    alpha_lower = ifelse(!is.na(alpha_lower), round(alpha_lower, 3), alpha_lower),
+    alpha_upper = ifelse(!is.na(alpha_upper), round(alpha_upper, 3), alpha_upper)
+  )
+  
   return(dataframeclean)
 }
 
