@@ -526,7 +526,7 @@ ui <- dashboardPage(dark = T,
                                   column(12,
                                          
                                          shiny::HTML("<br><br><center> <h1>Overview</h1> </center><br>"),
-                                         shiny::HTML("<h5>MaTCH is a tool designed to relate microplastic and trash nomenclature through semantic harmonization, as well as perform other non-semantic alignment techniques. It consists of a single drag and drop box to perform all data cleaning, includes all relational tables used in the development of this algorithm, and a tool that can be used to query the relational tables with microplastic and trash survey sheets.</h5>"),
+                                         shiny::HTML("<h5>MaTCH is a tool designed to relate microplastic and trash nomenclature through semantic harmonization, as well as perform other non-semantic alignment techniques. It consists separate drag and drop boxes to perform data cleaning for three different data structures: microplastic particle, microplastic concentration, and trash particle data. For more information on what types of harmonization operations can be performed for each data structure, see the 'Data Template' tab.</h5>"),
                                          shiny::HTML("<h5>We are grateful for the funding for this project provided by the Moore Institute for Plastic Pollution Research, The Possibility Lab, the National Science Foundation, University of California, Riverside, National Marine Sanctuary Foundation, the National Oceanic and Atmospheric Administration Marine Debris Program, and the Benioff Ocean Initiative</h5>")
                                          
                                   )
