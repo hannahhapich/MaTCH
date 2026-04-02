@@ -539,60 +539,33 @@ ui <- dashboardPage(dark = T,
                                 tags$hr(),
                                 
                                 fluidRow(
-                                  column(12,
-                                         
-                                         shiny::HTML("<br><br><center> <h1>Detailed Instructions</h1> </center><br>"),
-                                         shiny::HTML("<h5>Find here a detailed demonstration of the tool, including data formatting, multiple use cases, and information about advanced settings.</h5>"),
-                                         tags$hr(),
+                                  column(1),
+                                  column(10,
+                                         shiny::HTML("<br><br><center> <h1>Microplastic particle volume calculation: decision tree</h1> </center><br>"),
+                                         shiny::HTML("<h5 style='max-width: 700px; margin: 0 auto 20px auto; line-height: 1.6;'>Decision tree outlining how microplastic particle volume will be calculated. This is dependent on morphology type, data availability, and model error. Methods are listed from top to bottom, most preferable to least preferable. The data required to use each method is listed in the parentheses following the citation.</h5>"),
                                          align = "center",
-                                         shiny::HTML("<iframe width='70%' height='150%' src='https://www.youtube-nocookie.com/embed/Nze8bnf-lqA' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
-                                         
-                                  )
+                                         img(src = "particle_vol_selection_tree.png", style = 'display: block; margin: 0 auto; width: 100%; height: auto;')
+                                  ),
+                                  column(1)
                                 ),
+                                
                                 fluidRow(
                                   
-                                  style = "height:400px;"),
+                                  style = "height:50px;"),
                                 
                                 # PAGE BREAK
                                 tags$hr(),
                                 
                                 fluidRow(
-                                  column(3),
-                                  column(6,
+                                  column(1),
+                                  column(10,
                                          shiny::HTML("<br><br><center> <h1>About the Relational Tables</h1> </center><br>"),
                                          align = "center",
-                                         img(width = "600", src = "db_diagram.JPG", style = 'display: block; margin-left: auto; margin-right: auto;'),
-                                         shiny::HTML("<h5>These relational tables describe alias relationships (words that mean the same thing) and hierarchical relationships (words that are nested groups within one another). You can view or download these tables using the relational table tab above!</h5>")
+                                         img(src = "db_diagram.JPG", style = 'display: block; margin: 0 auto; width: 100%; height: auto;'),
+                                         shiny::HTML("<h5 style='max-width: 700px; margin: 20px auto 0 auto; line-height: 1.6;'>These relational tables describe alias relationships (words that mean the same thing) and hierarchical relationships (words that are nested groups within one another).</h5>")
                                   ),
-                                  column(3)
+                                  column(1)
                                 ),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                # PAGE BREAK
-                                tags$hr(),
-                                
-                                # HOW
-                                fluidRow(
-                                  column(3),
-                                  column(6,
-                                         shiny::HTML("<br><br><center> <h1>About the Query Tool</h1> </center><br>"),
-                                         shiny::HTML("<h5>This tool queries the relational tables with an uploaded survey list. To use the tool, upload a csv file to the upload file tab. 
-                                  The file needs to be a csv with one column named -material- and another named -items-. 
-                                  The material should correspond to the item names in the same row.</h5>")
-                                  ),
-                                  column(3)
-                                ),
-                                tags$hr(),
-                                
-                                fluidRow(
-                                  
-                                  style = "height:50px;"),
-                                
-                                tags$hr(),
-                                
                                 
                                 fluidRow(
                                   
