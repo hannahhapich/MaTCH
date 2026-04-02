@@ -110,6 +110,120 @@ server <- function(input,output,session) {
     
   })
   
+  #Material Sunburst Plot by Mass (Microplastic) ----
+  output$plot1Mass <- renderPlotly({
+    req(convertedParticles())
+    dataframe <- convertedParticles()
+    if("mean_mass_mg" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% 
+        select(material, mean_mass_mg) %>%
+        filter(!is.na(mean_mass_mg)) %>%
+        mutate(mean_mass_mg = as.numeric(mean_mass_mg)) %>%
+        rename(Class = material)
+      
+      # Group and sum
+      dataframe <- dataframe %>% 
+        group_by(Class) %>%
+        summarise(Mass = sum(mean_mass_mg, na.rm = TRUE)) %>%
+        ungroup()
+      
+      # Calculate proportion
+      total_mass <- sum(dataframe$Mass, na.rm = TRUE)
+      dataframe <- dataframe %>% 
+        mutate(Count = Mass / total_mass) %>%
+        select(Class, Count)
+      
+      Material_DF_group <- dataframe
+      
+      material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst_microplastic, Group_Hierarchy = MaterialsHierarchy_sunburst_microplastic, type = "material")
+      
+      #Making readable alias display for sunburst plot
+      primeMaterials_SB <- primeMaterials_microplastic %>%
+        add_row(Material = "material", Alias = "material", readable = "material") %>%
+        add_row(Material = "trash", Alias = "trash", readable = "trash")
+      material_grouped_readable <- left_join(material_grouped, primeMaterials_SB, by = c("from" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "from"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeMaterials_SB, by = c("to" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "to"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+      
+      Materials_Plot <- sunburstplot(df_join_boot = material_grouped_readable)
+      print(Materials_Plot)
+    }
+  })
+  
+  #Morphology Sunburst Plot by Mass (Microplastic) ----
+  output$plot2Mass <- renderPlotly({
+    req(convertedParticles())
+    dataframe <- convertedParticles()
+    if("mean_mass_mg" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% 
+        select(morphology, mean_mass_mg) %>%
+        filter(!is.na(mean_mass_mg)) %>%
+        mutate(mean_mass_mg = as.numeric(mean_mass_mg)) %>%
+        rename(Class = morphology)
+      
+      # Group and sum
+      dataframe <- dataframe %>% 
+        group_by(Class) %>%
+        summarise(Mass = sum(mean_mass_mg, na.rm = TRUE)) %>%
+        ungroup()
+      
+      # Calculate proportion
+      total_mass <- sum(dataframe$Mass, na.rm = TRUE)
+      dataframe <- dataframe %>% 
+        mutate(Count = Mass / total_mass) %>%
+        select(Class, Count)
+      
+      Item_DF_group <- dataframe
+      
+      #Item prop uncertainty
+      item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst_microplastic, Group_Hierarchy = ItemsHierarchy_sunburst_microplastic, type = "items")
+      
+      #Making readable alias display for sunburst plot
+      primeItems_SB <- primeItems_microplastic %>%
+        add_row(Item = "items", Alias = "items", readable = "items") %>%
+        add_row(Item = "trash", Alias = "trash", readable = "trash")
+      item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "from")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeItems_SB, by = c("to" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "to")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+      
+      Items_Plot <- sunburstplot(df_join_boot = item_grouped_readable)
+      print(Items_Plot)
+    }
+  })
+  
+  #Conditional output indicators for microplastic mass plots
+  output$plot1MassExists <- reactive({
+    req(convertedParticles())
+    "mean_mass_mg" %in% colnames(convertedParticles())
+  })
+  outputOptions(output, "plot1MassExists", suspendWhenHidden = FALSE)
+  
+  output$plot2MassExists <- reactive({
+    req(convertedParticles())
+    "mean_mass_mg" %in% colnames(convertedParticles())
+  })
+  outputOptions(output, "plot2MassExists", suspendWhenHidden = FALSE)
+  
   ###END MERGING TOOL
   
   #MaTCH Tool
@@ -1006,6 +1120,120 @@ server <- function(input,output,session) {
       return(plotly_empty(type = "scatter"))
     }
   })
+  
+  #Material Sunburst Plot by Mass (Trash) ----
+  output$plot1TrashMass <- renderPlotly({
+    req(convertedParticlesTrash())
+    dataframe <- convertedParticlesTrash()
+    if("weight_estimate_g" %in% colnames(dataframe) && "material" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% 
+        select(material, weight_estimate_g) %>%
+        filter(!is.na(weight_estimate_g)) %>%
+        mutate(weight_estimate_g = as.numeric(weight_estimate_g)) %>%
+        rename(Class = material)
+      
+      # Group and sum
+      dataframe <- dataframe %>% 
+        group_by(Class) %>%
+        summarise(Mass = sum(weight_estimate_g, na.rm = TRUE)) %>%
+        ungroup()
+      
+      # Calculate proportion
+      total_mass <- sum(dataframe$Mass, na.rm = TRUE)
+      dataframe <- dataframe %>% 
+        mutate(Count = Mass / total_mass) %>%
+        select(Class, Count)
+      
+      Material_DF_group <- dataframe
+      
+      material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst, Group_Hierarchy = MaterialsHierarchy_sunburst, type = "material")
+      
+      #Making readable alias display for sunburst plot
+      primeMaterials_SB <- primeMaterials %>%
+        add_row(Material = "material", Alias = "material", readable = "material") %>%
+        add_row(Material = "trash", Alias = "trash", readable = "trash")
+      material_grouped_readable <- left_join(material_grouped, primeMaterials_SB, by = c("from" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "from"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeMaterials_SB, by = c("to" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "to"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+      
+      Materials_Plot <- sunburstplot(df_join_boot = material_grouped_readable)
+      print(Materials_Plot)
+    }
+  })
+  
+  #Morphology Sunburst Plot by Mass (Trash) ----
+  output$plot2TrashMass <- renderPlotly({
+    req(convertedParticlesTrash())
+    dataframe <- convertedParticlesTrash()
+    if("weight_estimate_g" %in% colnames(dataframe) && "morphology" %in% colnames(dataframe)){
+      dataframe <- dataframe %>% 
+        select(morphology, weight_estimate_g) %>%
+        filter(!is.na(weight_estimate_g)) %>%
+        mutate(weight_estimate_g = as.numeric(weight_estimate_g)) %>%
+        rename(Class = morphology)
+      
+      # Group and sum
+      dataframe <- dataframe %>% 
+        group_by(Class) %>%
+        summarise(Mass = sum(weight_estimate_g, na.rm = TRUE)) %>%
+        ungroup()
+      
+      # Calculate proportion
+      total_mass <- sum(dataframe$Mass, na.rm = TRUE)
+      dataframe <- dataframe %>% 
+        mutate(Count = Mass / total_mass) %>%
+        select(Class, Count)
+      
+      Item_DF_group <- dataframe
+      
+      #Item prop uncertainty
+      item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
+      
+      #Making readable alias display for sunburst plot
+      primeItems_SB <- primeItems %>%
+        add_row(Item = "items", Alias = "items", readable = "items") %>%
+        add_row(Item = "trash", Alias = "trash", readable = "trash")
+      item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "from")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeItems_SB, by = c("to" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "to")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+      
+      Items_Plot <- sunburstplot(df_join_boot = item_grouped_readable)
+      print(Items_Plot)
+    }
+  })
+  
+  #Conditional output indicators for trash mass plots
+  output$plot1TrashMassExists <- reactive({
+    req(convertedParticlesTrash())
+    "weight_estimate_g" %in% colnames(convertedParticlesTrash())
+  })
+  outputOptions(output, "plot1TrashMassExists", suspendWhenHidden = FALSE)
+  
+  output$plot2TrashMassExists <- reactive({
+    req(convertedParticlesTrash())
+    "weight_estimate_g" %in% colnames(convertedParticlesTrash())
+  })
+  outputOptions(output, "plot2TrashMassExists", suspendWhenHidden = FALSE)
   
   output$downloadDataTrash <- downloadHandler(
     filename = function() {

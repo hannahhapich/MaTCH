@@ -324,13 +324,25 @@ ui <- dashboardPage(dark = T,
                                       maximizable = T,
                                       collapsed = T,
                                       width = 6,
-                                      plotlyOutput("plot1")
+                                      tags$h5("By count"),
+                                      plotlyOutput("plot1"),
+                                      conditionalPanel(
+                                        condition = "output.plot1MassExists",
+                                        tags$h5("By mass"),
+                                        plotlyOutput("plot1Mass")
+                                      )
                                   ),
                                   box(title = HTML(paste0("Morphology Plot")),
                                       maximizable = T,
                                       collapsed = T,
                                       width = 6,
-                                      plotlyOutput("plot2")
+                                      tags$h5("By count"),
+                                      plotlyOutput("plot2"),
+                                      conditionalPanel(
+                                        condition = "output.plot2MassExists",
+                                        tags$h5("By mass"),
+                                        plotlyOutput("plot2Mass")
+                                      )
                                   )
                                 ),
                                 
@@ -498,13 +510,25 @@ ui <- dashboardPage(dark = T,
                                           maximizable = T,
                                           collapsed = T,
                                           width = 6,
-                                          plotlyOutput("plot1Trash")
+                                          tags$h5("By count"),
+                                          plotlyOutput("plot1Trash"),
+                                          conditionalPanel(
+                                            condition = "output.plot1TrashMassExists",
+                                            tags$h5("By mass"),
+                                            plotlyOutput("plot1TrashMass")
+                                          )
                                       ),
                                       box(title = HTML(paste0("Morphology Plot")),
                                           maximizable = T,
                                           collapsed = T,
                                           width = 6,
-                                          plotlyOutput("plot2Trash")
+                                          tags$h5("By count"),
+                                          plotlyOutput("plot2Trash"),
+                                          conditionalPanel(
+                                            condition = "output.plot2TrashMassExists",
+                                            tags$h5("By mass"),
+                                            plotlyOutput("plot2TrashMass")
+                                          )
                                       )
                                     ),
                                     
