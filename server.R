@@ -30,10 +30,10 @@ server <- function(input,output,session) {
 
       Material_DF_group <- dataframe
 
-      material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst, Group_Hierarchy = MaterialsHierarchy_sunburst, type = "material")
+      material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst_microplastic, Group_Hierarchy = MaterialsHierarchy_sunburst_microplastic, type = "material")
 
       #Making readable alias display for sunburst plot
-      primeMaterials_SB <- primeMaterials %>%
+      primeMaterials_SB <- primeMaterials_microplastic %>%
         add_row(Material = "material", Alias = "material", readable = "material") %>%
         add_row(Material = "trash", Alias = "trash", readable = "trash")
       material_grouped_readable <- left_join(material_grouped, primeMaterials_SB, by = c("from" = "Alias"))
@@ -84,10 +84,10 @@ server <- function(input,output,session) {
       Item_DF_group <- dataframe
       
       #Item prop uncertainty
-      item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
+      item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst_microplastic, Group_Hierarchy = ItemsHierarchy_sunburst_microplastic, type = "items")
       
       #Making readable alias display for sunburst plot
-      primeItems_SB <- primeItems %>%
+      primeItems_SB <- primeItems_microplastic %>%
         add_row(Item = "items", Alias = "items", readable = "items") %>%
         add_row(Item = "trash", Alias = "trash", readable = "trash")
       item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
@@ -916,7 +916,44 @@ server <- function(input,output,session) {
     req(convertedParticlesTrash())
     dataframe <- convertedParticlesTrash()
     if("material" %in% colnames(dataframe)){
-      return(plotly_empty(type = "scatter"))
+      dataframe <- dataframe %>% rename(Class = material)
+      if("material_percent" %in% colnames(dataframe)){
+        dataframe <- dataframe %>% rename(Count = material_percent) %>%
+                      select(Class, Count)
+        dataframe <- dataframe %>% group_by(Class) %>%
+          summarise_at(c("Count"), sum)
+
+      }else{
+        dataframe <- dataframe %>% add_column(Count = 1) %>%
+          select(Class, Count)
+        dataframe <- dataframe %>% group_by(Class) %>%
+          summarise_at(c("Count"), sum)
+      }
+
+      Material_DF_group <- dataframe
+
+      material_grouped <- grouped_uncertainty(DF_group = Material_DF_group, Group_Alias = MaterialsAlias_sunburst, Group_Hierarchy = MaterialsHierarchy_sunburst, type = "material")
+
+      #Making readable alias display for sunburst plot
+      primeMaterials_SB <- primeMaterials %>%
+        add_row(Material = "material", Alias = "material", readable = "material") %>%
+        add_row(Material = "trash", Alias = "trash", readable = "trash")
+      material_grouped_readable <- left_join(material_grouped, primeMaterials_SB, by = c("from" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "from"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeMaterials_SB, by = c("to" = "Alias"))
+      material_grouped_readable <- material_grouped_readable %>%
+        ungroup() %>%
+        select(-c("Material", "to"))
+      material_grouped_readable <- material_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+
+      Materials_Plot <- sunburstplot(df_join_boot = material_grouped_readable)
+      print(Materials_Plot)
     }else{
       return(plotly_empty(type = "scatter"))
     }
@@ -926,7 +963,45 @@ server <- function(input,output,session) {
     req(convertedParticlesTrash())
     dataframe <- convertedParticlesTrash()
     if("morphology" %in% colnames(dataframe)){
-      return(plotly_empty(type = "scatter"))
+      dataframe <- dataframe %>% rename(Class = morphology)
+      if("morphology_percent" %in% colnames(dataframe)){
+        dataframe <- dataframe %>% rename(Count = morphology_percent) %>%
+          select(Class, Count)
+        dataframe <- dataframe %>% group_by(Class) %>%
+          summarise_at(c("Count"), sum)
+        
+      }else{
+        dataframe <- dataframe %>% add_column(Count = 1) %>%
+          select(Class, Count)
+        dataframe <- dataframe %>% group_by(Class) %>%
+          summarise_at(c("Count"), sum)
+      }
+      
+      Item_DF_group <- dataframe
+      
+      #Item prop uncertainty
+      item_grouped <- grouped_uncertainty(DF_group = Item_DF_group, Group_Alias = ItemsAlias_sunburst, Group_Hierarchy = ItemsHierarchy_sunburst, type = "items")
+      
+      #Making readable alias display for sunburst plot
+      primeItems_SB <- primeItems %>%
+        add_row(Item = "items", Alias = "items", readable = "items") %>%
+        add_row(Item = "trash", Alias = "trash", readable = "trash")
+      item_grouped_readable <- left_join(item_grouped, primeItems_SB, by = c("from" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "from")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(from = readable) %>%
+        left_join(primeItems_SB, by = c("to" = "Alias"))
+      item_grouped_readable <- item_grouped_readable %>% 
+        ungroup() %>%
+        select(-c("Item", "to")) 
+      item_grouped_readable <- item_grouped_readable %>%
+        rename(to = readable) %>%
+        group_by(from, to)
+      
+      Items_Plot <- sunburstplot(df_join_boot = item_grouped_readable)
+      print(Items_Plot)
     }else{
       return(plotly_empty(type = "scatter"))
     }

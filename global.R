@@ -1487,6 +1487,8 @@ PrimeUnclassifiable <- read.csv("data/PrimeUnclassifiable.csv")
 
 primeItems <- read.csv("data/PrimeItems.csv")
 primeMaterials <- read.csv("data/PrimeMaterials.csv")
+primeItems_microplastic <- read.csv("data/PrimeItems_microplastic.csv")
+primeMaterials_microplastic <- read.csv("data/PrimeMaterials_microplastic.csv")
 
 #Build cleaning functions
 cleantext <- function(x) {
@@ -1766,7 +1768,7 @@ ItemsHierarchy_sunburst <- data.frame(matrix(ncol=2, dimnames = list("", c("from
 for(y in 1:ncol(hierarchycleani)){
   for(x in 1:nrow(hierarchycleani)){
     ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst) + 1, 2] <- hierarchycleani[x,y]
-    if(!is.na(hierarchycleani[x,y]) && y == 1){ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst), 1] <- paste("Trash")}
+    if(!is.na(hierarchycleani[x,y]) && y == 1){ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst), 1] <- paste("trash")}
     if(!is.na(hierarchycleani[x,y]) && y != 1){ItemsHierarchy_sunburst[nrow(ItemsHierarchy_sunburst), 1] <- paste(hierarchycleani[x, y -1])}
   }
   ItemsHierarchy_sunburst <- ItemsHierarchy_sunburst %>% distinct() %>% drop_na()
@@ -1776,10 +1778,31 @@ MaterialsHierarchy_sunburst <- data.frame(matrix(ncol=2, dimnames = list("", c("
 for(y in 1:ncol(hierarchyclean)){
   for(x in 1:nrow(hierarchyclean)){
     MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst) + 1, 2] <- hierarchyclean[x,y]
-    if(!is.na(hierarchyclean[x,y]) && y == 1){MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst), 1] <- paste("Trash")}
+    if(!is.na(hierarchyclean[x,y]) && y == 1){MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst), 1] <- paste("trash")}
     if(!is.na(hierarchyclean[x,y]) && y != 1){MaterialsHierarchy_sunburst[nrow(MaterialsHierarchy_sunburst), 1] <- paste(hierarchyclean[x, y -1])}
   }
   MaterialsHierarchy_sunburst <- MaterialsHierarchy_sunburst %>% distinct() %>% drop_na()
+}
+
+#Files for bootstrapping routine and sunburst plots - MICROPLASTICS versions
+ItemsHierarchy_sunburst_microplastic <- data.frame(matrix(ncol=2, dimnames = list("", c("from", "to"))))
+for(y in 1:ncol(hierarchycleani_microplastic)){
+  for(x in 1:nrow(hierarchycleani_microplastic)){
+    ItemsHierarchy_sunburst_microplastic[nrow(ItemsHierarchy_sunburst_microplastic) + 1, 2] <- hierarchycleani_microplastic[x,y]
+    if(!is.na(hierarchycleani_microplastic[x,y]) && y == 1){ItemsHierarchy_sunburst_microplastic[nrow(ItemsHierarchy_sunburst_microplastic), 1] <- paste("trash")}
+    if(!is.na(hierarchycleani_microplastic[x,y]) && y != 1){ItemsHierarchy_sunburst_microplastic[nrow(ItemsHierarchy_sunburst_microplastic), 1] <- paste(hierarchycleani_microplastic[x, y -1])}
+  }
+  ItemsHierarchy_sunburst_microplastic <- ItemsHierarchy_sunburst_microplastic %>% distinct() %>% drop_na()
+}
+
+MaterialsHierarchy_sunburst_microplastic <- data.frame(matrix(ncol=2, dimnames = list("", c("from", "to"))))
+for(y in 1:ncol(hierarchyclean_microplastic)){
+  for(x in 1:nrow(hierarchyclean_microplastic)){
+    MaterialsHierarchy_sunburst_microplastic[nrow(MaterialsHierarchy_sunburst_microplastic) + 1, 2] <- hierarchyclean_microplastic[x,y]
+    if(!is.na(hierarchyclean_microplastic[x,y]) && y == 1){MaterialsHierarchy_sunburst_microplastic[nrow(MaterialsHierarchy_sunburst_microplastic), 1] <- paste("trash")}
+    if(!is.na(hierarchyclean_microplastic[x,y]) && y != 1){MaterialsHierarchy_sunburst_microplastic[nrow(MaterialsHierarchy_sunburst_microplastic), 1] <- paste(hierarchyclean_microplastic[x, y -1])}
+  }
+  MaterialsHierarchy_sunburst_microplastic <- MaterialsHierarchy_sunburst_microplastic %>% distinct() %>% drop_na()
 }
 
 ItemsAlias_sunburst <- read.csv("data/PrimeItems_trash.csv")%>%
