@@ -197,17 +197,19 @@ ui <- dashboardPage(dark = T,
                                                         style = "height: 27vh; overflow-y: auto;",
                                                         footer = tags$small("Options for rescaling and mass conversion techniques."),
                                                         title = "Advanced Settings",
-                                                        fluidRow(
-                                                          box(width = 12,
-                                                              collapsed = T,
-                                                              footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
-                                                                                  'equal' divides the range into 'n' parts.
-                                                                                  'sd' creates classes proportionate to the standard deviation of the data provided"),
-                                                              title = "Alpha Value Calculation",
-                                                              br(),
-                                                              selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","equal","sd")),
-                                                              br(),
-                                                              numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
+                                                        tags$div(style = "display: none;",
+                                                          fluidRow(
+                                                            box(width = 12,
+                                                                collapsed = T,
+                                                                footer = tags$small("'jenks' bins data via natural break classification from inherent groups within the data (see Jenks Natural Breaks Algorithm).
+                                                                                    'equal' divides the range into 'n' parts.
+                                                                                    'sd' creates classes proportionate to the standard deviation of the data provided"),
+                                                                title = "Alpha Value Calculation",
+                                                                br(),
+                                                                selectInput('binning_type', "Binning Technique for Alpha Calculation", c("jenks","equal","sd")),
+                                                                br(),
+                                                                numericInput('bin_number', "Number of Bins to Fit Regression", 5, min = 5)
+                                                            )
                                                           )
                                                         ),
                                                         fluidRow(

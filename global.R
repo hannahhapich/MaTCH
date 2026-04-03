@@ -306,6 +306,16 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
     dataframeclean <- dataframeclean %>% mutate(morphology = cleantext(morphology))
     
     dataframeclean <- left_join(dataframeclean, morphology_shape, by = "morphology", copy = F)
+    
+    # Create a morphology_for_calc column that maps morphology_unique (e.g., "foam") to base form (e.g., "fragment")
+    # This allows foams to be treated as fragments for volume calculations while keeping display name as "foam"
+    dataframeclean <- left_join(dataframeclean, 
+                                morph_conversion %>% rename(morphology_for_calc = morphology),
+                                by = c("morphology" = "morphology_unique"), 
+                                copy = F)
+    # If morphology wasn't in the conversion table, use the original morphology
+    dataframeclean <- dataframeclean %>% 
+      mutate(morphology_for_calc = ifelse(is.na(morphology_for_calc), morphology, morphology_for_calc))
   }
   
   # Remove old morphology_shape dimension columns (no longer used in new volume calculation)
@@ -337,7 +347,7 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
   
   # Row-by-row volume calculation with preference ordering
   for (row_idx in 1:nrow(dataframeclean)) {
-    morph <- dataframeclean$morphology[row_idx]
+    morph <- dataframeclean$morphology_for_calc[row_idx]
     vol_result <- NULL
     method_used <- NULL
     
@@ -1601,6 +1611,10 @@ grouped_uncertainty <- function(DF_group, Group_Alias, Group_Hierarchy, type){
 }
 
 sunburstplot <-function(df_join_boot){
+  
+  # Sort by mean_prop descending to ensure consistent color ordering across count and mass plots
+  df_join_boot <- df_join_boot %>%
+    arrange(desc(mean_prop))
   
   values <- paste(df_join_boot$to, 
                   "<br>", 
