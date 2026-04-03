@@ -1,10 +1,8 @@
-﻿sample_id,particle_concentration,min_length_um,max_length_um,error_SD
-1,100,300,1000,18
-1,100,1000,3000,18
-1,100,3000,5000,18
-2,200,50,100,
-2,200,101,500,
-2,200,500,5000,
-3,300,501,1000,
-3,300,1000,2000,
-3,300,2000,4000,
+particle_concentration,sample_id,min_length_um,max_length_um,study_media,known_alpha
+150,test_1,150,5000,marine surface,1.8
+100,test_2,200,5000,marine surface,NA
+20,test_3,500,5000,NA,NA
+30,test_3,350,500,NA,NA
+80,test_3,200,350,NA,NA
+300,test_3,100,200,NA,NA
+430,test_3,70,100,NA,NA

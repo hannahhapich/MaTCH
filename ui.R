@@ -385,9 +385,9 @@ ui <- dashboardPage(dark = T,
                                                           title = "Rescaling Settings",
                                                           collapsed = T,
                                                           br(),
-                                                          numericInput('corrected_min_conc', "Corrected Particle Range Minimum", 20, min = 1),
+                                                          numericInput('corrected_min_conc', "Corrected Particle Range Minimum (microns)", 20, min = 1),
                                                           br(), 
-                                                          numericInput('corrected_max_conc', "Corrected Particle Range Maximum", 5000, min = 1),
+                                                          numericInput('corrected_max_conc', "Corrected Particle Range Maximum (microns)", 5000, min = 1),
                                                           footer = tags$small("Note: if inputting a study media, options include 'marine surface', 'marine sediment', 'freshwater surface', 'freshwater sediment', 'biota', 'effluent.' (See Kooi et al., 2021 (doi.org/10.1016/j.watres.2021.117429) for values), and 'drinking water' (Singh et al., in prep).")
                                                       )
                                                ))),
