@@ -284,13 +284,17 @@ server <- function(input,output,session) {
     
     if("material" %in% colnames(dataframe_mat) && "material_match_1" %in% colnames(dataframe_mat)){
       # Select only unique material_raw values (deduplicate if any duplicates exist)
-      dataframe_mat2 <- dataframe_mat %>% 
+      df_tmp <- dataframe_mat %>% 
         select(material_raw, material, starts_with("material_match")) %>% 
         filter(!(is.na(material_match_1))) %>% 
-        distinct(material_raw, .keep_all = TRUE) %>%  # Ensure one row per material_raw
-        add_column(Prime_Material = NA, input_id = NA)
+        distinct(material_raw, .keep_all = TRUE)
+      if(nrow(df_tmp) == 0){
+        dataframe_mat2 <- data.frame(material_raw = character(), input_id = character(), Prime_Material = character())
+      } else {
+        dataframe_mat2 <- df_tmp %>% add_column(Prime_Material = NA_character_, input_id = NA_character_)
+      }
       
-      for (i in 1:nrow(dataframe_mat2)) {
+      for (i in seq_len(nrow(dataframe_mat2))) {
         # Create stable ID based on material_raw hash
         stable_id <- paste0("material_select_", digest::digest(dataframe_mat2[i, 1], algo = "md5"))
         
@@ -340,13 +344,17 @@ server <- function(input,output,session) {
     
     if("morphology" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
       # Select only unique morphology_raw values (deduplicate if any duplicates exist)
-      dataframe_morph2 <- dataframe_morph %>% 
+      df_tmp <- dataframe_morph %>% 
         select(morphology_raw, morphology, starts_with("morphology_match")) %>% 
         filter(!(is.na(morphology_match_1))) %>% 
-        distinct(morphology_raw, .keep_all = TRUE) %>%  # Ensure one row per morphology_raw
-        add_column(Prime_Morphology = NA, input_id = NA)
+        distinct(morphology_raw, .keep_all = TRUE)
+      if(nrow(df_tmp) == 0){
+        dataframe_morph2 <- data.frame(morphology_raw = character(), input_id = character(), Prime_Morphology = character())
+      } else {
+        dataframe_morph2 <- df_tmp %>% add_column(Prime_Morphology = NA_character_, input_id = NA_character_)
+      }
       
-      for (i in 1:nrow(dataframe_morph2)) {
+      for (i in seq_len(nrow(dataframe_morph2))) {
         # Create stable ID based on morphology_raw hash
         stable_id <- paste0("morph_select_", digest::digest(dataframe_morph2[i, 1], algo = "md5"))
         
@@ -398,13 +406,17 @@ server <- function(input,output,session) {
     
     if("material" %in% colnames(dataframe_mat) && "material_match_1" %in% colnames(dataframe_mat)){
       # Select only unique material_raw values (deduplicate if any duplicates exist)
-      dataframe_mat2 <- dataframe_mat %>% 
+      df_tmp <- dataframe_mat %>% 
         select(material_raw, material, starts_with("material_match")) %>% 
         filter(!(is.na(material_match_1))) %>% 
-        distinct(material_raw, .keep_all = TRUE) %>%  # Ensure one row per material_raw
-        add_column(Prime_Material = NA, input_id = NA)
+        distinct(material_raw, .keep_all = TRUE)
+      if(nrow(df_tmp) == 0){
+        dataframe_mat2 <- data.frame(material_raw = character(), input_id = character(), Prime_Material = character())
+      } else {
+        dataframe_mat2 <- df_tmp %>% add_column(Prime_Material = NA_character_, input_id = NA_character_)
+      }
       
-      for (i in 1:nrow(dataframe_mat2)) {
+      for (i in seq_len(nrow(dataframe_mat2))) {
         # Create stable ID based on material_raw hash
         stable_id <- paste0("material_select_trash_", digest::digest(dataframe_mat2[i, 1], algo = "md5"))
         
@@ -450,13 +462,17 @@ server <- function(input,output,session) {
     
     if("morphology" %in% colnames(dataframe_morph) && "morphology_match_1" %in% colnames(dataframe_morph)){
       # Select only unique morphology_raw values (deduplicate if any duplicates exist)
-      dataframe_morph2 <- dataframe_morph %>% 
+      df_tmp <- dataframe_morph %>% 
         select(morphology_raw, morphology, starts_with("morphology_match")) %>% 
         filter(!(is.na(morphology_match_1))) %>% 
-        distinct(morphology_raw, .keep_all = TRUE) %>%  # Ensure one row per morphology_raw
-        add_column(Prime_Morphology = NA, input_id = NA)
+        distinct(morphology_raw, .keep_all = TRUE)
+      if(nrow(df_tmp) == 0){
+        dataframe_morph2 <- data.frame(morphology_raw = character(), input_id = character(), Prime_Morphology = character())
+      } else {
+        dataframe_morph2 <- df_tmp %>% add_column(Prime_Morphology = NA_character_, input_id = NA_character_)
+      }
       
-      for (i in 1:nrow(dataframe_morph2)) {
+      for (i in seq_len(nrow(dataframe_morph2))) {
         # Create stable ID based on morphology_raw hash
         stable_id <- paste0("morph_select_trash_", digest::digest(dataframe_morph2[i, 1], algo = "md5"))
         
