@@ -12,7 +12,7 @@
 ##For pellet (req: Dx OR L, Dy OR W, C; 0.5 </= C < 0.75) (citation: Chen 2024, https://doi.org/10.1021/acs.est.4c01031)
 chen_pellet_a <- function(L, W, C){
   V = (0.115)*(pi)*(L)*(W)^2
-  #Absolute estimation error of 7.1% from Chen 2024
+  #Symmetric error range based on the magnitude of Chen's mean error (-7.1%).
   V_min = V - ((V)*(0.071))
   V_max = V + ((V)*(0.071))
   return(c(V, V_min, V_max))
@@ -21,18 +21,18 @@ chen_pellet_a <- function(L, W, C){
 ##For pellet (req: Dw OR L, Dy OR W, C; 0.75 </= C </= 1.10; max should be 1.0 but image J pixelation can yield values slightly higher) (citation: Chen 2024, https://doi.org/10.1021/acs.est.4c01031)
 chen_pellet_b <- function(W, C){
   V = (pi/6)*(W)^3
-  #Absolute estimation error of 3.1% from Chen 2024
+  # Chen reports mean errors of +2.0% and -3.1% for model 13 in the applicable circularity strata. Preserve the directional endpoints.
   V_min = V - ((V)*(0.031))
-  V_max = V + ((V)*(0.031))
+  V_max = V + ((V)*(0.020))
   return(c(V, V_min, V_max))
 }
 
 ##For fiber (req: Dx, Dy) (citation: Chen 2024, https://doi.org/10.1021/acs.est.4c01031)
 chen_fiber <- function(Dx, Dy){
   V = (0.012)*(pi)*(Dx)*(Dy)*sqrt(Dx * Dy)
-  #Absolute estimation error of 0.2% from Chen 2024
-  V_min = V - ((V)*(0.002))
-  V_max = V + ((V)*(0.002))
+  # Chen reports mean +/- SEM = -0.2 +/- 9.5%. Preserves the resulting directional endpoints (-9.7%, +9.3%) as a performance envelope.
+  V_min = V - ((V)*(0.097))
+  V_max = V + ((V)*(0.093))
   return(c(V, V_min, V_max))
 }
 
@@ -40,9 +40,9 @@ chen_fiber <- function(Dx, Dy){
 ##For fragment (req: L, W, A) (citation: Chen 2024, https://doi.org/10.1021/acs.est.4c01031)
 chen_fragment <- function(L, W, A){
   V = (0.144)*(A)*sqrt(L * W)
-  #Absolute estimation error of 0.9% from Chen 2024
-  V_min = V - ((V)*(0.009))
-  V_max = V + ((V)*(0.009))
+  # Chen reports mean +/- SEM = 0.9 +/- 5.0%. Preserves the resulting directional endpoints (-4.1%, +5.9%) as a performance envelope.
+  V_min = V - ((V)*(0.041))
+  V_max = V + ((V)*(0.059))
   return(c(V, V_min, V_max))
 }
 
@@ -70,9 +70,10 @@ tanoiri_fragment <- function(L, W){
   return(c(V, V_min, V_max))
 }
 
-#For pellet (req: Dx OR L, Dx OR W) (citation: Tanoiri 2021, https://doi.org/10.1016/j.marpolbul.2021.112749)
+#For pellets (req: Dx OR L, Dy OR W) (citation: PE/PP-pellet model from Tanoiri 2021, https://doi.org/10.1016/j.marpolbul.2021.112749)
 tanoiri_pellet <- function(L, W){
-  V = (4/3)*(pi)*(L/2)*(W/2) * (0.565 * (W/2))
+  #Uses Tanoiri's better-supported PE/PP-pellet coefficient as its default Tanoiri pellet pathway. The third axis is 0.565 times the major axis; this is not an automatic material-specific classification.
+  V = (4/3)*(pi)*(L/2)*(W/2) * (0.565 * (L/2))
   #Range of Vmodeled/Vmeasured from Barchiesi 2023
   V_min = V * (0.98)
   V_max = V * (1.02)
@@ -125,13 +126,14 @@ medina <- function(A){
 
 
 
+
 #Basic geometry equations ----
 #For films (req: Dx OR L, Dy OR W, H) (citation: basic geometry for a sheet)
 film_geo <- function(L, W, H){
   V = L * W * H
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  #All dimensions measured; do not transfer old +/- 5% length-measurement.
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 
@@ -155,9 +157,8 @@ film_geo_WH <- function(L, H, H_min, H_max){
 fiber_geo <- function(L, W, H){
   r = (W + H)/4
   V = (pi) * (r)^2 * (L)
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 
@@ -165,9 +166,8 @@ fiber_geo <- function(L, W, H){
 fiber_geo_H <- function(L, W){
   r = (W)/2
   V = (pi) * (r)^2 * (L)
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 
@@ -183,9 +183,8 @@ fiber_geo_WH <- function(L, W, W_min, W_max){
 sphere_geo <- function(L, W, H){
   r = (L + W + H)/6
   V = (4/3) * (pi) * (r)^3
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 
@@ -193,9 +192,8 @@ sphere_geo <- function(L, W, H){
 sphere_geo_H <- function(L, W){
   r = (L + W)/4
   V = (4/3) * (pi) * (r)^3
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 
@@ -203,9 +201,8 @@ sphere_geo_H <- function(L, W){
 sphere_geo_WH <- function(L){
   r = (L)/2
   V = (4/3) * (pi) * (r)^3
-  #Add +/- 5% error, see Hapich 2024
-  V_min = V * 0.95
-  V_max = V * 1.05
+  V_min = V
+  V_max = V
   return(c(V, V_min, V_max))
 }
 

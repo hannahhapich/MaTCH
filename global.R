@@ -438,11 +438,13 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
           method_used <- "Chen Pellet B (Dy,C)"
         }
       }
-      # Preference #2: L, W, C (with circularity ranges)
-      else if (all(c("length_um", "width_um", "circularity") %in% colnames(dataframeclean)) &&
-               !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0 &&
-               !is.na(dataframeclean$width_um[row_idx]) && dataframeclean$width_um[row_idx] > 0 &&
-               !is.na(dataframeclean$circularity[row_idx])) {
+      # Preference #2: L, W, C (with circularity ranges). Use a separate
+      # condition so an out-of-range Dx/Dy circularity can fall through.
+      if (is.null(vol_result) &&
+          all(c("length_um", "width_um", "circularity") %in% colnames(dataframeclean)) &&
+          !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0 &&
+          !is.na(dataframeclean$width_um[row_idx]) && dataframeclean$width_um[row_idx] > 0 &&
+          !is.na(dataframeclean$circularity[row_idx])) {
         circ <- dataframeclean$circularity[row_idx]
         if (circ >= 0.5 && circ < 0.75) {
           vol_result <- chen_pellet_a(L = dataframeclean$length_um[row_idx], 
@@ -455,39 +457,42 @@ particle_count_mass <- function(dataframe, morphology_shape, polymer_density, tr
           method_used <- "Chen Pellet B (W,C)"
         }
       }
-      # Preference #3: Dx, Dy
-      else if (all(c("Dx", "Dy") %in% colnames(dataframeclean)) &&
-               !is.na(dataframeclean$Dx[row_idx]) && dataframeclean$Dx[row_idx] > 0 &&
-               !is.na(dataframeclean$Dy[row_idx]) && dataframeclean$Dy[row_idx] > 0) {
-        vol_result <- tanoiri_pellet(L = dataframeclean$Dx[row_idx], 
+      # Preference #3: Dx, Dy. Use Tanoiri's PE/PP-calibrated coefficient as
+      # the default pellet pathway without routing on the material column.
+      if (is.null(vol_result) &&
+          all(c("Dx", "Dy") %in% colnames(dataframeclean)) &&
+          !is.na(dataframeclean$Dx[row_idx]) && dataframeclean$Dx[row_idx] > 0 &&
+          !is.na(dataframeclean$Dy[row_idx]) && dataframeclean$Dy[row_idx] > 0) {
+        vol_result <- tanoiri_pellet(L = dataframeclean$Dx[row_idx],
                                      W = dataframeclean$Dy[row_idx])
         method_used <- "Tanoiri Pellet (Dx,Dy)"
       }
       # Preference #4: L, W
-      else if (all(c("length_um", "width_um") %in% colnames(dataframeclean)) &&
-               !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0 &&
-               !is.na(dataframeclean$width_um[row_idx]) && dataframeclean$width_um[row_idx] > 0) {
-        vol_result <- tanoiri_pellet(L = dataframeclean$length_um[row_idx], 
+      if (is.null(vol_result) &&
+          all(c("length_um", "width_um") %in% colnames(dataframeclean)) &&
+          !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0 &&
+          !is.na(dataframeclean$width_um[row_idx]) && dataframeclean$width_um[row_idx] > 0) {
+        vol_result <- tanoiri_pellet(L = dataframeclean$length_um[row_idx],
                                      W = dataframeclean$width_um[row_idx])
         method_used <- "Tanoiri Pellet (L,W)"
       }
       # Preference #5: Dx
-      else if ("Dx" %in% colnames(dataframeclean) &&
-               !is.na(dataframeclean$Dx[row_idx]) && dataframeclean$Dx[row_idx] > 0) {
+      if (is.null(vol_result) && "Dx" %in% colnames(dataframeclean) &&
+          !is.na(dataframeclean$Dx[row_idx]) && dataframeclean$Dx[row_idx] > 0) {
         vol_result <- simon(L = dataframeclean$Dx[row_idx], 
-                           W = dataframeclean$Dx[row_idx])
+                            W = dataframeclean$Dx[row_idx])
         method_used <- "Simon (Dx as L,W)"
       }
       # Preference #6: L
-      else if ("length_um" %in% colnames(dataframeclean) &&
-               !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0) {
+      if (is.null(vol_result) && "length_um" %in% colnames(dataframeclean) &&
+          !is.na(dataframeclean$length_um[row_idx]) && dataframeclean$length_um[row_idx] > 0) {
         vol_result <- simon(L = dataframeclean$length_um[row_idx], 
-                           W = dataframeclean$length_um[row_idx])
+                            W = dataframeclean$length_um[row_idx])
         method_used <- "Simon (L as L,W)"
       }
       # Preference #7: A
-      else if ("area_um2" %in% colnames(dataframeclean) &&
-               !is.na(dataframeclean$area_um2[row_idx]) && dataframeclean$area_um2[row_idx] > 0) {
+      if (is.null(vol_result) && "area_um2" %in% colnames(dataframeclean) &&
+          !is.na(dataframeclean$area_um2[row_idx]) && dataframeclean$area_um2[row_idx] > 0) {
         vol_result <- medina(A = dataframeclean$area_um2[row_idx])
         method_used <- "Medina (A)"
       }
